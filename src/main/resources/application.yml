@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: natc
-    password: ENC(wSI15dRY960Ge77lWsvlOQ==)
+    password: ENC(4ptjXo7JluhqszGqz1ua3ALLNWo8VQYliL3FqEz0w9dZGwsbrZXFkyITg/zsqtDScjKEvt8LLD0=)
   security:
     user:
       name: natc-client
