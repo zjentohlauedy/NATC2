@@ -8,6 +8,16 @@ spring:
       name: natc-client
       password: ENC(V9DPUx2MZ8Knb9N3cFSBN3g6AybkyH5Aa8QvFNjEqUfhGAGKNq369lShlwdECrdML5C9jFfsP1E=)
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: when_authorized
+      show-components: when_authorized
+
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
