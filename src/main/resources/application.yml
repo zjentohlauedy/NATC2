@@ -1,1 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: natc
+    password: ENC(wSI15dRY960Ge77lWsvlOQ==)
 
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: DUMMY
