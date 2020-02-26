@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/natc
     username: natc
     password: ENC(4ptjXo7JluhqszGqz1ua3ALLNWo8VQYliL3FqEz0w9dZGwsbrZXFkyITg/zsqtDScjKEvt8LLD0=)
   security:

@@ -2,12 +2,22 @@ package org.natc.natc.entity.domain;
 
 import lombok.Getter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+
+@Entity(name = "teams_t")
+@IdClass(TeamId.class)
 @Getter
 public class Team {
+    @Id
     private Integer teamId;
+    @Id
     private String year;
     private String location;
     private String name;
+    @Column(name = "abbrev")
     private String abbreviation;
     private String timeZone;
     private Integer gameTime;
@@ -20,11 +30,17 @@ public class Team {
     private Integer games;
     private Integer wins;
     private Integer losses;
+    @Column(name = "div_wins")
     private Integer divisionWins;
+    @Column(name = "div_losses")
     private Integer divisionLosses;
+    @Column(name = "ooc_wins")
     private Integer outOfConferenceWins;
+    @Column(name = "ooc_losses")
     private Integer outOfConferenceLosses;
+    @Column(name = "ot_wins")
     private Integer overtimeWins;
+    @Column(name = "ot_losses")
     private Integer overtimeLosses;
     private Integer roadWins;
     private Integer roadLosses;
@@ -33,8 +49,11 @@ public class Team {
     private Integer divisionRank;
     private Integer playoffRank;
     private Integer playoffGames;
+    @Column(name = "round1_wins")
     private Integer round1Wins;
+    @Column(name = "round2_wins")
     private Integer round2Wins;
+    @Column(name = "round3_wins")
     private Integer round3Wins;
     private Double expectation;
     private Integer drought;

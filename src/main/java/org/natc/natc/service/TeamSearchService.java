@@ -1,15 +1,23 @@
 package org.natc.natc.service;
 
 import org.natc.natc.entity.domain.Team;
+import org.natc.natc.repository.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class TeamSearchService {
 
+    private final TeamRepository teamRepository;
+
+    @Autowired
+    public TeamSearchService(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
+
     public List<Team> execute() {
-        return Collections.emptyList();
+        return teamRepository.findAll();
     }
 }
