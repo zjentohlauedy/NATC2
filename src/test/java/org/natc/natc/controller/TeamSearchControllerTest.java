@@ -30,61 +30,70 @@ class TeamSearchControllerTest {
 
     @Test
     public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null);
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void search_ShouldCallTeamSearchService() {
-        teamSearchController.search(null, null, null, null);
+        teamSearchController.search(null, null, null, null, null);
 
-        verify(teamSearchService).execute(any(), any(), any(), any());
+        verify(teamSearchService).execute(any(), any(), any(), any(), any());
     }
 
     @Test
     public void search_ShouldPassTeamIdFromRequestToSearchService() {
         final Integer teamId = 123;
 
-        teamSearchController.search(teamId, null, null, null);
+        teamSearchController.search(teamId, null, null, null, null);
 
-        verify(teamSearchService).execute(eq(teamId), any(), any(), any());
+        verify(teamSearchService).execute(eq(teamId), any(), any(), any(), any());
     }
 
     @Test
     public void search_ShouldPassYearFromRequestToSearchService() {
         final String year = "1999";
 
-        teamSearchController.search(null, year, null, null);
+        teamSearchController.search(null, year, null, null, null);
 
-        verify(teamSearchService).execute(any(), eq(year), any(), any());
+        verify(teamSearchService).execute(any(), eq(year), any(), any(), any());
     }
 
     @Test
     public void search_ShouldPassConferenceIdFromRequestToSearchService() {
         final Integer conferenceId = 2;
 
-        teamSearchController.search(null, null, conferenceId, null);
+        teamSearchController.search(null, null, conferenceId, null, null);
 
-        verify(teamSearchService).execute(any(), any(), eq(conferenceId), any());
+        verify(teamSearchService).execute(any(), any(), eq(conferenceId), any(), any());
     }
 
     @Test
     public void search_ShouldPassDivisionIdFromRequestToSearchService() {
         final Integer divisionId = 2;
 
-        teamSearchController.search(null, null, null, divisionId);
+        teamSearchController.search(null, null, null, divisionId, null);
 
-        verify(teamSearchService).execute(any(), any(), any(), eq(divisionId));
+        verify(teamSearchService).execute(any(), any(), any(), eq(divisionId), any());
+    }
+
+    @Test
+    public void search_ShouldPassAllstarTeamFromRequestToSearchService() {
+        final Boolean allstarTeam = true;
+
+        teamSearchController.search(null, null, null, null, allstarTeam);
+
+        verify(teamSearchService).execute(any(), any(), any(), any(), eq(allstarTeam));
     }
 
     @Test
     public void search_ShouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
         final List<Team> teamList = Collections.emptyList();
 
-        when(teamSearchService.execute(any(), any(), any(), any())).thenReturn(teamList);
+        when(teamSearchService.execute(any(), any(), any(), any(), any())).thenReturn(teamList);
 
-        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null);
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null, null);
 
         assertEquals(teamList, response.getBody().getResources());
     }
