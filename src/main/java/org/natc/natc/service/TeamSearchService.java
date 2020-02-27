@@ -19,9 +19,7 @@ public class TeamSearchService {
     }
 
     public List<Team> execute(Integer teamId) {
-        final Team team = new Team();
-
-        team.setTeamId(teamId);
+        final Team team = Team.builder().teamId(teamId).build();
 
         return teamRepository.findAll(Example.of(team));
     }
