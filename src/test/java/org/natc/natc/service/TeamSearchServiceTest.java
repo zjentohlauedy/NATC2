@@ -30,14 +30,14 @@ class TeamSearchServiceTest {
 
     @Test
     public void execute_ShouldReturnAListOfTeams() {
-        final List<Team> result = teamSearchService.execute(null, null);
+        final List<Team> result = teamSearchService.execute(null, null, null);
 
         assertEquals(0, result.size());
     }
 
     @Test
     public void execute_ShouldCallTheTeamRepositoryWithAnExampleTeam() {
-        teamSearchService.execute(null, null);
+        teamSearchService.execute(null, null, null);
 
         verify(teamRepository).findAll(ArgumentMatchers.<Example<Team>>any());
     }
@@ -46,12 +46,14 @@ class TeamSearchServiceTest {
     public void execute_ShouldCallTeamRepositorWithExampleTeamBasedOnInputArgs() {
         final Integer teamId = 123;
         final String year = "1999";
+        final Integer conferenceId = 1;
 
-        teamSearchService.execute(teamId, year);
+        teamSearchService.execute(teamId, year, conferenceId);
 
         verify(teamRepository).findAll(captor.capture());
 
         assertEquals(teamId, captor.getValue().getProbe().getTeamId());
         assertEquals(year, captor.getValue().getProbe().getYear());
+        assertEquals(conferenceId, captor.getValue().getProbe().getConference());
     }
 }

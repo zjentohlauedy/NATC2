@@ -18,8 +18,8 @@ public class TeamSearchService {
         this.teamRepository = teamRepository;
     }
 
-    public List<Team> execute(Integer teamId, String year) {
-        final Team team = Team.builder().teamId(teamId).year(year).build();
+    public List<Team> execute(Integer teamId, String year, Integer conferenceId) {
+        final Team team = Team.builder().teamId(teamId).year(year).conference(conferenceId).build();
 
         return teamRepository.findAll(Example.of(team));
     }
