@@ -26,8 +26,9 @@ public class TeamSearchController {
     @GetMapping("/search")
     public ResponseEntity<ResponseEnvelope<Team>> search(@RequestParam(name = "team-id", required = false) Integer teamId,
                                                          @RequestParam(required = false) String year,
-                                                         @RequestParam(name = "conference-id", required = false) Integer conferenceId) {
-        final List<Team> teamList = teamSearchService.execute(teamId, year, conferenceId);
+                                                         @RequestParam(name = "conference-id", required = false) Integer conferenceId,
+                                                         @RequestParam(name = "division-id", required = false) Integer divisionId) {
+        final List<Team> teamList = teamSearchService.execute(teamId, year, conferenceId, divisionId);
 
         return ResponseEntity.ok(new ResponseEnvelope<>(teamList));
     }
