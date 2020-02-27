@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,33 +30,43 @@ class TeamSearchControllerTest {
 
     @Test
     public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null);
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void search_ShouldCallTeamSearchService() {
-        teamSearchController.search(null);
+        teamSearchController.search(null, null);
 
-        verify(teamSearchService).execute(null);
+        verify(teamSearchService).execute(any(), any());
     }
 
     @Test
     public void search_ShouldPassTeamIdFromRequestToSearchService() {
         final Integer teamId = 123;
 
-        teamSearchController.search(teamId);
+        teamSearchController.search(teamId, null);
 
-        verify(teamSearchService).execute(teamId);
+        verify(teamSearchService).execute(eq(teamId), any());
     }
+
+    @Test
+    public void search_ShouldPassYearFromRequestToSearchService() {
+        final String year = "1999";
+
+        teamSearchController.search(null, year);
+
+        verify(teamSearchService).execute(any(), eq(year));
+    }
+
     @Test
     public void search_ShouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
         final List<Team> teamList = Collections.emptyList();
 
-        when(teamSearchService.execute(null)).thenReturn(teamList);
+        when(teamSearchService.execute(any(), any())).thenReturn(teamList);
 
-        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null);
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null);
 
         assertEquals(teamList, response.getBody().getResources());
     }
