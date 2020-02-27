@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class TeamSearchController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseEnvelope<Team>> search() {
-        final List<Team> teamList = teamSearchService.execute();
+    public ResponseEntity<ResponseEnvelope<Team>> search(@RequestParam(name = "team-id", required = false) Integer teamId) {
+        final List<Team> teamList = teamSearchService.execute(teamId);
 
         return ResponseEntity.ok(new ResponseEnvelope<>(teamList));
     }

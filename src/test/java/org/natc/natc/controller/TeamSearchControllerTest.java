@@ -28,25 +28,33 @@ class TeamSearchControllerTest {
 
     @Test
     public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search();
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void search_ShouldCallTeamSearchService() {
-        teamSearchController.search();
+        teamSearchController.search(null);
 
-        verify(teamSearchService).execute();
+        verify(teamSearchService).execute(null);
     }
 
     @Test
-    public void search_ShouldResponseWithEnvelopContainingTeamsReturnedBySearchService() {
+    public void search_ShouldPassTeamIdFromRequestToSearchService() {
+        final Integer teamId = 123;
+
+        teamSearchController.search(teamId);
+
+        verify(teamSearchService).execute(teamId);
+    }
+    @Test
+    public void search_ShouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
         final List<Team> teamList = Collections.emptyList();
 
-        when(teamSearchService.execute()).thenReturn(teamList);
+        when(teamSearchService.execute(null)).thenReturn(teamList);
 
-        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search();
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null);
 
         assertEquals(teamList, response.getBody().getResources());
     }

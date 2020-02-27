@@ -1,6 +1,7 @@
 package org.natc.natc.entity.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.IdClass;
 @Entity(name = "teams_t")
 @IdClass(TeamId.class)
 @Getter
+@Setter
 public class Team {
     @Id
     private Integer teamId;
