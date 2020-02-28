@@ -11,7 +11,7 @@ public class ResponseEnvelope<T> {
     private List<T> resources;
     private List<String> errors;
 
-    public ResponseEnvelope(ResponseStatus responseStatus, List<T> list) {
+    public ResponseEnvelope(final ResponseStatus responseStatus, List<T> list) {
         status = responseStatus;
         resources = list;
     }
