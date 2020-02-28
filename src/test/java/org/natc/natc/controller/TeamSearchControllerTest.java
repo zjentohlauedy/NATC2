@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.Team;
 import org.natc.natc.entity.response.ResponseEnvelope;
+import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.service.TeamSearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,24 @@ class TeamSearchControllerTest {
         final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        final List<Team> teamList = Collections.singletonList(new Team());
+
+        when(teamSearchService.execute(any(), any(), any(), any(), any())).thenReturn(teamList);
+
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null, null);
+
+        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+    }
+
+    @Test
+    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        final ResponseEntity<ResponseEnvelope<Team>> response = teamSearchController.search(null, null, null, null, null);
+
+        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
     }
 
     @Test

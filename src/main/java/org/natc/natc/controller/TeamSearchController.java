@@ -2,10 +2,12 @@ package org.natc.natc.controller;
 
 import org.natc.natc.entity.domain.Team;
 import org.natc.natc.entity.response.ResponseEnvelope;
+import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.service.TeamSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +33,8 @@ public class TeamSearchController {
                                                          @RequestParam(name = "allstar-team", required = false) Boolean allstarTeam) {
         final List<Team> teamList = teamSearchService.execute(teamId, year, conferenceId, divisionId, allstarTeam);
 
-        return ResponseEntity.ok(new ResponseEnvelope<>(teamList));
+        final ResponseStatus status = CollectionUtils.isEmpty(teamList) ? ResponseStatus.NOT_FOUND : ResponseStatus.SUCCESS;
+
+        return ResponseEntity.ok(new ResponseEnvelope<>(status, teamList));
     }
 }
