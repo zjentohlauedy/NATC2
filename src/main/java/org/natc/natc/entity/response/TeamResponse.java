@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.natc.natc.entity.domain.Team;
 
+import static org.natc.natc.util.BooleanHelper.valueOf;
+
 @Getter
 @NoArgsConstructor
 public class TeamResponse {
@@ -43,10 +45,6 @@ public class TeamResponse {
     private Integer drought;
 
     public TeamResponse(final Team team) {
-        if (team.getAllstarTeam() != null) {
-            allstarTeam = team.getAllstarTeam() == 1;
-        }
-
         teamId = team.getTeamId();
         year = team.getYear();
         location = team.getLocation();
@@ -56,6 +54,7 @@ public class TeamResponse {
         gameTime = team.getGameTime();
         conferenceId = team.getConference();
         divisionId = team.getDivision();
+        allstarTeam = valueOf(team.getAllstarTeam());
         preseasonGames = team.getPreseasonGames();
         preseasonWins = team.getPreseasonWins();
         preseasonLosses = team.getPreseasonLosses();
