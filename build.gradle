@@ -15,6 +15,17 @@ configurations {
 	}
 }
 
+sourceSets {
+	test {
+		java {
+			srcDirs = ['src/test/unit/java', 'src/test/integration/java']
+		}
+		resources {
+			srcDirs = ['src/test/unit/resources', 'src/test/integration/resources']
+		}
+	}
+}
+
 repositories {
 	mavenCentral()
 }
