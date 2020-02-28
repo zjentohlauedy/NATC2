@@ -44,6 +44,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'io.zonky.test:embedded-database-spring-test:+'
+	testImplementation enforcedPlatform('io.zonky.test.postgres:embedded-postgres-binaries-bom:12.+')
 }
 
 test {
