@@ -1,5 +1,6 @@
 package org.natc.natc.controller;
 
+import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.entity.response.TeamResponse;
@@ -31,7 +32,15 @@ public class TeamSearchController {
                                                          @RequestParam(name = "conference-id", required = false) final Integer conferenceId,
                                                          @RequestParam(name = "division-id", required = false) final Integer divisionId,
                                                          @RequestParam(name = "allstar-team", required = false) final Boolean allstarTeam) {
-        final List<TeamResponse> teamList = teamSearchService.execute(teamId, year, conferenceId, divisionId, allstarTeam);
+        final TeamSearchRequest request = TeamSearchRequest.builder()
+                .teamId(teamId)
+                .year(year)
+                .conferenceId(conferenceId)
+                .divisionId(divisionId)
+                .allstarTeam(allstarTeam)
+                .build();
+
+        final List<TeamResponse> teamList = teamSearchService.execute(request);
 
         final ResponseStatus status = CollectionUtils.isEmpty(teamList) ? ResponseStatus.NOT_FOUND : ResponseStatus.SUCCESS;
 

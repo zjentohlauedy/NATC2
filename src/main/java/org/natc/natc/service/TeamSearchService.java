@@ -1,6 +1,7 @@
 package org.natc.natc.service;
 
 import org.natc.natc.entity.domain.Team;
+import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.TeamResponse;
 import org.natc.natc.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ public class TeamSearchService {
         this.teamRepository = teamRepository;
     }
 
-    public List<TeamResponse> execute(final Integer teamId, final String year, final Integer conferenceId, final Integer divisionId, final Boolean allstarTeam) {
+    public List<TeamResponse> execute(final TeamSearchRequest request) {
         final Team team = Team.builder()
-                .teamId(teamId)
-                .year(year)
-                .conference(conferenceId)
-                .division(divisionId)
-                .allstarTeam(mapAllstarTeamValue(allstarTeam))
+                .teamId(request.getTeamId())
+                .year(request.getYear())
+                .conference(request.getConferenceId())
+                .division(request.getDivisionId())
+                .allstarTeam(mapAllstarTeamValue(request.getAllstarTeam()))
                 .build();
 
         final List<Team> teamList = teamRepository.findAll(Example.of(team));

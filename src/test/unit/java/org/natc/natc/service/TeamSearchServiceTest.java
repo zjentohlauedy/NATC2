@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.Team;
+import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.TeamResponse;
 import org.natc.natc.repository.TeamRepository;
 import org.springframework.data.domain.Example;
@@ -36,44 +37,47 @@ class TeamSearchServiceTest {
 
     @Test
     public void execute_ShouldReturnAListOfTeamResponses() {
-        final List<TeamResponse> result = teamSearchService.execute(null, null, null, null, null);
+        final List<TeamResponse> result = teamSearchService.execute(new TeamSearchRequest());
 
         assertEquals(0, result.size());
     }
 
     @Test
     public void execute_ShouldCallTheTeamRepositoryWithAnExampleTeam() {
-        teamSearchService.execute(null, null, null, null, null);
+        teamSearchService.execute(new TeamSearchRequest());
 
         verify(teamRepository).findAll(ArgumentMatchers.<Example<Team>>any());
     }
 
     @Test
-    public void execute_ShouldCallTeamRepositorWithExampleTeamBasedOnInputArgs() {
-        final Integer teamId = 123;
-        final String year = "1999";
-        final Integer conferenceId = 1;
-        final Integer divisionId = 2;
-        final Boolean allstarTeam = false;
+    public void execute_ShouldCallTeamRepositorWithExampleTeamBasedOnRequest() {
+        final TeamSearchRequest request = TeamSearchRequest.builder()
+                .teamId(123)
+                .year("1999")
+                .conferenceId(1)
+                .divisionId(2)
+                .allstarTeam(false)
+                .build();
 
-        teamSearchService.execute(teamId, year, conferenceId, divisionId, allstarTeam);
+        teamSearchService.execute(request);
 
         verify(teamRepository).findAll(captor.capture());
         
         Team team = captor.getValue().getProbe();
 
-        assertEquals(teamId, team.getTeamId());
-        assertEquals(year, team.getYear());
-        assertEquals(conferenceId, team.getConference());
-        assertEquals(divisionId, team.getDivision());
+        assertEquals(request.getTeamId(), team.getTeamId());
+        assertEquals(request.getYear(), team.getYear());
+        assertEquals(request.getConferenceId(), team.getConference());
+        assertEquals(request.getDivisionId(), team.getDivision());
+
         assertNotNull(team.getAllstarTeam());
     }
     
     @Test
     public void execute_ShouldSetAllstarTeamTo0WhenArgIsFalse() {
-        final Boolean allstarTeam = false;
+        final TeamSearchRequest request = TeamSearchRequest.builder().allstarTeam(false).build();
 
-        teamSearchService.execute(null, null, null, null, allstarTeam);
+        teamSearchService.execute(request);
 
         verify(teamRepository).findAll(captor.capture());
 
@@ -82,9 +86,9 @@ class TeamSearchServiceTest {
 
     @Test
     public void execute_ShouldSetAllstarTeamTo1WhenArgIsTrue() {
-        final Boolean allstarTeam = true;
+        final TeamSearchRequest request = TeamSearchRequest.builder().allstarTeam(true).build();
 
-        teamSearchService.execute(null, null, null, null, allstarTeam);
+        teamSearchService.execute(request);
 
         verify(teamRepository).findAll(captor.capture());
 
@@ -93,7 +97,7 @@ class TeamSearchServiceTest {
 
     @Test
     public void execute_ShouldSetAllstarTeamToNullWhenArgIsNull() {
-        teamSearchService.execute(null, null, null, null, null);
+        teamSearchService.execute(new TeamSearchRequest());
 
         verify(teamRepository).findAll(captor.capture());
 
@@ -106,7 +110,7 @@ class TeamSearchServiceTest {
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
 
-        final List<TeamResponse> result = teamSearchService.execute(null, null, null, null, null);
+        final List<TeamResponse> result = teamSearchService.execute(new TeamSearchRequest());
 
         assertEquals(1, result.size());
 
@@ -153,7 +157,7 @@ class TeamSearchServiceTest {
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
 
-        final List<TeamResponse> result = teamSearchService.execute(null, null, null, null, null);
+        final List<TeamResponse> result = teamSearchService.execute(new TeamSearchRequest());
 
         assertEquals(1, result.size());
 
@@ -168,7 +172,7 @@ class TeamSearchServiceTest {
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
 
-        final List<TeamResponse> result = teamSearchService.execute(null, null, null, null, null);
+        final List<TeamResponse> result = teamSearchService.execute(new TeamSearchRequest());
 
         assertEquals(1, result.size());
 
@@ -183,7 +187,7 @@ class TeamSearchServiceTest {
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
 
-        final List<TeamResponse> result = teamSearchService.execute(null, null, null, null, null);
+        final List<TeamResponse> result = teamSearchService.execute(new TeamSearchRequest());
 
         assertEquals(1, result.size());
 
@@ -198,7 +202,7 @@ class TeamSearchServiceTest {
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(teamList);
 
-        final List<TeamResponse> result = teamSearchService.execute(null, null, null, null, null);
+        final List<TeamResponse> result = teamSearchService.execute(new TeamSearchRequest());
 
         assertEquals(teamList.size(), result.size());
     }

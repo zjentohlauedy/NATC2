@@ -2,9 +2,11 @@ package org.natc.natc.controller;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.entity.response.TeamResponse;
@@ -17,7 +19,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +41,7 @@ class TeamSearchControllerTest {
     public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
         final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
 
-        when(teamSearchService.execute(any(), any(), any(), any(), any())).thenReturn(teamList);
+        when(teamSearchService.execute(any(TeamSearchRequest.class))).thenReturn(teamList);
 
         final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
@@ -58,59 +59,36 @@ class TeamSearchControllerTest {
     public void search_ShouldCallTeamSearchService() {
         teamSearchController.search(null, null, null, null, null);
 
-        verify(teamSearchService).execute(any(), any(), any(), any(), any());
+        verify(teamSearchService).execute(any(TeamSearchRequest.class));
     }
 
     @Test
-    public void search_ShouldPassTeamIdFromRequestToSearchService() {
+    public void search_ShouldConstructRequestObjectForTeamSearchServiceUsingRequestParameters() {
         final Integer teamId = 123;
-
-        teamSearchController.search(teamId, null, null, null, null);
-
-        verify(teamSearchService).execute(eq(teamId), any(), any(), any(), any());
-    }
-
-    @Test
-    public void search_ShouldPassYearFromRequestToSearchService() {
         final String year = "1999";
-
-        teamSearchController.search(null, year, null, null, null);
-
-        verify(teamSearchService).execute(any(), eq(year), any(), any(), any());
-    }
-
-    @Test
-    public void search_ShouldPassConferenceIdFromRequestToSearchService() {
-        final Integer conferenceId = 2;
-
-        teamSearchController.search(null, null, conferenceId, null, null);
-
-        verify(teamSearchService).execute(any(), any(), eq(conferenceId), any(), any());
-    }
-
-    @Test
-    public void search_ShouldPassDivisionIdFromRequestToSearchService() {
+        final Integer conferenceId = 1;
         final Integer divisionId = 2;
-
-        teamSearchController.search(null, null, null, divisionId, null);
-
-        verify(teamSearchService).execute(any(), any(), any(), eq(divisionId), any());
-    }
-
-    @Test
-    public void search_ShouldPassAllstarTeamFromRequestToSearchService() {
         final Boolean allstarTeam = true;
+        final ArgumentCaptor<TeamSearchRequest> captor = ArgumentCaptor.forClass(TeamSearchRequest.class);
 
-        teamSearchController.search(null, null, null, null, allstarTeam);
+        teamSearchController.search(teamId, year, conferenceId, divisionId, allstarTeam);
 
-        verify(teamSearchService).execute(any(), any(), any(), any(), eq(allstarTeam));
+        verify(teamSearchService).execute(captor.capture());
+
+        final TeamSearchRequest request = captor.getValue();
+
+        assertEquals(teamId, request.getTeamId());
+        assertEquals(year, request.getYear());
+        assertEquals(conferenceId, request.getConferenceId());
+        assertEquals(divisionId, request.getDivisionId());
+        assertEquals(allstarTeam, request.getAllstarTeam());
     }
 
     @Test
     public void search_ShouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
         final List<TeamResponse> teamList = Collections.emptyList();
 
-        when(teamSearchService.execute(any(), any(), any(), any(), any())).thenReturn(teamList);
+        when(teamSearchService.execute(any(TeamSearchRequest.class))).thenReturn(teamList);
 
         final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
