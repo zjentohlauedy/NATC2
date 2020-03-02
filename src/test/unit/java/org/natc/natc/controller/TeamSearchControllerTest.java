@@ -41,7 +41,7 @@ class TeamSearchControllerTest {
     public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
         final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
 
-        when(teamSearchService.execute(any(TeamSearchRequest.class))).thenReturn(teamList);
+        when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);
 
         final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
@@ -59,7 +59,7 @@ class TeamSearchControllerTest {
     public void search_ShouldCallTeamSearchService() {
         teamSearchController.search(null, null, null, null, null);
 
-        verify(teamSearchService).execute(any(TeamSearchRequest.class));
+        verify(teamSearchService).fetchAll(any(TeamSearchRequest.class));
     }
 
     @Test
@@ -73,7 +73,7 @@ class TeamSearchControllerTest {
 
         teamSearchController.search(teamId, year, conferenceId, divisionId, allstarTeam);
 
-        verify(teamSearchService).execute(captor.capture());
+        verify(teamSearchService).fetchAll(captor.capture());
 
         final TeamSearchRequest request = captor.getValue();
 
@@ -88,7 +88,7 @@ class TeamSearchControllerTest {
     public void search_ShouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
         final List<TeamResponse> teamList = Collections.emptyList();
 
-        when(teamSearchService.execute(any(TeamSearchRequest.class))).thenReturn(teamList);
+        when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);
 
         final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 

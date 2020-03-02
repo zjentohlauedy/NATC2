@@ -4,7 +4,7 @@ import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.entity.response.TeamResponse;
-import org.natc.natc.service.TeamSearchService;
+import org.natc.natc.service.NATCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import java.util.List;
 @RequestMapping("/api/teams")
 public class TeamSearchController {
 
-    private final TeamSearchService teamSearchService;
+    private final NATCService<TeamResponse, TeamSearchRequest> service;
 
     @Autowired
-    public TeamSearchController(final TeamSearchService teamSearchService) {
-        this.teamSearchService = teamSearchService;
+    public TeamSearchController(final NATCService<TeamResponse, TeamSearchRequest> service) {
+        this.service = service;
     }
 
     @GetMapping("/search")
@@ -40,7 +40,7 @@ public class TeamSearchController {
                 .allstarTeam(allstarTeam)
                 .build();
 
-        final List<TeamResponse> teamList = teamSearchService.execute(request);
+        final List<TeamResponse> teamList = service.fetchAll(request);
 
         final ResponseStatus status = CollectionUtils.isEmpty(teamList) ? ResponseStatus.NOT_FOUND : ResponseStatus.SUCCESS;
 

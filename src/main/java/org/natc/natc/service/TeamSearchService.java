@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static java.lang.Boolean.TRUE;
 
 @Service
-public class TeamSearchService {
+public class TeamSearchService implements NATCService<TeamResponse, TeamSearchRequest> {
 
     private final TeamRepository teamRepository;
 
@@ -23,7 +23,8 @@ public class TeamSearchService {
         this.teamRepository = teamRepository;
     }
 
-    public List<TeamResponse> execute(final TeamSearchRequest request) {
+    @Override
+    public List<TeamResponse> fetchAll(TeamSearchRequest request) {
         final Team team = Team.builder()
                 .teamId(request.getTeamId())
                 .year(request.getYear())
@@ -43,5 +44,10 @@ public class TeamSearchService {
         }
 
         return null;
+    }
+
+    @Override
+    public TeamResponse fetch(TeamSearchRequest request) {
+        throw new UnsupportedOperationException("Method Not Implemented");
     }
 }
