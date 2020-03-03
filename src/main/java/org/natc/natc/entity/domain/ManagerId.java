@@ -9,5 +9,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ManagerId implements Serializable {
     private Integer managerId;
-    private Integer year ;
+    private String year;
 }

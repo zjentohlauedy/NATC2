@@ -38,17 +38,6 @@ class TeamSearchControllerTest {
     }
 
     @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
-
-        when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);
-
-        final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
-
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
-    }
-
-    @Test
     public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
         final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
@@ -93,5 +82,16 @@ class TeamSearchControllerTest {
         final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
         assertEquals(teamList, response.getBody().getResources());
+    }
+
+    @Test
+    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
+
+        when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);
+
+        final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
+
+        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
     }
 }

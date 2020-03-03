@@ -19,8 +19,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -63,7 +65,7 @@ class TeamSearchServiceTest {
 
         verify(teamRepository).findAll(captor.capture());
         
-        Team team = captor.getValue().getProbe();
+        final Team team = captor.getValue().getProbe();
 
         assertEquals(request.getTeamId(), team.getTeamId());
         assertEquals(request.getYear(), team.getYear());
@@ -149,6 +151,8 @@ class TeamSearchServiceTest {
         assertEquals(team.getRound3Wins(), response.getRound3Wins());
         assertEquals(team.getExpectation(), response.getExpectation());
         assertEquals(team.getDrought(), response.getDrought());
+
+        assertNotNull(response.getAllstarTeam());
     }
 
     @Test
@@ -163,7 +167,7 @@ class TeamSearchServiceTest {
 
         final TeamResponse response = result.get(0);
 
-        assertEquals(false, response.getAllstarTeam());
+        assertFalse(response.getAllstarTeam());
     }
 
     @Test
@@ -178,7 +182,7 @@ class TeamSearchServiceTest {
 
         final TeamResponse response = result.get(0);
 
-        assertEquals(true, response.getAllstarTeam());
+        assertTrue(response.getAllstarTeam());
     }
 
     @Test
@@ -218,6 +222,7 @@ class TeamSearchServiceTest {
                 .gameTime(999)
                 .conference(111)
                 .division(222)
+                .allstarTeam(1)
                 .preseasonGames(12)
                 .preseasonWins(7)
                 .preseasonLosses(5)

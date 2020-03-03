@@ -1,9 +1,13 @@
 package org.natc.natc.entity.response;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.natc.natc.entity.domain.Manager;
 
 import static org.natc.natc.util.BooleanHelper.valueOf;
 
+@Getter
+@NoArgsConstructor
 public class ManagerResponse {
     private Integer managerId;
     private Integer teamId;

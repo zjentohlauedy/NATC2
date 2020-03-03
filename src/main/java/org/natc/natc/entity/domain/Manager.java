@@ -1,6 +1,9 @@
 package org.natc.natc.entity.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +12,9 @@ import javax.persistence.IdClass;
 @Entity(name = "managers_t")
 @IdClass(ManagerId.class)
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Manager {
     @Id
     private Integer managerId;
