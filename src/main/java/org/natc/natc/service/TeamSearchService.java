@@ -4,7 +4,6 @@ import org.natc.natc.entity.domain.Team;
 import org.natc.natc.entity.domain.TeamId;
 import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.TeamResponse;
-import org.natc.natc.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +20,7 @@ public class TeamSearchService implements NATCService<TeamResponse, TeamSearchRe
     private final JpaRepository<Team, TeamId> repository;
 
     @Autowired
-    public TeamSearchService(final TeamRepository repository) {
+    public TeamSearchService(final JpaRepository<Team, TeamId> repository) {
         this.repository = repository;
     }
 

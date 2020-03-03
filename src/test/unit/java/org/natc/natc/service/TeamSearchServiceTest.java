@@ -11,8 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.Team;
 import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.TeamResponse;
-import org.natc.natc.repository.TeamRepository;
 import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,7 +31,7 @@ class TeamSearchServiceTest {
     private ArgumentCaptor<Example<Team>> captor;
 
     @Mock
-    private TeamRepository teamRepository;
+    private JpaRepository teamRepository;
 
     @InjectMocks
     private TeamSearchService teamSearchService;
