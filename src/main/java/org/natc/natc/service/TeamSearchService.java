@@ -46,9 +46,4 @@ public class TeamSearchService implements NATCService<TeamResponse, TeamSearchRe
 
         return null;
     }
-
-    @Override
-    public TeamResponse fetch(TeamSearchRequest request) {
-        throw new UnsupportedOperationException("Method Not Implemented");
-    }
 }

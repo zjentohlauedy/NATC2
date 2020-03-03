@@ -21,7 +21,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -206,11 +205,6 @@ class TeamSearchServiceTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(new TeamSearchRequest());
 
         assertEquals(teamList.size(), result.size());
-    }
-
-    @Test
-    public void fetch_ShouldThrowAnExceptionIfCalled() {
-        assertThrows(UnsupportedOperationException.class, () -> teamSearchService.fetch(new TeamSearchRequest()));
     }
 
     private Team generateTeam() {
