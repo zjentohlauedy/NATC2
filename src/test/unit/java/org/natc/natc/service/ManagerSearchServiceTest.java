@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.Manager;
+import org.natc.natc.entity.domain.ManagerAward;
 import org.natc.natc.entity.domain.ManagerStyle;
 import org.natc.natc.entity.request.ManagerSearchRequest;
 import org.natc.natc.entity.response.ManagerResponse;
@@ -76,7 +77,7 @@ class ManagerSearchServiceTest {
 
     @Test
     public void fetchAll_ShouldReturnManagerResponsesMappedFromTheManagersReturnedByRepository() {
-        final Manager manager = generateManager(ManagerStyle.PENALTIES);
+        final Manager manager = generateManager(ManagerStyle.PENALTIES, ManagerAward.MANAGER_OF_THE_YEAR);
 
         when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
 
@@ -101,7 +102,7 @@ class ManagerSearchServiceTest {
         assertEquals(ManagerStyle.PENALTIES, response.getStyle());
         assertEquals(manager.getFormerTeamId(), response.getFormerTeamId());
         assertEquals(manager.getAllstarTeamId(), response.getAllstarTeamId());
-        assertEquals(manager.getAward(), response.getAward());
+        assertEquals(ManagerAward.MANAGER_OF_THE_YEAR, response.getAward());
         assertEquals(manager.getSeasons(), response.getSeasons());
         assertEquals(manager.getScore(), response.getScore());
         assertEquals(manager.getTotalSeasons(), response.getTotalSeasons());
@@ -258,7 +259,7 @@ class ManagerSearchServiceTest {
         assertEquals(managerList.size(), result.size());
     }
 
-    private Manager generateManager(final ManagerStyle style) {
+    private Manager generateManager(final ManagerStyle style, final ManagerAward award) {
         return Manager.builder()
                 .managerId(123)
                 .teamId(321)
@@ -278,7 +279,7 @@ class ManagerSearchServiceTest {
                 .retired(0)
                 .formerTeamId(111)
                 .allstarTeamId(222)
-                .award(3)
+                .award(award.getValue())
                 .seasons(12)
                 .score(33)
                 .totalSeasons(18)
