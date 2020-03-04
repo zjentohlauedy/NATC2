@@ -3,6 +3,7 @@ package org.natc.natc.entity.response;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.natc.natc.entity.domain.Manager;
+import org.natc.natc.entity.domain.ManagerStyle;
 
 import static org.natc.natc.util.BooleanHelper.valueOf;
 
@@ -21,7 +22,7 @@ public class ManagerResponse {
     private Double intangible;
     private Double penalties;
     private Double vitality;
-    private Integer style; // TODO: enum
+    private ManagerStyle style;
     private Boolean newHire;
     private Boolean released;
     private Boolean retired;
@@ -46,7 +47,7 @@ public class ManagerResponse {
         intangible = manager.getIntangible();
         penalties = manager.getPenalties();
         vitality = manager.getVitality();
-        style = manager.getStyle();
+        style = ManagerStyle.getByValue(manager.getStyle());
         newHire = valueOf(manager.getNewHire());
         released = valueOf(manager.getReleased());
         retired = valueOf(manager.getRetired());

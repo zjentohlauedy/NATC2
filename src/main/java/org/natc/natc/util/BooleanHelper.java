@@ -4,7 +4,7 @@ public final class BooleanHelper {
     private BooleanHelper() {
     }
 
-    public static Boolean valueOf(Integer i) {
+    public static Boolean valueOf(final Integer i) {
         if (i != null) {
             return i == 1;
         }

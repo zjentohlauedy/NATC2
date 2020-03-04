@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.Manager;
+import org.natc.natc.entity.domain.ManagerStyle;
 import org.natc.natc.entity.request.ManagerSearchRequest;
 import org.natc.natc.entity.response.ManagerResponse;
 import org.springframework.data.domain.Example;
@@ -75,7 +76,7 @@ class ManagerSearchServiceTest {
 
     @Test
     public void fetchAll_ShouldReturnManagerResponsesMappedFromTheManagersReturnedByRepository() {
-        final Manager manager = generateManager();
+        final Manager manager = generateManager(ManagerStyle.PENALTIES);
 
         when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
 
@@ -97,7 +98,7 @@ class ManagerSearchServiceTest {
         assertEquals(manager.getIntangible(), response.getIntangible());
         assertEquals(manager.getPenalties(), response.getPenalties());
         assertEquals(manager.getVitality(), response.getVitality());
-        assertEquals(manager.getStyle(), response.getStyle());
+        assertEquals(ManagerStyle.PENALTIES, response.getStyle());
         assertEquals(manager.getFormerTeamId(), response.getFormerTeamId());
         assertEquals(manager.getAllstarTeamId(), response.getAllstarTeamId());
         assertEquals(manager.getAward(), response.getAward());
@@ -257,7 +258,7 @@ class ManagerSearchServiceTest {
         assertEquals(managerList.size(), result.size());
     }
 
-    private Manager generateManager() {
+    private Manager generateManager(final ManagerStyle style) {
         return Manager.builder()
                 .managerId(123)
                 .teamId(321)
@@ -271,7 +272,7 @@ class ManagerSearchServiceTest {
                 .intangible(0.333)
                 .penalties(0.444)
                 .vitality(0.555)
-                .style(4)
+                .style(style.getValue())
                 .newHire(1)
                 .released(0)
                 .retired(0)
