@@ -75,7 +75,7 @@ class TeamSearchControllerTest {
 
     @Test
     public void search_ShouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
-        final List<TeamResponse> teamList = Collections.emptyList();
+        final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
 
         when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);
 

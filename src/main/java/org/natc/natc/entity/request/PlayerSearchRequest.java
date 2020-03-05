@@ -1,7 +1,12 @@
 package org.natc.natc.entity.request;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
 public class PlayerSearchRequest {
-    private Integer playerId;
-    private Integer teamId;
-    private String year;
+    private final Integer playerId;
+    private final Integer teamId;
+    private final String year;
 }

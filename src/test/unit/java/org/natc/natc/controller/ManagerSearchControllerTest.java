@@ -74,7 +74,7 @@ class ManagerSearchControllerTest {
 
     @Test
     public void search_ShouldRespondWithEnvelopContainingManagersReturnedBySearchService() {
-        final List<ManagerResponse> managerList = Collections.emptyList();
+        final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
 
         when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);
 
