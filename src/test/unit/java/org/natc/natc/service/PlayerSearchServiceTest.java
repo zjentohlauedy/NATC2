@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.Player;
+import org.natc.natc.entity.domain.PlayerAward;
 import org.natc.natc.entity.request.PlayerSearchRequest;
 import org.natc.natc.entity.response.PlayerResponse;
 import org.springframework.data.domain.Example;
@@ -74,7 +75,7 @@ class PlayerSearchServiceTest {
 
     @Test
     public void fetchAll_ShouldReturnPlayerResponsesMappedFromThePlayersReturnedByRepository() {
-        final Player player = generatePlayer();
+        final Player player = generatePlayer(PlayerAward.GOLD);
 
         when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
 
@@ -107,7 +108,7 @@ class PlayerSearchServiceTest {
         assertEquals(player.getReturnDate(), response.getReturnDate());
         assertEquals(player.getFormerTeamId(), response.getFormerTeamId());
         assertEquals(player.getAllstarTeamId(), response.getAllstarTeamId());
-        assertEquals(player.getAward(), response.getAward());
+        assertEquals(PlayerAward.GOLD, response.getAward());
         assertEquals(player.getDraftPick(), response.getDraftPick());
         assertEquals(player.getSeasonsPlayed(), response.getSeasonsPlayed());
 
@@ -447,7 +448,7 @@ class PlayerSearchServiceTest {
         assertEquals(playerList.size(), result.size());
     }
 
-    private Player generatePlayer() {
+    private Player generatePlayer(final PlayerAward award) {
         return Player.builder()
                 .playerId(123)
                 .teamId(321)
@@ -478,7 +479,7 @@ class PlayerSearchServiceTest {
                 .retired(0)
                 .formerTeamId(111)
                 .allstarAlternate(222)
-                .award(333)
+                .award(award.getValue())
                 .draftPick(444)
                 .seasonsPlayed(555)
                 .allstarTeamId(1)

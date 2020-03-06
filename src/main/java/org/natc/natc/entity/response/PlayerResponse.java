@@ -3,6 +3,7 @@ package org.natc.natc.entity.response;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.natc.natc.entity.domain.Player;
+import org.natc.natc.entity.domain.PlayerAward;
 
 import java.time.LocalDate;
 
@@ -40,7 +41,7 @@ public class PlayerResponse {
     private Boolean retired;
     private Integer formerTeamId;
     private Integer allstarTeamId;
-    private Integer award; // TODO: enum
+    private PlayerAward award;
     private Integer draftPick;
     private Integer seasonsPlayed;
     private Boolean allstarAlternate;
@@ -75,7 +76,7 @@ public class PlayerResponse {
         retired = valueOf(player.getRetired());
         formerTeamId = player.getFormerTeamId();
         allstarTeamId = player.getAllstarTeamId();
-        award = player.getAward();
+        award = PlayerAward.getByValue(player.getAward());
         draftPick = player.getDraftPick();
         seasonsPlayed = player.getSeasonsPlayed();
         allstarAlternate = valueOf(player.getAllstarAlternate());
