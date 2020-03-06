@@ -1,14 +1,23 @@
 package org.natc.natc.entity.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Player {
     private Integer playerId;
     private Integer teamId;
     private String year;
     private String firstName;
     private String lastName;
-    private Double age;
+    private Integer age;
     private Double scoring;
     private Double passing;
     private Double blocking;
