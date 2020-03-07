@@ -1,0 +1,21 @@
+spring:
+  security:
+    user:
+      name: natc-client
+      password: nothing
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: when_authorized
+      show-components: when_authorized
+
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: DUMMY

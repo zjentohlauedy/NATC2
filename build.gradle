@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'groovy'
 }
 
 group = 'org.natc'
@@ -20,8 +21,11 @@ sourceSets {
 		java {
 			srcDirs = ['src/test/unit/java', 'src/test/integration/java']
 		}
+		groovy {
+			srcDirs = ['src/test/functional/groovy']
+		}
 		resources {
-			srcDirs = ['src/test/unit/resources', 'src/test/integration/resources']
+			srcDirs = ['src/test/resources']
 		}
 	}
 }
@@ -45,7 +49,12 @@ dependencies {
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'io.zonky.test:embedded-database-spring-test:+'
-	testImplementation enforcedPlatform('io.zonky.test.postgres:embedded-postgres-binaries-bom:12.+')
+	testImplementation 'org.codehaus.groovy:groovy-all:2.5.10'
+	testImplementation 'org.codehaus.groovy.modules.http-builder:http-builder:+'
+	testImplementation platform('org.spockframework:spock-bom:2.0-M1-groovy-2.5')
+	testImplementation 'org.spockframework:spock-core'
+	testImplementation 'org.spockframework:spock-spring'
+	testImplementation enforcedPlatform('io.zonky.test.postgres:embedded-postgres-binaries-bom:12.1.0')
 }
 
 test {
