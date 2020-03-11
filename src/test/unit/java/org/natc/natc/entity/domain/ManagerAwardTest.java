@@ -13,7 +13,7 @@ class ManagerAwardTest {
 
     @Test
     void getByValue_ShouldReturnNullWhenGivenInvalidValue() {
-        assertNull(ManagerStyle.getByValue(7));
+        assertNull(ManagerAward.getByValue(7));
     }
 
     @Test
