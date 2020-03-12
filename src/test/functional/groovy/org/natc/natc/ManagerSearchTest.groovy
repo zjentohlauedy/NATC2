@@ -134,7 +134,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
 
         managerRepository.saveAll(managers)
 
-        when: 'a request is sent to the manager search endpoint'
+        when: 'a request is sent to the manager search endpoint for manager id 4'
         def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['manager-id': 4])
 
         then: 'the response should contain all three managers'
@@ -142,6 +142,94 @@ class ManagerSearchTest extends NATCFunctionalTest {
             status == 200
             data.status == 'NOT_FOUND'
             data.resources.size == 0
+        }
+    }
+
+    def 'manager search endpoint accepts manager-id query parameter'() {
+        given: 'three managers with different ids exist in the database'
+        def managers = [
+                Manager.builder().managerId(1).year('2000').teamId(2).playerId(3).build(),
+                Manager.builder().managerId(2).year('2001').teamId(3).playerId(4).build(),
+                Manager.builder().managerId(3).year('2002').teamId(4).playerId(5).build()
+        ]
+
+        managerRepository.saveAll(managers)
+
+        when: 'a request is sent to the manager search endpoint for manager id 1'
+        def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['manager-id': 1])
+
+        then: 'only the matching manager should be returned'
+        with(response) {
+            status == 200
+            data.status == 'SUCCESS'
+            data.resources.size == 1
+            data.resources[0].managerId == 1
+        }
+    }
+
+    def 'manager search endpoint accepts year query parameter'() {
+        given: 'three managers with different years exist in the database'
+        def managers = [
+                Manager.builder().managerId(1).year('2000').teamId(2).playerId(3).build(),
+                Manager.builder().managerId(2).year('2001').teamId(3).playerId(4).build(),
+                Manager.builder().managerId(3).year('2002').teamId(4).playerId(5).build()
+        ]
+
+        managerRepository.saveAll(managers)
+
+        when: 'a request is sent to the manager search endpoint for year 2000'
+        def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['year': '2000'])
+
+        then: 'only the matching manager should be returned'
+        with(response) {
+            status == 200
+            data.status == 'SUCCESS'
+            data.resources.size == 1
+            data.resources[0].year == '2000'
+        }
+    }
+
+    def 'manager search endpoint accepts team-id query parameter'() {
+        given: 'three managers with different team ids exist in the database'
+        def managers = [
+                Manager.builder().managerId(1).year('2000').teamId(2).playerId(3).build(),
+                Manager.builder().managerId(2).year('2001').teamId(3).playerId(4).build(),
+                Manager.builder().managerId(3).year('2002').teamId(4).playerId(5).build()
+        ]
+
+        managerRepository.saveAll(managers)
+
+        when: 'a request is sent to the manager search endpoint for team id 3'
+        def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['team-id': 3])
+
+        then: 'only the matching manager should be returned'
+        with(response) {
+            status == 200
+            data.status == 'SUCCESS'
+            data.resources.size == 1
+            data.resources[0].teamId == 3
+        }
+    }
+
+    def 'manager search endpoint accepts player-id query parameter'() {
+        given: 'three managers with different player ids exist in the database'
+        def managers = [
+                Manager.builder().managerId(1).year('2000').teamId(2).playerId(3).build(),
+                Manager.builder().managerId(2).year('2001').teamId(3).playerId(4).build(),
+                Manager.builder().managerId(3).year('2002').teamId(4).playerId(5).build()
+        ]
+
+        managerRepository.saveAll(managers)
+
+        when: 'a request is sent to the manager search endpoint for player id 5'
+        def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['player-id': 5])
+
+        then: 'only the matching manager should be returned'
+        with(response) {
+            status == 200
+            data.status == 'SUCCESS'
+            data.resources.size == 1
+            data.resources[0].playerId == 5
         }
     }
 }
