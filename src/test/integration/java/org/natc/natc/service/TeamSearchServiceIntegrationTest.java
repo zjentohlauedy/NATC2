@@ -1,18 +1,11 @@
 package org.natc.natc.service;
 
-import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.natc.natc.entity.domain.Team;
 import org.natc.natc.entity.request.TeamSearchRequest;
 import org.natc.natc.entity.response.TeamResponse;
 import org.natc.natc.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,30 +14,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
-@AutoConfigureEmbeddedDatabase
-class TeamSearchServiceIntegrationTest {
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
+class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
     @Autowired
     private TeamRepository teamRepository;
     
     @Autowired
     private TeamSearchService teamSearchService;
-
-    private TransactionStatus transactionStatus;
-
-    @BeforeEach
-    public void setUp() {
-        transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    }
-
-    @AfterEach
-    public void tearDown() {
-        transactionManager.rollback(transactionStatus);
-    }
 
     @Test
     public void shouldReturnATeamFromTheDatabaseMappedToAResponse() {
@@ -169,6 +145,15 @@ class TeamSearchServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
+    }
+
+    @Test
+    public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        final TeamSearchRequest request = TeamSearchRequest.builder().build();
+
+        final List<TeamResponse> result = teamSearchService.fetchAll(request);
+
+        assertEquals(0, result.size());
     }
 
     @Test

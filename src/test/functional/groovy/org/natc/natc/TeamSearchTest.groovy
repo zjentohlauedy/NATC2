@@ -1,36 +1,14 @@
 package org.natc.natc
 
-import groovyx.net.http.RESTClient
-import io.zonky.test.db.AutoConfigureEmbeddedDatabase
+
 import org.natc.natc.entity.domain.Team
 import org.natc.natc.repository.TeamRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.transaction.PlatformTransactionManager
-import spock.lang.Specification
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureEmbeddedDatabase
-class TeamSearchTest extends Specification {
-
-    @LocalServerPort
-    def port
-
-    @Autowired
-    PlatformTransactionManager transactionManager;
+class TeamSearchTest extends NATCFunctionalTest {
 
     @Autowired
     TeamRepository teamRepository
-
-    @Value('${spring.security.user.name}')
-    def appUsername
-
-    @Value('${spring.security.user.password}')
-    def appPassword
-
-    def transactionStatus
 
     def setup() {
         teamRepository.deleteAll()
@@ -42,14 +20,12 @@ class TeamSearchTest extends Specification {
         teamRepository.save(team)
 
         when: 'a request is sent to the team search endpoint'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json')
 
-        then: 'the status should be UP'
+        then: 'the response should contain the team'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resource == null
             data.errors == null
             data.resources.size == 1
@@ -62,11 +38,11 @@ class TeamSearchTest extends Specification {
         given: 'a team exists in the database'
         def team = Team.builder()
                 .teamId(123)
-                .year("1999")
-                .location("Here")
-                .name("Them")
-                .abbreviation("ABC.")
-                .timeZone("Americas/Los_Angeles")
+                .year('1999')
+                .location('Here')
+                .name('Them')
+                .abbreviation('ABC.')
+                .timeZone('Americas/Los_Angeles')
                 .gameTime(999)
                 .conference(111)
                 .division(222)
@@ -100,22 +76,20 @@ class TeamSearchTest extends Specification {
         teamRepository.save(team)
 
         when: 'a request is sent to the team search endpoint'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json')
 
         then: 'the response should contain all of the team fields'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resources.size == 1
             with(data.resources[0]) {
                 teamId == 123
-                year == "1999"
-                location == "Here"
-                name == "Them"
-                abbreviation == "ABC."
-                timeZone == "Americas/Los_Angeles"
+                year == '1999'
+                location == 'Here'
+                name == 'Them'
+                abbreviation == 'ABC.'
+                timeZone == 'Americas/Los_Angeles'
                 gameTime == 999
                 conferenceId == 111
                 divisionId == 222
@@ -149,7 +123,7 @@ class TeamSearchTest extends Specification {
     }
 
     def 'team search endpoint returns all matching teams'() {
-        given: 'three teams exists in the database'
+        given: 'three teams exist in the database'
         def teams = [
                 Team.builder().teamId(1).year("2000").build(),
                 Team.builder().teamId(2).year("2000").build(),
@@ -159,14 +133,12 @@ class TeamSearchTest extends Specification {
         teamRepository.saveAll(teams)
 
         when: 'a request is sent to the team search endpoint'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json')
 
         then: 'the response should contain all three teams'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resources.size == 3
 
             data.resources.collect { it.teamId }.containsAll([1, 2, 3])
@@ -184,14 +156,12 @@ class TeamSearchTest extends Specification {
         teamRepository.saveAll(teams)
 
         when: 'a request is sent to the team search endpoint for team-id 4'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json', query: ['team-id': 4])
 
         then: 'the response should contain an empty resources list'
         with(response) {
             status == 200
-            data.status == "NOT_FOUND"
+            data.status == 'NOT_FOUND'
             data.resources.size == 0
         }
     }
@@ -207,14 +177,12 @@ class TeamSearchTest extends Specification {
         teamRepository.saveAll(teams)
 
         when: 'a request is sent to the team search endpoint for team id 1'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json', query: ['team-id': 1])
 
         then: 'only the matching team should be returned'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resources.size == 1
             data.resources[0].teamId == 1
         }
@@ -231,14 +199,12 @@ class TeamSearchTest extends Specification {
         teamRepository.saveAll(teams)
 
         when: 'a request is sent to the team search endpoint for year 2000'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json', query: ['year': '2000'])
 
         then: 'only the matching team should be returned'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resources.size == 1
             data.resources[0].year == '2000'
         }
@@ -255,14 +221,12 @@ class TeamSearchTest extends Specification {
         teamRepository.saveAll(teams)
 
         when: 'a request is sent to the team search endpoint for conference id 1'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json', query: ['conference-id': 1])
 
         then: 'only the matching team should be returned'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resources.size == 1
             data.resources[0].conferenceId == 1
         }
@@ -279,14 +243,12 @@ class TeamSearchTest extends Specification {
         teamRepository.saveAll(teams)
 
         when: 'a request is sent to the team search endpoint for division id 1'
-        def restClient = new RESTClient("http://localhost:${port}")
-        restClient.auth.basic appUsername, appPassword
         def response = restClient.get(path: '/api/teams/search', contentType: 'application/json', query: ['division-id': 1])
 
         then: 'only the matching team should be returned'
         with(response) {
             status == 200
-            data.status == "SUCCESS"
+            data.status == 'SUCCESS'
             data.resources.size == 1
             data.resources[0].divisionId == 1
         }
