@@ -194,7 +194,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t -> t.getTeamId().equals(1)).count());
+        assertEquals(3, result.stream().filter(t -> t.getTeamId().equals(1)).count());
     }
 
     @Test
@@ -235,7 +235,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t -> t.getYear().equals("2000")).count());
+        assertEquals(3, result.stream().filter(t -> t.getYear().equals("2000")).count());
     }
 
     @Test
@@ -276,7 +276,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t -> t.getConferenceId().equals(1)).count());
+        assertEquals(3, result.stream().filter(t -> t.getConferenceId().equals(1)).count());
     }
 
     @Test
@@ -317,7 +317,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t -> t.getDivisionId().equals(1)).count());
+        assertEquals(3, result.stream().filter(t -> t.getDivisionId().equals(1)).count());
     }
 
     @Test
@@ -358,7 +358,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t -> !t.getAllstarTeam()).count());
+        assertEquals(3, result.stream().filter(t -> !t.getAllstarTeam()).count());
     }
 
     @Test
@@ -400,7 +400,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getYear().equals("2000")
         ).count());
     }
@@ -447,7 +447,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getConferenceId().equals(1)
         ).count());
     }
@@ -494,7 +494,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getDivisionId().equals(1)
         ).count());
     }
@@ -541,7 +541,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -588,7 +588,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && t.getConferenceId().equals(1)
         ).count());
     }
@@ -635,7 +635,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && t.getDivisionId().equals(1)
         ).count());
     }
@@ -682,7 +682,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && !t.getAllstarTeam()
         ).count());
     }
@@ -729,7 +729,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getConferenceId().equals(1) && t.getDivisionId().equals(1)
         ).count());
     }
@@ -776,7 +776,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getConferenceId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -823,7 +823,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getDivisionId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -869,7 +869,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getYear().equals("2000") && t.getConferenceId().equals(1)
         ).count());
     }
@@ -938,7 +938,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getYear().equals("2000") && t.getDivisionId().equals(1)
         ).count());
     }
@@ -1007,7 +1007,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getYear().equals("2000") && !t.getAllstarTeam()
         ).count());
     }
@@ -1081,7 +1081,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getConferenceId().equals(1) && t.getDivisionId().equals(1)
         ).count());
     }
@@ -1132,7 +1132,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getConferenceId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -1183,7 +1183,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) && t.getDivisionId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -1234,7 +1234,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && t.getConferenceId().equals(1) && t.getDivisionId().equals(1)
         ).count());
     }
@@ -1285,7 +1285,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && t.getConferenceId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -1336,7 +1336,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && t.getDivisionId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -1387,7 +1387,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getConferenceId().equals(1) && t.getDivisionId().equals(1) && !t.getAllstarTeam()
         ).count());
     }
@@ -1435,7 +1435,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) &&
                         t.getYear().equals("2000") &&
                         t.getConferenceId().equals(1) &&
@@ -1534,7 +1534,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) &&
                         t.getYear().equals("2000") &&
                         t.getConferenceId().equals(1) &&
@@ -1633,7 +1633,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) &&
                         t.getYear().equals("2000") &&
                         t.getDivisionId().equals(1) &&
@@ -1739,7 +1739,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getTeamId().equals(1) &&
                         t.getConferenceId().equals(1) &&
                         t.getDivisionId().equals(1) &&
@@ -1797,7 +1797,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(3, result.size());
-        assertEquals(3, (int) result.stream().filter(t ->
+        assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") &&
                         t.getConferenceId().equals(1) &&
                         t.getDivisionId().equals(1) &&
@@ -1850,7 +1850,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<TeamResponse> result = teamSearchService.fetchAll(request);
 
         assertEquals(1, result.size());
-        assertEquals(1, (int) result.stream().filter(t ->
+        assertEquals(1, result.stream().filter(t ->
                 t.getTeamId().equals(1) &&
                         t.getYear().equals("2000") &&
                         t.getConferenceId().equals(1) &&
