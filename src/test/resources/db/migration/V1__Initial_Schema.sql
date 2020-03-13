@@ -81,3 +81,49 @@ create index if not exists idx_16404_manager_year
 create index if not exists idx_16404_manager_player_id
 	on managers_t (player_id);
 
+create table if not exists players_t
+(
+    player_id bigint,
+    team_id bigint,
+    year char(4),
+    first_name varchar(30),
+    last_name varchar(30),
+    age bigint,
+    scoring double precision,
+    passing double precision,
+    blocking double precision,
+    tackling double precision,
+    stealing double precision,
+    presence double precision,
+    discipline double precision,
+    penalty_shot double precision,
+    penalty_offense double precision,
+    penalty_defense double precision,
+    endurance double precision,
+    confidence double precision,
+    vitality double precision,
+    durability double precision,
+    rookie bigint,
+    injured bigint,
+    return_date date,
+    free_agent bigint,
+    signed bigint,
+    released bigint,
+    retired bigint,
+    former_team_id bigint,
+    allstar_team_id bigint,
+    award bigint,
+    draft_pick bigint,
+    seasons_played bigint,
+    allstar_alternate bigint
+);
+
+create index if not exists idx_16410_player_year
+    on players_t (year);
+
+create index if not exists idx_16410_player_player_id
+    on players_t (player_id);
+
+create index if not exists idx_16410_player_team_id
+    on players_t (team_id);
+

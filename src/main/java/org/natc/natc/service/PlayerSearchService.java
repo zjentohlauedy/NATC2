@@ -6,10 +6,12 @@ import org.natc.natc.entity.request.PlayerSearchRequest;
 import org.natc.natc.entity.response.PlayerResponse;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PlayerSearchService implements NATCService<PlayerResponse, PlayerSearchRequest> {
 
     private final JpaRepository<Player, PlayerId> playerRepository;

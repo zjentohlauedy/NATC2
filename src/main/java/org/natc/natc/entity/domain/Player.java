@@ -5,15 +5,22 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import java.time.LocalDate;
 
+@Entity(name = "players_t")
+@IdClass(PlayerId.class)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Player {
+    @Id
     private Integer playerId;
     private Integer teamId;
+    @Id
     private String year;
     private String firstName;
     private String lastName;
