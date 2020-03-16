@@ -28,10 +28,10 @@ public class TeamSearchController {
 
     @GetMapping("/search")
     public ResponseEntity<ResponseEnvelope<TeamResponse>> search(@RequestParam(name = "team-id", required = false) final Integer teamId,
-                                                         @RequestParam(required = false) final String year,
-                                                         @RequestParam(name = "conference-id", required = false) final Integer conferenceId,
-                                                         @RequestParam(name = "division-id", required = false) final Integer divisionId,
-                                                         @RequestParam(name = "allstar-team", required = false) final Boolean allstarTeam) {
+                                                                 @RequestParam(required = false) final String year,
+                                                                 @RequestParam(name = "conference-id", required = false) final Integer conferenceId,
+                                                                 @RequestParam(name = "division-id", required = false) final Integer divisionId,
+                                                                 @RequestParam(name = "allstar-team", required = false) final Boolean allstarTeam) {
         final TeamSearchRequest request = TeamSearchRequest.builder()
                 .teamId(teamId)
                 .year(year)

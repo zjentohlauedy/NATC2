@@ -137,7 +137,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         when: 'a request is sent to the manager search endpoint for manager id 4'
         def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['manager-id': 4])
 
-        then: 'the response should contain all three managers'
+        then: 'the response should contain an empty resources list'
         with(response) {
             status == 200
             data.status == 'NOT_FOUND'

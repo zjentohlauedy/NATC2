@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class PlayerSearchController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseEnvelope<PlayerResponse>> search(final Integer playerId, final Integer teamId, final String year) {
+    public ResponseEntity<ResponseEnvelope<PlayerResponse>> search(@RequestParam(name = "player-id", required = false) final Integer playerId,
+                                                                   @RequestParam(name = "team-id", required = false) final Integer teamId,
+                                                                   @RequestParam(required = false) final String year) {
         final PlayerSearchRequest request = PlayerSearchRequest.builder()
                 .playerId(playerId)
                 .teamId(teamId)
