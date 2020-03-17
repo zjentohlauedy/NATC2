@@ -3,12 +3,10 @@ package org.natc.natc.controller;
 import org.natc.natc.entity.request.PlayerSearchRequest;
 import org.natc.natc.entity.response.PlayerResponse;
 import org.natc.natc.entity.response.ResponseEnvelope;
-import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.service.NATCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +17,11 @@ import java.util.List;
 @RequestMapping("/api/players")
 public class PlayerSearchController {
 
-    private final NATCService<PlayerResponse, PlayerSearchRequest> playerSearchService;
+    private final NATCService<PlayerResponse, PlayerSearchRequest> service;
 
     @Autowired
-    public PlayerSearchController(final NATCService<PlayerResponse, PlayerSearchRequest> playerSearchService) {
-        this.playerSearchService = playerSearchService;
+    public PlayerSearchController(final NATCService<PlayerResponse, PlayerSearchRequest> service) {
+        this.service = service;
     }
 
     @GetMapping("/search")
@@ -36,10 +34,8 @@ public class PlayerSearchController {
                 .year(year)
                 .build();
 
-        final List<PlayerResponse> playerList =  playerSearchService.fetchAll(request);
+        final List<PlayerResponse> playerList =  service.fetchAll(request);
 
-        final ResponseStatus status = CollectionUtils.isEmpty(playerList) ? ResponseStatus.NOT_FOUND : ResponseStatus.SUCCESS;
-
-        return ResponseEntity.ok(new ResponseEnvelope<>(status, playerList));
+        return ResponseEntity.ok(new ResponseEnvelope<>(playerList));
     }
 }

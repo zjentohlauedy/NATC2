@@ -3,12 +3,10 @@ package org.natc.natc.controller;
 import org.natc.natc.entity.request.ManagerSearchRequest;
 import org.natc.natc.entity.response.ManagerResponse;
 import org.natc.natc.entity.response.ResponseEnvelope;
-import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.service.NATCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +17,11 @@ import java.util.List;
 @RequestMapping("/api/managers")
 public class ManagerSearchController {
 
-    private final NATCService<ManagerResponse, ManagerSearchRequest> managerSearchService;
+    private final NATCService<ManagerResponse, ManagerSearchRequest> service;
 
     @Autowired
-    public ManagerSearchController(final NATCService<ManagerResponse, ManagerSearchRequest> managerSearchService) {
-        this.managerSearchService = managerSearchService;
+    public ManagerSearchController(final NATCService<ManagerResponse, ManagerSearchRequest> service) {
+        this.service = service;
     }
 
     @GetMapping("/search")
@@ -38,10 +36,8 @@ public class ManagerSearchController {
                 .year(year)
                 .build();
 
-        final List<ManagerResponse> managerList = managerSearchService.fetchAll(request);
+        final List<ManagerResponse> managerList = service.fetchAll(request);
 
-        final ResponseStatus status = CollectionUtils.isEmpty(managerList) ? ResponseStatus.NOT_FOUND : ResponseStatus.SUCCESS;
-
-        return ResponseEntity.ok(new ResponseEnvelope<>(status, managerList));
+        return ResponseEntity.ok(new ResponseEnvelope<>(managerList));
     }
 }

@@ -1,6 +1,7 @@
 package org.natc.natc.entity.response;
 
 import lombok.Getter;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -14,5 +15,11 @@ public class ResponseEnvelope<T> {
     public ResponseEnvelope(final ResponseStatus responseStatus, List<T> list) {
         status = responseStatus;
         resources = list;
+    }
+
+    public ResponseEnvelope(final List<T> resources) {
+        this.resources = resources;
+
+        status = CollectionUtils.isEmpty(resources) ? ResponseStatus.NOT_FOUND : ResponseStatus.SUCCESS;
     }
 }

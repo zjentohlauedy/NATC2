@@ -4,6 +4,7 @@ import org.natc.natc.entity.domain.Player;
 import org.natc.natc.entity.domain.PlayerId;
 import org.natc.natc.entity.request.PlayerSearchRequest;
 import org.natc.natc.entity.response.PlayerResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerSearchService implements NATCService<PlayerResponse, PlayerSearchRequest> {
 
-    private final JpaRepository<Player, PlayerId> playerRepository;
+    private final JpaRepository<Player, PlayerId> repository;
 
-    public PlayerSearchService(final JpaRepository<Player, PlayerId> playerRepository) {
-        this.playerRepository = playerRepository;
+    @Autowired
+    public PlayerSearchService(final JpaRepository<Player, PlayerId> repository) {
+        this.repository = repository;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class PlayerSearchService implements NATCService<PlayerResponse, PlayerSe
                 .year(request.getYear())
                 .build();
 
-        final List<Player> playerList = playerRepository.findAll(Example.of(player));
+        final List<Player> playerList = repository.findAll(Example.of(player));
 
         return playerList.stream().map(PlayerResponse::new).collect(Collectors.toList());
     }
