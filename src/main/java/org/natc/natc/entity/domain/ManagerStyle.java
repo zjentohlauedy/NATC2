@@ -9,7 +9,7 @@ public enum ManagerStyle {
         this.style = style;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return style;
     }
 
@@ -19,7 +19,7 @@ public enum ManagerStyle {
         }
 
         for (final ManagerStyle style: ManagerStyle.values()) {
-            if (style.getValue() == value) {
+            if (style.getValue().equals(value)) {
                 return style;
             }
         }

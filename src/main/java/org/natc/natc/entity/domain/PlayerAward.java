@@ -9,7 +9,7 @@ public enum PlayerAward {
         this.award = award;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return award;
     }
 
@@ -19,7 +19,7 @@ public enum PlayerAward {
         }
 
         for (final PlayerAward award : PlayerAward.values()) {
-            if (award.getValue() == value) {
+            if (award.getValue().equals(value)) {
                 return award;
             }
         }

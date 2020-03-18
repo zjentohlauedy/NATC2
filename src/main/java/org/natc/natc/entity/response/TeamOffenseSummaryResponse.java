@@ -2,13 +2,14 @@ package org.natc.natc.entity.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamOffenseSummary;
 
 @Getter
 @NoArgsConstructor
 public class TeamOffenseSummaryResponse {
     private String year;
-    private Integer type; // TODO: enum
+    private GameType type;
     private Integer teamId;
     private Integer games;
     private Integer possessions;
@@ -27,7 +28,7 @@ public class TeamOffenseSummaryResponse {
 
     public TeamOffenseSummaryResponse(final TeamOffenseSummary teamOffenseSummary) {
         year = teamOffenseSummary.getYear();
-        type = teamOffenseSummary.getType();
+        type = GameType.getByValue(teamOffenseSummary.getType());
         teamId = teamOffenseSummary.getTeamId();
         games = teamOffenseSummary.getGames();
         possessions = teamOffenseSummary.getPossessions();

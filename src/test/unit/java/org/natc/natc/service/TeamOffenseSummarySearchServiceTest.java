@@ -8,6 +8,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamOffenseSummary;
 import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
@@ -64,7 +65,7 @@ class TeamOffenseSummarySearchServiceTest {
 
     @Test
     public void fetchAll_ShouldReturnResponsesMappedFromTheTeamOffenseSummariesReturnedByRepository() {
-        final TeamOffenseSummary teamOffenseSummary = generateTeamOffenseSummary();
+        final TeamOffenseSummary teamOffenseSummary = generateTeamOffenseSummary(GameType.REGULAR_SEASON);
 
         when(repository.findAll(ArgumentMatchers.<Example<TeamOffenseSummary>>any()))
                 .thenReturn(Collections.singletonList(teamOffenseSummary));
@@ -76,7 +77,7 @@ class TeamOffenseSummarySearchServiceTest {
         final TeamOffenseSummaryResponse response = result.get(0);
 
         assertEquals(teamOffenseSummary.getYear(), response.getYear());
-        assertEquals(teamOffenseSummary.getType(), response.getType());
+        assertEquals(GameType.REGULAR_SEASON, response.getType());
         assertEquals(teamOffenseSummary.getTeamId(), response.getTeamId());
         assertEquals(teamOffenseSummary.getGames(), response.getGames());
         assertEquals(teamOffenseSummary.getPossessions(), response.getPossessions());
@@ -111,10 +112,10 @@ class TeamOffenseSummarySearchServiceTest {
         assertEquals(teamOffenseSummaryList.size(), result.size());
     }
 
-    private TeamOffenseSummary generateTeamOffenseSummary() {
+    private TeamOffenseSummary generateTeamOffenseSummary(final GameType gameType) {
         return TeamOffenseSummary.builder()
                 .year("2016")
-                .type(1)
+                .type(gameType.getValue())
                 .teamId(123)
                 .games(99)
                 .possessions(234)
