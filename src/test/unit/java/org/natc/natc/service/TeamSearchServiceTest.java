@@ -52,7 +52,7 @@ class TeamSearchServiceTest {
     }
 
     @Test
-    public void fetchAll_ShouldCallTeamRepositorWithExampleTeamBasedOnRequest() {
+    public void fetchAll_ShouldCallTeamRepositoryWithExampleTeamBasedOnRequest() {
         final TeamSearchRequest request = TeamSearchRequest.builder()
                 .teamId(123)
                 .year("1999")

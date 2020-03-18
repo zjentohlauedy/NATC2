@@ -55,7 +55,7 @@ class PlayerSearchServiceTest {
     }
 
     @Test
-    public void fetchAll_ShouldCallPlayerRepositorWithExamplePlayerBasedOnRequest() {
+    public void fetchAll_ShouldCallPlayerRepositoryWithExamplePlayerBasedOnRequest() {
         final PlayerSearchRequest request = PlayerSearchRequest.builder()
                 .playerId(123)
                 .teamId(321)

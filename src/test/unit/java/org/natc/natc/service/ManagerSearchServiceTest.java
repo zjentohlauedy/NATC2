@@ -55,7 +55,7 @@ class ManagerSearchServiceTest {
     }
 
     @Test
-    public void fetchAll_ShouldCallManagerRepositorWithExampleManagerBasedOnRequest() {
+    public void fetchAll_ShouldCallManagerRepositoryWithExampleManagerBasedOnRequest() {
         final ManagerSearchRequest request = ManagerSearchRequest.builder()
                 .managerId(123)
                 .teamId(321)
