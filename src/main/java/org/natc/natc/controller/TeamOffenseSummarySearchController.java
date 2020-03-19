@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,7 +25,9 @@ public class TeamOffenseSummarySearchController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> search(final String year, final Integer teamId) {
+    public ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> search(
+            @RequestParam(required = false) final String year,
+            @RequestParam(name = "team-id", required = false) final Integer teamId) {
         final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder().year(year).teamId(teamId).build();
 
         final List<TeamOffenseSummaryResponse> teamOffenseSummaryList = service.fetchAll(request);
