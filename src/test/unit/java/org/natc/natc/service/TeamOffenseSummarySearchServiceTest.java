@@ -93,7 +93,6 @@ class TeamOffenseSummarySearchServiceTest {
         assertEquals(teamOffenseSummary.getOvertimePenaltyShotsAttempted(), response.getOvertimePenaltyShotsAttempted());
         assertEquals(teamOffenseSummary.getOvertimePenaltyShotsMade(), response.getOvertimePenaltyShotsMade());
         assertEquals(teamOffenseSummary.getScore(), response.getScore());
-
     }
 
     @Test
