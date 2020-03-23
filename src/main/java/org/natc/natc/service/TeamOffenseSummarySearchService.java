@@ -1,5 +1,6 @@
 package org.natc.natc.service;
 
+import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamOffenseSummary;
 import org.natc.natc.entity.domain.TeamOffenseSummaryId;
 import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
@@ -26,11 +27,18 @@ public class TeamOffenseSummarySearchService implements NATCService<TeamOffenseS
     public List<TeamOffenseSummaryResponse> fetchAll(final TeamOffenseSummaryRequest request) {
         final TeamOffenseSummary teamOffenseSummary = TeamOffenseSummary.builder()
                 .year(request.getYear())
+                .type(getTypeValue(request.getType()))
                 .teamId(request.getTeamId())
                 .build();
 
         final List<TeamOffenseSummary> teamOffenseSummaryList = repository.findAll(Example.of(teamOffenseSummary));
 
         return teamOffenseSummaryList.stream().map(TeamOffenseSummaryResponse::new).collect(Collectors.toList());
+    }
+
+    private Integer getTypeValue(GameType type) {
+        if (type == null) return null;
+
+        return type.getValue();
     }
 }

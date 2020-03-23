@@ -6,6 +6,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.ResponseStatus;
@@ -33,21 +34,21 @@ class TeamOffenseSummarySearchControllerTest {
 
     @Test
     public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null);
+        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null);
+        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null, null);
 
         assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
     }
 
     @Test
     public void search_ShouldCallTeamOffenseSummarySearchService() {
-        controller.search(null, null);
+        controller.search(null, null, null);
 
         verify(searchService).fetchAll(any(TeamOffenseSummaryRequest.class));
     }
@@ -55,16 +56,18 @@ class TeamOffenseSummarySearchControllerTest {
     @Test
     public void search_ShouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
         final String year = "2004";
+        final GameType type = GameType.POSTSEASON;
         final Integer teamId = 20;
         final ArgumentCaptor<TeamOffenseSummaryRequest> captor = ArgumentCaptor.forClass(TeamOffenseSummaryRequest.class);
 
-        controller.search(year, teamId);
+        controller.search(year, type, teamId);
 
         verify(searchService).fetchAll(captor.capture());
 
         final TeamOffenseSummaryRequest request = captor.getValue();
 
         assertEquals(year, request.getYear());
+        assertEquals(type, request.getType());
         assertEquals(teamId, request.getTeamId());
     }
 
@@ -74,7 +77,7 @@ class TeamOffenseSummarySearchControllerTest {
 
         when(searchService.fetchAll(any(TeamOffenseSummaryRequest.class))).thenReturn(teamOffenseSummaryList);
 
-        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null);
+        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null, null);
 
         assertEquals(teamOffenseSummaryList, response.getBody().getResources());
     }
@@ -85,7 +88,7 @@ class TeamOffenseSummarySearchControllerTest {
 
         when(searchService.fetchAll(any(TeamOffenseSummaryRequest.class))).thenReturn(teamOffenseSummaryList);
 
-        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null);
+        final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null, null);
 
         assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
     }

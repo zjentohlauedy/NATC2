@@ -51,7 +51,11 @@ class TeamOffenseSummarySearchServiceTest {
 
     @Test
     public void fetchAll_ShouldCallRepositoryWithExampleBasedOnRequest() {
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder().year("2002").teamId(123).build();
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .year("2002")
+                .type(GameType.ALLSTAR)
+                .teamId(123)
+                .build();
 
         service.fetchAll(request);
 
@@ -60,6 +64,7 @@ class TeamOffenseSummarySearchServiceTest {
         final TeamOffenseSummary teamOffenseSummary = captor.getValue().getProbe();
 
         assertEquals(request.getYear(), teamOffenseSummary.getYear());
+        assertEquals(request.getType().getValue(), teamOffenseSummary.getType());
         assertEquals(request.getTeamId(), teamOffenseSummary.getTeamId());
     }
 

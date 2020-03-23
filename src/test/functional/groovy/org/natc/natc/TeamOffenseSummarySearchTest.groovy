@@ -160,6 +160,28 @@ public class TeamOffenseSummarySearchTest extends NATCFunctionalTest {
         }
     }
 
+    def 'team offense summary search endpoint accepts type query parameter'() {
+        given: 'three records exist in the database'
+        def teamOffenseSummaries = [
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2002").type(GameType.POSTSEASON.getValue()).teamId(3).build()
+        ]
+
+        repository.saveAll(teamOffenseSummaries)
+
+        when: 'a request is sent to the team offense summary search endpoint for year 2000'
+        def response = restClient.get(path: '/api/team-offense-summaries/search', contentType: 'application/json', query: ['type': 'POSTSEASON'])
+
+        then: 'only the matching record should be returned'
+        with(response) {
+            status == 200
+            data.status == 'SUCCESS'
+            data.resources.size == 1
+            data.resources[0].type == 'POSTSEASON'
+        }
+    }
+
     def 'team offense summary search endpoint accepts team-id query parameter'() {
         given: 'three records exist in the database'
         def teamOffenseSummaries = [

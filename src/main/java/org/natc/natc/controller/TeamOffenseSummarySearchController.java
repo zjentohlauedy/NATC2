@@ -1,5 +1,6 @@
 package org.natc.natc.controller;
 
+import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
@@ -27,8 +28,13 @@ public class TeamOffenseSummarySearchController {
     @GetMapping("/search")
     public ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> search(
             @RequestParam(required = false) final String year,
+            @RequestParam(required = false) final GameType type,
             @RequestParam(name = "team-id", required = false) final Integer teamId) {
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder().year(year).teamId(teamId).build();
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .year(year)
+                .type(type)
+                .teamId(teamId)
+                .build();
 
         final List<TeamOffenseSummaryResponse> teamOffenseSummaryList = service.fetchAll(request);
 

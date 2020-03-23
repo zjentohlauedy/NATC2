@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.natc.natc.entity.domain.GameType;
 
 @Getter
 @NoArgsConstructor
@@ -11,5 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TeamOffenseSummaryRequest {
     private String year;
+    private GameType type;
     private Integer teamId;
 }

@@ -9,6 +9,7 @@ import org.natc.natc.repository.TeamOffenseSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -164,6 +165,47 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
     }
 
     @Test
+    public void shouldReturnAllEntriesForTypeWhenSearchingByType() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2002").type(GameType.REGULAR_SEASON.getValue()).teamId(3).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .type(GameType.REGULAR_SEASON)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    public void shouldOnlyReturnEntriesForTypeWhenSearchingByType() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.POSTSEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.ALLSTAR.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2002").type(GameType.REGULAR_SEASON.getValue()).teamId(3).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .type(GameType.REGULAR_SEASON)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(3, result.size());
+        assertEquals(3, result.stream().filter(t -> t.getType().equals(GameType.REGULAR_SEASON)).count());
+    }
+
+    @Test
     public void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
         final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                 TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
@@ -202,6 +244,53 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         assertEquals(3, result.size());
         assertEquals(3, result.stream().filter(t -> t.getTeamId().equals(1)).count());
+    }
+
+    @Test
+    public void shouldReturnAllEntriesForYearAndTypeWhenSearchingByYearAndType() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(3).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .year("2000")
+                .type(GameType.PRESEASON)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    public void shouldOnlyReturnEntriesForYearAndTypeWhenSearchingByYearAndType() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.POSTSEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2002").type(GameType.PRESEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(3).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .year("2000")
+                .type(GameType.PRESEASON)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(3, result.size());
+        assertEquals(3, result.stream().filter(t ->
+                t.getYear().equals("2000") && t.getType().equals(GameType.PRESEASON)
+        ).count());
     }
 
     @Test
@@ -248,6 +337,97 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         assertEquals(3, result.size());
         assertEquals(3, result.stream().filter(t ->
                 t.getYear().equals("2000") && t.getTeamId().equals(1)
+        ).count());
+    }
+
+    @Test
+    public void shouldReturnAllEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2002").type(GameType.PRESEASON.getValue()).teamId(1).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .teamId(1)
+                .type(GameType.PRESEASON)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    public void shouldOnlyReturnEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(2).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.POSTSEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(3).build(),
+                TeamOffenseSummary.builder().year("2002").type(GameType.PRESEASON.getValue()).teamId(1).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .teamId(1)
+                .type(GameType.PRESEASON)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(3, result.size());
+        assertEquals(3, result.stream().filter(t ->
+                t.getType().equals(GameType.PRESEASON) && t.getTeamId().equals(1)
+        ).count());
+    }
+
+    @Test
+    public void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Collections.singletonList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .year("2000")
+                .type(GameType.PRESEASON)
+                .teamId(1)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    public void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
+        final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
+                TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(2).build()
+        );
+
+        repository.saveAll(teamOffenseSummaries);
+
+        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+                .year("2000")
+                .type(GameType.PRESEASON)
+                .teamId(1)
+                .build();
+
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(request);
+
+        assertEquals(1, result.size());
+        assertEquals(1, result.stream().filter(t ->
+                t.getType().equals(GameType.PRESEASON) && t.getType().equals(GameType.PRESEASON) && t.getTeamId().equals(1)
         ).count());
     }
 }
