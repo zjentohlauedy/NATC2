@@ -2,19 +2,24 @@ package org.natc.natc.service;
 
 import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamDefenseSummary;
+import org.natc.natc.entity.domain.TeamDefenseSummaryId;
 import org.natc.natc.entity.request.TeamDefenseSummaryRequest;
 import org.natc.natc.entity.response.TeamDefenseSummaryResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class TeamDefenseSummarySearchService implements NATCService<TeamDefenseSummaryResponse, TeamDefenseSummaryRequest> {
 
-    private final JpaRepository repository;
+    private final JpaRepository<TeamDefenseSummary, TeamDefenseSummaryId> repository;
 
-    public TeamDefenseSummarySearchService(final JpaRepository repository) {
+    @Autowired
+    public TeamDefenseSummarySearchService(final JpaRepository<TeamDefenseSummary, TeamDefenseSummaryId> repository) {
         this.repository = repository;
     }
 
