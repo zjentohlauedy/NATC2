@@ -1,5 +1,14 @@
 package org.natc.natc.entity.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TeamDefenseSummary {
     private String year;
     private Integer type;

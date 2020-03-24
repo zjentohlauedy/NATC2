@@ -27,18 +27,12 @@ public class TeamOffenseSummarySearchService implements NATCService<TeamOffenseS
     public List<TeamOffenseSummaryResponse> fetchAll(final TeamOffenseSummaryRequest request) {
         final TeamOffenseSummary teamOffenseSummary = TeamOffenseSummary.builder()
                 .year(request.getYear())
-                .type(getTypeValue(request.getType()))
+                .type(GameType.getValueFor(request.getType()))
                 .teamId(request.getTeamId())
                 .build();
 
         final List<TeamOffenseSummary> teamOffenseSummaryList = repository.findAll(Example.of(teamOffenseSummary));
 
         return teamOffenseSummaryList.stream().map(TeamOffenseSummaryResponse::new).collect(Collectors.toList());
-    }
-
-    private Integer getTypeValue(GameType type) {
-        if (type == null) return null;
-
-        return type.getValue();
     }
 }

@@ -13,6 +13,12 @@ public enum GameType {
         return type;
     }
 
+    public static Integer getValueFor(final GameType type) {
+        if (type == null) return null;
+
+        return type.getValue();
+    }
+
     public static GameType getByValue(final Integer value) {
         if (value == null) {
             return null;

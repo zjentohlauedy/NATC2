@@ -24,4 +24,17 @@ class GameTypeTest {
         assertEquals(GameType.POSTSEASON, GameType.getByValue(3));
         assertEquals(GameType.ALLSTAR, GameType.getByValue(4));
     }
+
+    @Test
+    public void getValueFor_ShouldReturnNullWhenGivenNull() {
+        assertNull(GameType.getValueFor(null));
+    }
+
+    @Test
+    public void getValueFor_ShouldReturnAppropriateValueGivenValidGameType() {
+        assertEquals(1, GameType.getValueFor(GameType.PRESEASON));
+        assertEquals(2, GameType.getValueFor(GameType.REGULAR_SEASON));
+        assertEquals(3, GameType.getValueFor(GameType.POSTSEASON));
+        assertEquals(4, GameType.getValueFor(GameType.ALLSTAR));
+    }
 }
