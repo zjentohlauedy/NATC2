@@ -40,7 +40,7 @@ public class TeamOffenseSummarySearchTest extends NATCFunctionalTest {
         }
     }
 
-    def 'team offense summary search endpoint provides all team fields'() {
+    def 'team offense summary search endpoint provides all fields'() {
         given: 'a team offense summary exists in the database'
         def teamOffenseSummary = TeamOffenseSummary.builder()
                 .year("2016")
@@ -170,7 +170,7 @@ public class TeamOffenseSummarySearchTest extends NATCFunctionalTest {
 
         repository.saveAll(teamOffenseSummaries)
 
-        when: 'a request is sent to the team offense summary search endpoint for year 2000'
+        when: 'a request is sent to the team offense summary search endpoint for type POSTSEASON'
         def response = restClient.get(path: '/api/team-offense-summaries/search', contentType: 'application/json', query: ['type': 'POSTSEASON'])
 
         then: 'only the matching record should be returned'
