@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.GameType;
-import org.natc.natc.entity.request.TeamDefenseSummaryRequest;
+import org.natc.natc.entity.request.TeamDefenseSummarySearchRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.entity.response.TeamDefenseSummaryResponse;
@@ -58,13 +58,13 @@ class TeamDefenseSummarySearchControllerTest {
         final String year = "1989";
         final GameType type = GameType.REGULAR_SEASON;
         final Integer teamId = 33;
-        final ArgumentCaptor<TeamDefenseSummaryRequest> captor = ArgumentCaptor.forClass(TeamDefenseSummaryRequest.class);
+        final ArgumentCaptor<TeamDefenseSummarySearchRequest> captor = ArgumentCaptor.forClass(TeamDefenseSummarySearchRequest.class);
 
         controller.search(year, type, teamId);
 
         verify(searchService).fetchAll(captor.capture());
 
-        final TeamDefenseSummaryRequest request = captor.getValue();
+        final TeamDefenseSummarySearchRequest request = captor.getValue();
 
         assertEquals(year, request.getYear());
         assertEquals(type, request.getType());
@@ -75,7 +75,7 @@ class TeamDefenseSummarySearchControllerTest {
     public void search_ShouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
         final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
 
-        when(searchService.fetchAll(any(TeamDefenseSummaryRequest.class))).thenReturn(teamDefenseSummaryList);
+        when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
 
         final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 
@@ -86,7 +86,7 @@ class TeamDefenseSummarySearchControllerTest {
     public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
         final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
 
-        when(searchService.fetchAll(any(TeamDefenseSummaryRequest.class))).thenReturn(teamDefenseSummaryList);
+        when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
 
         final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 

@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.GameType;
-import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
+import org.natc.natc.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.ResponseStatus;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
@@ -50,7 +50,7 @@ class TeamOffenseSummarySearchControllerTest {
     public void search_ShouldCallTeamOffenseSummarySearchService() {
         controller.search(null, null, null);
 
-        verify(searchService).fetchAll(any(TeamOffenseSummaryRequest.class));
+        verify(searchService).fetchAll(any(TeamOffenseSummarySearchRequest.class));
     }
 
     @Test
@@ -58,13 +58,13 @@ class TeamOffenseSummarySearchControllerTest {
         final String year = "2004";
         final GameType type = GameType.POSTSEASON;
         final Integer teamId = 20;
-        final ArgumentCaptor<TeamOffenseSummaryRequest> captor = ArgumentCaptor.forClass(TeamOffenseSummaryRequest.class);
+        final ArgumentCaptor<TeamOffenseSummarySearchRequest> captor = ArgumentCaptor.forClass(TeamOffenseSummarySearchRequest.class);
 
         controller.search(year, type, teamId);
 
         verify(searchService).fetchAll(captor.capture());
 
-        final TeamOffenseSummaryRequest request = captor.getValue();
+        final TeamOffenseSummarySearchRequest request = captor.getValue();
 
         assertEquals(year, request.getYear());
         assertEquals(type, request.getType());
@@ -75,7 +75,7 @@ class TeamOffenseSummarySearchControllerTest {
     public void search_ShouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
         final List<TeamOffenseSummaryResponse> teamOffenseSummaryList = Collections.singletonList(new TeamOffenseSummaryResponse());
 
-        when(searchService.fetchAll(any(TeamOffenseSummaryRequest.class))).thenReturn(teamOffenseSummaryList);
+        when(searchService.fetchAll(any(TeamOffenseSummarySearchRequest.class))).thenReturn(teamOffenseSummaryList);
 
         final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null, null);
 
@@ -86,7 +86,7 @@ class TeamOffenseSummarySearchControllerTest {
     public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
         final List<TeamOffenseSummaryResponse> teamOffenseSummaryList = Collections.singletonList(new TeamOffenseSummaryResponse());
 
-        when(searchService.fetchAll(any(TeamOffenseSummaryRequest.class))).thenReturn(teamOffenseSummaryList);
+        when(searchService.fetchAll(any(TeamOffenseSummarySearchRequest.class))).thenReturn(teamOffenseSummaryList);
 
         final ResponseEntity<ResponseEnvelope<TeamOffenseSummaryResponse>> response = controller.search(null, null, null);
 

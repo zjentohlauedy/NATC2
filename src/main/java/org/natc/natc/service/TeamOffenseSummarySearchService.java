@@ -3,7 +3,7 @@ package org.natc.natc.service;
 import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamOffenseSummary;
 import org.natc.natc.entity.domain.TeamOffenseSummaryId;
-import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
+import org.natc.natc.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TeamOffenseSummarySearchService implements NATCService<TeamOffenseSummaryResponse, TeamOffenseSummaryRequest> {
+public class TeamOffenseSummarySearchService implements NATCService<TeamOffenseSummaryResponse, TeamOffenseSummarySearchRequest> {
 
     private final JpaRepository<TeamOffenseSummary, TeamOffenseSummaryId> repository;
 
@@ -24,7 +24,7 @@ public class TeamOffenseSummarySearchService implements NATCService<TeamOffenseS
     }
 
     @Override
-    public List<TeamOffenseSummaryResponse> fetchAll(final TeamOffenseSummaryRequest request) {
+    public List<TeamOffenseSummaryResponse> fetchAll(final TeamOffenseSummarySearchRequest request) {
         final TeamOffenseSummary teamOffenseSummary = TeamOffenseSummary.builder()
                 .year(request.getYear())
                 .type(GameType.getValueFor(request.getType()))

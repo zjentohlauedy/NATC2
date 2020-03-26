@@ -1,7 +1,7 @@
 package org.natc.natc.controller;
 
 import org.natc.natc.entity.domain.GameType;
-import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
+import org.natc.natc.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.natc.entity.response.ResponseEnvelope;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
 import org.natc.natc.service.NATCService;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/api/team-offense-summaries")
 public class TeamOffenseSummarySearchController {
 
-    private final NATCService<TeamOffenseSummaryResponse, TeamOffenseSummaryRequest> service;
+    private final NATCService<TeamOffenseSummaryResponse, TeamOffenseSummarySearchRequest> service;
 
     @Autowired
-    public TeamOffenseSummarySearchController(final NATCService<TeamOffenseSummaryResponse, TeamOffenseSummaryRequest> service) {
+    public TeamOffenseSummarySearchController(final NATCService<TeamOffenseSummaryResponse, TeamOffenseSummarySearchRequest> service) {
         this.service = service;
     }
 
@@ -30,7 +30,7 @@ public class TeamOffenseSummarySearchController {
             @RequestParam(required = false) final String year,
             @RequestParam(required = false) final GameType type,
             @RequestParam(name = "team-id", required = false) final Integer teamId) {
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year(year)
                 .type(type)
                 .teamId(teamId)

@@ -10,7 +10,7 @@ import org.natc.natc.entity.domain.GameType;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TeamOffenseSummaryRequest {
+public class TeamDefenseSummarySearchRequest {
     private String year;
     private GameType type;
     private Integer teamId;

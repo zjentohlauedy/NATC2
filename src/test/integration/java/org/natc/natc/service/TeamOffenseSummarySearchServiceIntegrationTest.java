@@ -3,7 +3,7 @@ package org.natc.natc.service;
 import org.junit.jupiter.api.Test;
 import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamOffenseSummary;
-import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
+import org.natc.natc.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
 import org.natc.natc.repository.TeamOffenseSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.save(teamOffenseSummary);
 
-        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(1, result.size());
 
@@ -76,7 +76,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.save(teamOffenseSummary);
 
-        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(1, result.size());
 
@@ -111,14 +111,14 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(3, result.size());
     }
 
     @Test
     public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
-        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(0, result.size());
     }
@@ -133,7 +133,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .build();
 
@@ -154,7 +154,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .build();
 
@@ -174,7 +174,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .type(GameType.REGULAR_SEASON)
                 .build();
 
@@ -195,7 +195,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .type(GameType.REGULAR_SEASON)
                 .build();
 
@@ -215,7 +215,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .teamId(1)
                 .build();
 
@@ -236,7 +236,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .teamId(1)
                 .build();
 
@@ -256,7 +256,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .type(GameType.PRESEASON)
                 .build();
@@ -280,7 +280,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .type(GameType.PRESEASON)
                 .build();
@@ -303,7 +303,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .teamId(1)
                 .build();
@@ -327,7 +327,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .teamId(1)
                 .build();
@@ -350,7 +350,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .teamId(1)
                 .type(GameType.PRESEASON)
                 .build();
@@ -374,7 +374,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .teamId(1)
                 .type(GameType.PRESEASON)
                 .build();
@@ -395,7 +395,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .type(GameType.PRESEASON)
                 .teamId(1)
@@ -417,7 +417,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
         repository.saveAll(teamOffenseSummaries);
 
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2000")
                 .type(GameType.PRESEASON)
                 .teamId(1)

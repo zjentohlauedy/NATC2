@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.TeamOffenseSummary;
-import org.natc.natc.entity.request.TeamOffenseSummaryRequest;
+import org.natc.natc.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.natc.entity.response.TeamOffenseSummaryResponse;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,21 +37,21 @@ class TeamOffenseSummarySearchServiceTest {
 
     @Test
     public void fetchAll_ShouldReturnAListOfTeamOffenseSummaryResponses() {
-        final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(0, result.size());
     }
 
     @Test
     public void fetchAll_ShouldCallTheRepositoryWithAnExampleTeamOffenseSummary() {
-        service.fetchAll(new TeamOffenseSummaryRequest());
+        service.fetchAll(new TeamOffenseSummarySearchRequest());
 
         verify(repository).findAll(ArgumentMatchers.<Example<TeamOffenseSummary>>any());
     }
 
     @Test
     public void fetchAll_ShouldCallRepositoryWithExampleBasedOnRequest() {
-        final TeamOffenseSummaryRequest request = TeamOffenseSummaryRequest.builder()
+        final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                 .year("2002")
                 .type(GameType.ALLSTAR)
                 .teamId(123)
@@ -75,7 +75,7 @@ class TeamOffenseSummarySearchServiceTest {
         when(repository.findAll(ArgumentMatchers.<Example<TeamOffenseSummary>>any()))
                 .thenReturn(Collections.singletonList(teamOffenseSummary));
 
-        final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(1, result.size());
 
@@ -111,7 +111,7 @@ class TeamOffenseSummarySearchServiceTest {
 
         when(repository.findAll(ArgumentMatchers.<Example<TeamOffenseSummary>>any())).thenReturn(teamOffenseSummaryList);
 
-        final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummaryRequest());
+        final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummarySearchRequest());
 
         assertEquals(teamOffenseSummaryList.size(), result.size());
     }
