@@ -1,10 +1,12 @@
 package org.natc.natc.entity.response;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.PlayerStatsSummary;
 
 @Getter
+@NoArgsConstructor
 public class PlayerStatsSummaryResponse {
     private String year;
     private GameType type;
