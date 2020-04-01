@@ -2,19 +2,24 @@ package org.natc.natc.service;
 
 import org.natc.natc.entity.domain.GameType;
 import org.natc.natc.entity.domain.PlayerStatsSummary;
+import org.natc.natc.entity.domain.PlayerStatsSummaryId;
 import org.natc.natc.entity.request.PlayerStatsSummarySearchRequest;
 import org.natc.natc.entity.response.PlayerStatsSummaryResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PlayerStatsSummarySearchService implements NATCService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> {
 
-    private JpaRepository repository;
+    private JpaRepository<PlayerStatsSummary, PlayerStatsSummaryId> repository;
 
-    public PlayerStatsSummarySearchService(final JpaRepository repository) {
+    @Autowired
+    public PlayerStatsSummarySearchService(final JpaRepository<PlayerStatsSummary, PlayerStatsSummaryId> repository) {
         this.repository = repository;
     }
 

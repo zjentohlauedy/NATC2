@@ -181,3 +181,32 @@ create index if not exists idx_16425_team_defense_team_id
 create index if not exists idx_16425_team_defense_year
     on team_defense_sum_t (year);
 
+create table if not exists player_stats_sum_t
+(
+    year char(4),
+    type bigint,
+    player_id bigint,
+    games bigint,
+    games_started bigint,
+    playing_time bigint,
+    attempts bigint,
+    goals bigint,
+    assists bigint,
+    turnovers bigint,
+    stops bigint,
+    steals bigint,
+    penalties bigint,
+    offensive_penalties bigint,
+    psa bigint,
+    psm bigint,
+    ot_psa bigint,
+    ot_psm bigint,
+    team_id bigint
+);
+
+create index if not exists idx_16413_player_stats_year
+    on player_stats_sum_t (year);
+
+create index if not exists idx_16413_player_stats_player_id
+    on player_stats_sum_t (player_id);
+
