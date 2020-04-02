@@ -95,6 +95,7 @@ class TeamDefenseSummarySearchTest extends NATCFunctionalTest {
     }
 
     def 'team defense summary search endpoint returns all matching records'() {
+        given: 'three records exist in the database'
         def teamDefenseSummaries = [
                 TeamDefenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                 TeamDefenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
@@ -116,7 +117,7 @@ class TeamDefenseSummarySearchTest extends NATCFunctionalTest {
         }
     }
 
-    def 'team defense summary search endpoint returns empty list when no matching teams found'() {
+    def 'team defense summary search endpoint returns empty list when no matching records found'() {
         given: 'three records exist in the database'
         def teamDefenseSummaries = [
                 TeamDefenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
