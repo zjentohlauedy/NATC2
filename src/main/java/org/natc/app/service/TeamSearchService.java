@@ -25,7 +25,7 @@ public class TeamSearchService implements NATCService<TeamResponse, TeamSearchRe
     }
 
     @Override
-    public List<TeamResponse> fetchAll(TeamSearchRequest request) {
+    public List<TeamResponse> fetchAll(final TeamSearchRequest request) {
         final Team team = Team.builder()
                 .teamId(request.getTeamId())
                 .year(request.getYear())
