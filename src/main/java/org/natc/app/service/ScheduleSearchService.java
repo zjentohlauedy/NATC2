@@ -1,19 +1,24 @@
 package org.natc.app.service;
 
 import org.natc.app.entity.domain.Schedule;
+import org.natc.app.entity.domain.ScheduleId;
 import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ScheduleResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ScheduleSearchService implements NATCService<ScheduleResponse, ScheduleSearchRequest> {
 
-    private final JpaRepository repository;
+    private final JpaRepository<Schedule, ScheduleId> repository;
 
-    public ScheduleSearchService(final JpaRepository repository) {
+    @Autowired
+    public ScheduleSearchService(final JpaRepository<Schedule, ScheduleId> repository) {
         this.repository = repository;
     }
 

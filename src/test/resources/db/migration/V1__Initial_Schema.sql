@@ -210,3 +210,19 @@ create index if not exists idx_16413_player_stats_year
 create index if not exists idx_16413_player_stats_player_id
     on player_stats_sum_t (player_id);
 
+create table if not exists schedule_t
+(
+    year char(4),
+    sequence bigint,
+    type bigint,
+    data varchar(50),
+    scheduled date,
+    status bigint
+);
+
+create index if not exists idx_16416_schedule_year
+    on schedule_t (year);
+
+create index if not exists idx_16416_schedule_sequence
+    on schedule_t (sequence);
+
