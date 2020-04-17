@@ -10,7 +10,7 @@ import java.time.LocalDate
 class PlayerSearchTest extends NATCFunctionalTest {
 
     @Autowired
-    private PlayerRepository playerRepository;
+    PlayerRepository playerRepository;
 
     def setup() {
         playerRepository.deleteAll()
@@ -38,7 +38,7 @@ class PlayerSearchTest extends NATCFunctionalTest {
 
     def 'player search endpoint provides all player fields'() {
         given: 'a player exists in the database'
-        def returnDate = LocalDate.now()
+        def dateOfReturn = LocalDate.now()
         def player = Player.builder()
                 .playerId(123)
                 .teamId(321)
@@ -62,7 +62,7 @@ class PlayerSearchTest extends NATCFunctionalTest {
                 .durability(1.414)
                 .rookie(1)
                 .injured(0)
-                .returnDate(returnDate)
+                .returnDate(dateOfReturn)
                 .freeAgent(1)
                 .signed(0)
                 .released(1)
@@ -80,10 +80,11 @@ class PlayerSearchTest extends NATCFunctionalTest {
         when: 'a request is sent to the player search endpoint'
         def response = restClient.get(path: '/api/players/search', contentType: 'application/json')
 
-        then: 'the response should contain the player'
+        then: 'the response should contain all of the player fields'
         with(response) {
             status == 200
             data.status == 'SUCCESS'
+            data.resources.size == 1
             with(data.resources[0]) {
                 playerId == 123
                 teamId == 321
@@ -107,7 +108,7 @@ class PlayerSearchTest extends NATCFunctionalTest {
                 durability == 1.414
                 rookie == true
                 injured == false
-                returnDate == returnDate
+                returnDate == dateOfReturn.toString()
                 freeAgent == true
                 signed == false
                 released == true

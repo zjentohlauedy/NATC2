@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class TeamDefenseSummarySearchTest extends NATCFunctionalTest {
 
     @Autowired
-    def TeamDefenseSummaryRepository repository
+    TeamDefenseSummaryRepository repository
 
     def setup() {
         repository.deleteAll()
