@@ -226,3 +226,45 @@ create index if not exists idx_16416_schedule_year
 create index if not exists idx_16416_schedule_sequence
     on schedule_t (sequence);
 
+create table if not exists teamgames_t
+(
+    game_id bigint,
+    year char(4),
+    datestamp date,
+    type bigint,
+    playoff_round bigint,
+    team_id bigint,
+    opponent bigint,
+    road bigint,
+    overtime bigint,
+    win bigint,
+    possessions bigint,
+    possession_time bigint,
+    attempts bigint,
+    goals bigint,
+    turnovers bigint,
+    steals bigint,
+    penalties bigint,
+    offensive_penalties bigint,
+    psa bigint,
+    psm bigint,
+    ot_psa bigint,
+    ot_psm bigint,
+    period1_score bigint,
+    period2_score bigint,
+    period3_score bigint,
+    period4_score bigint,
+    period5_score bigint,
+    overtime_score bigint,
+    total_score bigint
+);
+
+create index if not exists idx_16419_teamgames_game_id
+    on teamgames_t (game_id);
+
+create index if not exists idx_16419_teamgames_datestamp
+    on teamgames_t (datestamp);
+
+create index if not exists idx_16419_teamgames_year
+    on teamgames_t (year);
+
