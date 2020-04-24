@@ -146,17 +146,9 @@ class TeamSearchTest extends NATCFunctionalTest {
     }
 
     def 'team search endpoint returns empty list when no matching teams found'() {
-        given: 'three teams exists in the database'
-        def teams = [
-                Team.builder().teamId(1).year("2000").build(),
-                Team.builder().teamId(2).year("2000").build(),
-                Team.builder().teamId(3).year("2000").build()
-        ]
-
-        teamRepository.saveAll(teams)
-
-        when: 'a request is sent to the team search endpoint for team-id 4'
-        def response = restClient.get(path: '/api/teams/search', contentType: 'application/json', query: ['team-id': 4])
+        given: 'no teams exists in the database'
+        when: 'a request is sent to the team search endpoint'
+        def response = restClient.get(path: '/api/teams/search', contentType: 'application/json')
 
         then: 'the response should contain an empty resources list'
         with(response) {

@@ -118,17 +118,9 @@ class TeamDefenseSummarySearchTest extends NATCFunctionalTest {
     }
 
     def 'team defense summary search endpoint returns empty list when no matching records found'() {
-        given: 'three records exist in the database'
-        def teamDefenseSummaries = [
-                TeamDefenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
-                TeamDefenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
-                TeamDefenseSummary.builder().year("2002").type(GameType.ALLSTAR.getValue()).teamId(3).build()
-        ]
-
-        repository.saveAll(teamDefenseSummaries)
-
-        when: 'a request is sent to the team defense summary search endpoint for year 2003'
-        def response = restClient.get(path: '/api/team-defense-summaries/search', contentType: 'application/json', query: ['year': '2003'])
+        given: 'no records exist in the database'
+        when: 'a request is sent to the team defense summary search endpoint'
+        def response = restClient.get(path: '/api/team-defense-summaries/search', contentType: 'application/json')
 
         then: 'the response should contain an empty resources list'
         with(response) {

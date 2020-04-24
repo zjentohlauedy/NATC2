@@ -94,17 +94,9 @@ class ScheduleSearchTest extends NATCFunctionalTest {
     }
 
     def 'schedule search endpoint returns an empty list when no matching schedules are found'() {
-        given: 'three schedules exist in the database'
-        def schedules = [
-                Schedule.builder().year('2000').sequence(1).build(),
-                Schedule.builder().year('2001').sequence(2).build(),
-                Schedule.builder().year('2002').sequence(3).build()
-        ]
-
-        scheduleRepository.saveAll(schedules)
-
-        when: 'a request is sent to the schedule search endpoint for sequence 4'
-        def response = restClient.get(path: '/api/schedules/search', contentType: 'application/json', query: ['sequence': 4])
+        given: 'no schedules exist in the database'
+        when: 'a request is sent to the schedule search endpoint'
+        def response = restClient.get(path: '/api/schedules/search', contentType: 'application/json')
 
         then: 'the response should contain an empty resources list'
         with(response) {

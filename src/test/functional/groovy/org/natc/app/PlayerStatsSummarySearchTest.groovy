@@ -124,17 +124,9 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
     }
 
     def 'player stats summary search endpoint returns empty list when no matching records found'() {
-        given: 'three records exist in the database'
-        def playerStatsSummaries = [
-                PlayerStatsSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
-                PlayerStatsSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).playerId(2).teamId(2).build(),
-                PlayerStatsSummary.builder().year("2002").type(GameType.POSTSEASON.getValue()).playerId(3).teamId(3).build()
-        ]
-
-        repository.saveAll(playerStatsSummaries)
-
-        when: 'a request is sent to the player stats summary search endpoint for year 2003'
-        def response = restClient.get(path: '/api/player-stats-summaries/search', contentType: 'application/json', query: ['year': '2003'])
+        given: 'no records exist in the database'
+        when: 'a request is sent to the player stats summary search endpoint'
+        def response = restClient.get(path: '/api/player-stats-summaries/search', contentType: 'application/json')
 
         then: 'the response should contain an empty resources list'
         with(response) {

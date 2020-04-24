@@ -125,17 +125,9 @@ class ManagerSearchTest extends NATCFunctionalTest {
     }
 
     def 'manager search endpoint returns empty list when no matching managers found'() {
-        given: 'three managers exist in the database'
-        def managers = [
-                Manager.builder().managerId(1).year('1999').build(),
-                Manager.builder().managerId(2).year('1999').build(),
-                Manager.builder().managerId(3).year('1999').build()
-        ]
-
-        managerRepository.saveAll(managers)
-
-        when: 'a request is sent to the manager search endpoint for manager id 4'
-        def response = restClient.get(path: '/api/managers/search', contentType: 'application/json', query: ['manager-id': 4])
+        given: 'no managers exist in the database'
+        when: 'a request is sent to the manager search endpoint'
+        def response = restClient.get(path: '/api/managers/search', contentType: 'application/json')
 
         then: 'the response should contain an empty resources list'
         with(response) {

@@ -147,17 +147,9 @@ class PlayerSearchTest extends NATCFunctionalTest {
     }
 
     def 'player search endpoint returns an empty list when no matching players are found'() {
-        given: 'three players exist in the database'
-        def players = [
-                Player.builder().playerId(1).year('2020').build(),
-                Player.builder().playerId(2).year('2020').build(),
-                Player.builder().playerId(3).year('2020').build()
-        ]
-
-        playerRepository.saveAll(players)
-
-        when: 'a request is sent to the player search endpoint for player id 4'
-        def response = restClient.get(path: '/api/players/search', contentType: 'application/json', query: ['player-id': 4])
+        given: 'no players exist in the database'
+        when: 'a request is sent to the player search endpoint'
+        def response = restClient.get(path: '/api/players/search', contentType: 'application/json')
 
         then: 'the response should contain an empty resources list'
         with(response) {
