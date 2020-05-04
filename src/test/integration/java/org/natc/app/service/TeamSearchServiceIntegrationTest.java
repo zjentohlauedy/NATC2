@@ -385,8 +385,6 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
-                Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(0).build(),
-                Team.builder().teamId(2).year("2000").division(2).conference(2).allstarTeam(1).build(),
                 Team.builder().teamId(1).year("2001").division(2).conference(2).allstarTeam(1).build()
         );
 
@@ -853,8 +851,6 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
-                Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(0).build(),
-                Team.builder().teamId(2).year("2000").division(2).conference(2).allstarTeam(1).build(),
                 Team.builder().teamId(1).year("2001").division(2).conference(2).allstarTeam(1).build()
         );
 
