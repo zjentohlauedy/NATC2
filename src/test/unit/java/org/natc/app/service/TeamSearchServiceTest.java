@@ -156,7 +156,7 @@ class TeamSearchServiceTest {
     }
 
     @Test
-    public void fetchAll_ShouldMapAllstarTeamValueFromIntegerToBooleanInReponseWhenFalse() {
+    public void fetchAll_ShouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenFalse() {
         final Team team = Team.builder().allstarTeam(0).build();
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
@@ -171,7 +171,7 @@ class TeamSearchServiceTest {
     }
 
     @Test
-    public void fetchAll_ShouldMapAllstarTeamValueFromIntegerToBooleanInReponseWhenTrue() {
+    public void fetchAll_ShouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenTrue() {
         final Team team = Team.builder().allstarTeam(1).build();
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
@@ -186,7 +186,7 @@ class TeamSearchServiceTest {
     }
 
     @Test
-    public void fetchAll_ShouldMapAllstarTeamValueFromIntegerToBooleanInReponseWhenNull() {
+    public void fetchAll_ShouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenNull() {
         final Team team = new Team();
 
         when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
