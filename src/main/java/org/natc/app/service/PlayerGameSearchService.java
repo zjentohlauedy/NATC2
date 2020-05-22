@@ -2,19 +2,24 @@ package org.natc.app.service;
 
 import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.domain.PlayerGame;
+import org.natc.app.entity.domain.PlayerGameId;
 import org.natc.app.entity.request.PlayerGameSearchRequest;
 import org.natc.app.entity.response.PlayerGameResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PlayerGameSearchService {
 
-    private final JpaRepository repository;
+    private final JpaRepository<PlayerGame, PlayerGameId> repository;
 
-    public PlayerGameSearchService(final JpaRepository repository) {
+    @Autowired
+    public PlayerGameSearchService(final JpaRepository<PlayerGame, PlayerGameId> repository) {
         this.repository = repository;
     }
 

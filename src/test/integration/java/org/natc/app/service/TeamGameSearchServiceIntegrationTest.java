@@ -60,7 +60,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     }
 
     @Test
-    public void shouldMapAllTeamFieldsToTheResponse() {
+    public void shouldMapAllTeamGameFieldsToTheResponse() {
         final TeamGame teamGame = TeamGame.builder()
                 .gameId(1234)
                 .year("1984")

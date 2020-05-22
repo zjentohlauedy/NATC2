@@ -268,3 +268,87 @@ create index if not exists idx_16419_teamgames_datestamp
 create index if not exists idx_16419_teamgames_year
     on teamgames_t (year);
 
+create table if not exists playergames_t
+(
+    game_id bigint,
+    year char(4),
+    datestamp date,
+    type bigint,
+    player_id bigint,
+    team_id bigint,
+    injured bigint,
+    started bigint,
+    playing_time bigint,
+    attempts bigint,
+    goals bigint,
+    assists bigint,
+    turnovers bigint,
+    stops bigint,
+    steals bigint,
+    penalties bigint,
+    offensive_penalties bigint,
+    psa bigint,
+    psm bigint,
+    ot_psa bigint,
+    ot_psm bigint,
+    offense bigint,
+    points bigint
+);
+
+create index if not exists idx_16407_playergames_penalties
+    on playergames_t (penalties);
+
+create index if not exists idx_16407_playergames_turnovers
+    on playergames_t (turnovers);
+
+create index if not exists idx_16407_playergames_points
+    on playergames_t (points);
+
+create index if not exists idx_16407_playergames_stops
+    on playergames_t (stops);
+
+create index if not exists idx_16407_playergames_psa
+    on playergames_t (psa);
+
+create index if not exists idx_16407_playergames_psm
+    on playergames_t (psm);
+
+create index if not exists idx_16407_playergames_datestamp
+    on playergames_t (datestamp);
+
+create index if not exists idx_16407_playergames_goals
+    on playergames_t (goals);
+
+create index if not exists idx_16407_playergames_player_id
+    on playergames_t (player_id);
+
+create index if not exists idx_16407_playergames_ot_psa
+    on playergames_t (ot_psa);
+
+create index if not exists idx_16407_playergames_year
+    on playergames_t (year);
+
+create index if not exists idx_16407_playergames_team_id
+    on playergames_t (team_id);
+
+create index if not exists idx_16407_playergames_playing_time
+    on playergames_t (playing_time);
+
+create index if not exists idx_16407_playergames_game_id
+    on playergames_t (game_id);
+
+create index if not exists idx_16407_playergames_ot_psm
+    on playergames_t (ot_psm);
+
+create index if not exists idx_16407_playergames_attempts
+    on playergames_t (attempts);
+
+create index if not exists idx_16407_playergames_steals
+    on playergames_t (steals);
+
+create index if not exists idx_16407_playergames_offense
+    on playergames_t (offense);
+
+create index if not exists idx_16407_playergames_assists
+    on playergames_t (assists);
+

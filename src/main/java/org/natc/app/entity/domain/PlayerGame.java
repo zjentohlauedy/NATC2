@@ -5,17 +5,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import java.time.LocalDate;
 
+@Entity(name = "playergames_t")
+@IdClass(PlayerGameId.class)
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerGame {
+    @Id
     private Integer gameId;
     private String year;
     private LocalDate datestamp;
     private Integer type;
+    @Id
     private Integer playerId;
     private Integer teamId;
     private Integer injured;
@@ -29,9 +37,13 @@ public class PlayerGame {
     private Integer steals;
     private Integer penalties;
     private Integer offensivePenalties;
+    @Column(name = "psa")
     private Integer penaltyShotsAttempted;
+    @Column(name = "psm")
     private Integer penaltyShotsMade;
+    @Column(name = "ot_psa")
     private Integer overtimePenaltyShotsAttempted;
+    @Column(name = "ot_psm")
     private Integer overtimePenaltyShotsMade;
     private Integer offense;
     private Integer points;
