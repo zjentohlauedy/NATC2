@@ -1,6 +1,7 @@
 package org.natc.app.entity.response;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.domain.PlayerGame;
 
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import static org.natc.app.util.BooleanHelper.valueOf;
 
 @Getter
+@NoArgsConstructor
 public class PlayerGameResponse {
     private Integer gameId;
     private String year;
