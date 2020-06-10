@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.4.RELEASE'
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 	id 'groovy'
@@ -49,9 +49,8 @@ dependencies {
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'io.zonky.test:embedded-database-spring-test:+'
-	testImplementation 'org.codehaus.groovy:groovy-all:2.5.10'
 	testImplementation 'org.codehaus.groovy.modules.http-builder:http-builder:+'
-	testImplementation platform('org.spockframework:spock-bom:2.0-M1-groovy-2.5')
+	testImplementation platform('org.spockframework:spock-bom:2.0-M2-groovy-2.5')
 	testImplementation 'org.spockframework:spock-core'
 	testImplementation 'org.spockframework:spock-spring'
 	testImplementation enforcedPlatform('io.zonky.test.postgres:embedded-postgres-binaries-bom:12.1.0')
@@ -62,6 +61,6 @@ test {
 }
 
 wrapper {
-	gradleVersion = '6.2'
+	gradleVersion = '6.5'
 	distributionType = Wrapper.DistributionType.ALL
 }
