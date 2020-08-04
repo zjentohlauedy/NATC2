@@ -553,7 +553,8 @@ class PlayerGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest 
         final List<PlayerGame> playerGameList = Arrays.asList(
                 PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
                 PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
-                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
+                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build(),
+                PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
         );
 
         repository.saveAll(playerGameList);
@@ -1215,7 +1216,8 @@ class PlayerGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest 
         final List<PlayerGame> playerGameList = Arrays.asList(
                 PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
                 PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
-                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
+                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build(),
+                PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
         );
 
         repository.saveAll(playerGameList);
@@ -1382,7 +1384,8 @@ class PlayerGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest 
         final List<PlayerGame> playerGameList = Arrays.asList(
                 PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
                 PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
-                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
+                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build(),
+                PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
         );
 
         repository.saveAll(playerGameList);
@@ -1498,7 +1501,8 @@ class PlayerGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest 
         final List<PlayerGame> playerGameList = Arrays.asList(
                 PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
                 PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
-                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
+                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build(),
+                PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
         );
 
         repository.saveAll(playerGameList);
@@ -1614,7 +1618,8 @@ class PlayerGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest 
         final List<PlayerGame> playerGameList = Arrays.asList(
                 PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
                 PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(1).teamId(1).build(),
-                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
+                PlayerGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build(),
+                PlayerGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).playerId(2).teamId(1).build()
         );
 
         repository.saveAll(playerGameList);
