@@ -1,19 +1,24 @@
 package org.natc.app.service;
 
 import org.natc.app.entity.domain.Injury;
+import org.natc.app.entity.domain.InjuryId;
 import org.natc.app.entity.request.InjurySearchRequest;
 import org.natc.app.entity.response.InjuryResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InjurySearchService {
+@Service
+public class InjurySearchService implements NATCService<InjuryResponse, InjurySearchRequest> {
 
-    private final JpaRepository repository;
+    private final JpaRepository<Injury, InjuryId> repository;
 
-    public InjurySearchService(final JpaRepository repository) {
+    @Autowired
+    public InjurySearchService(final JpaRepository<Injury, InjuryId> repository) {
         this.repository = repository;
     }
 

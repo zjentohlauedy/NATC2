@@ -352,3 +352,19 @@ create index if not exists idx_16407_playergames_offense
 create index if not exists idx_16407_playergames_assists
     on playergames_t (assists);
 
+create table if not exists injuries_t
+(
+    game_id bigint,
+    player_id bigint,
+    team_id bigint,
+    duration bigint
+);
+
+create index if not exists idx_16398_injury_player_id
+    on injuries_t (player_id);
+
+create index if not exists idx_16398_injury_team_id
+    on injuries_t (team_id);
+
+create index if not exists idx_16398_injury_game_id
+    on injuries_t (game_id);
