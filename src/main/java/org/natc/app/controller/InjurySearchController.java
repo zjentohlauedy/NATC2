@@ -4,19 +4,30 @@ import org.natc.app.entity.request.InjurySearchRequest;
 import org.natc.app.entity.response.InjuryResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.service.NATCService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@Controller
+@RequestMapping("/api/injuries")
 public class InjurySearchController {
 
     private final NATCService<InjuryResponse, InjurySearchRequest> service;
 
+    @Autowired
     public InjurySearchController(final NATCService<InjuryResponse, InjurySearchRequest> service) {
         this.service = service;
     }
 
-    public ResponseEntity<ResponseEnvelope<InjuryResponse>> search(final Integer gameId, final Integer playerId, final Integer teamId) {
+    @RequestMapping("/search")
+    public ResponseEntity<ResponseEnvelope<InjuryResponse>> search(
+            @RequestParam(name = "game-id", required = false) final Integer gameId,
+            @RequestParam(name = "player-id", required = false) final Integer playerId,
+            @RequestParam(name = "team-id", required = false) final Integer teamId) {
         final InjurySearchRequest request = InjurySearchRequest.builder()
                 .gameId(gameId)
                 .playerId(playerId)
