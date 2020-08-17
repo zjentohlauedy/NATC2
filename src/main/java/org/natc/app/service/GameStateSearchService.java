@@ -3,17 +3,21 @@ package org.natc.app.service;
 import org.natc.app.entity.domain.GameState;
 import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class GameStateSearchService implements NATCService<GameStateResponse, GameStateSearchRequest> {
 
-    private JpaRepository repository;
+    private final JpaRepository<GameState, Integer> repository;
 
-    public GameStateSearchService(final JpaRepository repository) {
+    @Autowired
+    public GameStateSearchService(final JpaRepository<GameState, Integer> repository) {
         this.repository = repository;
     }
 

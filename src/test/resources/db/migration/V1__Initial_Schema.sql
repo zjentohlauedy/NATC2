@@ -368,3 +368,21 @@ create index if not exists idx_16398_injury_team_id
 
 create index if not exists idx_16398_injury_game_id
     on injuries_t (game_id);
+
+create table if not exists gamestate_t
+(
+    game_id bigint,
+    started bigint,
+    start_time bigint,
+    sequence bigint,
+    period bigint,
+    overtime bigint,
+    time_remaining bigint,
+    clock_stopped bigint,
+    possession bigint,
+    last_event varchar(200)
+);
+
+create index if not exists idx_16395_gamestate_game_id
+    on gamestate_t (game_id);
+
