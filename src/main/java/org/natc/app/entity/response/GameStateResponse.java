@@ -1,6 +1,7 @@
 package org.natc.app.entity.response;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.natc.app.entity.domain.GameState;
 import org.natc.app.entity.domain.Period;
 import org.natc.app.entity.domain.PossessionType;
@@ -8,6 +9,7 @@ import org.natc.app.entity.domain.PossessionType;
 import static org.natc.app.util.BooleanHelper.valueOf;
 
 @Getter
+@NoArgsConstructor
 public class GameStateResponse {
     private Integer gameId;
     private Boolean started;
