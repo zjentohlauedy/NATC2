@@ -4,19 +4,28 @@ import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.service.NATCService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@Controller
+@RequestMapping("/api/game-states")
 public class GameStateSearchController {
 
     private final NATCService<GameStateResponse, GameStateSearchRequest> service;
 
+    @Autowired
     public GameStateSearchController(final NATCService<GameStateResponse, GameStateSearchRequest> service) {
         this.service = service;
     }
 
-    public ResponseEntity<ResponseEnvelope<GameStateResponse>> search(final Integer gameId) {
+    @RequestMapping("/search")
+    public ResponseEntity<ResponseEnvelope<GameStateResponse>> search(
+            @RequestParam(name = "game-id", required = false) final Integer gameId) {
         final GameStateSearchRequest request = GameStateSearchRequest.builder()
                 .gameId(gameId)
                 .build();

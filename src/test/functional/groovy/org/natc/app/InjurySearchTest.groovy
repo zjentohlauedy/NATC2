@@ -14,7 +14,7 @@ class InjurySearchTest extends NATCFunctionalTest {
     }
 
     def 'injury search endpoint returns injury data'() {
-        given: 'a schedule exists in the database'
+        given: 'an injury record exists in the database'
         def injury = Injury.builder().gameId(123).playerId(4321).build()
         injuryRepository.save(injury)
 
@@ -34,7 +34,7 @@ class InjurySearchTest extends NATCFunctionalTest {
     }
 
     def 'injury search endpoint provides all injury fields'() {
-        given: 'a schedule exists in the database'
+        given: 'an injury record exists in the database'
         def injury = Injury.builder()
                 .gameId(123)
                 .playerId(4321)
@@ -83,7 +83,7 @@ class InjurySearchTest extends NATCFunctionalTest {
     }
 
     def 'injury search endpoint returns an empty list when no matching injuries are found'() {
-        given: 'no injury records exist in the database'
+        given: 'no injury record exist in the database'
         when: 'a request is sent to the injury search endpoint'
         def response = restClient.get(path: '/api/injuries/search', contentType: 'application/json')
 
@@ -107,7 +107,7 @@ class InjurySearchTest extends NATCFunctionalTest {
         when: 'a request is sent to the injury search endpoint for game id 1'
         def response = restClient.get(path: '/api/injuries/search', contentType: 'application/json', query: ['game-id': 1])
 
-        then: 'only the matching game should be returned'
+        then: 'only the matching injury should be returned'
         with(response) {
             status == 200
             data.status == 'SUCCESS'
@@ -128,7 +128,7 @@ class InjurySearchTest extends NATCFunctionalTest {
         when: 'a request is sent to the injury search endpoint for player id 5'
         def response = restClient.get(path: '/api/injuries/search', contentType: 'application/json', query: ['player-id': 5])
 
-        then: 'only the matching game should be returned'
+        then: 'only the matching injury should be returned'
         with(response) {
             status == 200
             data.status == 'SUCCESS'
@@ -149,7 +149,7 @@ class InjurySearchTest extends NATCFunctionalTest {
         when: 'a request is sent to the injury search endpoint for team id 9'
         def response = restClient.get(path: '/api/injuries/search', contentType: 'application/json', query: ['team-id': 9])
 
-        then: 'only the matching game should be returned'
+        then: 'only the matching injury should be returned'
         with(response) {
             status == 200
             data.status == 'SUCCESS'
