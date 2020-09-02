@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PlayerSearchService implements NATCService<PlayerResponse, PlayerSearchRequest> {
+public class PlayerSearchService implements NATCSearchService<PlayerResponse, PlayerSearchRequest> {
 
     private final JpaRepository<Player, PlayerId> repository;
 

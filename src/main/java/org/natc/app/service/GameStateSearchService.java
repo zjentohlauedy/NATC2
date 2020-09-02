@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GameStateSearchService implements NATCService<GameStateResponse, GameStateSearchRequest> {
+public class GameStateSearchService implements NATCSearchService<GameStateResponse, GameStateSearchRequest> {
 
     private final JpaRepository<GameState, Integer> repository;
 

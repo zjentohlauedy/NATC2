@@ -2,6 +2,6 @@ package org.natc.app.service;
 
 import java.util.List;
 
-public interface NATCService<T, E> {
+public interface NATCSearchService<T, E> {
     List<T> fetchAll(E request);
 }

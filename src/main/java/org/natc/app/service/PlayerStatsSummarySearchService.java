@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PlayerStatsSummarySearchService implements NATCService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> {
+public class PlayerStatsSummarySearchService implements NATCSearchService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> {
 
     private JpaRepository<PlayerStatsSummary, PlayerStatsSummaryId> repository;
 

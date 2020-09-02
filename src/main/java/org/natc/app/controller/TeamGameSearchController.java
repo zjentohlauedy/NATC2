@@ -4,7 +4,7 @@ import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.request.TeamGameSearchRequest;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.TeamGameResponse;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +19,10 @@ import java.util.List;
 @RequestMapping("/api/team-games")
 public class TeamGameSearchController {
 
-    private final NATCService<TeamGameResponse, TeamGameSearchRequest> service;
+    private final NATCSearchService<TeamGameResponse, TeamGameSearchRequest> service;
 
     @Autowired
-    public TeamGameSearchController(final NATCService<TeamGameResponse, TeamGameSearchRequest> service) {
+    public TeamGameSearchController(final NATCSearchService<TeamGameResponse, TeamGameSearchRequest> service) {
         this.service = service;
     }
 

@@ -4,7 +4,7 @@ import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.request.PlayerStatsSummarySearchRequest;
 import org.natc.app.entity.response.PlayerStatsSummaryResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/api/player-stats-summaries")
 public class PlayerStatsSummarySearchController {
 
-    private final NATCService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> service;
+    private final NATCSearchService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> service;
 
     @Autowired
-    public PlayerStatsSummarySearchController(final NATCService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> service) {
+    public PlayerStatsSummarySearchController(final NATCSearchService<PlayerStatsSummaryResponse, PlayerStatsSummarySearchRequest> service) {
         this.service = service;
     }
 

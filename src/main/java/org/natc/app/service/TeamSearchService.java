@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static java.lang.Boolean.TRUE;
 
 @Service
-public class TeamSearchService implements NATCService<TeamResponse, TeamSearchRequest> {
+public class TeamSearchService implements NATCSearchService<TeamResponse, TeamSearchRequest> {
 
     private final JpaRepository<Team, TeamId> repository;
 

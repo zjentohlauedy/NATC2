@@ -10,7 +10,7 @@ import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.ResponseStatus;
 import org.natc.app.entity.response.ScheduleResponse;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 class ScheduleSearchControllerTest {
 
     @Mock
-    private NATCService scheduleSearchService;
+    private NATCSearchService scheduleSearchService;
 
     @InjectMocks
     private ScheduleSearchController scheduleSearchController;

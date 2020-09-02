@@ -11,7 +11,7 @@ import org.natc.app.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.ResponseStatus;
 import org.natc.app.entity.response.TeamOffenseSummaryResponse;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 class TeamOffenseSummarySearchControllerTest {
 
     @Mock
-    private NATCService searchService;
+    private NATCSearchService searchService;
 
     @InjectMocks
     private TeamOffenseSummarySearchController controller;

@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.ManagerSearchRequest;
 import org.natc.app.entity.response.ManagerResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/api/managers")
 public class ManagerSearchController {
 
-    private final NATCService<ManagerResponse, ManagerSearchRequest> service;
+    private final NATCSearchService<ManagerResponse, ManagerSearchRequest> service;
 
     @Autowired
-    public ManagerSearchController(final NATCService<ManagerResponse, ManagerSearchRequest> service) {
+    public ManagerSearchController(final NATCSearchService<ManagerResponse, ManagerSearchRequest> service) {
         this.service = service;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ManagerSearchService implements NATCService<ManagerResponse, ManagerSearchRequest> {
+public class ManagerSearchService implements NATCSearchService<ManagerResponse, ManagerSearchRequest> {
 
     private final JpaRepository<Manager, ManagerId> repository;
 

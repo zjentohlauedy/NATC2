@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.ScheduleResponse;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("/api/schedules")
 public class ScheduleSearchController {
 
-    private final NATCService<ScheduleResponse, ScheduleSearchRequest> service;
+    private final NATCSearchService<ScheduleResponse, ScheduleSearchRequest> service;
 
     @Autowired
-    public ScheduleSearchController(final NATCService<ScheduleResponse, ScheduleSearchRequest> service) {
+    public ScheduleSearchController(final NATCSearchService<ScheduleResponse, ScheduleSearchRequest> service) {
         this.service = service;
     }
 

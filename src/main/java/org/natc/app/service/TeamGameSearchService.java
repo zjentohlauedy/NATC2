@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TeamGameSearchService implements NATCService<TeamGameResponse, TeamGameSearchRequest> {
+public class TeamGameSearchService implements NATCSearchService<TeamGameResponse, TeamGameSearchRequest> {
 
     private final JpaRepository<TeamGame, TeamGameId> repository;
 

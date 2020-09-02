@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.PlayerSearchRequest;
 import org.natc.app.entity.response.PlayerResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/api/players")
 public class PlayerSearchController {
 
-    private final NATCService<PlayerResponse, PlayerSearchRequest> service;
+    private final NATCSearchService<PlayerResponse, PlayerSearchRequest> service;
 
     @Autowired
-    public PlayerSearchController(final NATCService<PlayerResponse, PlayerSearchRequest> service) {
+    public PlayerSearchController(final NATCSearchService<PlayerResponse, PlayerSearchRequest> service) {
         this.service = service;
     }
 

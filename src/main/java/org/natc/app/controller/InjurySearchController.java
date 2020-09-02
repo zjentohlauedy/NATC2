@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.InjurySearchRequest;
 import org.natc.app.entity.response.InjuryResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("/api/injuries")
 public class InjurySearchController {
 
-    private final NATCService<InjuryResponse, InjurySearchRequest> service;
+    private final NATCSearchService<InjuryResponse, InjurySearchRequest> service;
 
     @Autowired
-    public InjurySearchController(final NATCService<InjuryResponse, InjurySearchRequest> service) {
+    public InjurySearchController(final NATCSearchService<InjuryResponse, InjurySearchRequest> service) {
         this.service = service;
     }
 

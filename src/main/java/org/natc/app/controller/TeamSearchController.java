@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.TeamSearchRequest;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.TeamResponse;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/api/teams")
 public class TeamSearchController {
 
-    private final NATCService<TeamResponse, TeamSearchRequest> service;
+    private final NATCSearchService<TeamResponse, TeamSearchRequest> service;
 
     @Autowired
-    public TeamSearchController(final NATCService<TeamResponse, TeamSearchRequest> service) {
+    public TeamSearchController(final NATCSearchService<TeamResponse, TeamSearchRequest> service) {
         this.service = service;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ScheduleSearchService implements NATCService<ScheduleResponse, ScheduleSearchRequest> {
+public class ScheduleSearchService implements NATCSearchService<ScheduleResponse, ScheduleSearchRequest> {
 
     private final JpaRepository<Schedule, ScheduleId> repository;
 

@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("/api/game-states")
 public class GameStateSearchController {
 
-    private final NATCService<GameStateResponse, GameStateSearchRequest> service;
+    private final NATCSearchService<GameStateResponse, GameStateSearchRequest> service;
 
     @Autowired
-    public GameStateSearchController(final NATCService<GameStateResponse, GameStateSearchRequest> service) {
+    public GameStateSearchController(final NATCSearchService<GameStateResponse, GameStateSearchRequest> service) {
         this.service = service;
     }
 

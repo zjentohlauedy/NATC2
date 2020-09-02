@@ -10,7 +10,7 @@ import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.ResponseStatus;
-import org.natc.app.service.NATCService;
+import org.natc.app.service.NATCSearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 class GameStateSearchControllerTest {
 
     @Mock
-    private NATCService gameStateSearchService;
+    private NATCSearchService gameStateSearchService;
 
     @InjectMocks
     private GameStateSearchController gameStateSearchController;

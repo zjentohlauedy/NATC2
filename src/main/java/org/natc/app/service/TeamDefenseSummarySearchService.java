@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TeamDefenseSummarySearchService implements NATCService<TeamDefenseSummaryResponse, TeamDefenseSummarySearchRequest> {
+public class TeamDefenseSummarySearchService implements NATCSearchService<TeamDefenseSummaryResponse, TeamDefenseSummarySearchRequest> {
 
     private final JpaRepository<TeamDefenseSummary, TeamDefenseSummaryId> repository;
 
