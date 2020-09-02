@@ -6,6 +6,7 @@ import org.natc.app.entity.domain.PlayerGame;
 import org.natc.app.entity.request.PlayerGameSearchRequest;
 import org.natc.app.entity.response.PlayerGameResponse;
 import org.natc.app.repository.PlayerGameRepository;
+import org.natc.app.service.search.PlayerGameSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

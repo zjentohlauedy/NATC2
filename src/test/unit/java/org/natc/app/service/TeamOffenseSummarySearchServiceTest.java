@@ -12,6 +12,7 @@ import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.domain.TeamOffenseSummary;
 import org.natc.app.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.app.entity.response.TeamOffenseSummaryResponse;
+import org.natc.app.service.search.TeamOffenseSummarySearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

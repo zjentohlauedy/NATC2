@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import java.util.List;
 

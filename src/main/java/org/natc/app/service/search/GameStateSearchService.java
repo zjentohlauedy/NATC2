@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.natc.app.entity.domain.GameState;
 import org.natc.app.entity.request.GameStateSearchRequest;

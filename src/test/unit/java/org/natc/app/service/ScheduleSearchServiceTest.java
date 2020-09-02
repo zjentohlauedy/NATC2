@@ -13,6 +13,7 @@ import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
 import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ScheduleResponse;
+import org.natc.app.service.search.ScheduleSearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

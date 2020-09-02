@@ -3,7 +3,7 @@ package org.natc.app.controller;
 import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.ScheduleResponse;
-import org.natc.app.service.NATCSearchService;
+import org.natc.app.service.search.NATCSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

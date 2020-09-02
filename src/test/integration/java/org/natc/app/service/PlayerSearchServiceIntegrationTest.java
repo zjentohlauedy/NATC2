@@ -6,6 +6,7 @@ import org.natc.app.entity.domain.PlayerAward;
 import org.natc.app.entity.request.PlayerSearchRequest;
 import org.natc.app.entity.response.PlayerResponse;
 import org.natc.app.repository.PlayerRepository;
+import org.natc.app.service.search.PlayerSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

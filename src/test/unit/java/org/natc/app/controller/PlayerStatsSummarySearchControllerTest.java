@@ -11,7 +11,7 @@ import org.natc.app.entity.request.PlayerStatsSummarySearchRequest;
 import org.natc.app.entity.response.PlayerStatsSummaryResponse;
 import org.natc.app.entity.response.ResponseEnvelope;
 import org.natc.app.entity.response.ResponseStatus;
-import org.natc.app.service.NATCSearchService;
+import org.natc.app.service.search.NATCSearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

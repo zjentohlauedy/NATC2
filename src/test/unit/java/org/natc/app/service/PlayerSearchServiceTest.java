@@ -12,6 +12,7 @@ import org.natc.app.entity.domain.Player;
 import org.natc.app.entity.domain.PlayerAward;
 import org.natc.app.entity.request.PlayerSearchRequest;
 import org.natc.app.entity.response.PlayerResponse;
+import org.natc.app.service.search.PlayerSearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

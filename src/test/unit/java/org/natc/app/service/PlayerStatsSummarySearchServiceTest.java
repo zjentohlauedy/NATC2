@@ -12,6 +12,7 @@ import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.domain.PlayerStatsSummary;
 import org.natc.app.entity.request.PlayerStatsSummarySearchRequest;
 import org.natc.app.entity.response.PlayerStatsSummaryResponse;
+import org.natc.app.service.search.PlayerStatsSummarySearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

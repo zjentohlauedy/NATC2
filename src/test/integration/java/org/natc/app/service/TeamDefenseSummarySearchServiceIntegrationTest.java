@@ -6,6 +6,7 @@ import org.natc.app.entity.domain.TeamDefenseSummary;
 import org.natc.app.entity.request.TeamDefenseSummarySearchRequest;
 import org.natc.app.entity.response.TeamDefenseSummaryResponse;
 import org.natc.app.repository.TeamDefenseSummaryRepository;
+import org.natc.app.service.search.TeamDefenseSummarySearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ class TeamDefenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
     private TeamDefenseSummaryRepository repository;
     
     @Autowired
-    private TeamDefenseSummarySearchService searchService; 
+    private TeamDefenseSummarySearchService searchService;
     
     @Test
     public void shouldReturnATeamDefenseSummaryFromTheDatabaseMappedToAResponse() {

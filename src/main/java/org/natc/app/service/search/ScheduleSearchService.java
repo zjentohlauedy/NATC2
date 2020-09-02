@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleId;

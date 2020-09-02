@@ -13,6 +13,7 @@ import org.natc.app.entity.domain.ManagerAward;
 import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.request.ManagerSearchRequest;
 import org.natc.app.entity.response.ManagerResponse;
+import org.natc.app.service.search.ManagerSearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

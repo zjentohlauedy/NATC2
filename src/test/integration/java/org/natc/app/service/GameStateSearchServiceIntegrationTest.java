@@ -7,6 +7,7 @@ import org.natc.app.entity.domain.PossessionType;
 import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
 import org.natc.app.repository.GameStateRepository;
+import org.natc.app.service.search.GameStateSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

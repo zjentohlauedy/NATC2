@@ -7,6 +7,7 @@ import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.request.ManagerSearchRequest;
 import org.natc.app.entity.response.ManagerResponse;
 import org.natc.app.repository.ManagerRepository;
+import org.natc.app.service.search.ManagerSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

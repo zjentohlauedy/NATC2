@@ -5,6 +5,7 @@ import org.natc.app.entity.domain.Team;
 import org.natc.app.entity.request.TeamSearchRequest;
 import org.natc.app.entity.response.TeamResponse;
 import org.natc.app.repository.TeamRepository;
+import org.natc.app.service.search.TeamSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

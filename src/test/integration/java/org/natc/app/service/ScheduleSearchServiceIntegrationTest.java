@@ -8,6 +8,7 @@ import org.natc.app.entity.domain.ScheduleType;
 import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ScheduleResponse;
 import org.natc.app.repository.ScheduleRepository;
+import org.natc.app.service.search.ScheduleSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.entity.domain.Injury;
 import org.natc.app.entity.request.InjurySearchRequest;
 import org.natc.app.entity.response.InjuryResponse;
+import org.natc.app.service.search.InjurySearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
