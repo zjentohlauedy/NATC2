@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.entity.request.TeamSearchRequest;
 import org.natc.app.entity.response.TeamResponse;
-import org.natc.app.service.search.TeamSearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

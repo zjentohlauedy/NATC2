@@ -1,11 +1,11 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.entity.request.TeamSearchRequest;
 import org.natc.app.entity.response.TeamResponse;
 import org.natc.app.repository.TeamRepository;
-import org.natc.app.service.search.TeamSearchService;
+import org.natc.app.service.NATCServiceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.GameType;
@@ -6,7 +6,7 @@ import org.natc.app.entity.domain.TeamOffenseSummary;
 import org.natc.app.entity.request.TeamOffenseSummarySearchRequest;
 import org.natc.app.entity.response.TeamOffenseSummaryResponse;
 import org.natc.app.repository.TeamOffenseSummaryRepository;
-import org.natc.app.service.search.TeamOffenseSummarySearchService;
+import org.natc.app.service.NATCServiceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

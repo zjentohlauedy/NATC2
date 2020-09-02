@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.GameType;
@@ -6,7 +6,7 @@ import org.natc.app.entity.domain.PlayerGame;
 import org.natc.app.entity.request.PlayerGameSearchRequest;
 import org.natc.app.entity.response.PlayerGameResponse;
 import org.natc.app.repository.PlayerGameRepository;
-import org.natc.app.service.search.PlayerGameSearchService;
+import org.natc.app.service.NATCServiceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

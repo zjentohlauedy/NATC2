@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +13,6 @@ import org.natc.app.entity.domain.Period;
 import org.natc.app.entity.domain.PossessionType;
 import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
-import org.natc.app.service.search.GameStateSearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 

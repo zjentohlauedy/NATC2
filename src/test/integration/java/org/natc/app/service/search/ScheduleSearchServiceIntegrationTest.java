@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.natc.app.entity.domain.ScheduleType;
 import org.natc.app.entity.request.ScheduleSearchRequest;
 import org.natc.app.entity.response.ScheduleResponse;
 import org.natc.app.repository.ScheduleRepository;
-import org.natc.app.service.search.ScheduleSearchService;
+import org.natc.app.service.NATCServiceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

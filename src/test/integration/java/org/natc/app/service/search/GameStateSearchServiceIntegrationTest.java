@@ -1,4 +1,4 @@
-package org.natc.app.service;
+package org.natc.app.service.search;
 
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.GameState;
@@ -7,7 +7,7 @@ import org.natc.app.entity.domain.PossessionType;
 import org.natc.app.entity.request.GameStateSearchRequest;
 import org.natc.app.entity.response.GameStateResponse;
 import org.natc.app.repository.GameStateRepository;
-import org.natc.app.service.search.GameStateSearchService;
+import org.natc.app.service.NATCServiceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
