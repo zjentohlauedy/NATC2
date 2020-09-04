@@ -52,4 +52,31 @@ class ScheduleServiceTest {
 
         assertNull(actualSchedule);
     }
+
+    @Test
+    public void getLastScheduleEntry_ShouldCallScheduleRepository() {
+        scheduleService.getLastScheduleEntry();
+
+        verify(scheduleRepository).findFirstByStatusOrderByScheduledDesc(ScheduleStatus.COMPLETED.getValue());
+    }
+
+    @Test
+    public void getLastScheduleEntry_ShouldReturnScheduleReturnedByRepository() {
+        final Schedule expectedSchedule = new Schedule();
+
+        when(scheduleRepository.findFirstByStatusOrderByScheduledDesc(any())).thenReturn(Optional.of(expectedSchedule));
+
+        final Schedule actualSchedule = scheduleService.getLastScheduleEntry();
+
+        assertEquals(expectedSchedule, actualSchedule);
+    }
+
+    @Test
+    public void getLastScheduleEntry_ShouldReturnNullIfRepositoryDoesNotReturnASchedule() {
+        when(scheduleRepository.findFirstByStatusOrderByScheduledDesc(any())).thenReturn(Optional.empty());
+
+        final Schedule actualSchedule = scheduleService.getLastScheduleEntry();
+
+        assertNull(actualSchedule);
+    }
 }

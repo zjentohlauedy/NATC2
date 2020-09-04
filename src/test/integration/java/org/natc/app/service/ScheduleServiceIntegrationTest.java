@@ -73,4 +73,57 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         assertEquals(schedule.getSequence(), 3);
         assertEquals(schedule.getScheduled(), LocalDate.parse("2020-01-03"));
     }
+
+    @Test
+    public void getLastScheduleEntry_ShouldReturnNullIfNoSchedulesExist() {
+        final Schedule schedule = scheduleService.getLastScheduleEntry();
+
+        assertNull(schedule);
+    }
+
+    @Test
+    public void getLastScheduleEntry_ShouldReturnNullIfNoCompletedSchedulesExist() {
+        final List<Schedule> scheduleList = Arrays.asList(
+                Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
+                Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.SCHEDULED.getValue()).build()
+        );
+
+        repository.saveAll(scheduleList);
+
+        final Schedule schedule = scheduleService.getLastScheduleEntry();
+
+        assertNull(schedule);
+    }
+
+    @Test
+    public void getLastScheduleEntry_ShouldReturnCompletedSchedule() {
+        final List<Schedule> scheduleList = Arrays.asList(
+                Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
+                Schedule.builder().year("2020").sequence(3).scheduled(LocalDate.parse("2020-01-03")).status(ScheduleStatus.SCHEDULED.getValue()).build()
+        );
+
+        repository.saveAll(scheduleList);
+
+        final Schedule schedule = scheduleService.getLastScheduleEntry();
+
+        assertEquals(schedule.getSequence(), 1);
+        assertEquals(schedule.getStatus(), ScheduleStatus.COMPLETED.getValue());
+    }
+
+    @Test
+    public void getLastScheduleEntry_ShouldReturnMostRecentlyScheduledCompletedSchedule() {
+        final List<Schedule> scheduleList = Arrays.asList(
+                Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                Schedule.builder().year("2020").sequence(3).scheduled(LocalDate.parse("2020-01-03")).status(ScheduleStatus.COMPLETED.getValue()).build()
+        );
+
+        repository.saveAll(scheduleList);
+
+        final Schedule schedule = scheduleService.getLastScheduleEntry();
+
+        assertEquals(schedule.getSequence(), 3);
+        assertEquals(schedule.getScheduled(), LocalDate.parse("2020-01-03"));
+    }
 }

@@ -20,4 +20,9 @@ public class ScheduleService {
 
         return repository.findFirstByStatusOrderByScheduledDesc(ScheduleStatus.IN_PROGRESS.getValue()).orElse(null);
     }
+
+    public Schedule getLastScheduleEntry() {
+
+        return repository.findFirstByStatusOrderByScheduledDesc(ScheduleStatus.COMPLETED.getValue()).orElse(null);
+    }
 }
