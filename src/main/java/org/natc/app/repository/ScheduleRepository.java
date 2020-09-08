@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, ScheduleId> {
     Optional<Schedule> findFirstByStatusOrderByScheduledDesc(Integer status);
+    Optional<Schedule> findByYearAndSequence(String year, Integer sequence);
 }
