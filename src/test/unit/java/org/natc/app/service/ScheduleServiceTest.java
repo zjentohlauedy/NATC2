@@ -2,6 +2,7 @@ package org.natc.app.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -10,10 +11,12 @@ import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
 import org.natc.app.repository.ScheduleRepository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -118,5 +121,32 @@ class ScheduleServiceTest {
         final Schedule actualSchedule = scheduleService.getNextScheduleEntry(input);
 
         assertEquals(expectedSchedule, actualSchedule);
+    }
+
+    @Test
+    public void updateScheduleEntry_ShouldCallScheduleRepository() {
+        scheduleService.updateScheduleEntry(null);
+
+        verify(scheduleRepository).save(any());
+    }
+
+    @Test
+    public void updateScheduleEntry_ShouldCallScheduleRepositorySaveOnGivenSchedule() {
+        final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
+        final Schedule expectedSchedule = Schedule.builder()
+                .year("2000")
+                .sequence(123)
+                .scheduled(LocalDate.now())
+                .type(ScheduleType.REGULAR_SEASON.getValue())
+                .status(ScheduleStatus.SCHEDULED.getValue())
+                .build();
+
+        scheduleService.updateScheduleEntry(expectedSchedule);
+
+        verify(scheduleRepository).save(captor.capture());
+
+        final Schedule actualSchedule = captor.getValue();
+
+        assertSame(expectedSchedule, actualSchedule);
     }
 }

@@ -48,4 +48,8 @@ public class ScheduleService {
 
         return repository.findByYearAndSequence(year, sequence).orElse(null);
     }
+
+    public void updateScheduleEntry(final Schedule schedule) {
+        repository.save(schedule);
+    }
 }

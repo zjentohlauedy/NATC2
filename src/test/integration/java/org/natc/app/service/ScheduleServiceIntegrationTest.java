@@ -6,12 +6,14 @@ import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
 import org.natc.app.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
@@ -279,5 +281,33 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         final Schedule schedule = scheduleService.getNextScheduleEntry(currentSchedule);
 
         assertNull(schedule);
+    }
+
+    @Test
+    public void updateScheduleEntry_ShouldUpdateScheduleRecord() {
+        final Schedule schedule = Schedule.builder()
+                .year("2000")
+                .sequence(123)
+                .type(ScheduleType.PRESEASON.getValue())
+                .status(ScheduleStatus.SCHEDULED.getValue())
+                .build();
+
+        repository.save(schedule);
+
+        final Example<Schedule> exampleSchedule = Example.of(Schedule.builder().year("2000").sequence(123).build());
+
+        final Schedule scheduleBefore = repository.findOne(exampleSchedule).orElse(null);
+
+        assertNotNull(scheduleBefore);
+        assertEquals(ScheduleStatus.SCHEDULED.getValue(), scheduleBefore.getStatus());
+
+        schedule.setStatus(ScheduleStatus.IN_PROGRESS.getValue());
+
+        scheduleService.updateScheduleEntry(schedule);
+
+        final Schedule scheduleAfter = repository.findOne(exampleSchedule).orElse(null);
+
+        assertNotNull(scheduleAfter);
+        assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), scheduleAfter.getStatus());
     }
 }
