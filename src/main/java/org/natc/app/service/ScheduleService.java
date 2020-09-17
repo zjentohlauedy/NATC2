@@ -19,6 +19,10 @@ public class ScheduleService {
         this.repository = repository;
     }
 
+    public void generateSchedule(final String year) {
+        throw new UnsupportedOperationException("Method Not Implemented Yet");
+    }
+
     public Schedule getCurrentScheduleEntry() {
 
         return repository.findFirstByStatusOrderByScheduledDesc(ScheduleStatus.IN_PROGRESS.getValue()).orElse(null);
