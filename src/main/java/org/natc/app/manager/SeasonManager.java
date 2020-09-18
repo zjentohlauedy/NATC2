@@ -7,15 +7,19 @@ import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.processor.ScheduleProcessor;
 import org.natc.app.service.LeagueService;
 import org.natc.app.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class SeasonManager {
 
     private final ScheduleService scheduleService;
     private final ScheduleProcessorManager scheduleProcessorManager;
     private final LeagueService leagueService;
 
+    @Autowired
     public SeasonManager(final ScheduleService scheduleService, final ScheduleProcessorManager scheduleProcessorManager, final LeagueService leagueService) {
         this.scheduleService = scheduleService;
         this.scheduleProcessorManager = scheduleProcessorManager;
