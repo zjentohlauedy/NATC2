@@ -19,3 +19,7 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     password: DUMMY
+
+natc:
+  league:
+    players-per-team: 13

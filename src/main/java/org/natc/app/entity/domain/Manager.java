@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ import javax.persistence.IdClass;
 public class Manager {
     @Id
     private Integer managerId;
+    @Setter
     private Integer teamId;
     private Integer playerId;
     @Id
@@ -31,6 +33,7 @@ public class Manager {
     private Double penalties;
     private Double vitality;
     private Integer style;
+    @Setter
     private Integer newHire;
     private Integer released;
     private Integer retired;
@@ -41,4 +44,13 @@ public class Manager {
     private Integer score;
     private Integer totalSeasons;
     private Integer totalScore;
+
+    public Double getOverallRating() {
+        if (offense == null) return 0.0;
+        if (defense == null) return 0.0;
+        if (intangible == null) return 0.0;
+        if (penalties == null) return 0.0;
+
+        return (offense + defense + intangible + penalties) / 4.0;
+    }
 }

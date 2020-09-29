@@ -13,6 +13,7 @@ import org.mockito.quality.Strictness;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
+import org.natc.app.exception.LeagueProcessingException;
 import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.processor.ScheduleProcessor;
 import org.natc.app.service.LeagueService;
@@ -87,7 +88,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallLeagueServiceToGenerateLeagueIfLastScheduleEntryIsNotFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallLeagueServiceToGenerateLeagueIfLastScheduleEntryIsNotFound() throws ScheduleProcessingException, LeagueProcessingException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         seasonManager.processScheduledEvent();
@@ -105,7 +106,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldGenerateNewLeagueBeforeGeneratingNewSchedule() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldGenerateNewLeagueBeforeGeneratingNewSchedule() throws ScheduleProcessingException, LeagueProcessingException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         final InOrder inOrder = inOrder(leagueService, scheduleService);
@@ -117,7 +118,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfCurrentScheduleEntryIsFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfCurrentScheduleEntryIsFound() throws ScheduleProcessingException, LeagueProcessingException {
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
         seasonManager.processScheduledEvent();
@@ -126,7 +127,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsFound() throws ScheduleProcessingException, LeagueProcessingException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -137,7 +138,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsEndOfSeason() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsEndOfSeason() throws ScheduleProcessingException, LeagueProcessingException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);

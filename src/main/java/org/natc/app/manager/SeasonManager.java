@@ -3,6 +3,7 @@ package org.natc.app.manager;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
+import org.natc.app.exception.LeagueProcessingException;
 import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.processor.ScheduleProcessor;
 import org.natc.app.service.LeagueService;
@@ -32,8 +33,7 @@ public class SeasonManager {
         final Schedule lastScheduleEntry = scheduleService.getLastScheduleEntry();
 
         if (lastScheduleEntry == null) {
-            leagueService.generateNewLeague();
-            scheduleService.generateSchedule(Schedule.FIRST_YEAR);
+            generateNewLeague();
         }
         else if (lastScheduleEntry.getType().equals(ScheduleType.END_OF_SEASON.getValue())) {
             final String nextYear = String.valueOf(Integer.parseInt(lastScheduleEntry.getYear()) + 1);
@@ -56,5 +56,14 @@ public class SeasonManager {
                 .getProcessorFor(ScheduleType.getByValue(nextScheduleEntry.getType()));
 
         scheduleProcessor.process(nextScheduleEntry);
+    }
+
+    private void generateNewLeague() throws ScheduleProcessingException {
+        try {
+            leagueService.generateNewLeague();
+        } catch (final LeagueProcessingException ex) {
+            throw new ScheduleProcessingException(ex);
+        }
+        scheduleService.generateSchedule(Schedule.FIRST_YEAR);
     }
 }
