@@ -12,6 +12,7 @@ import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.exception.LeagueProcessingException;
+import org.natc.app.exception.NATCException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,28 +47,28 @@ class LeagueServiceTest {
     private LeagueService leagueService;
 
     @Test
-    public void generateNewLeague_ShouldCallTeamServiceToGenerateTeams() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldCallTeamServiceToGenerateTeams() throws NATCException {
         leagueService.generateNewLeague();
 
         verify(teamService).generateTeams();
     }
 
     @Test
-    public void generateNewLeague_ShouldCallManagerServiceToGenerateManagers() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldCallManagerServiceToGenerateManagers() throws NATCException {
         leagueService.generateNewLeague();
 
         verify(managerService).generateManagers();
     }
 
     @Test
-    public void generateNewLeague_ShouldCallPlayerServiceToGeneratePlayers() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldCallPlayerServiceToGeneratePlayers() throws NATCException {
         leagueService.generateNewLeague();
 
         verify(playerService).generatePlayers();
     }
 
     @Test
-    public void generateNewLeague_ShouldUpdateAManagerReturnedByManagerServiceWithATeamReturnedByTeamService() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldUpdateAManagerReturnedByManagerServiceWithATeamReturnedByTeamService() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).build();
 
@@ -82,7 +83,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldMarkTheManagerAsANewHireWhenUpdatingWithATeam() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldMarkTheManagerAsANewHireWhenUpdatingWithATeam() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).build();
 
@@ -95,7 +96,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldUpdateAUniqueManagerForAllTeamsReturnedByTeamService() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldUpdateAUniqueManagerForAllTeamsReturnedByTeamService() throws NATCException {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -126,7 +127,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldNotAssignAManagerToAnAllstarTeam() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldNotAssignAManagerToAnAllstarTeam() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(1).build();
         final Manager manager = Manager.builder().managerId(321).build();
 
@@ -139,7 +140,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldOnlyAssignAsManyManagersAsThereAreTeamsGivenMoreManagersThanTeams() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldOnlyAssignAsManyManagersAsThereAreTeamsGivenMoreManagersThanTeams() throws NATCException {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -187,7 +188,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedManager() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedManager() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager highRatedManager = Manager.builder().managerId(321).offense(0.8).defense(0.5).intangible(0.6).penalties(0.6).build();
         final Manager lowRatedManager = Manager.builder().managerId(322).offense(0.5).defense(0.5).intangible(0.3).penalties(0.2).build();
@@ -201,7 +202,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldAssignManagersInOrderFromHighestRatedToLowestRated() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldAssignManagersInOrderFromHighestRatedToLowestRated() throws NATCException {
         final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
@@ -236,7 +237,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldRandomizeTeamOrderWhenAssigningManagers() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldRandomizeTeamOrderWhenAssigningManagers() throws NATCException {
         final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
@@ -279,7 +280,7 @@ class LeagueServiceTest {
     }
     
     @Test
-    public void generateNewLeague_ShouldUpdateAPlayerReturnedByPlayerServiceWithATeamReturnedByTeamService() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldUpdateAPlayerReturnedByPlayerServiceWithATeamReturnedByTeamService() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
         final Player player = Player.builder().playerId(555).build();
@@ -297,7 +298,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldUpdateAsManyUniquePlayersWithSameTeamAsPlayersPerTeamConfiguration() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldUpdateAsManyUniquePlayersWithSameTeamAsPlayersPerTeamConfiguration() throws NATCException {
         final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
@@ -327,7 +328,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldUpdateAUniquePlayerForAllTeamsReturnedByTeamService() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldUpdateAUniquePlayerForAllTeamsReturnedByTeamService() throws NATCException {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -368,7 +369,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldAssignAsManyPlayersAsThereAreTeamsTimesPlayersPerTeam() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldAssignAsManyPlayersAsThereAreTeamsTimesPlayersPerTeam() throws NATCException {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -404,7 +405,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldNotAssignAPlayerToAnAllstarTeam() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldNotAssignAPlayerToAnAllstarTeam() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(1).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
         final Player player = Player.builder().playerId(555).build();
@@ -420,7 +421,7 @@ class LeagueServiceTest {
     }
     
     @Test
-    public void generateNewLeague_ShouldOnlyAssignAsManyPlayersAsThereAreTeamsGivenMorePlayersThanTeams() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldOnlyAssignAsManyPlayersAsThereAreTeamsGivenMorePlayersThanTeams() throws NATCException {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -454,7 +455,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanPlayers() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanPlayers() {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -486,7 +487,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldThrowLeagueProcessingExceptionIfThereAreNotEnoughPlayersConsideringPlayersPerTeam() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldThrowLeagueProcessingExceptionIfThereAreNotEnoughPlayersConsideringPlayersPerTeam() {
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
                 Team.builder().teamId(2).allstarTeam(0).build(),
@@ -525,7 +526,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldReverseTheTeamOrderForEachRoundOfPlayerAssignment() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldReverseTheTeamOrderForEachRoundOfPlayerAssignment() throws NATCException {
         final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
@@ -574,7 +575,7 @@ class LeagueServiceTest {
     }
     
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedPlayer() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedPlayer() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
         final Player highRatedPlayer = Player.builder().playerId(101)
@@ -599,7 +600,7 @@ class LeagueServiceTest {
     }
     
     @Test
-    public void generateNewLeague_ShouldAssignPlayersInOrderFromHighestRatedToLowestRatedAcrossTeams() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldAssignPlayersInOrderFromHighestRatedToLowestRatedAcrossTeams() throws NATCException {
         final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
         final List<Team> teamList = Arrays.asList(
                 Team.builder().teamId(1).allstarTeam(0).build(),
@@ -649,7 +650,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldAssignPlayersInOrderFromHighestRatedToLowestRatedForATeam() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldAssignPlayersInOrderFromHighestRatedToLowestRatedForATeam() throws NATCException {
         final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
         final List<Team> teamList = Collections.singletonList(
                 Team.builder().teamId(1).allstarTeam(0).build()
@@ -691,7 +692,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedOffensivePlayerWhenTheTeamManagerStyleIsOffensive() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedOffensivePlayerWhenTheTeamManagerStyleIsOffensive() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.OFFENSIVE.getValue()).build();
         final Player highRatedPlayer = Player.builder().playerId(101)
@@ -714,7 +715,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedDefensivePlayerWhenTheTeamManagerStyleIsDefensive() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedDefensivePlayerWhenTheTeamManagerStyleIsDefensive() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.DEFENSIVE.getValue()).build();
         final Player highRatedPlayer = Player.builder().playerId(101)
@@ -737,7 +738,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedIntangiblePlayerWhenTheTeamManagerStyleIsIntangible() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedIntangiblePlayerWhenTheTeamManagerStyleIsIntangible() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.INTANGIBLE.getValue()).build();
         final Player highRatedPlayer = Player.builder().playerId(101)
@@ -760,7 +761,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedPenaltiesPlayerWhenTheTeamManagerStyleIsPenalties() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedPenaltiesPlayerWhenTheTeamManagerStyleIsPenalties() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.PENALTIES.getValue()).build();
         final Player highRatedPlayer = Player.builder().playerId(101)
@@ -783,7 +784,7 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldSelectHighestRatedPlayerWhenTheTeamManagerStyleIsBalanced() throws LeagueProcessingException {
+    public void generateNewLeague_ShouldSelectHighestRatedPlayerWhenTheTeamManagerStyleIsBalanced() throws NATCException {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
         final Player highRatedPlayer = Player.builder().playerId(101)

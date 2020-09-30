@@ -1,6 +1,6 @@
 package org.natc.app.exception;
 
-public class ScheduleProcessingException extends Exception {
+public class ScheduleProcessingException extends NATCException {
 
     public ScheduleProcessingException() {
         super();

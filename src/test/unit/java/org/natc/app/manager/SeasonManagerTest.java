@@ -13,7 +13,7 @@ import org.mockito.quality.Strictness;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
-import org.natc.app.exception.LeagueProcessingException;
+import org.natc.app.exception.NATCException;
 import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.processor.ScheduleProcessor;
 import org.natc.app.service.LeagueService;
@@ -63,21 +63,21 @@ class SeasonManagerTest {
     }
     
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToGetCurrentScheduleEntry() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToGetCurrentScheduleEntry() throws NATCException {
         seasonManager.processScheduledEvent();
 
         verify(scheduleService).getCurrentScheduleEntry();
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToGetLastScheduleEntry() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToGetLastScheduleEntry() throws NATCException {
         seasonManager.processScheduledEvent();
 
         verify(scheduleService).getLastScheduleEntry();
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGetLastScheduleEntryIfCurrentScheduleEntryFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGetLastScheduleEntryIfCurrentScheduleEntryFound() throws NATCException {
         final Schedule currentSchedule = Schedule.builder().year("2000").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
 
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(currentSchedule);
@@ -88,7 +88,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallLeagueServiceToGenerateLeagueIfLastScheduleEntryIsNotFound() throws ScheduleProcessingException, LeagueProcessingException {
+    public void processScheduledEvent_ShouldCallLeagueServiceToGenerateLeagueIfLastScheduleEntryIsNotFound() throws NATCException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         seasonManager.processScheduledEvent();
@@ -97,7 +97,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToGenerateScheduleForFirstYearIfLastScheduleEntryIsNotFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToGenerateScheduleForFirstYearIfLastScheduleEntryIsNotFound() throws NATCException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         seasonManager.processScheduledEvent();
@@ -106,7 +106,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldGenerateNewLeagueBeforeGeneratingNewSchedule() throws ScheduleProcessingException, LeagueProcessingException {
+    public void processScheduledEvent_ShouldGenerateNewLeagueBeforeGeneratingNewSchedule() throws NATCException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         final InOrder inOrder = inOrder(leagueService, scheduleService);
@@ -118,7 +118,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfCurrentScheduleEntryIsFound() throws ScheduleProcessingException, LeagueProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfCurrentScheduleEntryIsFound() throws NATCException {
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
         seasonManager.processScheduledEvent();
@@ -127,7 +127,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsFound() throws ScheduleProcessingException, LeagueProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsFound() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -138,7 +138,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsEndOfSeason() throws ScheduleProcessingException, LeagueProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateNewLeagueIfLastScheduleEntryIsEndOfSeason() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -149,7 +149,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldUpdateLeagueForNewSeasonWhenLastScheduleEntryIsEndOfSeason() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUpdateLeagueForNewSeasonWhenLastScheduleEntryIsEndOfSeason() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -160,7 +160,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToGenerateScheduleForNextYearWhenLastScheduleEntryIsEndOfSeason() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToGenerateScheduleForNextYearWhenLastScheduleEntryIsEndOfSeason() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -171,7 +171,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldUpdateLeagueBeforeGeneratingNewSchedule() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUpdateLeagueBeforeGeneratingNewSchedule() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -185,7 +185,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotUpdateLeagueIfCurrentScheduleEntryIsFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotUpdateLeagueIfCurrentScheduleEntryIsFound() throws NATCException {
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
         seasonManager.processScheduledEvent();
@@ -194,7 +194,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotUpdateLeagueIfLastScheduleEntryIsNotFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotUpdateLeagueIfLastScheduleEntryIsNotFound() throws NATCException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         seasonManager.processScheduledEvent();
@@ -203,7 +203,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotUpdateLeagueIfLastScheduleEntryIsNotEndOfSeason() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotUpdateLeagueIfLastScheduleEntryIsNotEndOfSeason() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -214,7 +214,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateScheduleIfCurrentScheduleEntryIsFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateScheduleIfCurrentScheduleEntryIsFound() throws NATCException {
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
         seasonManager.processScheduledEvent();
@@ -223,7 +223,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGenerateScheduleIfLastScheduleEntryIsFoundAndIsNotEndOfSeason() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGenerateScheduleIfLastScheduleEntryIsFoundAndIsNotEndOfSeason() throws NATCException {
         final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
         when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -234,14 +234,14 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToGetNextScheduleEntry() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToGetNextScheduleEntry() throws NATCException {
         seasonManager.processScheduledEvent();
 
         verify(scheduleService).getNextScheduleEntry(any());
     }
 
     @Test
-    public void processScheduledEvent_ShouldUseLastScheduleEntryToGetNextScheduleEntry() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUseLastScheduleEntryToGetNextScheduleEntry() throws NATCException {
         final Schedule lastSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)
@@ -257,7 +257,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldUseLastScheduleEntryToGetNextScheduleEntryEvenIfNull() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUseLastScheduleEntryToGetNextScheduleEntryEvenIfNull() throws NATCException {
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
         seasonManager.processScheduledEvent();
@@ -266,7 +266,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGetNextScheduleEntryIfCurrentScheduleEntryFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGetNextScheduleEntryIfCurrentScheduleEntryFound() throws NATCException {
         final Schedule currentSchedule = Schedule.builder().year("2000").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
 
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(currentSchedule);
@@ -277,7 +277,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToUpdateScheduleStatusToInProgress() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToUpdateScheduleStatusToInProgress() throws NATCException {
         final Schedule nextSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)
@@ -301,7 +301,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldUpdateScheduleStatusToInProgressWhenScheduledDateIsInThePast() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUpdateScheduleStatusToInProgressWhenScheduledDateIsInThePast() throws NATCException {
         final Schedule nextSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)
@@ -325,7 +325,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotUpdateScheduleStatusToInProgressWhenScheduledDateIsInTheFuture() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotUpdateScheduleStatusToInProgressWhenScheduledDateIsInTheFuture() throws NATCException {
         final Schedule nextSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)
@@ -350,14 +350,14 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldGetScheduleProcessorFromScheduleProcessorManager() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldGetScheduleProcessorFromScheduleProcessorManager() throws NATCException {
         seasonManager.processScheduledEvent();
 
         verify(scheduleProcessorManager).getProcessorFor(any(ScheduleType.class));
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotGetScheduleProcessorIfCurrentScheduleEntryFound() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotGetScheduleProcessorIfCurrentScheduleEntryFound() throws NATCException {
         final Schedule currentSchedule = Schedule.builder().year("2000").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
 
         when(scheduleService.getCurrentScheduleEntry()).thenReturn(currentSchedule);
@@ -368,7 +368,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldNotgetScheduleProcessorWhenNextEntryScheduledDateIsInTheFuture() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldNotgetScheduleProcessorWhenNextEntryScheduledDateIsInTheFuture() throws NATCException {
         final Schedule nextSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)
@@ -385,7 +385,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldUseScheduleTypeFromNextScheduleEntryToGetScheduleProcessor() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUseScheduleTypeFromNextScheduleEntryToGetScheduleProcessor() throws NATCException {
         final Schedule nextSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)
@@ -403,7 +403,7 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldUseScheduleProcessorToProcessNextScheduleEntry() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldUseScheduleProcessorToProcessNextScheduleEntry() throws NATCException {
         final Schedule nextSchedule = Schedule.builder()
                 .year("2000")
                 .sequence(1)

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
+import org.natc.app.exception.NATCException;
 import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.repository.ScheduleRepository;
 import org.natc.app.service.NATCServiceIntegrationTest;
@@ -26,7 +27,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
     private SeasonManager seasonManager;
 
     @Test
-    public void processScheduledEvent_ShouldHandleInProgressSchedule() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldHandleInProgressSchedule() throws NATCException {
         final List<Schedule> initialScheduleList = Arrays.asList(
                 Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                         .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -91,7 +92,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldSetScheduleStatusToInProgress() throws ScheduleProcessingException {
+    public void processScheduledEvent_ShouldSetScheduleStatusToInProgress() throws NATCException {
         final List<Schedule> initialScheduleList = Arrays.asList(
                 Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                         .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),

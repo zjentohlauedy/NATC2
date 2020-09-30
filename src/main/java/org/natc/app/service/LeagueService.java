@@ -6,6 +6,7 @@ import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.exception.LeagueProcessingException;
+import org.natc.app.exception.NATCException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -44,7 +45,7 @@ public class LeagueService {
         );
     }
 
-    public void generateNewLeague() throws LeagueProcessingException {
+    public void generateNewLeague() throws NATCException {
         final List<Team> teams = teamService.generateTeams();
         final List<Manager> managers = managerService.generateManagers();
         final List<Player> players = playerService.generatePlayers();
@@ -62,7 +63,7 @@ public class LeagueService {
         }
     }
 
-    private void assignManagersToTeams(final List<Team> teams, final List<Manager> managers) throws LeagueProcessingException {
+    private void assignManagersToTeams(final List<Team> teams, final List<Manager> managers) throws NATCException {
         for (final Team team : teams) {
             final Optional<Manager> managerOpt = managers.stream()
                     .filter(manager -> manager.getTeamId() == null)
@@ -81,7 +82,7 @@ public class LeagueService {
         }
     }
 
-    private void assignPlayersToTeams(final List<Team> teams, final List<Manager> managers, final List<Player> players) throws LeagueProcessingException {
+    private void assignPlayersToTeams(final List<Team> teams, final List<Manager> managers, final List<Player> players) throws NATCException {
         for (final Team team : teams) {
             final Manager teamManager = managers.stream()
                     .filter(manager -> team.getTeamId().equals(manager.getTeamId()))
