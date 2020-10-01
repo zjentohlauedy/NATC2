@@ -10,6 +10,7 @@ import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.domain.Player;
+import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.exception.LeagueProcessingException;
 import org.natc.app.exception.NATCException;
@@ -50,7 +51,14 @@ class LeagueServiceTest {
     public void generateNewLeague_ShouldCallTeamServiceToGenerateTeams() throws NATCException {
         leagueService.generateNewLeague();
 
-        verify(teamService).generateTeams();
+        verify(teamService).generateTeams(any());
+    }
+
+    @Test
+    public void generateNewLeague_ShouldCallTeamServiceToGenerateTeamsForFirstYear() throws NATCException {
+        leagueService.generateNewLeague();
+
+        verify(teamService).generateTeams(Schedule.FIRST_YEAR);
     }
 
     @Test
@@ -72,7 +80,7 @@ class LeagueServiceTest {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
 
         leagueService.generateNewLeague();
@@ -87,7 +95,7 @@ class LeagueServiceTest {
         final Team team = Team.builder().teamId(123).allstarTeam(0).build();
         final Manager manager = Manager.builder().managerId(321).build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
 
         leagueService.generateNewLeague();
@@ -113,7 +121,7 @@ class LeagueServiceTest {
                 Manager.builder().managerId(105).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
 
         leagueService.generateNewLeague();
@@ -131,7 +139,7 @@ class LeagueServiceTest {
         final Team team = Team.builder().teamId(123).allstarTeam(1).build();
         final Manager manager = Manager.builder().managerId(321).build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
 
         leagueService.generateNewLeague();
@@ -155,7 +163,7 @@ class LeagueServiceTest {
                 Manager.builder().managerId(105).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
 
         leagueService.generateNewLeague();
@@ -181,7 +189,7 @@ class LeagueServiceTest {
                 Manager.builder().managerId(103).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
 
         assertThrows(LeagueProcessingException.class, () -> leagueService.generateNewLeague());
@@ -193,7 +201,7 @@ class LeagueServiceTest {
         final Manager highRatedManager = Manager.builder().managerId(321).offense(0.8).defense(0.5).intangible(0.6).penalties(0.6).build();
         final Manager lowRatedManager = Manager.builder().managerId(322).offense(0.5).defense(0.5).intangible(0.3).penalties(0.2).build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Arrays.asList(lowRatedManager, highRatedManager));
 
         leagueService.generateNewLeague();
@@ -222,7 +230,7 @@ class LeagueServiceTest {
 
         Collections.shuffle(managerList);
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
 
         leagueService.generateNewLeague();
@@ -265,7 +273,7 @@ class LeagueServiceTest {
                 Manager.builder().managerId(110).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
 
         final List<Integer> startingTeamIds = teamList.stream().map(Team::getTeamId).collect(Collectors.toList());
@@ -285,7 +293,7 @@ class LeagueServiceTest {
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
         final Player player = Player.builder().playerId(555).build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Collections.singletonList(player));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -310,7 +318,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(205).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(5);
@@ -353,7 +361,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(205).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -394,7 +402,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(209).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(3);
@@ -410,7 +418,7 @@ class LeagueServiceTest {
         final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
         final Player player = Player.builder().playerId(555).build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Collections.singletonList(player));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -442,7 +450,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(205).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -478,7 +486,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(203).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -517,7 +525,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(210).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(3);
@@ -552,7 +560,7 @@ class LeagueServiceTest {
                 Player.builder().playerId(209).build()
         );
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(3);
@@ -589,7 +597,7 @@ class LeagueServiceTest {
                 .discipline(0.3).endurance(0.3)
                 .build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -633,7 +641,7 @@ class LeagueServiceTest {
         
         Collections.shuffle(playerList);
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -675,7 +683,7 @@ class LeagueServiceTest {
 
         Collections.shuffle(playerList);
 
-        when(teamService.generateTeams()).thenReturn(teamList);
+        when(teamService.generateTeams(any())).thenReturn(teamList);
         when(managerService.generateManagers()).thenReturn(managerList);
         when(playerService.generatePlayers()).thenReturn(playerList);
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(5);
@@ -704,7 +712,7 @@ class LeagueServiceTest {
                 .discipline(0.8).endurance(0.8).penaltyShot(0.8).penaltyOffense(0.8).penaltyDefense(0.8)
                 .build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -727,7 +735,7 @@ class LeagueServiceTest {
                 .discipline(0.8).endurance(0.8).penaltyShot(0.8).penaltyOffense(0.8).penaltyDefense(0.8)
                 .build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -750,7 +758,7 @@ class LeagueServiceTest {
                 .discipline(0.3).endurance(0.3).penaltyShot(0.8).penaltyOffense(0.8).penaltyDefense(0.8)
                 .build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -773,7 +781,7 @@ class LeagueServiceTest {
                 .discipline(0.8).endurance(0.8).penaltyShot(0.3).penaltyOffense(0.3).penaltyDefense(0.3)
                 .build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
@@ -796,7 +804,7 @@ class LeagueServiceTest {
                 .discipline(0.4).endurance(0.5).penaltyShot(1.0).penaltyOffense(1.0).penaltyDefense(1.0)
                 .build();
 
-        when(teamService.generateTeams()).thenReturn(Collections.singletonList(team));
+        when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
         when(managerService.generateManagers()).thenReturn(Collections.singletonList(manager));
         when(playerService.generatePlayers()).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
         when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
