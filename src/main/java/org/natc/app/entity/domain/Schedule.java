@@ -19,7 +19,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Schedule {
-    public static final String FIRST_YEAR = "1971";
     public static final Integer FIRST_SEQUENCE = 1;
 
     @Id

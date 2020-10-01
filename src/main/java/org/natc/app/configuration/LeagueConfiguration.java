@@ -11,4 +11,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "natc.league")
 public class LeagueConfiguration {
     private Integer playersPerTeam;
+    private String firstSeason;
 }

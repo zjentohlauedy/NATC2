@@ -27,3 +27,4 @@ jasypt:
 natc:
   league:
     players-per-team: 13
+    first-season: 1971

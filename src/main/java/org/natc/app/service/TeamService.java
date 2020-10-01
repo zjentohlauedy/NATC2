@@ -2,6 +2,7 @@ package org.natc.app.service;
 
 import org.natc.app.entity.domain.Team;
 import org.natc.app.repository.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ public class TeamService {
 
     private final TeamRepository repository;
 
+    @Autowired
     public TeamService(final TeamRepository repository) {
         this.repository = repository;
     }

@@ -1,5 +1,6 @@
 package org.natc.app.service;
 
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
@@ -13,10 +14,12 @@ import static java.util.Objects.isNull;
 public class ScheduleService {
 
     private final ScheduleRepository repository;
+    private final LeagueConfiguration leagueConfiguration;
 
     @Autowired
-    public ScheduleService(final ScheduleRepository repository) {
+    public ScheduleService(final ScheduleRepository repository, final LeagueConfiguration leagueConfiguration) {
         this.repository = repository;
+        this.leagueConfiguration = leagueConfiguration;
     }
 
     public void generateSchedule(final String year) {
@@ -38,7 +41,7 @@ public class ScheduleService {
         final Integer sequence;
 
         if (isNull(lastEntry)) {
-            year = Schedule.FIRST_YEAR;
+            year = leagueConfiguration.getFirstSeason();
             sequence = Schedule.FIRST_SEQUENCE;
         }
         else if (ScheduleType.END_OF_SEASON.getValue().equals(lastEntry.getType())) {

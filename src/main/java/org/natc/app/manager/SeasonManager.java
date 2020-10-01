@@ -1,5 +1,6 @@
 package org.natc.app.manager;
 
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
@@ -19,12 +20,14 @@ public class SeasonManager {
     private final ScheduleService scheduleService;
     private final ScheduleProcessorManager scheduleProcessorManager;
     private final LeagueService leagueService;
+    private final LeagueConfiguration leagueConfiguration;
 
     @Autowired
-    public SeasonManager(final ScheduleService scheduleService, final ScheduleProcessorManager scheduleProcessorManager, final LeagueService leagueService) {
+    public SeasonManager(final ScheduleService scheduleService, final ScheduleProcessorManager scheduleProcessorManager, final LeagueService leagueService, final LeagueConfiguration leagueConfiguration) {
         this.scheduleService = scheduleService;
         this.scheduleProcessorManager = scheduleProcessorManager;
         this.leagueService = leagueService;
+        this.leagueConfiguration = leagueConfiguration;
     }
 
     public void processScheduledEvent() throws NATCException {
@@ -34,7 +37,7 @@ public class SeasonManager {
 
         if (lastScheduleEntry == null) {
             leagueService.generateNewLeague();
-            scheduleService.generateSchedule(Schedule.FIRST_YEAR);
+            scheduleService.generateSchedule(leagueConfiguration.getFirstSeason());
         }
         else if (lastScheduleEntry.getType().equals(ScheduleType.END_OF_SEASON.getValue())) {
             final String nextYear = String.valueOf(Integer.parseInt(lastScheduleEntry.getYear()) + 1);

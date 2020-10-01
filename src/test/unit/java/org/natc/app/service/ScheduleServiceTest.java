@@ -6,6 +6,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
@@ -28,6 +29,9 @@ class ScheduleServiceTest {
 
     @Mock
     private ScheduleRepository scheduleRepository;
+
+    @Mock
+    private LeagueConfiguration leagueConfiguration;
 
     @InjectMocks
     private ScheduleService scheduleService;
@@ -96,10 +100,14 @@ class ScheduleServiceTest {
     }
 
     @Test
-    public void getNextScheduleEntry_ShouldCallScheduleRepositoryWithFirstYearAndSequenceGivenNullInput() {
+    public void getNextScheduleEntry_ShouldCallScheduleRepositoryWithFirstSeasonAndSequenceGivenNullInput() {
+        final String expectedYear = "1984";
+
+        when(leagueConfiguration.getFirstSeason()).thenReturn(expectedYear);
+
         scheduleService.getNextScheduleEntry(null);
 
-        verify(scheduleRepository).findByYearAndSequence(Schedule.FIRST_YEAR, Schedule.FIRST_SEQUENCE);
+        verify(scheduleRepository).findByYearAndSequence(expectedYear, Schedule.FIRST_SEQUENCE);
     }
 
     @Test

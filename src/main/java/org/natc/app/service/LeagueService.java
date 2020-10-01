@@ -4,7 +4,6 @@ import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.domain.Player;
-import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.exception.LeagueProcessingException;
 import org.natc.app.exception.NATCException;
@@ -47,7 +46,7 @@ public class LeagueService {
     }
 
     public void generateNewLeague() throws NATCException {
-        final List<Team> teams = teamService.generateTeams(Schedule.FIRST_YEAR);
+        final List<Team> teams = teamService.generateTeams(leagueConfiguration.getFirstSeason());
         final List<Manager> managers = managerService.generateManagers();
         final List<Player> players = playerService.generatePlayers();
 

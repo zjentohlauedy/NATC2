@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
@@ -43,6 +44,9 @@ class SeasonManagerTest {
 
     @Mock
     private ScheduleProcessorManager scheduleProcessorManager;
+
+    @Mock
+    private LeagueConfiguration leagueConfiguration;
     
     @InjectMocks
     private SeasonManager seasonManager;
@@ -97,12 +101,15 @@ class SeasonManagerTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldCallScheduleServiceToGenerateScheduleForFirstYearIfLastScheduleEntryIsNotFound() throws NATCException {
+    public void processScheduledEvent_ShouldCallScheduleServiceToGenerateScheduleForFirstSeasonIfLastScheduleEntryIsNotFound() throws NATCException {
+        final String expectedYear = "1999";
+
         when(scheduleService.getLastScheduleEntry()).thenReturn(null);
+        when(leagueConfiguration.getFirstSeason()).thenReturn(expectedYear);
 
         seasonManager.processScheduledEvent();
 
-        verify(scheduleService).generateSchedule(Schedule.FIRST_YEAR);
+        verify(scheduleService).generateSchedule(expectedYear);
     }
 
     @Test

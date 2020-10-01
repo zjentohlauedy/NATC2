@@ -10,7 +10,6 @@ import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.domain.Player;
-import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.exception.LeagueProcessingException;
 import org.natc.app.exception.NATCException;
@@ -55,10 +54,14 @@ class LeagueServiceTest {
     }
 
     @Test
-    public void generateNewLeague_ShouldCallTeamServiceToGenerateTeamsForFirstYear() throws NATCException {
+    public void generateNewLeague_ShouldCallTeamServiceToGenerateTeamsForFirstSeason() throws NATCException {
+        final String expectedYear = "2112";
+
+        when(leagueConfiguration.getFirstSeason()).thenReturn(expectedYear);
+
         leagueService.generateNewLeague();
 
-        verify(teamService).generateTeams(Schedule.FIRST_YEAR);
+        verify(teamService).generateTeams(expectedYear);
     }
 
     @Test

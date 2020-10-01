@@ -1,6 +1,7 @@
 package org.natc.app.service;
 
 import org.junit.jupiter.api.Test;
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
@@ -20,6 +21,9 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
 
     @Autowired
     private ScheduleRepository repository;
+    
+    @Autowired
+    private LeagueConfiguration leagueConfiguration;
 
     @Autowired
     private ScheduleService scheduleService;
@@ -166,28 +170,28 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
     @Test
     public void getNextScheduleEntry_ShouldReturnFirstDefinedScheduleWhenGivenNull() {
         final List<Schedule> scheduleList = Arrays.asList(
-                Schedule.builder().year(Schedule.FIRST_YEAR).sequence(Schedule.FIRST_SEQUENCE).status(ScheduleStatus.SCHEDULED.getValue()).build(),
-                Schedule.builder().year(Schedule.FIRST_YEAR).sequence(Schedule.FIRST_SEQUENCE + 1).status(ScheduleStatus.SCHEDULED.getValue()).build(),
-                Schedule.builder().year(Schedule.FIRST_YEAR).sequence(Schedule.FIRST_SEQUENCE + 2).status(ScheduleStatus.SCHEDULED.getValue()).build()
+                Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE).status(ScheduleStatus.SCHEDULED.getValue()).build(),
+                Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE + 1).status(ScheduleStatus.SCHEDULED.getValue()).build(),
+                Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE + 2).status(ScheduleStatus.SCHEDULED.getValue()).build()
         );
 
         repository.saveAll(scheduleList);
 
         final Schedule schedule = scheduleService.getNextScheduleEntry(null);
 
-        assertEquals(schedule.getYear(), Schedule.FIRST_YEAR);
+        assertEquals(schedule.getYear(), leagueConfiguration.getFirstSeason());
         assertEquals(schedule.getSequence(), Schedule.FIRST_SEQUENCE);
     }
 
     @Test
     public void getNextScheduleEntry_ShouldReturnNullIfFirstDefinedScheduleDoesNotExistWhenGivenNull() {
-        final String differentYear = String.valueOf(Integer.parseInt(Schedule.FIRST_YEAR) - 1);
+        final String differentYear = String.valueOf(Integer.parseInt(leagueConfiguration.getFirstSeason()) - 1);
 
         final List<Schedule> scheduleList = Arrays.asList(
                 Schedule.builder().year(differentYear).sequence(Schedule.FIRST_SEQUENCE).status(ScheduleStatus.SCHEDULED.getValue()).build(),
-                Schedule.builder().year(Schedule.FIRST_YEAR).sequence(Schedule.FIRST_SEQUENCE + 1).status(ScheduleStatus.SCHEDULED.getValue()).build(),
-                Schedule.builder().year(Schedule.FIRST_YEAR).sequence(Schedule.FIRST_SEQUENCE + 2).status(ScheduleStatus.SCHEDULED.getValue()).build(),
-                Schedule.builder().year(Schedule.FIRST_YEAR).sequence(Schedule.FIRST_SEQUENCE + 3).status(ScheduleStatus.SCHEDULED.getValue()).build()
+                Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE + 1).status(ScheduleStatus.SCHEDULED.getValue()).build(),
+                Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE + 2).status(ScheduleStatus.SCHEDULED.getValue()).build(),
+                Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE + 3).status(ScheduleStatus.SCHEDULED.getValue()).build()
         );
 
         repository.saveAll(scheduleList);
