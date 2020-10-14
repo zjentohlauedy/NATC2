@@ -1,3 +1,15 @@
+create table if not exists firstnames_t
+(
+    name varchar(15),
+    frequency double precision
+);
+
+create table if not exists lastnames_t
+(
+    name varchar(15),
+    frequency double precision
+);
+
 create table if not exists teams_t
 (
     team_id bigint,
