@@ -32,6 +32,7 @@ public class Manager {
     private Double intangible;
     private Double penalties;
     private Double vitality;
+    @Setter
     private Integer style;
     @Setter
     private Integer newHire;
@@ -44,6 +45,32 @@ public class Manager {
     private Integer score;
     private Integer totalSeasons;
     private Integer totalScore;
+
+    public static Manager generate(
+            final Integer managerId,
+            final String year,
+            final String firstName,
+            final String lastName) {
+        return Manager.builder()
+                .managerId(managerId)
+                .year(year)
+                .firstName(firstName)
+                .lastName(lastName)
+                .age((int)Math.floor((Math.random() * 10.0) + 40.0))
+                .offense(Math.random())
+                .defense(Math.random())
+                .intangible(Math.random())
+                .penalties(Math.random())
+                .vitality(Math.random())
+                .newHire(0)
+                .released(0)
+                .retired(0)
+                .seasons(0)
+                .score(0)
+                .totalSeasons(0)
+                .totalScore(0)
+                .build();
+    }
 
     public Double getOverallRating() {
         if (offense == null) return 0.0;

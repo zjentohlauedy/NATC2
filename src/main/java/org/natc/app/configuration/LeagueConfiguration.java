@@ -12,4 +12,5 @@ import org.springframework.context.annotation.Configuration;
 public class LeagueConfiguration {
     private Integer playersPerTeam;
     private String firstSeason;
+    private Integer initialManagers;
 }

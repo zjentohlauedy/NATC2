@@ -47,7 +47,7 @@ public class LeagueService {
 
     public void generateNewLeague() throws NATCException {
         final List<Team> teams = teamService.generateTeams(leagueConfiguration.getFirstSeason());
-        final List<Manager> managers = managerService.generateManagers();
+        final List<Manager> managers = managerService.generateManagers(leagueConfiguration.getFirstSeason(), leagueConfiguration.getInitialManagers());
         final List<Player> players = playerService.generatePlayers();
 
         final List<Team> regularTeams = teams.stream().filter(team -> team.getAllstarTeam().equals(0)).collect(Collectors.toList());
