@@ -8,6 +8,7 @@ import org.natc.app.exception.NATCException;
 import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.repository.ScheduleRepository;
 import org.natc.app.service.NATCServiceIntegrationTest;
+import org.natc.app.util.TestHelpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
@@ -19,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
+
+    @Autowired
+    private TestHelpers testHelpers;
 
     @Autowired
     private ScheduleRepository repository;
@@ -50,6 +54,8 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
 
     @Test
     public void processScheduledEvent_ShouldThrowUnsupportedOperationExceptionWhenNoSchedulesExist() {
+        testHelpers.seedFirstAndLastNames();
+
         final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () ->
                 seasonManager.processScheduledEvent());
 
