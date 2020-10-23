@@ -35,9 +35,6 @@ public class TestHelpers {
             lastNames.add(lastName);
         }
 
-        System.out.println(firstNames);
-        System.out.println(lastNames);
-
         firstNameRepository.saveAll(firstNames);
         lastNameRepository.saveAll(lastNames);
     }
