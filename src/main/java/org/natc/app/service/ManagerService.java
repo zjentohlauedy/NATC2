@@ -6,6 +6,7 @@ import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.exception.NATCException;
 import org.natc.app.repository.ManagerRepository;
 import org.natc.app.service.analysis.ManagerAnalyzer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class ManagerService {
     private final NameService nameService;
     private final ManagerAnalyzer managerAnalyzer;
 
+    @Autowired
     public ManagerService(final ManagerRepository managerRepository, final NameService nameService, final ManagerAnalyzer managerAnalyzer) {
         this.managerRepository = managerRepository;
         this.nameService = nameService;

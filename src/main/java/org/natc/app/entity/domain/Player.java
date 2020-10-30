@@ -55,6 +55,37 @@ public class Player {
     private Integer seasonsPlayed;
     private Integer allstarAlternate;
 
+    public static Player generate(final Integer playerId, final String year, final String firstName, final String lastName) {
+        return Player.builder()
+                .playerId(playerId)
+                .year(year)
+                .firstName(firstName)
+                .lastName(lastName)
+                .age((int)Math.floor((Math.random() * 12.0) + 18.0))
+                .scoring(Math.random())
+                .passing(Math.random())
+                .blocking(Math.random())
+                .tackling(Math.random())
+                .stealing(Math.random())
+                .presence(Math.random())
+                .discipline(Math.random())
+                .penaltyShot(Math.random())
+                .penaltyOffense(Math.random())
+                .penaltyDefense(Math.random())
+                .endurance(Math.random())
+                .confidence(Math.random())
+                .vitality(Math.random())
+                .rookie(0)
+                .injured(0)
+                .freeAgent(0)
+                .signed(0)
+                .released(0)
+                .retired(0)
+                .allstarAlternate(0)
+                .seasonsPlayed(0)
+                .build();
+    }
+
     public Double getOffensiveRating() {
         if (scoring == null) return 0.0;
         if (passing == null) return 0.0;

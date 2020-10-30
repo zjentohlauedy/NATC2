@@ -2,7 +2,16 @@ package org.natc.app.entity.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.natc.app.util.BooleanHelper.valueOf;
 
 class PlayerTest {
 
@@ -272,5 +281,370 @@ class PlayerTest {
                 .discipline(1.0).endurance(null)
                 .build().getPerformanceRating()
         );
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayer() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertNotNull(player);
+    }
+    
+    @Test
+    public void generate_ShouldReturnAPlayerWithTheGivenPlayerId() {
+        final Player player = Player.generate(321, null, null, null);
+
+        assertEquals(321, player.getPlayerId());
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithTheGivenYear() {
+        final Player player = Player.generate(null, "2020", null, null);
+
+        assertEquals("2020", player.getYear());
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithTheGivenName() {
+        final Player player = Player.generate(null, null, "David", "Montgomery");
+
+        assertEquals("David", player.getFirstName());
+        assertEquals("Montgomery", player.getLastName());
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithWithAnAgeBetweenEighteenAndThirty() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getAge() >= 18 && player.getAge() <= 30);
+    }
+    
+    @Test
+    public void generate_ShouldChooseThePlayerAgeRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Integer> ages = players.stream().map(Player::getAge).collect(Collectors.toSet());
+
+        assertEquals(12, ages.size());
+    }
+    
+    @Test
+    public void generate_ShouldReturnAPlayerWithAScoringRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getScoring() >= 0.0 && player.getScoring() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheScoringRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getScoring).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+    
+    @Test
+    public void generate_ShouldReturnAPlayerWithAPassingRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getPassing() >= 0.0 && player.getPassing() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseThePassingRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getPassing).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+    
+    @Test
+    public void generate_ShouldReturnAPlayerWithABlockingRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getBlocking() >= 0.0 && player.getBlocking() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheBlockingRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getBlocking).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithATacklingRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getTackling() >= 0.0 && player.getTackling() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheTacklingRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getTackling).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAStealingRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getStealing() >= 0.0 && player.getStealing() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheStealingRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getStealing).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAPresenceRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getPresence() >= 0.0 && player.getPresence() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseThePresenceRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getPresence).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithADisciplineRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getDiscipline() >= 0.0 && player.getDiscipline() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheDisciplineRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getDiscipline).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAPenaltyShotRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getPenaltyShot() >= 0.0 && player.getPenaltyShot() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseThePenaltyShotRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getPenaltyShot).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAPenaltyOffenseRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getPenaltyOffense() >= 0.0 && player.getPenaltyOffense() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseThePenaltyOffenseRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getPenaltyOffense).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAPenaltyDefenseRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getPenaltyDefense() >= 0.0 && player.getPenaltyDefense() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseThePenaltyDefenseRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getPenaltyDefense).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAnEnduranceRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getEndurance() >= 0.0 && player.getEndurance() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheEnduranceRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getEndurance).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAConfidenceRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getConfidence() >= 0.0 && player.getConfidence() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheConfidenceRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getConfidence).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerWithAVitalityRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getVitality() >= 0.0 && player.getVitality() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheVitalityRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getVitality).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotARookie() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getRookie()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotInjured() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getInjured()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotAFreeAgent() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getFreeAgent()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotSignedToATeam() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getSigned()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotReleased() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getReleased()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotRetired() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getRetired()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatIsNotAnAllstarAlternate() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertFalse(valueOf(player.getAllstarAlternate()));
+    }
+
+    @Test
+    public void generate_ShouldReturnAPlayerThatHasZeroSeasonsPlayed() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertEquals(0, player.getSeasonsPlayed());
     }
 }
