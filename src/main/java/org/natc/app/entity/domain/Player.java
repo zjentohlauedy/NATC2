@@ -75,6 +75,7 @@ public class Player {
                 .endurance(Math.random())
                 .confidence(Math.random())
                 .vitality(Math.random())
+                .durability(Math.random())
                 .rookie(0)
                 .injured(0)
                 .freeAgent(0)

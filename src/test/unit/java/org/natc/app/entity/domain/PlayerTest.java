@@ -593,6 +593,26 @@ class PlayerTest {
     }
 
     @Test
+    public void generate_ShouldReturnAPlayerWithADurabilityRatingBetweenZeroAndOne() {
+        final Player player = Player.generate(null, null, null, null);
+
+        assertTrue(player.getDurability() >= 0.0 && player.getDurability() <= 1.0);
+    }
+
+    @Test
+    public void generate_ShouldChooseTheDurabilityRatingRandomly() {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i++) {
+            players.add(Player.generate(null, null, null, null));
+        }
+
+        final Set<Double> uniqueValues = players.stream().map(Player::getDurability).collect(Collectors.toSet());
+
+        assertTrue(uniqueValues.size() >= 85);
+    }
+
+    @Test
     public void generate_ShouldReturnAPlayerThatIsNotARookie() {
         final Player player = Player.generate(null, null, null, null);
 

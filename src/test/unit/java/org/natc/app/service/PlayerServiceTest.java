@@ -230,6 +230,7 @@ class PlayerServiceTest {
         assertTrue(player.getEndurance() >= 0.0 && player.getEndurance() <= 1.0);
         assertTrue(player.getConfidence() >= 0.0 && player.getConfidence() <= 1.0);
         assertTrue(player.getVitality() >= 0.0 && player.getVitality() <= 1.0);
+        assertTrue(player.getDurability() >= 0.0 && player.getDurability() <= 1.0);
     }
 
     @Test
