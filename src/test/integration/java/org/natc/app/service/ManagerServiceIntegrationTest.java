@@ -8,6 +8,7 @@ import org.natc.app.exception.NATCException;
 import org.natc.app.repository.ManagerRepository;
 import org.natc.app.util.TestHelpers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
@@ -146,5 +148,25 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         assertEquals(25, managers.size());
         assertEquals(25, managers.stream().filter(manager -> manager.getManagerId() >= 1 && manager.getManagerId() <= 25).count());
+    }
+
+    @Test
+    public void updateManager_ShouldModifyAnExistingManagerRecordInTheDatabase() {
+        final Manager originalManager = Manager.builder().managerId(123).year("2001").build();
+
+        managerRepository.save(originalManager);
+
+        final Manager updatedManager = Manager.builder().managerId(123).year("2001").firstName("Jake").lastName("Roberts").build();
+
+        managerService.updateManager(updatedManager);
+
+        final Manager persistedManager = managerRepository.findOne(Example.of(originalManager)).orElse(null);
+
+        assertNotNull(persistedManager);
+
+        assertEquals(updatedManager.getManagerId(), persistedManager.getManagerId());
+        assertEquals(updatedManager.getYear(), persistedManager.getYear());
+        assertEquals(updatedManager.getFirstName(), persistedManager.getFirstName());
+        assertEquals(updatedManager.getLastName(), persistedManager.getLastName());
     }
 }

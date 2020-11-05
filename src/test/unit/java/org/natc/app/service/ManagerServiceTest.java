@@ -320,4 +320,15 @@ class ManagerServiceTest {
 
         verify(managerRepository, times(10)).save(any(Manager.class));
     }
+
+    @Test
+    public void updateManager_ShouldCallTheManagerRepositoryToSaveTheGivenManager() {
+        final Manager manager = Manager.builder().managerId(1234).build();
+
+        reset(nameService);
+
+        managerService.updateManager(manager);
+
+        managerRepository.save(manager);
+    }
 }

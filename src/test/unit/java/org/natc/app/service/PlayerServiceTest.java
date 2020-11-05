@@ -290,4 +290,15 @@ class PlayerServiceTest {
 
         verify(playerRepository, times(10)).save(any(Player.class));
     }
+
+    @Test
+    public void updatePlayer_ShouldCallThePlayerRepositoryToSaveTheGivenPlayer() {
+        final Player player = Player.builder().playerId(555).build();
+
+        reset(nameService);
+
+        playerService.updatePlayer(player);
+
+        verify(playerRepository).save(player);
+    }
 }

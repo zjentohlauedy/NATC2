@@ -7,12 +7,14 @@ import org.natc.app.exception.NATCException;
 import org.natc.app.repository.PlayerRepository;
 import org.natc.app.util.TestHelpers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
@@ -137,5 +139,25 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         assertEquals(25, players.size());
         assertEquals(25, players.stream().filter(player -> player.getPlayerId() >= 1 && player.getPlayerId() <= 25).count());
+    }
+    
+    @Test
+    public void updatePlayer_ShouldModifyAnExistingPlayerRecordInTheDatabase() {
+        final Player originalPlayer = Player.builder().playerId(333).year("1999").build();
+
+        playerRepository.save(originalPlayer);
+
+        final Player updatedPlayer = Player.builder().playerId(333).year("1999").firstName("Todd").lastName("Stevens").build();
+
+        playerService.updatePlayer(updatedPlayer);
+
+        final Player persistedPlayer = playerRepository.findOne(Example.of(originalPlayer)).orElse(null);
+
+        assertNotNull(persistedPlayer);
+
+        assertEquals(updatedPlayer.getPlayerId(), persistedPlayer.getPlayerId());
+        assertEquals(updatedPlayer.getYear(), persistedPlayer.getYear());
+        assertEquals(updatedPlayer.getFirstName(), persistedPlayer.getFirstName());
+        assertEquals(updatedPlayer.getLastName(), persistedPlayer.getLastName());
     }
 }

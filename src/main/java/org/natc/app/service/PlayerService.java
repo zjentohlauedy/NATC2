@@ -40,6 +40,6 @@ public class PlayerService {
     }
 
     public void updatePlayer(final Player player) {
-        throw new UnsupportedOperationException("Method Not Implemented Yet");
+        playerRepository.save(player);
     }
 }

@@ -46,6 +46,6 @@ public class ManagerService {
     }
 
     public void updateManager(final Manager manager) {
-        throw new UnsupportedOperationException("Method Not Implemented Yet");
+        managerRepository.save(manager);
     }
 }
