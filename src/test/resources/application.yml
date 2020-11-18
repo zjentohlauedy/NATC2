@@ -26,3 +26,13 @@ natc:
     first-season: 1971
     initial-managers: 80
     initial-players: 600
+    days-in-preseason: 10
+    teams-per-division: 10
+    teams-per-conference: 20
+    number-of-teams: 40
+    days-in-regular-season: 100
+    games-per-day: 20
+    out-of-conference-games: 7
+    playoff-games-round-one: 7
+    playoff-games-round-two: 5
+    playoff-games-round-three: 3

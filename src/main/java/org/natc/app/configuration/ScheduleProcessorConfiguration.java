@@ -13,6 +13,7 @@ public class ScheduleProcessorConfiguration {
     @Bean
     public Map<ScheduleType, String> scheduleTypeProcessorMap() {
         final EnumMap<ScheduleType, String> map = new EnumMap<>(ScheduleType.class);
+        map.put(ScheduleType.BEGINNING_OF_SEASON, "dummy-schedule-processor");
         map.put(ScheduleType.REGULAR_SEASON, "dummy-schedule-processor");
         return map;
     }
