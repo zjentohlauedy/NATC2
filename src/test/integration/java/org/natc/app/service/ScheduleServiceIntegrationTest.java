@@ -12,10 +12,13 @@ import org.springframework.data.domain.Example;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
 
@@ -313,5 +316,62 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         assertNotNull(scheduleAfter);
         assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), scheduleAfter.getStatus());
+    }
+
+    @Test
+    public void generateSchedule_ShouldCreateScheduleRecordsForGivenYear() {
+        scheduleService.generateSchedule("2001");
+
+        final List<Schedule> scheduleList = repository.findAll();
+
+        final Set<String> years = scheduleList.stream().map(Schedule::getYear).collect(Collectors.toSet());
+
+        assertEquals(1, years.size());
+        assertEquals("2001", years.stream().findFirst().orElse(null));
+    }
+
+    @Test
+    public void generateSchedule_ShouldCreateScheduleRecordsForEveryTypeOfSchedule() {
+        scheduleService.generateSchedule("2001");
+
+        final List<Schedule> scheduleList = repository.findAll();
+
+        final Set<Integer> scheduleTypes = scheduleList.stream().map(Schedule::getType).collect(Collectors.toSet());
+
+        assertTrue(scheduleTypes.contains(ScheduleType.BEGINNING_OF_SEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.MANAGER_CHANGES.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.PLAYER_CHANGES.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.ROOKIE_DRAFT_ROUND_1.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.ROOKIE_DRAFT_ROUND_2.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.TRAINING_CAMP.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.PRESEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.END_OF_PRESEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.ROSTER_CUT.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.REGULAR_SEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.END_OF_REGULAR_SEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.AWARDS.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.POSTSEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.DIVISION_PLAYOFF.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.DIVISION_CHAMPIONSHIP.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.CONFERENCE_CHAMPIONSHIP.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.END_OF_POSTSEASON.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.ALL_STARS.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.ALL_STAR_DAY_1.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.ALL_STAR_DAY_2.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.END_OF_ALLSTAR_GAMES.getValue()));
+        assertTrue(scheduleTypes.contains(ScheduleType.END_OF_SEASON.getValue()));
+    }
+
+    @Test
+    public void generateSchedule_ShouldCreateScheduleRecordsThatAreAllScheduledForSomeDate() {
+        scheduleService.generateSchedule("2001");
+
+        final List<Schedule> scheduleList = repository.findAll();
+
+        final Set<Integer> statuses = scheduleList.stream().map(Schedule::getStatus).collect(Collectors.toSet());
+
+        assertEquals(1, statuses.size());
+        assertEquals(ScheduleStatus.SCHEDULED.getValue(), statuses.stream().findFirst().orElse(null));
+        assertEquals(0, scheduleList.stream().filter(schedule -> schedule.getScheduled() == null).count());
     }
 }
