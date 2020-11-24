@@ -7,9 +7,6 @@ import java.util.List;
 
 @Getter
 public class ScheduleData {
-    public int games;
-    public int[] home_teams;
-    public int[] road_teams;
 
     @Getter
     public static class Match {
@@ -25,34 +22,24 @@ public class ScheduleData {
     private final List<Match> matches;
 
     public ScheduleData() {
-        this.games = 0;
-        this.home_teams = new int[20];
-        this.road_teams = new int[20];
-
         matches = new ArrayList<>();
     }
 
+    @Override
     public String toString() {
-        final char[] array = new char[41];
-        int idx = 0;
+        final StringBuilder buffer = new StringBuilder();
 
-        array[idx] = (char) this.games;
-        array[idx] += '0';
+        buffer.append(encode(matches.size()));
 
-        idx++;
-
-        for (int i = 0; i < this.games; ++i) {
-            array[idx] = (char) this.road_teams[i];
-            array[idx] += '0';
-
-            idx++;
-
-            array[idx] = (char) this.home_teams[i];
-            array[idx] += '0';
-
-            idx++;
+        for (final Match match : matches) {
+            buffer.append(encode(match.getRoadTeam()));
+            buffer.append(encode(match.getHomeTeam()));
         }
 
-        return new String(array);
+        return buffer.toString();
+    }
+
+    private char encode(final int value) {
+        return (char)('0' + value);
     }
 }

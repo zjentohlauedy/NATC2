@@ -42,8 +42,6 @@ public class RegularSeasonScheduleDataGenerator {
         for ( int round = 0; round < outOfConferenceGames; ++round ) {
             final ScheduleData scheduleData = new ScheduleData();
 
-            scheduleData.games = gamesPerDay;
-
             for (int match = 0; match < gamesPerDay; ++match) {
 
                 // After conference schedule team list has the form with road/home bias:
@@ -91,8 +89,6 @@ public class RegularSeasonScheduleDataGenerator {
 
             for ( int round = 0; round < rounds; ++round ) {
                 final ScheduleData scheduleData = new ScheduleData();
-
-                scheduleData.games = leagueConfiguration.getGamesPerDay();
 
                 generateMatches( scheduleData, teams, partitionSize, invert, flip );
 

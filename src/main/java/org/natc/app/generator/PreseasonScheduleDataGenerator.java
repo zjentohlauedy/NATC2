@@ -29,8 +29,6 @@ public class PreseasonScheduleDataGenerator {
         for (int day = 0; day < leagueConfiguration.getDaysInPreseason(); ++day) {
             final ScheduleData scheduleData = new ScheduleData();
 
-            scheduleData.games = leagueConfiguration.getGamesPerDay();
-
             for (int match = 0; match < leagueConfiguration.getGamesPerDay(); ++match) {
                 if ((day % 2) == 0) {
                     // static teams are home
