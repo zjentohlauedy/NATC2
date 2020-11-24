@@ -1,6 +1,5 @@
 package org.natc.app.manager;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -19,7 +18,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,20 +33,10 @@ class ScheduleProcessorManagerTest {
     @InjectMocks
     private ScheduleProcessorManager scheduleProcessorManager;
 
-    @BeforeEach
-    public void setup() {
-        when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn("bean-name");
-    }
-
-    @Test
-    public void getProcessorFor_ShouldGetBeanFromApplicationContext() {
-        scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
-
-        verify(context).getBean(anyString(), any(Class.class));
-    }
-
     @Test
     public void getProcessorFor_ShouldGetScheduleProcessorBeanFromApplicationContext() {
+        when(scheduleTypeProcessorMap.get(any(ScheduleType.class))).thenReturn("bean-name");
+
         scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
 
         verify(context).getBean(anyString(), eq(ScheduleProcessor.class));
@@ -59,7 +47,6 @@ class ScheduleProcessorManagerTest {
         final String expectedBeanName = "my-bean-name";
         final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
-        reset(scheduleTypeProcessorMap);
         when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn(expectedBeanName);
 
         scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
@@ -75,7 +62,6 @@ class ScheduleProcessorManagerTest {
     public void getProcessorFor_ShouldReturnTheScheduleProcessorFoundInTheApplicationContext() {
         final ScheduleProcessor expectedScheduleProcessor = mock(ScheduleProcessor.class);
 
-        reset(scheduleTypeProcessorMap);
         when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn("bean-name");
         when(context.getBean("bean-name", ScheduleProcessor.class)).thenReturn(expectedScheduleProcessor);
 

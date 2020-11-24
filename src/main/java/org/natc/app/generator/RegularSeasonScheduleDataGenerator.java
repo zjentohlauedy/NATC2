@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RegularSeasonScheduleDataGenerator {
+public class RegularSeasonScheduleDataGenerator implements ScheduleDataGenerator {
 
     public static final int CONFERENCE_ROUNDS = 3;
     public static final int DIVISION_ROUNDS = 4;
