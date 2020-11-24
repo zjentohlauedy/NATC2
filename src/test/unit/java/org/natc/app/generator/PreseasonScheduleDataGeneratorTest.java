@@ -68,6 +68,17 @@ class PreseasonScheduleDataGeneratorTest {
     }
 
     @Test
+    public void generate_ShouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
+        final List<ScheduleData> scheduleDataList = generator.generate();
+
+        assertFalse(scheduleDataList.isEmpty());
+
+        for (final ScheduleData data : scheduleDataList) {
+            assertEquals(leagueConfiguration.getGamesPerDay(), data.getMatches().size());
+        }
+    }
+
+    @Test
     public void generate_ShouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
         final List<ScheduleData> scheduleDataList = generator.generate();
 
