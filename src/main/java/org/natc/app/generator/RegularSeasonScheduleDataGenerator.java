@@ -2,11 +2,13 @@ package org.natc.app.generator;
 
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.ScheduleData;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component("regular-season-schedule-data-generator")
 public class RegularSeasonScheduleDataGenerator implements ScheduleDataGenerator {
 
     public static final int CONFERENCE_ROUNDS = 3;

@@ -2,10 +2,12 @@ package org.natc.app.configuration;
 
 import org.natc.app.entity.domain.ScheduleType;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.EnumMap;
 import java.util.Map;
 
+@Configuration
 public class ScheduleDataGeneratorConfiguration {
 
     @Bean

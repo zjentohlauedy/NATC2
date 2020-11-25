@@ -2,6 +2,7 @@ package org.natc.app.generator;
 
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.ScheduleData;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Component("preseason-schedule-data-generator")
 public class PreseasonScheduleDataGenerator implements ScheduleDataGenerator {
 
     private final LeagueConfiguration leagueConfiguration;

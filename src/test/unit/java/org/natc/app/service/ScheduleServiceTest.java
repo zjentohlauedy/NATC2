@@ -10,13 +10,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Schedule;
+import org.natc.app.entity.domain.ScheduleData;
 import org.natc.app.entity.domain.ScheduleStatus;
 import org.natc.app.entity.domain.ScheduleType;
+import org.natc.app.generator.ScheduleDataGenerator;
+import org.natc.app.manager.ScheduleDataGeneratorManager;
 import org.natc.app.repository.ScheduleRepository;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,6 +51,9 @@ class ScheduleServiceTest {
 
     @Mock
     private LeagueConfiguration leagueConfiguration;
+
+    @Mock
+    private ScheduleDataGeneratorManager scheduleDataGeneratorManager;
 
     @InjectMocks
     private ScheduleService scheduleService;
@@ -174,6 +182,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldCallScheduleRepositoryToSaveAListOfSchedules() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("1999");
 
         verify(scheduleRepository).saveAll(ArgumentMatchers.<List<Schedule>>any());
@@ -181,6 +191,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveABeginningOfSeasonScheduleEntryForJanuaryFirstOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -200,6 +212,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAManagerChangesScheduleEntryForFirstMondayInFebruaryOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -219,6 +233,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAPlayerChangesScheduleEntryForFebruaryTwentyEightOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -238,6 +254,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveTheRookieDraftRoundOneScheduleEntryForFirstMondayInMarchOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -257,6 +275,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveTheRookieDraftRoundTwoScheduleEntryForTheDayAfterRoundOneOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -276,6 +296,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveTheTrainingCampScheduleEntryForThirdMondayInMarchOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -294,14 +316,34 @@ class ScheduleServiceTest {
     }
 
     @Test
-    public void generateSchedule_ShouldSaveConfiguredNumberOfPreseasonScheduleEntriesStartingFirstMondayInAprilOfGivenYear() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldCallScheduleDataGeneratorManagerToGetPreseasonScheduleDataGenerator() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
+        scheduleService.generateSchedule("2005");
+
+        verify(scheduleDataGeneratorManager).getGeneratorFor(ScheduleType.PRESEASON);
+    }
+
+    @Test
+    public void generateSchedule_ShouldUseThePreseasonScheduleDataGeneratorToGenerateThePreseasonSchedule() {
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+
+        scheduleService.generateSchedule("2005");
+
+        verify(generator).generate();
+    }
+
+    @Test
+    public void generateSchedule_ShouldSavePreseasonScheduleEntriesFromScheduleDataGeneratorStartingFirstMondayInAprilOfGivenYear() {
+        final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(generator.generate()).thenReturn(preseasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -311,32 +353,35 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInPreseason(), preseason.size());
+        assertEquals(preseasonScheduleData.size(), preseason.size());
 
         preseason.sort(Comparator.comparing(Schedule::getSequence));
 
+        assertEquals(LocalDate.parse("2005-04-04"), preseason.get(0).getScheduled());
+
         int expectedSequence = 7;
 
-        for (final Schedule schedule : preseason) {
+        for (int i = 0; i < preseason.size(); ++i) {
+            final Schedule schedule = preseason.get(i);
+
             assertEquals("2005", schedule.getYear());
             assertEquals(expectedSequence, schedule.getSequence());
             assertEquals(ScheduleStatus.SCHEDULED.getValue(), schedule.getStatus());
             assertEquals(2005, schedule.getScheduled().getYear());
-            assertNotNull(schedule.getData());
+            assertEquals(preseasonScheduleData.get(i).toString(), schedule.getData());
 
             expectedSequence++;
         }
     }
 
     @Test
-    public void generateSchedule_ShouldSaveConfiguredNumberOfPreseasonScheduleEntriesAllWithUniqueDataValues() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldSchedulePreseasonGamesOnDifferentDays() {
+        final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(generator.generate()).thenReturn(preseasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -346,47 +391,21 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInPreseason(), preseason.size());
-
-        final Set<String> dataValues = preseason.stream().map(Schedule::getData).collect(Collectors.toSet());
-
-        assertEquals(leagueConfiguration.getDaysInPreseason(), dataValues.size());
-    }
-
-    @Test
-    public void generateSchedule_ShouldShouldSchedulePreseasonGamesOnDifferentDays() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
-
-        scheduleService.generateSchedule("2005");
-
-        verify(scheduleRepository).saveAll(captor.capture());
-
-        final List<Schedule> preseason = captor.getValue().stream()
-                .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
-                .collect(Collectors.toList());
-
-        assertEquals(leagueConfiguration.getDaysInPreseason(), preseason.size());
+        assertEquals(preseasonScheduleData.size(), preseason.size());
 
         final Set<LocalDate> dates = preseason.stream().map(Schedule::getScheduled).collect(Collectors.toSet());
 
-        assertEquals(leagueConfiguration.getDaysInPreseason(), dates.size());
+        assertEquals(preseasonScheduleData.size(), dates.size());
     }
 
     @Test
-    public void generateSchedule_ShouldShouldNotSchedulePreseasonGamesOnTheWeekend() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldNotSchedulePreseasonGamesOnTheWeekend() {
+        final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(generator.generate()).thenReturn(preseasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -396,7 +415,7 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInPreseason(), preseason.size());
+        assertEquals(preseasonScheduleData.size(), preseason.size());
 
         for (final Schedule schedule : preseason) {
             assertNotEquals(DayOfWeek.SATURDAY, schedule.getScheduled().getDayOfWeek());
@@ -405,14 +424,13 @@ class ScheduleServiceTest {
     }
 
     @Test
-    public void generateSchedule_ShouldShouldSchedulePreseasonGamesOnConsecutiveWeekdays() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldSchedulePreseasonGamesOnConsecutiveWeekdays() {
+        final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(generator.generate()).thenReturn(preseasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -422,7 +440,7 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInPreseason(), preseason.size());
+        assertEquals(preseasonScheduleData.size(), preseason.size());
 
         preseason.sort(Comparator.comparing(Schedule::getSequence));
 
@@ -449,13 +467,11 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAEndOfPreseasonScheduleEntryForTheDayAfterPreseasonGames() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(generator.generate()).thenReturn(generateFakePreseasonData());
 
         scheduleService.generateSchedule("2005");
 
@@ -480,6 +496,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveARosterCutScheduleEntryForAprilThirtiethOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -505,14 +523,34 @@ class ScheduleServiceTest {
     }
 
     @Test
-    public void generateSchedule_ShouldSaveConfiguredNumberOfRegularSeasonScheduleEntriesStartingFirstMondayInMayOfGivenYear() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldCallScheduleDataGeneratorManagerToGetRegularSeasonScheduleDataGenerator() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
+        scheduleService.generateSchedule("2005");
+
+        verify(scheduleDataGeneratorManager).getGeneratorFor(ScheduleType.REGULAR_SEASON);
+    }
+
+    @Test
+    public void generateSchedule_ShouldUseTheRegularSeasonScheduleDataGeneratorToGenerateTheRegularSeasonSchedule() {
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(generator);
+
+        scheduleService.generateSchedule("2005");
+
+        verify(generator).generate();
+    }
+
+    @Test
+    public void generateSchedule_ShouldSaveRegularSeasonScheduleEntriesFromScheduleDataGeneratorStartingFirstMondayInMayOfGivenYear() {
+        final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(generator);
+        when(generator.generate()).thenReturn(regularSeasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -527,38 +565,35 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInRegularSeason(), regularSeason.size());
+        assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
         regularSeason.sort(Comparator.comparing(Schedule::getSequence));
 
+        assertEquals(LocalDate.parse("2005-05-02"), regularSeason.get(0).getScheduled());
+
         int expectedSequence = rosterCut.getSequence() + 1;
 
-        for (final Schedule schedule : regularSeason) {
+        for (int i = 0; i < regularSeason.size(); ++i) {
+            final Schedule schedule = regularSeason.get(i);
+
             assertEquals("2005", schedule.getYear());
             assertEquals(expectedSequence, schedule.getSequence());
             assertEquals(ScheduleStatus.SCHEDULED.getValue(), schedule.getStatus());
             assertEquals(2005, schedule.getScheduled().getYear());
-            assertNotNull(schedule.getData());
+            assertEquals(regularSeasonScheduleData.get(i).toString(), schedule.getData());
 
             expectedSequence++;
         }
     }
 
     @Test
-    public void generateSchedule_ShouldSaveConfiguredNumberOfRegularSeasonScheduleEntriesAllWithSixtyThreeUniqueDataValues() {
-        // 40 teams, 10 per division, 2 divisions per conference
-        // 9 games within division times 2 (home and road)
-        // 18 games within conference time 2
-        // 7 games between conferences
-        final Integer expectedDataCount = 63;
+    public void generateSchedule_ShouldScheduleRegularSeasonGamesOnDifferentDays() {
+        final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(generator);
+        when(generator.generate()).thenReturn(regularSeasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -568,47 +603,21 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInRegularSeason(), regularSeason.size());
-
-        final Set<String> dataValues = regularSeason.stream().map(Schedule::getData).collect(Collectors.toSet());
-
-        assertEquals(expectedDataCount, dataValues.size());
-    }
-
-    @Test
-    public void generateSchedule_ShouldShouldScheduleRegularSeasonGamesOnDifferentDays() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
-
-        scheduleService.generateSchedule("2005");
-
-        verify(scheduleRepository).saveAll(captor.capture());
-
-        final List<Schedule> regularSeason = captor.getValue().stream()
-                .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
-                .collect(Collectors.toList());
-
-        assertEquals(leagueConfiguration.getDaysInRegularSeason(), regularSeason.size());
+        assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
         final Set<LocalDate> dates = regularSeason.stream().map(Schedule::getScheduled).collect(Collectors.toSet());
 
-        assertEquals(leagueConfiguration.getDaysInRegularSeason(), dates.size());
+        assertEquals(regularSeasonScheduleData.size(), dates.size());
     }
 
     @Test
-    public void generateSchedule_ShouldShouldNotScheduleRegularSeasonGamesOnTheWeekend() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldNotScheduleRegularSeasonGamesOnTheWeekend() {
+        final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(generator);
+        when(generator.generate()).thenReturn(regularSeasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -618,7 +627,7 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInRegularSeason(), regularSeason.size());
+        assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
         for (final Schedule schedule : regularSeason) {
             assertNotEquals(DayOfWeek.SATURDAY, schedule.getScheduled().getDayOfWeek());
@@ -627,14 +636,13 @@ class ScheduleServiceTest {
     }
 
     @Test
-    public void generateSchedule_ShouldShouldScheduleRegularSeasonGamesOnConsecutiveWeekdays() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+    public void generateSchedule_ShouldScheduleRegularSeasonGamesOnConsecutiveWeekdays() {
+        final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(generator);
+        when(generator.generate()).thenReturn(regularSeasonScheduleData);
 
         scheduleService.generateSchedule("2005");
 
@@ -644,7 +652,7 @@ class ScheduleServiceTest {
                 .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
                 .collect(Collectors.toList());
 
-        assertEquals(leagueConfiguration.getDaysInRegularSeason(), regularSeason.size());
+        assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
         regularSeason.sort(Comparator.comparing(Schedule::getSequence));
 
@@ -670,13 +678,11 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAEndOfRegularSeasonScheduleEntryForTheDayAfterRegularSeasonGames() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+        final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
+
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
+        when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.REGULAR_SEASON)).thenReturn(generator);
+        when(generator.generate()).thenReturn(generateFakeRegularSeasonData());
 
         scheduleService.generateSchedule("2005");
 
@@ -701,13 +707,7 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAnAwardsScheduleEntryForTheMondayAfterEndOfRegularSeason() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
-        when(leagueConfiguration.getTeamsPerDivision()).thenReturn(10);
-        when(leagueConfiguration.getOutOfConferenceGames()).thenReturn(7);
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
         scheduleService.generateSchedule("2005");
 
@@ -738,6 +738,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAPostseasonScheduleEntryForTheFridayAfterAwards() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -767,6 +769,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveConfiguredNumberOfDivisionPlayoffScheduleEntriesStartingSundayAfterPostseason() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
 
         scheduleService.generateSchedule("2005");
@@ -810,6 +814,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveConfiguredNumberOfDivisionChampionshipScheduleEntriesStartingSundayAfterDivisionPlayoffs() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
         when(leagueConfiguration.getPlayoffGamesRoundTwo()).thenReturn(5);
 
@@ -851,6 +857,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveConfiguredNumberOfConferenceChampionshipScheduleEntriesStartingSundayAfterDivisionChampionships() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
         when(leagueConfiguration.getPlayoffGamesRoundTwo()).thenReturn(5);
         when(leagueConfiguration.getPlayoffGamesRoundThree()).thenReturn(3);
@@ -893,6 +901,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveANATCChampionshipScheduleEntryForTheSundayAfterDivisionChampionships() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
         when(leagueConfiguration.getPlayoffGamesRoundTwo()).thenReturn(5);
         when(leagueConfiguration.getPlayoffGamesRoundThree()).thenReturn(3);
@@ -923,6 +933,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAEndOfPostseasonScheduleEntryForTheDayAfterNATCChampionship() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -949,6 +961,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAnAllStarsScheduleEntryForTheDayAfterEndOfPostseason() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -975,6 +989,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAnAllStarDayOneScheduleEntryForTheSaturdayAfterAllStars() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -1004,6 +1020,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAnAllStarDayTwoScheduleEntryForTheDayAfterAllStarDayOne() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -1030,6 +1048,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAnEndOfAllStarGamesScheduleEntryForTheDayAfterAllStarDayTwo() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -1056,6 +1076,8 @@ class ScheduleServiceTest {
 
     @Test
     public void generateSchedule_ShouldSaveAnEndOfSeasonScheduleEntryForFirstMondayInNovemberFirstOfGivenYear() {
+        when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
+
         scheduleService.generateSchedule("2005");
 
         verify(scheduleRepository).saveAll(captor.capture());
@@ -1078,5 +1100,41 @@ class ScheduleServiceTest {
         assertEquals(endOfAllStarGames.getSequence() + 1, endOfSeason.getSequence());
         assertEquals(ScheduleStatus.SCHEDULED.getValue(), endOfSeason.getStatus());
         assertEquals(LocalDate.parse("2005-11-07"), endOfSeason.getScheduled());
+    }
+
+    private List<ScheduleData> generateFakePreseasonData() {
+        final List<ScheduleData> scheduleDataList = new ArrayList<>();
+
+        for (int i = 0; i < 10; ++i) {
+            final ScheduleData scheduleData = new ScheduleData();
+
+            for (int j = 0; j < 20; ++j) {
+                final ScheduleData.Match match = new ScheduleData.Match(j + 1, j + 21);
+
+                scheduleData.getMatches().add(match);
+            }
+
+            scheduleDataList.add(scheduleData);
+        }
+
+        return scheduleDataList;
+    }
+
+    private List<ScheduleData> generateFakeRegularSeasonData() {
+        final List<ScheduleData> scheduleDataList = new ArrayList<>();
+
+        for (int i = 0; i < 100; ++i) {
+            final ScheduleData scheduleData = new ScheduleData();
+
+            for (int j = 0; j < 20; ++j) {
+                final ScheduleData.Match match = new ScheduleData.Match(j + 1, j + 21);
+
+                scheduleData.getMatches().add(match);
+            }
+
+            scheduleDataList.add(scheduleData);
+        }
+
+        return scheduleDataList;
     }
 }
