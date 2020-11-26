@@ -66,7 +66,6 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         seasonManager.processScheduledEvent();
 
         final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
-
         final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
         assertEquals(ScheduleStatus.SCHEDULED.getValue(), afterScheduleList.get(0).getStatus());
@@ -79,9 +78,9 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         seasonManager.processScheduledEvent();
 
         final Example<Schedule> example = Example.of(Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(1).build());
-
         final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
+        assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
         assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
     }
 
@@ -101,7 +100,34 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
     }
 
     @Test
-    public void processScheduledEvent_ShouldThrowUnsupportedOperationExceptionWhenEndOfSeason() {
+    public void processScheduledEvent_ShouldUpdateLeagueToNextYearWhenEndOfSeason() throws NATCException {
+        final List<Schedule> initialScheduleList = Arrays.asList(
+                Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
+                        .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
+                        .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                Schedule.builder().year("2001").sequence(26).type(ScheduleType.END_OF_SEASON.getValue())
+                        .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
+        );
+
+        scheduleRepository.saveAll(initialScheduleList);
+        teamRepository.save(Team.builder().teamId(1).year("2001").build());
+        managerRepository.save(Manager.builder().managerId(1).year("2001").build());
+        playerRepository.save(Player.builder().playerId(1).year("2001").build());
+
+        seasonManager.processScheduledEvent();
+
+        final List<Team> teamList = teamRepository.findAll(Example.of(Team.builder().year("2002").build()));
+        final List<Manager> managerList = managerRepository.findAll(Example.of(Manager.builder().year("2002").build()));
+        final List<Player> playerList = playerRepository.findAll(Example.of(Player.builder().year("2002").build()));
+
+        assertFalse(teamList.isEmpty());
+        assertFalse(managerList.isEmpty());
+        assertFalse(playerList.isEmpty());
+    }
+
+    @Test
+    public void processScheduledEvent_ShouldGenerateANewScheduleForNextYearWhenEndOfSeasonAndPutNewBeginningOfSeasonInProgress() throws NATCException {
         final List<Schedule> initialScheduleList = Arrays.asList(
                 Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                         .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -113,10 +139,13 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
 
         scheduleRepository.saveAll(initialScheduleList);
 
-        final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () ->
-                seasonManager.processScheduledEvent());
+        seasonManager.processScheduledEvent();
 
-        assertEquals("Method Not Implemented Yet", exception.getMessage());
+        final Example<Schedule> example = Example.of(Schedule.builder().year("2002").sequence(1).build());
+        final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
+
+        assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
+        assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
     }
 
     @Test
@@ -151,7 +180,6 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         seasonManager.processScheduledEvent();
 
         final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
-
         final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
         assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());

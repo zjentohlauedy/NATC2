@@ -331,4 +331,22 @@ class ManagerServiceTest {
 
         managerRepository.save(manager);
     }
+    
+    @Test
+    public void updateManagersForNewSeason_ShouldCallTheRepositoryToCopyManagersForNewYear() {
+        reset(nameService);
+
+        managerService.updateManagersForNewSeason(null, null);
+
+        verify(managerRepository).copyManagersForNewYear(any(), any());
+    }
+
+    @Test
+    public void updateTeamsForNewSeason_ShouldCallPassThePreviousYearAndNewYearToTheRepository() {
+        reset(nameService);
+
+        managerService.updateManagersForNewSeason("2001", "2010");
+
+        verify(managerRepository).copyManagersForNewYear("2001", "2010");
+    }
 }

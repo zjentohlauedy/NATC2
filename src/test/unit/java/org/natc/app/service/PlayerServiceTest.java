@@ -301,4 +301,22 @@ class PlayerServiceTest {
 
         verify(playerRepository).save(player);
     }
+    
+    @Test
+    public void updatePlayersForNewSeason_ShouldCallTheRepositoryToCopyPlayersForNewYear() {
+        reset(nameService);
+
+        playerService.updatePlayersForNewSeason(null, null);
+
+        verify(playerRepository).copyPlayersForNewYear(any(), any());
+    }
+    
+    @Test
+    public void updatePlayersForNewSeason_ShouldCallPassThePreviousYearAndNewYearToTheRepository() {
+        reset(nameService);
+
+        playerService.updatePlayersForNewSeason("2004", "2005");
+
+        verify(playerRepository).copyPlayersForNewYear("2004", "2005");
+    }
 }

@@ -70,4 +70,8 @@ public class TeamService {
 
         return teamList;
     }
+
+    public void updateTeamsForNewSeason(final String previousYear, final String newYear) {
+        repository.copyTeamsForNewYear(previousYear, newYear);
+    }
 }

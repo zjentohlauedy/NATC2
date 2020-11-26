@@ -48,4 +48,8 @@ public class ManagerService {
     public void updateManager(final Manager manager) {
         managerRepository.save(manager);
     }
+
+    public void updateManagersForNewSeason(final String previousYear, final String newYear) {
+        managerRepository.copyManagersForNewYear(previousYear, newYear);
+    }
 }

@@ -104,7 +104,9 @@ public class LeagueService {
         }
     }
 
-    public void updateLeagueForNewSeason() {
-        throw new UnsupportedOperationException("Method Not Implemented Yet");
+    public void updateLeagueForNewSeason(final String previousYear, final String newYear) {
+        teamService.updateTeamsForNewSeason(previousYear, newYear);
+        managerService.updateManagersForNewSeason(previousYear, newYear);
+        playerService.updatePlayersForNewSeason(previousYear, newYear);
     }
 }

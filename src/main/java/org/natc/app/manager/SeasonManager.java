@@ -42,7 +42,7 @@ public class SeasonManager {
         else if (lastScheduleEntry.getType().equals(ScheduleType.END_OF_SEASON.getValue())) {
             final String nextYear = String.valueOf(Integer.parseInt(lastScheduleEntry.getYear()) + 1);
 
-            leagueService.updateLeagueForNewSeason();
+            leagueService.updateLeagueForNewSeason(lastScheduleEntry.getYear(), nextYear);
             scheduleService.generateSchedule(nextYear);
         }
 

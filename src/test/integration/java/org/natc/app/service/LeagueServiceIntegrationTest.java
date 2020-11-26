@@ -12,6 +12,7 @@ import org.natc.app.repository.PlayerRepository;
 import org.natc.app.repository.TeamRepository;
 import org.natc.app.util.TestHelpers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -133,5 +134,40 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         assertEquals(1, counts.size());
         assertEquals(leagueConfiguration.getPlayersPerTeam().longValue(), counts.stream().findFirst().orElse(0L));
+    }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldDuplicateTheLeagueStructureFromPreviousYearToNewYear() throws NATCException {
+        leagueService.generateNewLeague();
+
+        final List<Team> previousYearTeams = teamRepository.findAll();
+        final List<Manager> previousYearManagers = managerRepository.findAll();
+        final List<Player> previousYearPlayers = playerRepository.findAll();
+
+        final String newYear = String.valueOf(Integer.parseInt(leagueConfiguration.getFirstSeason()) + 1);
+
+        leagueService.updateLeagueForNewSeason(leagueConfiguration.getFirstSeason(), newYear);
+
+        final List<Team> newTeams = teamRepository.findAll(Example.of(Team.builder().year(newYear).build()));
+        final List<Manager> newManagers = managerRepository.findAll(Example.of(Manager.builder().year(newYear).build()));
+        final List<Player> newPlayers = playerRepository.findAll(Example.of(Player.builder().year(newYear).build()));
+
+        assertEquals(previousYearTeams.size(), newTeams.size());
+        assertEquals(previousYearManagers.size(), newManagers.size());
+        assertEquals(previousYearPlayers.size(), newPlayers.size());
+
+        previousYearManagers.sort(Comparator.comparing(Manager::getManagerId));
+        newManagers.sort(Comparator.comparing(Manager::getManagerId));
+
+        for (int i = 0; i < previousYearManagers.size(); ++i) {
+            assertEquals(previousYearManagers.get(i).getTeamId(), newManagers.get(i).getTeamId());
+        }
+
+        previousYearPlayers.sort(Comparator.comparing(Player::getPlayerId));
+        newPlayers.sort(Comparator.comparing(Player::getPlayerId));
+
+        for (int i = 0; i < previousYearPlayers.size(); ++i) {
+            assertEquals(previousYearPlayers.get(i).getTeamId(), newPlayers.get(i).getTeamId());
+        }
     }
 }

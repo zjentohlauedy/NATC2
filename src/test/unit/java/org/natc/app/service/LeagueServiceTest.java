@@ -853,4 +853,46 @@ class LeagueServiceTest {
 
         verify(playerService).updatePlayer(highRatedPlayer);
     }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldCallTeamServiceToUpdateTeamsForNewSeason() {
+        leagueService.updateLeagueForNewSeason(null, null);
+
+        verify(teamService).updateTeamsForNewSeason(any(), any());
+    }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldPassTheGivenPreviousAndNewYearsToTheTeamService() {
+        leagueService.updateLeagueForNewSeason("2001", "2002");
+
+        verify(teamService).updateTeamsForNewSeason("2001", "2002");
+    }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldCallManagerServiceToUpdateManagersForNewSeason() {
+        leagueService.updateLeagueForNewSeason(null, null);
+
+        verify(managerService).updateManagersForNewSeason(any(), any());
+    }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldPassTheGivenPreviousAndNewYearsToTheManagerService() {
+        leagueService.updateLeagueForNewSeason("2001", "2002");
+
+        verify(managerService).updateManagersForNewSeason("2001", "2002");
+    }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldCallPlayerServiceToUpdatePlayersForNewSeason() {
+        leagueService.updateLeagueForNewSeason(null, null);
+
+        verify(playerService).updatePlayersForNewSeason(any(), any());
+    }
+
+    @Test
+    public void updateLeagueForNewSeason_ShouldPassTheGivenPreviousAndNewYearsToThePlayerService() {
+        leagueService.updateLeagueForNewSeason("2001", "2002");
+
+        verify(playerService).updatePlayersForNewSeason("2001", "2002");
+    }
 }

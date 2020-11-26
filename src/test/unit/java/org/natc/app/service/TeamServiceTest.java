@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -215,5 +216,19 @@ class TeamServiceTest {
         final List<Team> teamList = teamService.generateTeams(null);
 
         verify(teamRepository).saveAll(teamList);
+    }
+
+    @Test
+    public void updateTeamsForNewSeason_ShouldCallTheRepositoryToCopyTeamsForNewYear() {
+        teamService.updateTeamsForNewSeason(null, null);
+
+        verify(teamRepository).copyTeamsForNewYear(any(), any());
+    }
+
+    @Test
+    public void updateTeamsForNewSeason_ShouldPassThePreviousYearAndNewYearToTheRepository() {
+        teamService.updateTeamsForNewSeason("2008", "2009");
+
+        verify(teamRepository).copyTeamsForNewYear("2008", "2009");
     }
 }

@@ -3,6 +3,7 @@ package org.natc.app.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.Manager;
+import org.natc.app.entity.domain.ManagerAward;
 import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.exception.NATCException;
 import org.natc.app.repository.ManagerRepository;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
@@ -168,5 +170,106 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         assertEquals(updatedManager.getYear(), persistedManager.getYear());
         assertEquals(updatedManager.getFirstName(), persistedManager.getFirstName());
         assertEquals(updatedManager.getLastName(), persistedManager.getLastName());
+    }
+    
+    @Test
+    public void updateManagersForNewSeason_ShouldCopyManagerRecordsFromOneYearToAnother() {
+        final List<Manager> managerList = Arrays.asList(
+                Manager.builder().managerId(1).year("2001").build(),
+                Manager.builder().managerId(2).year("2001").build(),
+                Manager.builder().managerId(3).year("2001").build()
+        );
+
+        managerRepository.saveAll(managerList);
+
+        managerService.updateManagersForNewSeason("2001", "2002");
+
+        final Example<Manager> queryCriteria = Example.of(Manager.builder().year("2002").build());
+        final List<Manager> copiedManagers = managerRepository.findAll(queryCriteria);
+
+        assertEquals(managerList.size(), copiedManagers.size());
+    }
+    
+    @Test
+    public void updateManagersForNewSeason_ShouldOnlyCopyManagerRecordsFromPreviousYear() {
+        final List<Manager> managerList = Arrays.asList(
+                Manager.builder().managerId(1).year("2001").build(),
+                Manager.builder().managerId(2).year("2002").build(),
+                Manager.builder().managerId(3).year("2003").build()
+        );
+
+        managerRepository.saveAll(managerList);
+
+        managerService.updateManagersForNewSeason("2003", "2004");
+
+        final Example<Manager> queryCriteria = Example.of(Manager.builder().year("2004").build());
+        final List<Manager> copiedManagers = managerRepository.findAll(queryCriteria);
+
+        assertEquals(1, copiedManagers.size());
+        assertEquals(3, copiedManagers.get(0).getManagerId());
+    }
+    
+    @Test
+    public void updateManagersForNewSeason_ShouldOnlyCopyNecessaryFieldsToNewYear() {
+        final Manager originalManager = Manager.builder()
+                .managerId(123)
+                .teamId(321)
+                .playerId(555)
+                .year("1991")
+                .firstName("John")
+                .lastName("Doe")
+                .age(49)
+                .offense(0.111)
+                .defense(0.222)
+                .intangible(0.333)
+                .penalties(0.444)
+                .vitality(0.555)
+                .style(ManagerStyle.BALANCED.getValue())
+                .newHire(1)
+                .released(0)
+                .retired(0)
+                .formerTeamId(111)
+                .allstarTeamId(222)
+                .award(ManagerAward.NONE.getValue())
+                .seasons(12)
+                .score(33)
+                .totalSeasons(18)
+                .totalScore(77)
+                .build();
+
+        managerRepository.save(originalManager);
+
+        managerService.updateManagersForNewSeason("1991", "2002");
+
+        final Example<Manager> queryCriteria = Example.of(Manager.builder().year("2002").build());
+        final List<Manager> copiedManagers = managerRepository.findAll(queryCriteria);
+
+        assertEquals(1, copiedManagers.size());
+
+        final Manager copiedManager = copiedManagers.get(0);
+
+        assertEquals(originalManager.getManagerId(), copiedManager.getManagerId());
+        assertEquals(originalManager.getTeamId(), copiedManager.getTeamId());
+        assertEquals(originalManager.getPlayerId(), copiedManager.getPlayerId());
+        assertEquals(originalManager.getFirstName(), copiedManager.getFirstName());
+        assertEquals(originalManager.getLastName(), copiedManager.getLastName());
+        assertEquals(originalManager.getAge(), copiedManager.getAge());
+        assertEquals(originalManager.getOffense(), copiedManager.getOffense());
+        assertEquals(originalManager.getDefense(), copiedManager.getDefense());
+        assertEquals(originalManager.getIntangible(), copiedManager.getIntangible());
+        assertEquals(originalManager.getPenalties(), copiedManager.getPenalties());
+        assertEquals(originalManager.getVitality(), copiedManager.getVitality());
+        assertEquals(originalManager.getStyle(), copiedManager.getStyle());
+        assertEquals(originalManager.getNewHire(), copiedManager.getNewHire());
+        assertEquals(originalManager.getReleased(), copiedManager.getReleased());
+        assertEquals(originalManager.getRetired(), copiedManager.getRetired());
+        assertEquals(originalManager.getSeasons(), copiedManager.getSeasons());
+        assertEquals(originalManager.getScore(), copiedManager.getScore());
+        assertEquals(originalManager.getTotalSeasons(), copiedManager.getTotalSeasons());
+        assertEquals(originalManager.getTotalScore(), copiedManager.getTotalScore());
+
+        assertNull(copiedManager.getFormerTeamId());
+        assertNull(copiedManager.getAllstarTeamId());
+        assertNull(copiedManager.getAward());
     }
 }

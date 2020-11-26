@@ -6,9 +6,11 @@ import org.natc.app.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
@@ -930,5 +932,128 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         assertEquals(1, team.getConference());
         assertEquals(3, team.getDivision());
         assertEquals(1, team.getAllstarTeam());
+    }
+
+    @Test
+    public void updateTeamsForNewSeason_ShouldCopyTeamRecordsFromOneYearToAnother() {
+        final List<Team> teamList = Arrays.asList(
+                Team.builder().teamId(1).year("2002").build(),
+                Team.builder().teamId(2).year("2002").build(),
+                Team.builder().teamId(3).year("2002").build()
+        );
+
+        teamRepository.saveAll(teamList);
+
+        teamService.updateTeamsForNewSeason("2002", "2020");
+
+        final Example<Team> queryCriteria = Example.of(Team.builder().year("2020").build());
+        final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
+
+        assertEquals(teamList.size(), copiedTeams.size());
+    }
+
+    @Test
+    public void updateTeamsForNewSeason_ShouldOnlyCopyTeamRecordsFromPreviousYear() {
+        final List<Team> teamList = Arrays.asList(
+                Team.builder().teamId(1).year("2001").build(),
+                Team.builder().teamId(2).year("2002").build(),
+                Team.builder().teamId(3).year("2003").build()
+        );
+
+        teamRepository.saveAll(teamList);
+
+        teamService.updateTeamsForNewSeason("2002", "2020");
+
+        final Example<Team> queryCriteria = Example.of(Team.builder().year("2020").build());
+        final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
+
+        assertEquals(1, copiedTeams.size());
+        assertEquals(2, copiedTeams.get(0).getTeamId());
+    }
+
+    @Test
+    public void updateTeamsForNewSeason_ShouldOnlyCopyNecessaryFieldsToNewYear() {
+        final Team originalTeam = Team.builder()
+                .teamId(123)
+                .year("1999")
+                .location("Here")
+                .name("Them")
+                .abbreviation("ABC.")
+                .timeZone("Americas/Los_Angeles")
+                .gameTime(999)
+                .conference(111)
+                .division(222)
+                .allstarTeam(1)
+                .preseasonGames(12)
+                .preseasonWins(7)
+                .preseasonLosses(5)
+                .games(99)
+                .wins(55)
+                .losses(44)
+                .divisionWins(33)
+                .divisionLosses(22)
+                .outOfConferenceWins(66)
+                .outOfConferenceLosses(11)
+                .overtimeWins(9)
+                .overtimeLosses(3)
+                .roadWins(88)
+                .roadLosses(77)
+                .homeWins(35)
+                .homeLosses(46)
+                .divisionRank(6)
+                .playoffRank(15)
+                .playoffGames(14)
+                .round1Wins(13)
+                .round2Wins(6)
+                .round3Wins(4)
+                .expectation(0.432)
+                .drought(17)
+                .build();
+
+        teamRepository.save(originalTeam);
+
+        teamService.updateTeamsForNewSeason("1999", "2000");
+
+        final Example<Team> queryCriteria = Example.of(Team.builder().year("2000").build());
+        final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
+
+        assertEquals(1, copiedTeams.size());
+
+        final Team copiedTeam = copiedTeams.get(0);
+
+        assertEquals(originalTeam.getTeamId(), copiedTeam.getTeamId());
+        assertEquals(originalTeam.getLocation(), copiedTeam.getLocation());
+        assertEquals(originalTeam.getName(), copiedTeam.getName());
+        assertEquals(originalTeam.getAbbreviation(), copiedTeam.getAbbreviation());
+        assertEquals(originalTeam.getTimeZone(), copiedTeam.getTimeZone());
+        assertEquals(originalTeam.getGameTime(), copiedTeam.getGameTime());
+        assertEquals(originalTeam.getConference(), copiedTeam.getConference());
+        assertEquals(originalTeam.getDivision(), copiedTeam.getDivision());
+        assertEquals(originalTeam.getAllstarTeam(), copiedTeam.getAllstarTeam());
+        assertEquals(originalTeam.getExpectation(), copiedTeam.getExpectation());
+        assertEquals(originalTeam.getDrought(), copiedTeam.getDrought());
+
+        assertNull(copiedTeam.getPreseasonGames());
+        assertNull(copiedTeam.getPreseasonWins());
+        assertNull(copiedTeam.getPreseasonLosses());
+        assertNull(copiedTeam.getGames());
+        assertNull(copiedTeam.getWins());
+        assertNull(copiedTeam.getLosses());
+        assertNull(copiedTeam.getDivisionWins());
+        assertNull(copiedTeam.getDivisionLosses());
+        assertNull(copiedTeam.getOutOfConferenceWins());
+        assertNull(copiedTeam.getOutOfConferenceLosses());
+        assertNull(copiedTeam.getOvertimeWins());
+        assertNull(copiedTeam.getOvertimeLosses());
+        assertNull(copiedTeam.getRoadWins());
+        assertNull(copiedTeam.getRoadLosses());
+        assertNull(copiedTeam.getHomeWins());
+        assertNull(copiedTeam.getHomeLosses());
+        assertNull(copiedTeam.getDivisionRank());
+        assertNull(copiedTeam.getPlayoffRank());
+        assertNull(copiedTeam.getPlayoffGames());
+        assertNull(copiedTeam.getRound1Wins());
+        assertNull(copiedTeam.getRound2Wins());
+        assertNull(copiedTeam.getRound3Wins());
     }
 }

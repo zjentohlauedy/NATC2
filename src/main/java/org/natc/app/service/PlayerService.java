@@ -42,4 +42,8 @@ public class PlayerService {
     public void updatePlayer(final Player player) {
         playerRepository.save(player);
     }
+
+    public void updatePlayersForNewSeason(final String previousYear, final String newYear) {
+        playerRepository.copyPlayersForNewYear(previousYear, newYear);
+    }
 }

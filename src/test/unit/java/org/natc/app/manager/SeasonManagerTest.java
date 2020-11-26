@@ -163,7 +163,7 @@ class SeasonManagerTest {
 
         seasonManager.processScheduledEvent();
 
-        verify(leagueService).updateLeagueForNewSeason();
+        verify(leagueService).updateLeagueForNewSeason("2000", "2001");
     }
 
     @Test
@@ -187,7 +187,7 @@ class SeasonManagerTest {
 
         seasonManager.processScheduledEvent();
 
-        inOrder.verify(leagueService).updateLeagueForNewSeason();
+        inOrder.verify(leagueService).updateLeagueForNewSeason(any(), any());
         inOrder.verify(scheduleService).generateSchedule(any());
     }
 
@@ -197,7 +197,7 @@ class SeasonManagerTest {
 
         seasonManager.processScheduledEvent();
 
-        verify(leagueService, never()).updateLeagueForNewSeason();
+        verify(leagueService, never()).updateLeagueForNewSeason(any(), any());
     }
 
     @Test
@@ -206,7 +206,7 @@ class SeasonManagerTest {
 
         seasonManager.processScheduledEvent();
 
-        verify(leagueService, never()).updateLeagueForNewSeason();
+        verify(leagueService, never()).updateLeagueForNewSeason(any(), any());
     }
 
     @Test
@@ -217,7 +217,7 @@ class SeasonManagerTest {
 
         seasonManager.processScheduledEvent();
 
-        verify(leagueService, never()).updateLeagueForNewSeason();
+        verify(leagueService, never()).updateLeagueForNewSeason(any(), any());
     }
 
     @Test
