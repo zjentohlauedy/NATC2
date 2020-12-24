@@ -1,6 +1,7 @@
 package org.natc.app.service;
 
 import org.junit.jupiter.api.Test;
+import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
@@ -1055,5 +1058,42 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         assertNull(copiedTeam.getRound1Wins());
         assertNull(copiedTeam.getRound2Wins());
         assertNull(copiedTeam.getRound3Wins());
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfPreviousSeasonTeamIsDoesNotExist() {
+        final Team team = Team.builder().teamId(1).year("2000").build();
+        final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
+
+        teamRepository.save(team);
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfTwoYearsBackSeasonTeamIsDoesNotExist() {
+        final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
+        final List<Team> teamList = Arrays.asList(
+                Team.builder().teamId(1).year("1999").build(),
+                Team.builder().teamId(2).year("2000").build()
+        );
+
+        teamRepository.saveAll(teamList);
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnTrueIfBothYearsTeamsExistAndTheManagerFailsOnCriteria() {
+        final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).totalSeasons(5).score(0).totalScore(0).build();
+        final List<Team> teamList = Arrays.asList(
+                Team.builder().teamId(1).wins(55).playoffRank(1).expectation(0.6).year("1998").build(),
+                Team.builder().teamId(2).wins(55).playoffRank(1).expectation(0.6).year("1999").build(),
+                Team.builder().teamId(3).wins(55).playoffRank(1).expectation(0.6).year("2000").build()
+        );
+
+        teamRepository.saveAll(teamList);
+
+        assertTrue(teamService.willTeamReleaseManager(manager));
     }
 }

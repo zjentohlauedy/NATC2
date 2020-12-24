@@ -1,12 +1,15 @@
 package org.natc.app.service;
 
+import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamService {
@@ -73,5 +76,30 @@ public class TeamService {
 
     public void updateTeamsForNewSeason(final String previousYear, final String newYear) {
         repository.copyTeamsForNewYear(previousYear, newYear);
+    }
+
+    public Boolean willTeamReleaseManager(final Manager manager) {
+        if (manager.getSeasons() < 3) return false;
+
+        final String previousYear = decrementYear(manager.getYear());
+        final String twoYearsBack = decrementYear(previousYear);
+
+        final Optional<Team> previousYearTeamOpt = repository.findOne(Example.of(Team.builder().teamId(manager.getTeamId()).year(previousYear).build()));
+        final Optional<Team> twoYearsBackTeamOpt = repository.findOne(Example.of(Team.builder().teamId(manager.getTeamId()).year(twoYearsBack).build()));
+
+        if (previousYearTeamOpt.isEmpty()) return false;
+        if (twoYearsBackTeamOpt.isEmpty()) return false;
+
+        final Team previousYearTeam = previousYearTeamOpt.get();
+        final Team twoYearsBackTeam = twoYearsBackTeamOpt.get();
+
+        if (previousYearTeam.getPlayoffRank() > twoYearsBackTeam.getPlayoffRank()) return false;
+        if (previousYearTeam.getWins() > twoYearsBackTeam.getWins()) return false;
+
+        return (manager.getPerformanceRating() < previousYearTeam.getExpectation());
+    }
+
+    private String decrementYear(final String year) {
+        return String.valueOf(Integer.parseInt(year) - 1);
     }
 }

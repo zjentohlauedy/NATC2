@@ -2,24 +2,36 @@ package org.natc.app.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.Team;
 import org.natc.app.repository.TeamRepository;
+import org.springframework.data.domain.Example;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TeamServiceTest {
+
+    @Captor
+    private ArgumentCaptor<Example<Team>> captor;
 
     @Mock
     private TeamRepository teamRepository;
@@ -230,5 +242,119 @@ class TeamServiceTest {
         teamService.updateTeamsForNewSeason("2008", "2009");
 
         verify(teamRepository).copyTeamsForNewYear("2008", "2009");
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfManagerHasLessThanThreeSeasons() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").seasons(0).build();
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldCallTeamRepositoryToGetManagersTeamsTwoPreviousYearRecords() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
+
+        teamService.willTeamReleaseManager(manager);
+
+        verify(teamRepository, times(2)).findOne(captor.capture());
+
+        final Team firstTeam = captor.getAllValues().get(0).getProbe();
+        final Team secondTeam = captor.getAllValues().get(1).getProbe();
+
+        assertEquals(manager.getTeamId(), firstTeam.getTeamId());
+        assertEquals("2001", firstTeam.getYear());
+
+        assertEquals(manager.getTeamId(), secondTeam.getTeamId());
+        assertEquals("2000", secondTeam.getYear());
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldNotCallRepositoryIfManagerHasLessThanThreeSeasons() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").seasons(2).build();
+
+        teamService.willTeamReleaseManager(manager);
+
+        verify(teamRepository, never()).findOne(any());
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfPreviousYearsTeamRecordIsNotFound() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
+
+        when(teamRepository.findOne(any())).thenReturn(Optional.empty());
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfTwoYearsBackTeamRecordIsNotFound() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
+
+        when(teamRepository.findOne(any()))
+                .thenReturn(Optional.of(Team.builder().build()))
+                .thenReturn(Optional.empty());
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfPlayoffRankImprovedBetweenYears() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
+
+        when(teamRepository.findOne(any()))
+                .thenReturn(Optional.of(Team.builder().playoffRank(3).build()))
+                .thenReturn(Optional.of(Team.builder().playoffRank(2).build()));
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfWinsImprovedBetweenYears() {
+        final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
+
+        when(teamRepository.findOne(any()))
+                .thenReturn(Optional.of(Team.builder().wins(65).playoffRank(0).build()))
+                .thenReturn(Optional.of(Team.builder().wins(55).playoffRank(0).build()));
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnFalseIfManagerPerformanceRatingIsGreaterThanExpectation() {
+        final Manager manager = Manager.builder()
+                .managerId(1)
+                .year("2002")
+                .teamId(5)
+                .seasons(4)
+                .score(4)
+                .totalSeasons(4)
+                .totalScore(4)
+                .build();
+
+        when(teamRepository.findOne(any()))
+                .thenReturn(Optional.of(Team.builder().wins(55).playoffRank(0).expectation(0.95).build()))
+                .thenReturn(Optional.of(Team.builder().wins(55).playoffRank(0).expectation(0.95).build()));
+
+        assertFalse(teamService.willTeamReleaseManager(manager));
+    }
+
+    @Test
+    public void willTeamReleaseManager_ShouldReturnTrueIfManagerHasNotImprovedAndExpectationIsNotMet() {
+        final Manager manager = Manager.builder()
+                .managerId(1)
+                .year("2002")
+                .teamId(5)
+                .seasons(4)
+                .score(4)
+                .totalSeasons(4)
+                .totalScore(4)
+                .build();
+
+        when(teamRepository.findOne(any()))
+                .thenReturn(Optional.of(Team.builder().wins(55).playoffRank(0).expectation(1.05).build()))
+                .thenReturn(Optional.of(Team.builder().wins(55).playoffRank(0).expectation(1.05).build()));
+
+        assertTrue(teamService.willTeamReleaseManager(manager));
     }
 }

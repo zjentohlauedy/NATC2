@@ -80,4 +80,10 @@ public class Manager {
 
         return (offense + defense + intangible + penalties) / 4.0;
     }
+
+    public Double getPerformanceRating() {
+        if (seasons == 0) return 1.0;
+
+        return Math.max(((double)score / seasons), ((double)totalScore / totalSeasons));
+    }
 }
