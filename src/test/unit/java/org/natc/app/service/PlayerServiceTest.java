@@ -8,6 +8,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.FullName;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.exception.NATCException;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atMostOnce;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -33,6 +35,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerServiceTest {
+
+    @Mock
+    private LeagueConfiguration leagueConfiguration;
 
     @Mock
     private PlayerRepository playerRepository;
@@ -323,7 +328,6 @@ class PlayerServiceTest {
 
     @Test
     public void getManagerialCandidates_ShouldReturnAListOfPlayers() {
-
         final List<Player> playerList = playerService.getManagerialCandidates("2020");
 
         assertNotNull(playerList);
@@ -333,7 +337,23 @@ class PlayerServiceTest {
     public void getManagerialCandidates_ShouldCallThePlayerRepositoryWithTheGivenYearToFindTheCandidates() {
         playerService.getManagerialCandidates("2007");
 
-        verify(playerRepository).findTopTwoRetiredPlayersForYear("2007");
+        verify(playerRepository).findTopNumRetiredPlayersForYear(eq("2007"), any());
+    }
+
+    @Test
+    public void getManagerialCandidates_ShouldCallTheLeagueConfigurationToGetTheMaxNumberOfPlayerManagersPerSeason() {
+        playerService.getManagerialCandidates("2007");
+
+        verify(leagueConfiguration).getMaxPlayerManagersPerSeason();
+    }
+
+    @Test
+    public void getManagerialCandidates_ShouldCallThePlayerRepositoryWithTheConfiguredMaxNumberOfPlayerManagersPerSeason() {
+        when(leagueConfiguration.getMaxPlayerManagersPerSeason()).thenReturn(5);
+
+        playerService.getManagerialCandidates("2007");
+
+        verify(playerRepository).findTopNumRetiredPlayersForYear(eq("2007"), any());
     }
 
     @Test
@@ -344,7 +364,7 @@ class PlayerServiceTest {
                 Player.builder().build()
         );
 
-        when(playerRepository.findTopTwoRetiredPlayersForYear(anyString())).thenReturn(playerList);
+        when(playerRepository.findTopNumRetiredPlayersForYear(anyString(), any())).thenReturn(playerList);
 
         assertEquals(playerList, playerService.getManagerialCandidates("2012"));
     }

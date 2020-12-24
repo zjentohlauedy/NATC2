@@ -1,5 +1,6 @@
 package org.natc.app.service;
 
+import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.FullName;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.exception.NATCException;
@@ -13,11 +14,13 @@ import java.util.List;
 @Service
 public class PlayerService {
 
+    private final LeagueConfiguration leagueConfiguration;
     private final PlayerRepository playerRepository;
     private final NameService nameService;
 
     @Autowired
-    public PlayerService(final PlayerRepository playerRepository, final NameService nameService) {
+    public PlayerService(final LeagueConfiguration leagueConfiguration, final PlayerRepository playerRepository, final NameService nameService) {
+        this.leagueConfiguration = leagueConfiguration;
         this.playerRepository = playerRepository;
         this.nameService = nameService;
     }
@@ -48,6 +51,6 @@ public class PlayerService {
     }
 
     public List<Player> getManagerialCandidates(final String year) {
-        return playerRepository.findTopTwoRetiredPlayersForYear(year);
+        return playerRepository.findTopNumRetiredPlayersForYear(year, leagueConfiguration.getMaxPlayerManagersPerSeason());
     }
 }

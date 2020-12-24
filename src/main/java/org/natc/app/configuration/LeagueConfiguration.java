@@ -24,4 +24,5 @@ public class LeagueConfiguration {
     private Integer playoffGamesRoundOne;
     private Integer playoffGamesRoundTwo;
     private Integer playoffGamesRoundThree;
+    private Integer maxPlayerManagersPerSeason;
 }

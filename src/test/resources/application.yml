@@ -36,3 +36,4 @@ natc:
     playoff-games-round-one: 7
     playoff-games-round-two: 5
     playoff-games-round-three: 3
+    max-player-managers-per-season: 2
