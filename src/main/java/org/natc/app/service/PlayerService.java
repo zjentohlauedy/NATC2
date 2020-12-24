@@ -46,4 +46,8 @@ public class PlayerService {
     public void updatePlayersForNewSeason(final String previousYear, final String newYear) {
         playerRepository.copyPlayersForNewYear(previousYear, newYear);
     }
+
+    public List<Player> getManagerialCandidates(final String year) {
+        return playerRepository.findTopTwoRetiredPlayersForYear(year);
+    }
 }

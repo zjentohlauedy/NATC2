@@ -1,6 +1,7 @@
 package org.natc.app.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -20,8 +21,10 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atMostOnce;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -40,262 +43,264 @@ class PlayerServiceTest {
     @InjectMocks
     private PlayerService playerService;
 
-    @BeforeEach
-    public void setup() throws NATCException {
-        when(nameService.generateName()).thenReturn(FullName.builder().build());
-    }
+    @Nested
+    class GeneratePlayers {
 
-    @Test
-    public void generatePlayers_ShouldReturnAListOfPlayersGenerated() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers(null, 1);
+        @BeforeEach
+        public void setup() throws NATCException {
+            when(nameService.generateName()).thenReturn(FullName.builder().build());
+        }
 
-        assertFalse(playerList.isEmpty());
-    }
+        @Test
+        public void shouldReturnAListOfPlayersGenerated() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers(null, 1);
 
-    @Test
-    public void generatePlayers_ShouldCreateTheGivenNumberOfPlayers() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers(null, 10);
+            assertFalse(playerList.isEmpty());
+        }
 
-        assertEquals(10, playerList.size());
-    }
+        @Test
+        public void shouldCreateTheGivenNumberOfPlayers() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers(null, 10);
 
-    @Test
-    public void generatePlayers_ShouldCreatePlayersForTheGivenYear() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 10);
+            assertEquals(10, playerList.size());
+        }
 
-        final Set<String> years = playerList.stream().map(Player::getYear).collect(Collectors.toSet());
+        @Test
+        public void shouldCreatePlayersForTheGivenYear() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 10);
 
-        assertEquals(1, years.size());
-        assertEquals("1995", years.stream().findFirst().orElse(null));
-    }
-    
-    @Test
-    public void generatePlayers_ShouldCallPlayerRepositoryToGetTheLastPlayerId() throws NATCException {
-        playerService.generatePlayers("2001", 10);
+            final Set<String> years = playerList.stream().map(Player::getYear).collect(Collectors.toSet());
 
-        verify(playerRepository).findMaxPlayerId();
-    }
-    
-    @Test
-    public void generatePlayers_ShouldSetThePlayerIdToTheNumberAfterTheMaxValueReturnedByRepository() throws NATCException {
-        when(playerRepository.findMaxPlayerId()).thenReturn(Optional.of(123));
+            assertEquals(1, years.size());
+            assertEquals("1995", years.stream().findFirst().orElse(null));
+        }
 
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldCallPlayerRepositoryToGetTheLastPlayerId() throws NATCException {
+            playerService.generatePlayers("2001", 10);
 
-        assertEquals(1, playerList.size());
-        assertEquals(124, playerList.get(0).getPlayerId());
-    }
-    
-    @Test
-    public void generatePlayers_ShouldSetThePlayerIdToOneIfNoValueIsFoundInTheRepository() throws NATCException {
-        when(playerRepository.findMaxPlayerId()).thenReturn(Optional.empty());
+            verify(playerRepository).findMaxPlayerId();
+        }
 
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldSetThePlayerIdToTheNumberAfterTheMaxValueReturnedByRepository() throws NATCException {
+            when(playerRepository.findMaxPlayerId()).thenReturn(Optional.of(123));
 
-        assertEquals(1, playerList.size());
-        assertEquals(1, playerList.get(0).getPlayerId());
-    }
-    
-    @Test
-    public void generatePlayers_ShouldOnlyGetTheMaxPlayerIdOnceEvenWhenGeneratingMultiplePlayers() throws NATCException {
-        playerService.generatePlayers("2001", 10);
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        verify(playerRepository, atMostOnce()).findMaxPlayerId();
-    }
-    
-    @Test
-    public void generatePlayers_ShouldGenerateEveryPlayerWithAPlayerId() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 10);
+            assertEquals(1, playerList.size());
+            assertEquals(124, playerList.get(0).getPlayerId());
+        }
 
-        assertEquals(10, playerList.size());
-        assertEquals(0, playerList.stream().filter(player -> player.getPlayerId() == null).count());
-    }
-    
-    @Test
-    public void generatePlayers_ShouldGeneratePlayersWithUniquePlayerIdsIncrementingFromMaxValueInRepository() throws NATCException {
-        when(playerRepository.findMaxPlayerId()).thenReturn(Optional.of(123));
+        @Test
+        public void shouldSetThePlayerIdToOneIfNoValueIsFoundInTheRepository() throws NATCException {
+            when(playerRepository.findMaxPlayerId()).thenReturn(Optional.empty());
 
-        final List<Player> playerList = playerService.generatePlayers("1995", 5);
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        final List<Integer> expectedPlayerIds = Arrays.asList(124, 125, 126, 127, 128);
+            assertEquals(1, playerList.size());
+            assertEquals(1, playerList.get(0).getPlayerId());
+        }
 
-        assertEquals(5, playerList.size());
-        assertEquals(expectedPlayerIds, playerList.stream().map(Player::getPlayerId).collect(Collectors.toList()));
-    }
-    
-    @Test
-    public void generatePlayers_ShouldCallNameServiceToGenerateANameForThePlayer() throws NATCException {
-        playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldOnlyGetTheMaxPlayerIdOnceEvenWhenGeneratingMultiplePlayers() throws NATCException {
+            playerService.generatePlayers("2001", 10);
 
-        verify(nameService).generateName();
-    }
-    
-    @Test
-    public void generatePlayers_ShouldGenerateANameForEveryPlayer() throws NATCException {
-        playerService.generatePlayers("1995", 25);
+            verify(playerRepository, atMostOnce()).findMaxPlayerId();
+        }
 
-        verify(nameService, times(25)).generateName();
-    }
-    
-    @Test
-    public void generatePlayers_ShouldSetTheNamesFromNameServiceOnTheGeneratedPlayers() throws NATCException {
-        reset(nameService);
+        @Test
+        public void shouldGenerateEveryPlayerWithAPlayerId() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 10);
 
-        when(nameService.generateName())
-                .thenReturn(FullName.builder().firstName("James").lastName("Smith").build())
-                .thenReturn(FullName.builder().firstName("John").lastName("Johnson").build())
-                .thenReturn(FullName.builder().firstName("Robert").lastName("Williams").build());
+            assertEquals(10, playerList.size());
+            assertEquals(0, playerList.stream().filter(player -> player.getPlayerId() == null).count());
+        }
 
-        final List<Player> playerList = playerService.generatePlayers("1995", 3);
+        @Test
+        public void shouldGeneratePlayersWithUniquePlayerIdsIncrementingFromMaxValueInRepository() throws NATCException {
+            when(playerRepository.findMaxPlayerId()).thenReturn(Optional.of(123));
 
-        assertEquals(3, playerList.size());
+            final List<Player> playerList = playerService.generatePlayers("1995", 5);
 
-        assertEquals("James", playerList.get(0).getFirstName());
-        assertEquals("Smith", playerList.get(0).getLastName());
+            final List<Integer> expectedPlayerIds = Arrays.asList(124, 125, 126, 127, 128);
 
-        assertEquals("John", playerList.get(1).getFirstName());
-        assertEquals("Johnson", playerList.get(1).getLastName());
+            assertEquals(5, playerList.size());
+            assertEquals(expectedPlayerIds, playerList.stream().map(Player::getPlayerId).collect(Collectors.toList()));
+        }
 
-        assertEquals("Robert", playerList.get(2).getFirstName());
-        assertEquals("Williams", playerList.get(2).getLastName());
-    }
-    
-    @Test
-    public void generatePlayers_ShouldGeneratePlayersBetweenEighteenAndThirtyYearsOld() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 100);
+        @Test
+        public void shouldCallNameServiceToGenerateANameForThePlayer() throws NATCException {
+            playerService.generatePlayers("1995", 1);
 
-        assertEquals(100, playerList.size());
-        assertEquals(100, playerList.stream().filter(player -> player.getAge() >= 18 && player.getAge() <= 30).count());
-    }
-    
-    @Test
-    public void generatePlayers_ShouldGeneratePlayersWithARandomAge() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 100);
+            verify(nameService).generateName();
+        }
 
-        assertEquals(100, playerList.size());
+        @Test
+        public void shouldGenerateANameForEveryPlayer() throws NATCException {
+            playerService.generatePlayers("1995", 25);
 
-        final Set<Integer> ages = playerList.stream().map(Player::getAge).collect(Collectors.toSet());
+            verify(nameService, times(25)).generateName();
+        }
 
-        assertEquals(12, ages.size());
-    }
+        @Test
+        public void shouldSetTheNamesFromNameServiceOnTheGeneratedPlayers() throws NATCException {
+            reset(nameService);
 
-    @Test
-    public void generatePlayers_ShouldSetPlayerOffenseRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+            when(nameService.generateName())
+                    .thenReturn(FullName.builder().firstName("James").lastName("Smith").build())
+                    .thenReturn(FullName.builder().firstName("John").lastName("Johnson").build())
+                    .thenReturn(FullName.builder().firstName("Robert").lastName("Williams").build());
 
-        assertEquals(1, playerList.size());
+            final List<Player> playerList = playerService.generatePlayers("1995", 3);
 
-        final Player player = playerList.get(0);
+            assertEquals(3, playerList.size());
 
-        assertTrue(player.getScoring() >= 0.0 && player.getScoring() <= 1.0);
-        assertTrue(player.getPassing() >= 0.0 && player.getPassing() <= 1.0);
-        assertTrue(player.getBlocking() >= 0.0 && player.getBlocking() <= 1.0);
-    }
+            assertEquals("James", playerList.get(0).getFirstName());
+            assertEquals("Smith", playerList.get(0).getLastName());
 
-    @Test
-    public void generatePlayers_ShouldSetPlayerDefenseRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+            assertEquals("John", playerList.get(1).getFirstName());
+            assertEquals("Johnson", playerList.get(1).getLastName());
 
-        assertEquals(1, playerList.size());
+            assertEquals("Robert", playerList.get(2).getFirstName());
+            assertEquals("Williams", playerList.get(2).getLastName());
+        }
 
-        final Player player = playerList.get(0);
+        @Test
+        public void shouldGeneratePlayersBetweenEighteenAndThirtyYearsOld() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 100);
 
-        assertTrue(player.getTackling() >= 0.0 && player.getTackling() <= 1.0);
-        assertTrue(player.getStealing() >= 0.0 && player.getStealing() <= 1.0);
-        assertTrue(player.getPresence() >= 0.0 && player.getPresence() <= 1.0);
-    }
+            assertEquals(100, playerList.size());
+            assertEquals(100, playerList.stream().filter(player -> player.getAge() >= 18 && player.getAge() <= 30).count());
+        }
 
-    @Test
-    public void generatePlayers_ShouldSetPlayerPenaltyRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldGeneratePlayersWithARandomAge() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 100);
 
-        assertEquals(1, playerList.size());
+            assertEquals(100, playerList.size());
 
-        final Player player = playerList.get(0);
+            final Set<Integer> ages = playerList.stream().map(Player::getAge).collect(Collectors.toSet());
 
-        assertTrue(player.getDiscipline() >= 0.0 && player.getDiscipline() <= 1.0);
-        assertTrue(player.getPenaltyShot() >= 0.0 && player.getPenaltyShot() <= 1.0);
-        assertTrue(player.getPenaltyOffense() >= 0.0 && player.getPenaltyOffense() <= 1.0);
-        assertTrue(player.getPenaltyDefense() >= 0.0 && player.getPenaltyDefense() <= 1.0);
-    }
+            assertEquals(12, ages.size());
+        }
 
-    @Test
-    public void generatePlayers_ShouldSetPlayerMiscellaneousRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldSetPlayerOffenseRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        assertEquals(1, playerList.size());
+            assertEquals(1, playerList.size());
 
-        final Player player = playerList.get(0);
+            final Player player = playerList.get(0);
 
-        assertTrue(player.getEndurance() >= 0.0 && player.getEndurance() <= 1.0);
-        assertTrue(player.getConfidence() >= 0.0 && player.getConfidence() <= 1.0);
-        assertTrue(player.getVitality() >= 0.0 && player.getVitality() <= 1.0);
-        assertTrue(player.getDurability() >= 0.0 && player.getDurability() <= 1.0);
-    }
+            assertTrue(player.getScoring() >= 0.0 && player.getScoring() <= 1.0);
+            assertTrue(player.getPassing() >= 0.0 && player.getPassing() <= 1.0);
+            assertTrue(player.getBlocking() >= 0.0 && player.getBlocking() <= 1.0);
+        }
 
-    @Test
-    public void generatePlayers_ShouldInitializeAllPlayerFlagsToFalse() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldSetPlayerDefenseRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        assertEquals(1, playerList.size());
+            assertEquals(1, playerList.size());
 
-        final Player player = playerList.get(0);
+            final Player player = playerList.get(0);
 
-        assertEquals(0, player.getRookie());
-        assertEquals(0, player.getInjured());
-        assertEquals(0, player.getFreeAgent());
-        assertEquals(0, player.getSigned());
-        assertEquals(0, player.getReleased());
-        assertEquals(0, player.getRetired());
-        assertEquals(0, player.getAllstarAlternate());
-    }
+            assertTrue(player.getTackling() >= 0.0 && player.getTackling() <= 1.0);
+            assertTrue(player.getStealing() >= 0.0 && player.getStealing() <= 1.0);
+            assertTrue(player.getPresence() >= 0.0 && player.getPresence() <= 1.0);
+        }
 
-    @Test
-    public void generatePlayers_ShouldInitializeSeasonsPlayedCounterToZero() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldSetPlayerPenaltyRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        assertEquals(1, playerList.size());
+            assertEquals(1, playerList.size());
 
-        final Player player = playerList.get(0);
+            final Player player = playerList.get(0);
 
-        assertEquals(0, player.getSeasonsPlayed());
-    }
+            assertTrue(player.getDiscipline() >= 0.0 && player.getDiscipline() <= 1.0);
+            assertTrue(player.getPenaltyShot() >= 0.0 && player.getPenaltyShot() <= 1.0);
+            assertTrue(player.getPenaltyOffense() >= 0.0 && player.getPenaltyOffense() <= 1.0);
+            assertTrue(player.getPenaltyDefense() >= 0.0 && player.getPenaltyDefense() <= 1.0);
+        }
 
-    @Test
-    public void generatePlayers_ShouldCallPlayerRepositoryToPersistGeneratedPlayer() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+        @Test
+        public void shouldSetPlayerMiscellaneousRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        verify(playerRepository).save(any(Player.class));
-    }
-    
-    @Test
-    public void generatePlayers_ShouldCallPlayerRepositoryWithGeneratedPlayer() throws NATCException {
-        final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
+            assertEquals(1, playerList.size());
 
-        final List<Player> playerList = playerService.generatePlayers("1995", 1);
+            final Player player = playerList.get(0);
 
-        verify(playerRepository).save(captor.capture());
+            assertTrue(player.getEndurance() >= 0.0 && player.getEndurance() <= 1.0);
+            assertTrue(player.getConfidence() >= 0.0 && player.getConfidence() <= 1.0);
+            assertTrue(player.getVitality() >= 0.0 && player.getVitality() <= 1.0);
+            assertTrue(player.getDurability() >= 0.0 && player.getDurability() <= 1.0);
+        }
 
-        assertEquals(1, playerList.size());
+        @Test
+        public void shouldInitializeAllPlayerFlagsToFalse() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
-        final Player expectedPlayer = playerList.get(0);
-        final Player actualPlayer = captor.getValue();
+            assertEquals(1, playerList.size());
 
-        assertEquals(expectedPlayer, actualPlayer);
-    }
-    
-    @Test
-    public void generatePlayers_ShouldCallPlayerRepositoryForEveryPlayerGenerated() throws NATCException {
-        final List<Player> playerList = playerService.generatePlayers("1995", 10);
+            final Player player = playerList.get(0);
 
-        verify(playerRepository, times(10)).save(any(Player.class));
+            assertEquals(0, player.getRookie());
+            assertEquals(0, player.getInjured());
+            assertEquals(0, player.getFreeAgent());
+            assertEquals(0, player.getSigned());
+            assertEquals(0, player.getReleased());
+            assertEquals(0, player.getRetired());
+            assertEquals(0, player.getAllstarAlternate());
+        }
+
+        @Test
+        public void shouldInitializeSeasonsPlayedCounterToZero() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
+
+            assertEquals(1, playerList.size());
+
+            final Player player = playerList.get(0);
+
+            assertEquals(0, player.getSeasonsPlayed());
+        }
+
+        @Test
+        public void shouldCallPlayerRepositoryToPersistGeneratedPlayer() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
+
+            verify(playerRepository).save(any(Player.class));
+        }
+
+        @Test
+        public void shouldCallPlayerRepositoryWithGeneratedPlayer() throws NATCException {
+            final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
+
+            final List<Player> playerList = playerService.generatePlayers("1995", 1);
+
+            verify(playerRepository).save(captor.capture());
+
+            assertEquals(1, playerList.size());
+
+            final Player expectedPlayer = playerList.get(0);
+            final Player actualPlayer = captor.getValue();
+
+            assertEquals(expectedPlayer, actualPlayer);
+        }
+
+        @Test
+        public void shouldCallPlayerRepositoryForEveryPlayerGenerated() throws NATCException {
+            final List<Player> playerList = playerService.generatePlayers("1995", 10);
+
+            verify(playerRepository, times(10)).save(any(Player.class));
+        }
     }
 
     @Test
     public void updatePlayer_ShouldCallThePlayerRepositoryToSaveTheGivenPlayer() {
         final Player player = Player.builder().playerId(555).build();
-
-        reset(nameService);
 
         playerService.updatePlayer(player);
 
@@ -304,8 +309,6 @@ class PlayerServiceTest {
     
     @Test
     public void updatePlayersForNewSeason_ShouldCallTheRepositoryToCopyPlayersForNewYear() {
-        reset(nameService);
-
         playerService.updatePlayersForNewSeason(null, null);
 
         verify(playerRepository).copyPlayersForNewYear(any(), any());
@@ -313,10 +316,36 @@ class PlayerServiceTest {
     
     @Test
     public void updatePlayersForNewSeason_ShouldCallPassThePreviousYearAndNewYearToTheRepository() {
-        reset(nameService);
-
         playerService.updatePlayersForNewSeason("2004", "2005");
 
         verify(playerRepository).copyPlayersForNewYear("2004", "2005");
+    }
+
+    @Test
+    public void getManagerialCandidates_ShouldReturnAListOfPlayers() {
+
+        final List<Player> playerList = playerService.getManagerialCandidates("2020");
+
+        assertNotNull(playerList);
+    }
+
+    @Test
+    public void getManagerialCandidates_ShouldCallThePlayerRepositoryWithTheGivenYearToFindTheCandidates() {
+        playerService.getManagerialCandidates("2007");
+
+        verify(playerRepository).findTopTwoRetiredPlayersForYear("2007");
+    }
+
+    @Test
+    public void getManagerialCandidates_ShouldReturnTheResponseFromTheRepository() {
+        final List<Player> playerList = Arrays.asList(
+                Player.builder().build(),
+                Player.builder().build(),
+                Player.builder().build()
+        );
+
+        when(playerRepository.findTopTwoRetiredPlayersForYear(anyString())).thenReturn(playerList);
+
+        assertEquals(playerList, playerService.getManagerialCandidates("2012"));
     }
 }
