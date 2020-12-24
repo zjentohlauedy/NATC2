@@ -84,4 +84,8 @@ public class Manager {
 
         return Math.max(((double)score / seasons), ((double)totalScore / totalSeasons));
     }
+
+    public Boolean readyToRetire() {
+        return age > (int) Math.ceil(50.0 + (20.0 * this.vitality));
+    }
 }

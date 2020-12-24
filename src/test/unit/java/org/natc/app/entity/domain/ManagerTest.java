@@ -335,4 +335,40 @@ class ManagerTest {
             );
         }
     }
+
+    @Nested
+    class ReadyToRetire {
+
+        @Test
+        void ShouldReturnFalseIfAgeIsLessThanOrEqualToFifty() {
+            assertFalse(Manager.builder().age(30).vitality(0.0).build().readyToRetire());
+            assertFalse(Manager.builder().age(38).vitality(0.0).build().readyToRetire());
+            assertFalse(Manager.builder().age(45).vitality(0.0).build().readyToRetire());
+            assertFalse(Manager.builder().age(49).vitality(0.0).build().readyToRetire());
+            assertFalse(Manager.builder().age(50).vitality(0.0).build().readyToRetire());
+        }
+
+        @Test
+        void ShouldReturnFalseIfAgeIsLessThanFiftyPlusVitalityModifier() {
+            assertFalse(Manager.builder().age(54).vitality(0.2).build().readyToRetire());
+            assertFalse(Manager.builder().age(58).vitality(0.4).build().readyToRetire());
+            assertFalse(Manager.builder().age(62).vitality(0.6).build().readyToRetire());
+            assertFalse(Manager.builder().age(66).vitality(0.8).build().readyToRetire());
+            assertFalse(Manager.builder().age(70).vitality(1.0).build().readyToRetire());
+        }
+
+        @Test
+        void ShouldReturnTrueIfAgeIsGreaterThanFiftyPlusVitalityModifier() {
+            assertTrue(Manager.builder().age(55).vitality(0.2).build().readyToRetire());
+            assertTrue(Manager.builder().age(59).vitality(0.4).build().readyToRetire());
+            assertTrue(Manager.builder().age(63).vitality(0.6).build().readyToRetire());
+            assertTrue(Manager.builder().age(67).vitality(0.8).build().readyToRetire());
+            assertTrue(Manager.builder().age(71).vitality(1.0).build().readyToRetire());
+        }
+
+        @Test
+        void ShouldRoundUpFromVitalityModifierCalculation() {
+            assertFalse(Manager.builder().age(55).vitality(0.2001).build().readyToRetire());
+        }
+    }
 }
