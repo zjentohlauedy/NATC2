@@ -13,13 +13,13 @@ import javax.persistence.IdClass;
 @Entity(name = "managers_t")
 @IdClass(ManagerId.class)
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Manager {
     @Id
     private Integer managerId;
-    @Setter
     private Integer teamId;
     private Integer playerId;
     @Id
@@ -32,9 +32,7 @@ public class Manager {
     private Double intangible;
     private Double penalties;
     private Double vitality;
-    @Setter
     private Integer style;
-    @Setter
     private Integer newHire;
     private Integer released;
     private Integer retired;
