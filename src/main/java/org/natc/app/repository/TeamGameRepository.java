@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeamGameRepository extends JpaRepository<TeamGame, TeamGameId> {
+
+    Integer countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(String year, Integer type, Integer teamId, Integer opponent);
 }
