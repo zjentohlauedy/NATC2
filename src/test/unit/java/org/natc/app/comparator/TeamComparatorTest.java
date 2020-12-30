@@ -207,11 +207,12 @@ class TeamComparatorTest {
 
                 teamComparator.compare(team1, team2);
 
-                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team1.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team1.getTeamId(),
-                        team2.getTeamId()
+                        team2.getTeamId(),
+                        1
                 );
             }
 
@@ -222,11 +223,12 @@ class TeamComparatorTest {
 
                 teamComparator.compare(team1, team2);
 
-                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team1.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team1.getTeamId(),
-                        team2.getTeamId()
+                        team2.getTeamId(),
+                        1
                 );
             }
 
@@ -237,11 +239,12 @@ class TeamComparatorTest {
 
                 teamComparator.compare(team1, team2);
 
-                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team2.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team2.getTeamId(),
-                        team1.getTeamId()
+                        team1.getTeamId(),
+                        1
                 );
             }
 
@@ -252,11 +255,12 @@ class TeamComparatorTest {
 
                 teamComparator.compare(team1, team2);
 
-                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                verify(teamGameRepository).countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team2.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team2.getTeamId(),
-                        team1.getTeamId()
+                        team1.getTeamId(),
+                        1
                 );
             }
 
@@ -265,17 +269,19 @@ class TeamComparatorTest {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team1.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team1.getTeamId(),
-                        team2.getTeamId()
+                        team2.getTeamId(),
+                        1
                 )).thenReturn(4);
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team2.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team2.getTeamId(),
-                        team1.getTeamId()
+                        team1.getTeamId(),
+                        1
                 )).thenReturn(1);
 
                 assertEquals(3, teamComparator.compare(team1, team2));
@@ -286,17 +292,19 @@ class TeamComparatorTest {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team1.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team1.getTeamId(),
-                        team2.getTeamId()
+                        team2.getTeamId(),
+                        1
                 )).thenReturn(0);
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(
                         team2.getYear(),
                         GameType.REGULAR_SEASON.getValue(),
                         team2.getTeamId(),
-                        team1.getTeamId()
+                        team1.getTeamId(),
+                        1
                 )).thenReturn(5);
 
                 assertEquals(-5, teamComparator.compare(team1, team2));
@@ -313,7 +321,7 @@ class TeamComparatorTest {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
 
                 teamComparator.compare(team1, team2);
 
@@ -337,7 +345,7 @@ class TeamComparatorTest {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
 
                 teamComparator.compare(team1, team2);
 
@@ -365,7 +373,7 @@ class TeamComparatorTest {
                 final TeamOffenseSummary team2OffenseSummary = TeamOffenseSummary.builder().score(602).build();
                 final TeamDefenseSummary team2DefenseSummary = TeamDefenseSummary.builder().score(537).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamOffenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1OffenseSummary))
                         .thenReturn(Optional.of(team2OffenseSummary));
@@ -385,7 +393,7 @@ class TeamComparatorTest {
                 final TeamOffenseSummary team2OffenseSummary = TeamOffenseSummary.builder().score(666).build();
                 final TeamDefenseSummary team2DefenseSummary = TeamDefenseSummary.builder().score(404).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamOffenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1OffenseSummary))
                         .thenReturn(Optional.of(team2OffenseSummary));
@@ -405,7 +413,7 @@ class TeamComparatorTest {
                 final TeamOffenseSummary team2OffenseSummary = TeamOffenseSummary.builder().score(316).build();
                 final TeamDefenseSummary team2DefenseSummary = TeamDefenseSummary.builder().score(555).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamOffenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1OffenseSummary))
                         .thenReturn(Optional.of(team2OffenseSummary));
@@ -425,7 +433,7 @@ class TeamComparatorTest {
                 final TeamOffenseSummary team2OffenseSummary = TeamOffenseSummary.builder().score(369).build();
                 final TeamDefenseSummary team2DefenseSummary = TeamDefenseSummary.builder().score(420).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamOffenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1OffenseSummary))
                         .thenReturn(Optional.of(team2OffenseSummary));
@@ -445,7 +453,7 @@ class TeamComparatorTest {
                 final TeamOffenseSummary team2OffenseSummary = TeamOffenseSummary.builder().score(450).build();
                 final TeamDefenseSummary team2DefenseSummary = TeamDefenseSummary.builder().score(350).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamOffenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1OffenseSummary))
                         .thenReturn(Optional.of(team2OffenseSummary));
@@ -463,7 +471,7 @@ class TeamComparatorTest {
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(500).build();
                 final TeamOffenseSummary team2OffenseSummary = TeamOffenseSummary.builder().score(450).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamOffenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1OffenseSummary))
                         .thenReturn(Optional.of(team2OffenseSummary));
@@ -478,7 +486,7 @@ class TeamComparatorTest {
                 final TeamDefenseSummary team1DefenseSummary = TeamDefenseSummary.builder().score(400).build();
                 final TeamDefenseSummary team2DefenseSummary = TeamDefenseSummary.builder().score(350).build();
 
-                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(any(), any(), any(), any())).thenReturn(0);
+                when(teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(any(), any(), any(), any(), any())).thenReturn(0);
                 when(teamDefenseSummaryRepository.findOne(any()))
                         .thenReturn(Optional.of(team1DefenseSummary))
                         .thenReturn(Optional.of(team2DefenseSummary));

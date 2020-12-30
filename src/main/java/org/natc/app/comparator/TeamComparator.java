@@ -7,17 +7,21 @@ import org.natc.app.entity.domain.TeamOffenseSummary;
 import org.natc.app.repository.TeamDefenseSummaryRepository;
 import org.natc.app.repository.TeamGameRepository;
 import org.natc.app.repository.TeamOffenseSummaryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.Objects;
 
+@Component
 public class TeamComparator implements Comparator<Team> {
 
     private final TeamGameRepository teamGameRepository;
     private final TeamOffenseSummaryRepository teamOffenseSummaryRepository;
     private final TeamDefenseSummaryRepository teamDefenseSummaryRepository;
 
+    @Autowired
     public TeamComparator(final TeamGameRepository teamGameRepository, final TeamOffenseSummaryRepository teamOffenseSummaryRepository, final TeamDefenseSummaryRepository teamDefenseSummaryRepository) {
         this.teamGameRepository = teamGameRepository;
         this.teamOffenseSummaryRepository = teamOffenseSummaryRepository;
@@ -53,8 +57,8 @@ public class TeamComparator implements Comparator<Team> {
         }
 
         // head to head
-        final Integer t1Wins = teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(t1.getYear(), GameType.REGULAR_SEASON.getValue(), t1.getTeamId(), t2.getTeamId());
-        final Integer t2Wins = teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWinTrue(t2.getYear(), GameType.REGULAR_SEASON.getValue(), t2.getTeamId(), t1.getTeamId());
+        final Integer t1Wins = teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(t1.getYear(), GameType.REGULAR_SEASON.getValue(), t1.getTeamId(), t2.getTeamId(), 1);
+        final Integer t2Wins = teamGameRepository.countByYearAndTypeAndTeamIdAndOpponentAndWin(t2.getYear(), GameType.REGULAR_SEASON.getValue(), t2.getTeamId(), t1.getTeamId(), 1);
 
         if (!t1Wins.equals(t2Wins)) return t1Wins - t2Wins;
 
