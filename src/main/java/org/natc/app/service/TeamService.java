@@ -2,6 +2,7 @@ package org.natc.app.service;
 
 import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.Team;
+import org.natc.app.exception.TeamNotFoundException;
 import org.natc.app.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -101,5 +102,10 @@ public class TeamService {
 
     private String decrementYear(final String year) {
         return String.valueOf(Integer.parseInt(year) - 1);
+    }
+
+    public Team getTeamByTeamIdAndYear(final Integer teamId, final String year) throws TeamNotFoundException {
+        return repository.findOne(Example.of(Team.builder().teamId(teamId).year(year).build()))
+                .orElseThrow(TeamNotFoundException::new);
     }
 }

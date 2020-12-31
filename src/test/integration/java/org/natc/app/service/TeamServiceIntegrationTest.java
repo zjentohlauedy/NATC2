@@ -1,8 +1,10 @@
 package org.natc.app.service;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.Team;
+import org.natc.app.exception.TeamNotFoundException;
 import org.natc.app.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -13,6 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
@@ -23,1077 +26,1138 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
     @Autowired
     private TeamService teamService;
 
-    @Test
-    public void generateTeams_ShouldPersistFourDivisionsOfTenTeamsEachEvenlySplitBetweenTwoConferences() {
-        teamService.generateTeams("2001");
+    @Nested
+    class GenerateTeams {
 
-        final Example<Team> queryCriteria = Example.of(Team.builder().allstarTeam(0).build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
+        @Test
+        public void shouldPersistFourDivisionsOfTenTeamsEachEvenlySplitBetweenTwoConferences() {
+            teamService.generateTeams("2001");
 
-        assertEquals(40, teamList.size());
-        assertEquals(20, teamList.stream().filter(team -> team.getConference().equals(0)).count());
-        assertEquals(20, teamList.stream().filter(team -> team.getConference().equals(1)).count());
-        assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(0)).count());
-        assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(1)).count());
-        assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(2)).count());
-        assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(3)).count());
+            final Example<Team> queryCriteria = Example.of(Team.builder().allstarTeam(0).build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(40, teamList.size());
+            assertEquals(20, teamList.stream().filter(team -> team.getConference().equals(0)).count());
+            assertEquals(20, teamList.stream().filter(team -> team.getConference().equals(1)).count());
+            assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(0)).count());
+            assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(1)).count());
+            assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(2)).count());
+            assertEquals(10, teamList.stream().filter(team -> team.getDivision().equals(3)).count());
+        }
+
+        @Test
+        public void shouldPersistFourAllstarTeamsWithOneForEachDivision() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().allstarTeam(1).build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(4, teamList.size());
+            assertEquals(2, teamList.stream().filter(team -> team.getConference().equals(0)).count());
+            assertEquals(2, teamList.stream().filter(team -> team.getConference().equals(1)).count());
+            assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(0)).count());
+            assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(1)).count());
+            assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(2)).count());
+            assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(3)).count());
+        }
+
+        @Test
+        public void shouldCreateTheIndianapolisTitansForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Indianapolis").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Indianapolis", team.getLocation());
+            assertEquals("Titans", team.getName());
+            assertEquals("IND.", team.getAbbreviation());
+            assertEquals("America/Indianapolis", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheCincinnatiWhirlwindForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Cincinnati").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Cincinnati", team.getLocation());
+            assertEquals("Whirlwind", team.getName());
+            assertEquals("CIN.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheKansasCityFlamesForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Kansas City").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Kansas City", team.getLocation());
+            assertEquals("Flames", team.getName());
+            assertEquals("K.C.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheDallasRustlersForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Dallas").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Dallas", team.getLocation());
+            assertEquals("Rustlers", team.getName());
+            assertEquals("DAL.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheWashingtonOlympiansForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Washington").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Washington", team.getLocation());
+            assertEquals("Olympians", team.getName());
+            assertEquals("WAS.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheMinneapolisMaraudersForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Minneapolis").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Minneapolis", team.getLocation());
+            assertEquals("Marauders", team.getName());
+            assertEquals("MIN.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheNewOrleansTigersharksForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("New Orleans").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("New Orleans", team.getLocation());
+            assertEquals("Tigersharks", team.getName());
+            assertEquals("N.O.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheOaklandAcesForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Oakland").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Oakland", team.getLocation());
+            assertEquals("Aces", team.getName());
+            assertEquals("OAK.", team.getAbbreviation());
+            assertEquals("America/Los_Angeles", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheVancouverCometsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Vancouver").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Vancouver", team.getLocation());
+            assertEquals("Comets", team.getName());
+            assertEquals("VAN.", team.getAbbreviation());
+            assertEquals("America/Vancouver", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheSaltLakeCityLightningForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Salt Lake City").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Salt Lake City", team.getLocation());
+            assertEquals("Lightning", team.getName());
+            assertEquals("SLC.", team.getAbbreviation());
+            assertEquals("America/Phoenix", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheBostonBlacksForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Boston").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Boston", team.getLocation());
+            assertEquals("Blacks", team.getName());
+            assertEquals("BOS.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateThePittsburghPirahnasForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Pittsburgh").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Pittsburgh", team.getLocation());
+            assertEquals("Pirahnas", team.getName());
+            assertEquals("PIT.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheSanDiegoStingraysForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("San Diego").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("San Diego", team.getLocation());
+            assertEquals("Stingrays", team.getName());
+            assertEquals("S.D.", team.getAbbreviation());
+            assertEquals("America/Los_Angeles", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateThePhiladelphiaPhotonsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Philadelphia").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Philadelphia", team.getLocation());
+            assertEquals("Photons", team.getName());
+            assertEquals("PHI.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheDetroitThunderForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Detroit").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Detroit", team.getLocation());
+            assertEquals("Thunder", team.getName());
+            assertEquals("DET.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheAtlantaRenegadesForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Atlanta").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Atlanta", team.getLocation());
+            assertEquals("Renegades", team.getName());
+            assertEquals("ATL.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheBaltimoreCrabbersForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Baltimore").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Baltimore", team.getLocation());
+            assertEquals("Crabbers", team.getName());
+            assertEquals("BAL.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheStLouisJuggernautsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("St. Louis").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("St. Louis", team.getLocation());
+            assertEquals("Juggernauts", team.getName());
+            assertEquals("S.L.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheOrlandoHurricanesForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Orlando").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Orlando", team.getLocation());
+            assertEquals("Hurricanes", team.getName());
+            assertEquals("ORL.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheLasVegasVampiresForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Las Vegas").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Las Vegas", team.getLocation());
+            assertEquals("Vampires", team.getName());
+            assertEquals("L.V.", team.getAbbreviation());
+            assertEquals("America/Los_Angeles", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheMiamiVoyagersForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Miami").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Miami", team.getLocation());
+            assertEquals("Voyagers", team.getName());
+            assertEquals("MIA.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheHoustonHammersForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Houston").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Houston", team.getLocation());
+            assertEquals("Hammers", team.getName());
+            assertEquals("HOU.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheLosAngelesLegendsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Los Angeles").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Los Angeles", team.getLocation());
+            assertEquals("Legends", team.getName());
+            assertEquals("L.A.", team.getAbbreviation());
+            assertEquals("America/Los_Angeles", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheNewYorkKnightsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("New York").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("New York", team.getLocation());
+            assertEquals("Knights", team.getName());
+            assertEquals("N.Y.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheChicagoGoblinsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Chicago").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Chicago", team.getLocation());
+            assertEquals("Goblins", team.getName());
+            assertEquals("CHI.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheTampaBayTerrorForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Tampa Bay").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Tampa Bay", team.getLocation());
+            assertEquals("Terror", team.getName());
+            assertEquals("T.B.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheMontrealDragonsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Montreal").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Montreal", team.getLocation());
+            assertEquals("Dragons", team.getName());
+            assertEquals("MON.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheNewJerseyPhantomsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("New Jersey").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("New Jersey", team.getLocation());
+            assertEquals("Phantoms", team.getName());
+            assertEquals("N.J.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheMexicoCityAztecsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Mexico City").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Mexico City", team.getLocation());
+            assertEquals("Aztecs", team.getName());
+            assertEquals("MEX.", team.getAbbreviation());
+            assertEquals("America/Mexico_City", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(2, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheBuffaloIcersForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Buffalo").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Buffalo", team.getLocation());
+            assertEquals("Icers", team.getName());
+            assertEquals("BUF.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheClevelandScorpionsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Cleveland").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Cleveland", team.getLocation());
+            assertEquals("Scorpions", team.getName());
+            assertEquals("CLE.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheDenverNukesForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Denver").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Denver", team.getLocation());
+            assertEquals("Nukes", team.getName());
+            assertEquals("DEN.", team.getAbbreviation());
+            assertEquals("America/Denver", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheSeattlePsychoticsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Seattle").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Seattle", team.getLocation());
+            assertEquals("Psychotics", team.getName());
+            assertEquals("SEA.", team.getAbbreviation());
+            assertEquals("America/Los_Angeles", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateThePhoenixEclipseForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Phoenix").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Phoenix", team.getLocation());
+            assertEquals("Eclipse", team.getName());
+            assertEquals("PHX.", team.getAbbreviation());
+            assertEquals("America/Phoenix", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheMilwaukeeWarriorsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Milwaukee").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Milwaukee", team.getLocation());
+            assertEquals("Warriors", team.getName());
+            assertEquals("MIL.", team.getAbbreviation());
+            assertEquals("America/Chicago", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheKingstonOutlawsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Kingston").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Kingston", team.getLocation());
+            assertEquals("Outlaws", team.getName());
+            assertEquals("KIN.", team.getAbbreviation());
+            assertEquals("America/Jamaica", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheTorontoOverlordsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Toronto").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Toronto", team.getLocation());
+            assertEquals("Overlords", team.getName());
+            assertEquals("TOR.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheCharlotteSerpentsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Charlotte").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Charlotte", team.getLocation());
+            assertEquals("Serpents", team.getName());
+            assertEquals("CHA.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateThePortlandRhinosForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Portland").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Portland", team.getLocation());
+            assertEquals("Rhinos", team.getName());
+            assertEquals("POR.", team.getAbbreviation());
+            assertEquals("America/Los_Angeles", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(0, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheGreeneDivisionAllstarsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Greene").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Greene", team.getLocation());
+            assertEquals("All Stars", team.getName());
+            assertEquals("GRN.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(0, team.getDivision());
+            assertEquals(1, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheDavisDivisionAllstarsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Davis").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Davis", team.getLocation());
+            assertEquals("All Stars", team.getName());
+            assertEquals("DVS.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(0, team.getConference());
+            assertEquals(1, team.getDivision());
+            assertEquals(1, team.getAllstarTeam());
+        }
+
+        @Test
+        public void shouldCreateTheLawrenceDivisionAllstarsForTheGivenYear() {
+            teamService.generateTeams("2001");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().location("Lawrence").build());
+            final List<Team> teamList = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, teamList.size());
+
+            final Team team = teamList.get(0);
+
+            assertEquals("Lawrence", team.getLocation());
+            assertEquals("All Stars", team.getName());
+            assertEquals("LAW.", team.getAbbreviation());
+            assertEquals("America/New_York", team.getTimeZone());
+            assertEquals("2001", team.getYear());
+            assertEquals(1, team.getConference());
+            assertEquals(3, team.getDivision());
+            assertEquals(1, team.getAllstarTeam());
+        }
     }
 
-    @Test
-    public void generateTeams_ShouldPersistFourAllstarTeamsWithOneForEachDivision() {
-        teamService.generateTeams("2001");
+    @Nested
+    class UpdateTeamsForNewSeason {
 
-        final Example<Team> queryCriteria = Example.of(Team.builder().allstarTeam(1).build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
+        @Test
+        public void shouldCopyTeamRecordsFromOneYearToAnother() {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("2002").build(),
+                    Team.builder().teamId(2).year("2002").build(),
+                    Team.builder().teamId(3).year("2002").build()
+            );
 
-        assertEquals(4, teamList.size());
-        assertEquals(2, teamList.stream().filter(team -> team.getConference().equals(0)).count());
-        assertEquals(2, teamList.stream().filter(team -> team.getConference().equals(1)).count());
-        assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(0)).count());
-        assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(1)).count());
-        assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(2)).count());
-        assertEquals(1, teamList.stream().filter(team -> team.getDivision().equals(3)).count());
+            teamRepository.saveAll(teamList);
+
+            teamService.updateTeamsForNewSeason("2002", "2020");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().year("2020").build());
+            final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
+
+            assertEquals(teamList.size(), copiedTeams.size());
+        }
+
+        @Test
+        public void shouldOnlyCopyTeamRecordsFromPreviousYear() {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("2001").build(),
+                    Team.builder().teamId(2).year("2002").build(),
+                    Team.builder().teamId(3).year("2003").build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            teamService.updateTeamsForNewSeason("2002", "2020");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().year("2020").build());
+            final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, copiedTeams.size());
+            assertEquals(2, copiedTeams.get(0).getTeamId());
+        }
+
+        @Test
+        public void shouldOnlyCopyNecessaryFieldsToNewYear() {
+            final Team originalTeam = Team.builder()
+                    .teamId(123)
+                    .year("1999")
+                    .location("Here")
+                    .name("Them")
+                    .abbreviation("ABC.")
+                    .timeZone("Americas/Los_Angeles")
+                    .gameTime(999)
+                    .conference(111)
+                    .division(222)
+                    .allstarTeam(1)
+                    .preseasonGames(12)
+                    .preseasonWins(7)
+                    .preseasonLosses(5)
+                    .games(99)
+                    .wins(55)
+                    .losses(44)
+                    .divisionWins(33)
+                    .divisionLosses(22)
+                    .outOfConferenceWins(66)
+                    .outOfConferenceLosses(11)
+                    .overtimeWins(9)
+                    .overtimeLosses(3)
+                    .roadWins(88)
+                    .roadLosses(77)
+                    .homeWins(35)
+                    .homeLosses(46)
+                    .divisionRank(6)
+                    .playoffRank(15)
+                    .playoffGames(14)
+                    .round1Wins(13)
+                    .round2Wins(6)
+                    .round3Wins(4)
+                    .expectation(0.432)
+                    .drought(17)
+                    .build();
+
+            teamRepository.save(originalTeam);
+
+            teamService.updateTeamsForNewSeason("1999", "2000");
+
+            final Example<Team> queryCriteria = Example.of(Team.builder().year("2000").build());
+            final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
+
+            assertEquals(1, copiedTeams.size());
+
+            final Team copiedTeam = copiedTeams.get(0);
+
+            assertEquals(originalTeam.getTeamId(), copiedTeam.getTeamId());
+            assertEquals(originalTeam.getLocation(), copiedTeam.getLocation());
+            assertEquals(originalTeam.getName(), copiedTeam.getName());
+            assertEquals(originalTeam.getAbbreviation(), copiedTeam.getAbbreviation());
+            assertEquals(originalTeam.getTimeZone(), copiedTeam.getTimeZone());
+            assertEquals(originalTeam.getGameTime(), copiedTeam.getGameTime());
+            assertEquals(originalTeam.getConference(), copiedTeam.getConference());
+            assertEquals(originalTeam.getDivision(), copiedTeam.getDivision());
+            assertEquals(originalTeam.getAllstarTeam(), copiedTeam.getAllstarTeam());
+            assertEquals(originalTeam.getExpectation(), copiedTeam.getExpectation());
+            assertEquals(originalTeam.getDrought(), copiedTeam.getDrought());
+
+            assertNull(copiedTeam.getPreseasonGames());
+            assertNull(copiedTeam.getPreseasonWins());
+            assertNull(copiedTeam.getPreseasonLosses());
+            assertNull(copiedTeam.getGames());
+            assertNull(copiedTeam.getWins());
+            assertNull(copiedTeam.getLosses());
+            assertNull(copiedTeam.getDivisionWins());
+            assertNull(copiedTeam.getDivisionLosses());
+            assertNull(copiedTeam.getOutOfConferenceWins());
+            assertNull(copiedTeam.getOutOfConferenceLosses());
+            assertNull(copiedTeam.getOvertimeWins());
+            assertNull(copiedTeam.getOvertimeLosses());
+            assertNull(copiedTeam.getRoadWins());
+            assertNull(copiedTeam.getRoadLosses());
+            assertNull(copiedTeam.getHomeWins());
+            assertNull(copiedTeam.getHomeLosses());
+            assertNull(copiedTeam.getDivisionRank());
+            assertNull(copiedTeam.getPlayoffRank());
+            assertNull(copiedTeam.getPlayoffGames());
+            assertNull(copiedTeam.getRound1Wins());
+            assertNull(copiedTeam.getRound2Wins());
+            assertNull(copiedTeam.getRound3Wins());
+        }
     }
 
-    @Test
-    public void generateTeams_ShouldCreateTheIndianapolisTitansForTheGivenYear() {
-        teamService.generateTeams("2001");
+    @Nested
+    class WillTeamReleaseManager {
 
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Indianapolis").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
+        @Test
+        public void shouldReturnFalseIfPreviousSeasonTeamIsDoesNotExist() {
+            final Team team = Team.builder().teamId(1).year("2000").build();
+            final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
 
-        assertEquals(1, teamList.size());
+            teamRepository.save(team);
 
-        final Team team = teamList.get(0);
+            assertFalse(teamService.willTeamReleaseManager(manager));
+        }
 
-        assertEquals("Indianapolis", team.getLocation());
-        assertEquals("Titans", team.getName());
-        assertEquals("IND.", team.getAbbreviation());
-        assertEquals("America/Indianapolis", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
+        @Test
+        public void shouldReturnFalseIfTwoYearsBackSeasonTeamIsDoesNotExist() {
+            final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("1999").build(),
+                    Team.builder().teamId(2).year("2000").build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            assertFalse(teamService.willTeamReleaseManager(manager));
+        }
+
+        @Test
+        public void shouldReturnTrueIfBothYearsTeamsExistAndTheManagerFailsOnCriteria() {
+            final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).totalSeasons(5).score(0).totalScore(0).build();
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).wins(55).playoffRank(1).expectation(0.6).year("1998").build(),
+                    Team.builder().teamId(2).wins(55).playoffRank(1).expectation(0.6).year("1999").build(),
+                    Team.builder().teamId(3).wins(55).playoffRank(1).expectation(0.6).year("2000").build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            assertTrue(teamService.willTeamReleaseManager(manager));
+        }
     }
 
-    @Test
-    public void generateTeams_ShouldCreateTheCincinnatiWhirlwindForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Cincinnati").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Cincinnati", team.getLocation());
-        assertEquals("Whirlwind", team.getName());
-        assertEquals("CIN.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheKansasCityFlamesForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Kansas City").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Kansas City", team.getLocation());
-        assertEquals("Flames", team.getName());
-        assertEquals("K.C.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheDallasRustlersForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Dallas").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Dallas", team.getLocation());
-        assertEquals("Rustlers", team.getName());
-        assertEquals("DAL.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheWashingtonOlympiansForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Washington").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Washington", team.getLocation());
-        assertEquals("Olympians", team.getName());
-        assertEquals("WAS.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheMinneapolisMaraudersForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Minneapolis").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Minneapolis", team.getLocation());
-        assertEquals("Marauders", team.getName());
-        assertEquals("MIN.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheNewOrleansTigersharksForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("New Orleans").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("New Orleans", team.getLocation());
-        assertEquals("Tigersharks", team.getName());
-        assertEquals("N.O.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheOaklandAcesForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Oakland").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Oakland", team.getLocation());
-        assertEquals("Aces", team.getName());
-        assertEquals("OAK.", team.getAbbreviation());
-        assertEquals("America/Los_Angeles", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheVancouverCometsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Vancouver").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Vancouver", team.getLocation());
-        assertEquals("Comets", team.getName());
-        assertEquals("VAN.", team.getAbbreviation());
-        assertEquals("America/Vancouver", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheSaltLakeCityLightningForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Salt Lake City").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Salt Lake City", team.getLocation());
-        assertEquals("Lightning", team.getName());
-        assertEquals("SLC.", team.getAbbreviation());
-        assertEquals("America/Phoenix", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheBostonBlacksForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Boston").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Boston", team.getLocation());
-        assertEquals("Blacks", team.getName());
-        assertEquals("BOS.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateThePittsburghPirahnasForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Pittsburgh").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Pittsburgh", team.getLocation());
-        assertEquals("Pirahnas", team.getName());
-        assertEquals("PIT.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheSanDiegoStingraysForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("San Diego").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("San Diego", team.getLocation());
-        assertEquals("Stingrays", team.getName());
-        assertEquals("S.D.", team.getAbbreviation());
-        assertEquals("America/Los_Angeles", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateThePhiladelphiaPhotonsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Philadelphia").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Philadelphia", team.getLocation());
-        assertEquals("Photons", team.getName());
-        assertEquals("PHI.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheDetroitThunderForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Detroit").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Detroit", team.getLocation());
-        assertEquals("Thunder", team.getName());
-        assertEquals("DET.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheAtlantaRenegadesForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Atlanta").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Atlanta", team.getLocation());
-        assertEquals("Renegades", team.getName());
-        assertEquals("ATL.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheBaltimoreCrabbersForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Baltimore").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Baltimore", team.getLocation());
-        assertEquals("Crabbers", team.getName());
-        assertEquals("BAL.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheStLouisJuggernautsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("St. Louis").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("St. Louis", team.getLocation());
-        assertEquals("Juggernauts", team.getName());
-        assertEquals("S.L.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheOrlandoHurricanesForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Orlando").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Orlando", team.getLocation());
-        assertEquals("Hurricanes", team.getName());
-        assertEquals("ORL.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheLasVegasVampiresForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Las Vegas").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Las Vegas", team.getLocation());
-        assertEquals("Vampires", team.getName());
-        assertEquals("L.V.", team.getAbbreviation());
-        assertEquals("America/Los_Angeles", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheMiamiVoyagersForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Miami").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Miami", team.getLocation());
-        assertEquals("Voyagers", team.getName());
-        assertEquals("MIA.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheHoustonHammersForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Houston").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Houston", team.getLocation());
-        assertEquals("Hammers", team.getName());
-        assertEquals("HOU.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheLosAngelesLegendsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Los Angeles").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Los Angeles", team.getLocation());
-        assertEquals("Legends", team.getName());
-        assertEquals("L.A.", team.getAbbreviation());
-        assertEquals("America/Los_Angeles", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheNewYorkKnightsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("New York").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("New York", team.getLocation());
-        assertEquals("Knights", team.getName());
-        assertEquals("N.Y.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheChicagoGoblinsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Chicago").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Chicago", team.getLocation());
-        assertEquals("Goblins", team.getName());
-        assertEquals("CHI.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheTampaBayTerrorForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Tampa Bay").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Tampa Bay", team.getLocation());
-        assertEquals("Terror", team.getName());
-        assertEquals("T.B.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheMontrealDragonsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Montreal").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Montreal", team.getLocation());
-        assertEquals("Dragons", team.getName());
-        assertEquals("MON.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheNewJerseyPhantomsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("New Jersey").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("New Jersey", team.getLocation());
-        assertEquals("Phantoms", team.getName());
-        assertEquals("N.J.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheMexicoCityAztecsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Mexico City").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Mexico City", team.getLocation());
-        assertEquals("Aztecs", team.getName());
-        assertEquals("MEX.", team.getAbbreviation());
-        assertEquals("America/Mexico_City", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(2, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheBuffaloIcersForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Buffalo").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Buffalo", team.getLocation());
-        assertEquals("Icers", team.getName());
-        assertEquals("BUF.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheClevelandScorpionsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Cleveland").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Cleveland", team.getLocation());
-        assertEquals("Scorpions", team.getName());
-        assertEquals("CLE.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheDenverNukesForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Denver").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Denver", team.getLocation());
-        assertEquals("Nukes", team.getName());
-        assertEquals("DEN.", team.getAbbreviation());
-        assertEquals("America/Denver", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheSeattlePsychoticsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Seattle").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Seattle", team.getLocation());
-        assertEquals("Psychotics", team.getName());
-        assertEquals("SEA.", team.getAbbreviation());
-        assertEquals("America/Los_Angeles", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateThePhoenixEclipseForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Phoenix").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Phoenix", team.getLocation());
-        assertEquals("Eclipse", team.getName());
-        assertEquals("PHX.", team.getAbbreviation());
-        assertEquals("America/Phoenix", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheMilwaukeeWarriorsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Milwaukee").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Milwaukee", team.getLocation());
-        assertEquals("Warriors", team.getName());
-        assertEquals("MIL.", team.getAbbreviation());
-        assertEquals("America/Chicago", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheKingstonOutlawsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Kingston").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Kingston", team.getLocation());
-        assertEquals("Outlaws", team.getName());
-        assertEquals("KIN.", team.getAbbreviation());
-        assertEquals("America/Jamaica", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheTorontoOverlordsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Toronto").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Toronto", team.getLocation());
-        assertEquals("Overlords", team.getName());
-        assertEquals("TOR.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheCharlotteSerpentsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Charlotte").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Charlotte", team.getLocation());
-        assertEquals("Serpents", team.getName());
-        assertEquals("CHA.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateThePortlandRhinosForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Portland").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Portland", team.getLocation());
-        assertEquals("Rhinos", team.getName());
-        assertEquals("POR.", team.getAbbreviation());
-        assertEquals("America/Los_Angeles", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(0, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheGreeneDivisionAllstarsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Greene").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Greene", team.getLocation());
-        assertEquals("All Stars", team.getName());
-        assertEquals("GRN.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(0, team.getDivision());
-        assertEquals(1, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheDavisDivisionAllstarsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Davis").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Davis", team.getLocation());
-        assertEquals("All Stars", team.getName());
-        assertEquals("DVS.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(0, team.getConference());
-        assertEquals(1, team.getDivision());
-        assertEquals(1, team.getAllstarTeam());
-    }
-
-    @Test
-    public void generateTeams_ShouldCreateTheLawrenceDivisionAllstarsForTheGivenYear() {
-        teamService.generateTeams("2001");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().location("Lawrence").build());
-        final List<Team> teamList = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, teamList.size());
-
-        final Team team = teamList.get(0);
-
-        assertEquals("Lawrence", team.getLocation());
-        assertEquals("All Stars", team.getName());
-        assertEquals("LAW.", team.getAbbreviation());
-        assertEquals("America/New_York", team.getTimeZone());
-        assertEquals("2001", team.getYear());
-        assertEquals(1, team.getConference());
-        assertEquals(3, team.getDivision());
-        assertEquals(1, team.getAllstarTeam());
-    }
-
-    @Test
-    public void updateTeamsForNewSeason_ShouldCopyTeamRecordsFromOneYearToAnother() {
-        final List<Team> teamList = Arrays.asList(
-                Team.builder().teamId(1).year("2002").build(),
-                Team.builder().teamId(2).year("2002").build(),
-                Team.builder().teamId(3).year("2002").build()
-        );
-
-        teamRepository.saveAll(teamList);
-
-        teamService.updateTeamsForNewSeason("2002", "2020");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().year("2020").build());
-        final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
-
-        assertEquals(teamList.size(), copiedTeams.size());
-    }
-
-    @Test
-    public void updateTeamsForNewSeason_ShouldOnlyCopyTeamRecordsFromPreviousYear() {
-        final List<Team> teamList = Arrays.asList(
-                Team.builder().teamId(1).year("2001").build(),
-                Team.builder().teamId(2).year("2002").build(),
-                Team.builder().teamId(3).year("2003").build()
-        );
-
-        teamRepository.saveAll(teamList);
-
-        teamService.updateTeamsForNewSeason("2002", "2020");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().year("2020").build());
-        final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, copiedTeams.size());
-        assertEquals(2, copiedTeams.get(0).getTeamId());
-    }
-
-    @Test
-    public void updateTeamsForNewSeason_ShouldOnlyCopyNecessaryFieldsToNewYear() {
-        final Team originalTeam = Team.builder()
-                .teamId(123)
-                .year("1999")
-                .location("Here")
-                .name("Them")
-                .abbreviation("ABC.")
-                .timeZone("Americas/Los_Angeles")
-                .gameTime(999)
-                .conference(111)
-                .division(222)
-                .allstarTeam(1)
-                .preseasonGames(12)
-                .preseasonWins(7)
-                .preseasonLosses(5)
-                .games(99)
-                .wins(55)
-                .losses(44)
-                .divisionWins(33)
-                .divisionLosses(22)
-                .outOfConferenceWins(66)
-                .outOfConferenceLosses(11)
-                .overtimeWins(9)
-                .overtimeLosses(3)
-                .roadWins(88)
-                .roadLosses(77)
-                .homeWins(35)
-                .homeLosses(46)
-                .divisionRank(6)
-                .playoffRank(15)
-                .playoffGames(14)
-                .round1Wins(13)
-                .round2Wins(6)
-                .round3Wins(4)
-                .expectation(0.432)
-                .drought(17)
-                .build();
-
-        teamRepository.save(originalTeam);
-
-        teamService.updateTeamsForNewSeason("1999", "2000");
-
-        final Example<Team> queryCriteria = Example.of(Team.builder().year("2000").build());
-        final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
-
-        assertEquals(1, copiedTeams.size());
-
-        final Team copiedTeam = copiedTeams.get(0);
-
-        assertEquals(originalTeam.getTeamId(), copiedTeam.getTeamId());
-        assertEquals(originalTeam.getLocation(), copiedTeam.getLocation());
-        assertEquals(originalTeam.getName(), copiedTeam.getName());
-        assertEquals(originalTeam.getAbbreviation(), copiedTeam.getAbbreviation());
-        assertEquals(originalTeam.getTimeZone(), copiedTeam.getTimeZone());
-        assertEquals(originalTeam.getGameTime(), copiedTeam.getGameTime());
-        assertEquals(originalTeam.getConference(), copiedTeam.getConference());
-        assertEquals(originalTeam.getDivision(), copiedTeam.getDivision());
-        assertEquals(originalTeam.getAllstarTeam(), copiedTeam.getAllstarTeam());
-        assertEquals(originalTeam.getExpectation(), copiedTeam.getExpectation());
-        assertEquals(originalTeam.getDrought(), copiedTeam.getDrought());
-
-        assertNull(copiedTeam.getPreseasonGames());
-        assertNull(copiedTeam.getPreseasonWins());
-        assertNull(copiedTeam.getPreseasonLosses());
-        assertNull(copiedTeam.getGames());
-        assertNull(copiedTeam.getWins());
-        assertNull(copiedTeam.getLosses());
-        assertNull(copiedTeam.getDivisionWins());
-        assertNull(copiedTeam.getDivisionLosses());
-        assertNull(copiedTeam.getOutOfConferenceWins());
-        assertNull(copiedTeam.getOutOfConferenceLosses());
-        assertNull(copiedTeam.getOvertimeWins());
-        assertNull(copiedTeam.getOvertimeLosses());
-        assertNull(copiedTeam.getRoadWins());
-        assertNull(copiedTeam.getRoadLosses());
-        assertNull(copiedTeam.getHomeWins());
-        assertNull(copiedTeam.getHomeLosses());
-        assertNull(copiedTeam.getDivisionRank());
-        assertNull(copiedTeam.getPlayoffRank());
-        assertNull(copiedTeam.getPlayoffGames());
-        assertNull(copiedTeam.getRound1Wins());
-        assertNull(copiedTeam.getRound2Wins());
-        assertNull(copiedTeam.getRound3Wins());
-    }
-
-    @Test
-    public void willTeamReleaseManager_ShouldReturnFalseIfPreviousSeasonTeamIsDoesNotExist() {
-        final Team team = Team.builder().teamId(1).year("2000").build();
-        final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
-
-        teamRepository.save(team);
-
-        assertFalse(teamService.willTeamReleaseManager(manager));
-    }
-
-    @Test
-    public void willTeamReleaseManager_ShouldReturnFalseIfTwoYearsBackSeasonTeamIsDoesNotExist() {
-        final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
-        final List<Team> teamList = Arrays.asList(
-                Team.builder().teamId(1).year("1999").build(),
-                Team.builder().teamId(2).year("2000").build()
-        );
-
-        teamRepository.saveAll(teamList);
-
-        assertFalse(teamService.willTeamReleaseManager(manager));
-    }
-
-    @Test
-    public void willTeamReleaseManager_ShouldReturnTrueIfBothYearsTeamsExistAndTheManagerFailsOnCriteria() {
-        final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).totalSeasons(5).score(0).totalScore(0).build();
-        final List<Team> teamList = Arrays.asList(
-                Team.builder().teamId(1).wins(55).playoffRank(1).expectation(0.6).year("1998").build(),
-                Team.builder().teamId(2).wins(55).playoffRank(1).expectation(0.6).year("1999").build(),
-                Team.builder().teamId(3).wins(55).playoffRank(1).expectation(0.6).year("2000").build()
-        );
-
-        teamRepository.saveAll(teamList);
-
-        assertTrue(teamService.willTeamReleaseManager(manager));
+    @Nested
+    class GetTeamByTeamIdAndYear {
+
+        @Test
+        public void shouldReturnTheMatchingTeam() throws TeamNotFoundException {
+            final Team expectedTeam = Team.builder().teamId(123).year("2012").build();
+
+            teamRepository.save(expectedTeam);
+
+            final Team actualTeam = teamService.getTeamByTeamIdAndYear(expectedTeam.getTeamId(), expectedTeam.getYear());
+
+            assertEquals(expectedTeam.getTeamId(), actualTeam.getTeamId());
+            assertEquals(expectedTeam.getYear(), actualTeam.getYear());
+        }
+
+        @Test
+        public void shouldReturnTheOnlyMatchingTeam() throws TeamNotFoundException {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("2000").build(),
+                    Team.builder().teamId(2).year("1999").build(),
+                    Team.builder().teamId(2).year("2000").build(),
+                    Team.builder().teamId(2).year("2001").build(),
+                    Team.builder().teamId(3).year("2000").build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            final Team actualTeam = teamService.getTeamByTeamIdAndYear(2, "2000");
+
+            assertEquals(2, actualTeam.getTeamId());
+            assertEquals("2000", actualTeam.getYear());
+        }
+
+        @Test
+        public void shouldThrowATeamNotFoundExceptionIfMatchingTeamDoesntExist() throws TeamNotFoundException {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("2000").build(),
+                    Team.builder().teamId(2).year("1999").build(),
+                    Team.builder().teamId(2).year("2000").build(),
+                    Team.builder().teamId(2).year("2001").build(),
+                    Team.builder().teamId(3).year("2000").build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            assertThrows(TeamNotFoundException.class, () -> teamService.getTeamByTeamIdAndYear(5, "2005"));
+        }
     }
 }
