@@ -61,5 +61,69 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
                     managers.stream().sorted(Comparator.comparing(Manager::getManagerId)).map(Manager::getTeamId).collect(Collectors.toList())
             );
         }
+
+        @Test
+        public void shouldOnlyConsiderPreviousSeasonTeamRecords() throws NATCException {
+            final List<Team> previousYearTeams = Arrays.asList(
+                    Team.builder().teamId(1).year("1997").games(100).wins(55).build(),
+                    Team.builder().teamId(1).year("1998").games(100).wins(40).build(),
+                    Team.builder().teamId(1).year("1999").games(100).wins(35).build(),
+                    Team.builder().teamId(1).year("2000").games(100).wins(50).build(),
+                    Team.builder().teamId(1).year("2001").games(100).wins(45).build(),
+
+                    Team.builder().teamId(2).year("1997").games(100).wins(36).build(),
+                    Team.builder().teamId(2).year("1998").games(100).wins(36).build(),
+                    Team.builder().teamId(2).year("1999").games(100).wins(36).build(),
+                    Team.builder().teamId(2).year("2000").games(100).wins(36).build(),
+                    Team.builder().teamId(2).year("2001").games(100).wins(36).build()
+            );
+
+            teamRepository.saveAll(previousYearTeams);
+
+            final List<Team> teams = Arrays.asList(
+                    Team.builder().teamId(1).year("2000").build(),
+                    Team.builder().teamId(2).year("2000").build()
+            );
+
+            final Manager highestRatedManager = Manager.builder().managerId(101).year("2000").seasons(0).offense(1.0).defense(1.0).intangible(1.0).penalties(1.0).build();
+            final Manager lowestRatedManager = Manager.builder().managerId(105).year("2000").seasons(0).offense(0.2).defense(0.2).intangible(0.2).penalties(0.2).build();
+
+            final List<Manager> managers = Arrays.asList(lowestRatedManager, highestRatedManager);
+
+            teamManagerDraftService.assignManagersToTeams(teams, managers);
+
+            assertEquals(1, highestRatedManager.getTeamId());
+            assertEquals(2, lowestRatedManager.getTeamId());
+        }
+
+        @Test
+        public void shouldOnlyConsiderRecordsForTheGivenTeams() throws NATCException {
+            final List<Team> previousYearTeams = Arrays.asList(
+                    Team.builder().teamId(1).year("1999").games(100).wins(55).build(),
+                    Team.builder().teamId(2).year("1999").games(100).wins(35).build(),
+                    Team.builder().teamId(3).year("1999").games(100).wins(40).build(),
+                    Team.builder().teamId(4).year("1999").games(100).wins(50).build(),
+                    Team.builder().teamId(5).year("1999").games(100).wins(45).build(),
+                    Team.builder().teamId(6).year("1999").games(100).wins(60).build(),
+                    Team.builder().teamId(7).year("1999").games(100).wins(65).build()
+            );
+
+            teamRepository.saveAll(previousYearTeams);
+
+            final List<Team> teams = Arrays.asList(
+                    Team.builder().teamId(1).year("2000").build(),
+                    Team.builder().teamId(2).year("2000").build()
+            );
+
+            final Manager highestRatedManager = Manager.builder().managerId(101).year("2000").seasons(0).offense(1.0).defense(1.0).intangible(1.0).penalties(1.0).build();
+            final Manager lowestRatedManager = Manager.builder().managerId(105).year("2000").seasons(0).offense(0.2).defense(0.2).intangible(0.2).penalties(0.2).build();
+
+            final List<Manager> managers = Arrays.asList(lowestRatedManager, highestRatedManager);
+
+            teamManagerDraftService.assignManagersToTeams(teams, managers);
+
+            assertEquals(2, highestRatedManager.getTeamId());
+            assertEquals(1, lowestRatedManager.getTeamId());
+        }
     }
 }
