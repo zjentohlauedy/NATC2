@@ -41,3 +41,6 @@ natc:
     playoff-games-round-two: 5
     playoff-games-round-three: 3
     max-player-managers-per-season: 2
+    new-managers-per-season: 5
+    new-manager-starting-age: 40
+    player-manager-years-retired: 10

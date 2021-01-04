@@ -24,5 +24,8 @@ public class LeagueConfiguration {
     private Integer playoffGamesRoundOne;
     private Integer playoffGamesRoundTwo;
     private Integer playoffGamesRoundThree;
+    private Integer newManagersPerSeason;
     private Integer maxPlayerManagersPerSeason;
+    private Integer playerManagerYearsRetired;
+    private Integer newManagerStartingAge;
 }
