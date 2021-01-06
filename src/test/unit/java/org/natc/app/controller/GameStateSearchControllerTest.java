@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,60 +32,64 @@ class GameStateSearchControllerTest {
     @InjectMocks
     private GameStateSearchController gameStateSearchController;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
 
-    @Test
-    public void search_ShouldCallGameStateSearchService() {
-        gameStateSearchController.search(null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(gameStateSearchService).fetchAll(any(GameStateSearchRequest.class));
-    }
+        @Test
+        public void shouldCallGameStateSearchService() {
+            gameStateSearchController.search(null);
 
-    @Test
-    public void search_ShouldConstructRequestObjectForGameStateSearchServiceUsingRequestParameters() {
-        final Integer gameId = 123;
-        final ArgumentCaptor<GameStateSearchRequest> captor = ArgumentCaptor.forClass(GameStateSearchRequest.class);
+            verify(gameStateSearchService).fetchAll(any(GameStateSearchRequest.class));
+        }
 
-        gameStateSearchController.search(gameId);
+        @Test
+        public void shouldConstructRequestObjectForGameStateSearchServiceUsingRequestParameters() {
+            final Integer gameId = 123;
+            final ArgumentCaptor<GameStateSearchRequest> captor = ArgumentCaptor.forClass(GameStateSearchRequest.class);
 
-        verify(gameStateSearchService).fetchAll(captor.capture());
+            gameStateSearchController.search(gameId);
 
-        final GameStateSearchRequest request = captor.getValue();
+            verify(gameStateSearchService).fetchAll(captor.capture());
 
-        assertEquals(gameId, request.getGameId());
-    }
+            final GameStateSearchRequest request = captor.getValue();
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingGameStatesReturnedBySearchService() {
-        final List<GameStateResponse> gameStateList = Collections.singletonList(new GameStateResponse());
+            assertEquals(gameId, request.getGameId());
+        }
 
-        when(gameStateSearchService.fetchAll(any(GameStateSearchRequest.class))).thenReturn(gameStateList);
+        @Test
+        public void shouldRespondWithEnvelopContainingGameStatesReturnedBySearchService() {
+            final List<GameStateResponse> gameStateList = Collections.singletonList(new GameStateResponse());
 
-        final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
+            when(gameStateSearchService.fetchAll(any(GameStateSearchRequest.class))).thenReturn(gameStateList);
 
-        assertEquals(gameStateList, response.getBody().getResources());
-    }
+            final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<GameStateResponse> gameStateList = Collections.singletonList(new GameStateResponse());
+            assertEquals(gameStateList, response.getBody().getResources());
+        }
 
-        when(gameStateSearchService.fetchAll(any(GameStateSearchRequest.class))).thenReturn(gameStateList);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<GameStateResponse> gameStateList = Collections.singletonList(new GameStateResponse());
 
-        final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
+            when(gameStateSearchService.fetchAll(any(GameStateSearchRequest.class))).thenReturn(gameStateList);
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }

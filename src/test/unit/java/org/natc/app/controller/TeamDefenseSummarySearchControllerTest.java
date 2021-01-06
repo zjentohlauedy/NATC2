@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -32,64 +33,68 @@ class TeamDefenseSummarySearchControllerTest {
     @InjectMocks
     private TeamDefenseSummarySearchController controller;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 
-    @Test
-    public void search_ShouldCallTeamDefenseSummarySearchService() {
-        controller.search(null, null, null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(searchService).fetchAll(any());
-    }
+        @Test
+        public void shouldCallTeamDefenseSummarySearchService() {
+            controller.search(null, null, null);
 
-    @Test
-    public void search_ShouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
-        final String year = "1989";
-        final GameType type = GameType.REGULAR_SEASON;
-        final Integer teamId = 33;
-        final ArgumentCaptor<TeamDefenseSummarySearchRequest> captor = ArgumentCaptor.forClass(TeamDefenseSummarySearchRequest.class);
+            verify(searchService).fetchAll(any());
+        }
 
-        controller.search(year, type, teamId);
+        @Test
+        public void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
+            final String year = "1989";
+            final GameType type = GameType.REGULAR_SEASON;
+            final Integer teamId = 33;
+            final ArgumentCaptor<TeamDefenseSummarySearchRequest> captor = ArgumentCaptor.forClass(TeamDefenseSummarySearchRequest.class);
 
-        verify(searchService).fetchAll(captor.capture());
+            controller.search(year, type, teamId);
 
-        final TeamDefenseSummarySearchRequest request = captor.getValue();
+            verify(searchService).fetchAll(captor.capture());
 
-        assertEquals(year, request.getYear());
-        assertEquals(type, request.getType());
-        assertEquals(teamId, request.getTeamId());
-    }
+            final TeamDefenseSummarySearchRequest request = captor.getValue();
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
-        final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
+            assertEquals(year, request.getYear());
+            assertEquals(type, request.getType());
+            assertEquals(teamId, request.getTeamId());
+        }
 
-        when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
+        @Test
+        public void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
+            final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
 
-        final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
+            when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
 
-        assertEquals(teamDefenseSummaryList, response.getBody().getResources());
-    }
+            final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
+            assertEquals(teamDefenseSummaryList, response.getBody().getResources());
+        }
 
-        when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
 
-        final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
+            when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }

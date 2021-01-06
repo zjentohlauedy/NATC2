@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -32,64 +33,68 @@ class PlayerSearchControllerTest {
     @InjectMocks
     private PlayerSearchController playerSearchController;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldCallPlayerSearchService() {
-        playerSearchController.search(null, null, null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(playerSearchService).fetchAll(any());
-    }
+        @Test
+        public void shouldCallPlayerSearchService() {
+            playerSearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldConstructRequestObjectForPlayerSearchServiceUsingRequestParameters() {
-        final Integer playerId = 123;
-        final Integer teamId = 321;
-        final String year = "1991";
-        final ArgumentCaptor<PlayerSearchRequest> captor = ArgumentCaptor.forClass(PlayerSearchRequest.class);
+            verify(playerSearchService).fetchAll(any());
+        }
 
-        playerSearchController.search(playerId, teamId, year);
+        @Test
+        public void shouldConstructRequestObjectForPlayerSearchServiceUsingRequestParameters() {
+            final Integer playerId = 123;
+            final Integer teamId = 321;
+            final String year = "1991";
+            final ArgumentCaptor<PlayerSearchRequest> captor = ArgumentCaptor.forClass(PlayerSearchRequest.class);
 
-        verify(playerSearchService).fetchAll(captor.capture());
+            playerSearchController.search(playerId, teamId, year);
 
-        final PlayerSearchRequest request = captor.getValue();
+            verify(playerSearchService).fetchAll(captor.capture());
 
-        assertEquals(playerId, request.getPlayerId());
-        assertEquals(teamId, request.getTeamId());
-        assertEquals(year, request.getYear());
-    }
+            final PlayerSearchRequest request = captor.getValue();
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingPlayersReturnedBySearchService() {
-        final List<PlayerResponse> playerList = Collections.singletonList(new PlayerResponse());
+            assertEquals(playerId, request.getPlayerId());
+            assertEquals(teamId, request.getTeamId());
+            assertEquals(year, request.getYear());
+        }
 
-        when(playerSearchService.fetchAll(any(PlayerSearchRequest.class))).thenReturn(playerList);
+        @Test
+        public void shouldRespondWithEnvelopContainingPlayersReturnedBySearchService() {
+            final List<PlayerResponse> playerList = Collections.singletonList(new PlayerResponse());
 
-        final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
+            when(playerSearchService.fetchAll(any(PlayerSearchRequest.class))).thenReturn(playerList);
 
-        assertSame(playerList, response.getBody().getResources());
-    }
+            final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<PlayerResponse> playerList = Collections.singletonList(new PlayerResponse());
+            assertSame(playerList, response.getBody().getResources());
+        }
 
-        when(playerSearchService.fetchAll(any(PlayerSearchRequest.class))).thenReturn(playerList);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<PlayerResponse> playerList = Collections.singletonList(new PlayerResponse());
 
-        final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
+            when(playerSearchService.fetchAll(any(PlayerSearchRequest.class))).thenReturn(playerList);
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }

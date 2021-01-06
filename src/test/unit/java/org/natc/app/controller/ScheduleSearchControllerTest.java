@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,62 +32,66 @@ class ScheduleSearchControllerTest {
     @InjectMocks
     private ScheduleSearchController scheduleSearchController;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
 
-    @Test
-    public void search_ShouldCallScheduleSearchService() {
-        scheduleSearchController.search(null, null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(scheduleSearchService).fetchAll(any(ScheduleSearchRequest.class));
-    }
+        @Test
+        public void shouldCallScheduleSearchService() {
+            scheduleSearchController.search(null, null);
 
-    @Test
-    public void search_ShouldConstructRequestObjectForScheduleSearchServiceUsingRequestParameters() {
-        final String year = "1992";
-        final Integer sequence = 35;
-        final ArgumentCaptor<ScheduleSearchRequest> captor = ArgumentCaptor.forClass(ScheduleSearchRequest.class);
+            verify(scheduleSearchService).fetchAll(any(ScheduleSearchRequest.class));
+        }
 
-        scheduleSearchController.search(year, sequence);
+        @Test
+        public void shouldConstructRequestObjectForScheduleSearchServiceUsingRequestParameters() {
+            final String year = "1992";
+            final Integer sequence = 35;
+            final ArgumentCaptor<ScheduleSearchRequest> captor = ArgumentCaptor.forClass(ScheduleSearchRequest.class);
 
-        verify(scheduleSearchService).fetchAll(captor.capture());
+            scheduleSearchController.search(year, sequence);
 
-        final ScheduleSearchRequest request = captor.getValue();
+            verify(scheduleSearchService).fetchAll(captor.capture());
 
-        assertEquals(year, request.getYear());
-        assertEquals(sequence, request.getSequence());
-    }
+            final ScheduleSearchRequest request = captor.getValue();
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingSchedulesReturnedBySearchService() {
-        final List<ScheduleResponse> scheduleList = Collections.singletonList(new ScheduleResponse());
+            assertEquals(year, request.getYear());
+            assertEquals(sequence, request.getSequence());
+        }
 
-        when(scheduleSearchService.fetchAll(any(ScheduleSearchRequest.class))).thenReturn(scheduleList);
+        @Test
+        public void shouldRespondWithEnvelopContainingSchedulesReturnedBySearchService() {
+            final List<ScheduleResponse> scheduleList = Collections.singletonList(new ScheduleResponse());
 
-        final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
+            when(scheduleSearchService.fetchAll(any(ScheduleSearchRequest.class))).thenReturn(scheduleList);
 
-        assertEquals(scheduleList, response.getBody().getResources());
-    }
+            final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<ScheduleResponse> scheduleList = Collections.singletonList(new ScheduleResponse());
+            assertEquals(scheduleList, response.getBody().getResources());
+        }
 
-        when(scheduleSearchService.fetchAll(any(ScheduleSearchRequest.class))).thenReturn(scheduleList);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<ScheduleResponse> scheduleList = Collections.singletonList(new ScheduleResponse());
 
-        final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
+            when(scheduleSearchService.fetchAll(any(ScheduleSearchRequest.class))).thenReturn(scheduleList);
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }

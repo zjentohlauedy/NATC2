@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,70 +34,74 @@ class TeamGameSearchControllerTest {
     @InjectMocks
     private TeamGameSearchController controller;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
 
-    @Test
-    public void search_ShouldCallTeamGameSearchService() {
-        controller.search(null, null, null, null, null, null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(searchService).fetchAll(any(TeamGameSearchRequest.class));
-    }
+        @Test
+        public void shouldCallTeamGameSearchService() {
+            controller.search(null, null, null, null, null, null);
 
-    @Test
-    public void search_ShouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
-        final Integer gameId = 24;
-        final String year = "1998";
-        final LocalDate datestamp = LocalDate.now();
-        final GameType type = GameType.REGULAR_SEASON;
-        final Integer teamId = 16;
-        final Integer opponent = 33;
-        final ArgumentCaptor<TeamGameSearchRequest> captor = ArgumentCaptor.forClass(TeamGameSearchRequest.class);
+            verify(searchService).fetchAll(any(TeamGameSearchRequest.class));
+        }
 
-        controller.search(gameId, year, datestamp, type, teamId, opponent);
+        @Test
+        public void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
+            final Integer gameId = 24;
+            final String year = "1998";
+            final LocalDate datestamp = LocalDate.now();
+            final GameType type = GameType.REGULAR_SEASON;
+            final Integer teamId = 16;
+            final Integer opponent = 33;
+            final ArgumentCaptor<TeamGameSearchRequest> captor = ArgumentCaptor.forClass(TeamGameSearchRequest.class);
 
-        verify(searchService).fetchAll(captor.capture());
+            controller.search(gameId, year, datestamp, type, teamId, opponent);
 
-        final TeamGameSearchRequest request = captor.getValue();
+            verify(searchService).fetchAll(captor.capture());
 
-        assertEquals(gameId, request.getGameId());
-        assertEquals(year, request.getYear());
-        assertEquals(datestamp, request.getDatestamp());
-        assertEquals(type, request.getType());
-        assertEquals(teamId, request.getTeamId());
-        assertEquals(opponent, request.getOpponent());
-    }
+            final TeamGameSearchRequest request = captor.getValue();
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
-        final List<TeamGameResponse> teamGameList = Collections.singletonList(new TeamGameResponse());
+            assertEquals(gameId, request.getGameId());
+            assertEquals(year, request.getYear());
+            assertEquals(datestamp, request.getDatestamp());
+            assertEquals(type, request.getType());
+            assertEquals(teamId, request.getTeamId());
+            assertEquals(opponent, request.getOpponent());
+        }
 
-        when(searchService.fetchAll(any(TeamGameSearchRequest.class))).thenReturn(teamGameList);
+        @Test
+        public void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
+            final List<TeamGameResponse> teamGameList = Collections.singletonList(new TeamGameResponse());
 
-        final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
+            when(searchService.fetchAll(any(TeamGameSearchRequest.class))).thenReturn(teamGameList);
 
-        assertEquals(teamGameList, response.getBody().getResources());
-    }
+            final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<TeamGameResponse> teamGameList = Collections.singletonList(new TeamGameResponse());
+            assertEquals(teamGameList, response.getBody().getResources());
+        }
 
-        when(searchService.fetchAll(any(TeamGameSearchRequest.class))).thenReturn(teamGameList);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<TeamGameResponse> teamGameList = Collections.singletonList(new TeamGameResponse());
 
-        final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
+            when(searchService.fetchAll(any(TeamGameSearchRequest.class))).thenReturn(teamGameList);
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }

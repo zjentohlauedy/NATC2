@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,66 +32,70 @@ class ManagerSearchControllerTest {
     @InjectMocks
     private ManagerSearchController managerSearchController;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
 
-    @Test
-    public void search_ShouldCallManagerSearchService() {
-        managerSearchController.search(null, null, null, null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(managerSearchService).fetchAll(any());
-    }
-    
-    @Test
-    public void search_ShouldConstructRequestObjectForManagerSearchServiceUsingRequestParameters() {
-        final Integer managerId = 123;
-        final Integer teamId = 321;
-        final Integer playerId = 555;
-        final String year = "1919";
-        final ArgumentCaptor<ManagerSearchRequest> captor = ArgumentCaptor.forClass(ManagerSearchRequest.class);
+        @Test
+        public void shouldCallManagerSearchService() {
+            managerSearchController.search(null, null, null, null);
 
-        managerSearchController.search(managerId, teamId, playerId, year);
+            verify(managerSearchService).fetchAll(any());
+        }
 
-        verify(managerSearchService).fetchAll(captor.capture());
+        @Test
+        public void shouldConstructRequestObjectForManagerSearchServiceUsingRequestParameters() {
+            final Integer managerId = 123;
+            final Integer teamId = 321;
+            final Integer playerId = 555;
+            final String year = "1919";
+            final ArgumentCaptor<ManagerSearchRequest> captor = ArgumentCaptor.forClass(ManagerSearchRequest.class);
 
-        final ManagerSearchRequest request = captor.getValue();
+            managerSearchController.search(managerId, teamId, playerId, year);
 
-        assertEquals(managerId, request.getManagerId());
-        assertEquals(teamId, request.getTeamId());
-        assertEquals(playerId, request.getPlayerId());
-        assertEquals(year, request.getYear());
-    }
+            verify(managerSearchService).fetchAll(captor.capture());
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingManagersReturnedBySearchService() {
-        final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
+            final ManagerSearchRequest request = captor.getValue();
 
-        when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);
+            assertEquals(managerId, request.getManagerId());
+            assertEquals(teamId, request.getTeamId());
+            assertEquals(playerId, request.getPlayerId());
+            assertEquals(year, request.getYear());
+        }
 
-        final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
+        @Test
+        public void shouldRespondWithEnvelopContainingManagersReturnedBySearchService() {
+            final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
 
-        assertEquals(managerList, response.getBody().getResources());
-    }
+            when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
+            final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
 
-        when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);
+            assertEquals(managerList, response.getBody().getResources());
+        }
 
-        final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);
+
+            final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }

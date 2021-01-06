@@ -1,5 +1,6 @@
 package org.natc.app.controller;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,64 +32,68 @@ class InjurySearchControllerTest {
     @InjectMocks
     private InjurySearchController injurySearchController;
 
-    @Test
-    public void search_ShouldReturnOKResponse() {
-        final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
+    @Nested
+    class Search {
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
+        @Test
+        public void shouldReturnOKResponse() {
+            final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
-        final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        }
 
-        assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
-    }
+        @Test
+        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+            final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldCallInjurySearchService() {
-        injurySearchController.search(null, null, null);
+            assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
+        }
 
-        verify(injurySearchService).fetchAll(any(InjurySearchRequest.class));
-    }
+        @Test
+        public void shouldCallInjurySearchService() {
+            injurySearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldConstructRequestObjectForInjurySearchServiceUsingRequestParameters() {
-        final Integer gameId = 123;
-        final Integer playerId = 4321;
-        final Integer teamId = 56;
-        final ArgumentCaptor<InjurySearchRequest> captor = ArgumentCaptor.forClass(InjurySearchRequest.class);
+            verify(injurySearchService).fetchAll(any(InjurySearchRequest.class));
+        }
 
-        injurySearchController.search(gameId, playerId, teamId);
+        @Test
+        public void shouldConstructRequestObjectForInjurySearchServiceUsingRequestParameters() {
+            final Integer gameId = 123;
+            final Integer playerId = 4321;
+            final Integer teamId = 56;
+            final ArgumentCaptor<InjurySearchRequest> captor = ArgumentCaptor.forClass(InjurySearchRequest.class);
 
-        verify(injurySearchService).fetchAll(captor.capture());
+            injurySearchController.search(gameId, playerId, teamId);
 
-        final InjurySearchRequest request = captor.getValue();
+            verify(injurySearchService).fetchAll(captor.capture());
 
-        assertEquals(gameId, request.getGameId());
-        assertEquals(playerId, request.getPlayerId());
-        assertEquals(teamId, request.getTeamId());
-    }
+            final InjurySearchRequest request = captor.getValue();
 
-    @Test
-    public void search_ShouldRespondWithEnvelopContainingInjuriesReturnedBySearchService() {
-        final List<InjuryResponse> injuryList = Collections.singletonList(new InjuryResponse());
+            assertEquals(gameId, request.getGameId());
+            assertEquals(playerId, request.getPlayerId());
+            assertEquals(teamId, request.getTeamId());
+        }
 
-        when(injurySearchService.fetchAll(any(InjurySearchRequest.class))).thenReturn(injuryList);
+        @Test
+        public void shouldRespondWithEnvelopContainingInjuriesReturnedBySearchService() {
+            final List<InjuryResponse> injuryList = Collections.singletonList(new InjuryResponse());
 
-        final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
+            when(injurySearchService.fetchAll(any(InjurySearchRequest.class))).thenReturn(injuryList);
 
-        assertEquals(injuryList, response.getBody().getResources());
-    }
+            final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
 
-    @Test
-    public void search_ShouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
-        final List<InjuryResponse> injuryList = Collections.singletonList(new InjuryResponse());
+            assertEquals(injuryList, response.getBody().getResources());
+        }
 
-        when(injurySearchService.fetchAll(any(InjurySearchRequest.class))).thenReturn(injuryList);
+        @Test
+        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+            final List<InjuryResponse> injuryList = Collections.singletonList(new InjuryResponse());
 
-        final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
+            when(injurySearchService.fetchAll(any(InjurySearchRequest.class))).thenReturn(injuryList);
 
-        assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+            final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
+
+            assertEquals(ResponseStatus.SUCCESS, response.getBody().getStatus());
+        }
     }
 }
