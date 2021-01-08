@@ -1,5 +1,6 @@
 package org.natc.app.processor;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
@@ -22,23 +23,27 @@ class BeginningOfSeasonScheduleProcessorIntegrationTest extends NATCServiceInteg
     @Autowired
     private BeginningOfSeasonScheduleProcessor processor;
 
-    @Test
-    public void process_ShouldUpdateTheGivenScheduleStatusToCompleted() throws NATCException {
-        final Schedule schedule = Schedule.builder()
-                .year("2005")
-                .sequence(1)
-                .type(ScheduleType.BEGINNING_OF_SEASON.getValue())
-                .status(ScheduleStatus.IN_PROGRESS.getValue())
-                .scheduled(LocalDate.now())
-                .build();
+    @Nested
+    class Process {
 
-        scheduleRepository.save(schedule);
+        @Test
+        public void shouldUpdateTheGivenScheduleStatusToCompleted() throws NATCException {
+            final Schedule schedule = Schedule.builder()
+                    .year("2005")
+                    .sequence(1)
+                    .type(ScheduleType.BEGINNING_OF_SEASON.getValue())
+                    .status(ScheduleStatus.IN_PROGRESS.getValue())
+                    .scheduled(LocalDate.now())
+                    .build();
 
-        processor.process(schedule);
+            scheduleRepository.save(schedule);
 
-        final List<Schedule> scheduleList = scheduleRepository.findAll();
+            processor.process(schedule);
 
-        assertEquals(1, scheduleList.size());
-        assertEquals(ScheduleStatus.COMPLETED.getValue(), scheduleList.get(0).getStatus());
+            final List<Schedule> scheduleList = scheduleRepository.findAll();
+
+            assertEquals(1, scheduleList.size());
+            assertEquals(ScheduleStatus.COMPLETED.getValue(), scheduleList.get(0).getStatus());
+        }
     }
 }

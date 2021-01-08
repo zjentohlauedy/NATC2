@@ -1,5 +1,6 @@
 package org.natc.app.manager;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.Manager;
@@ -50,138 +51,142 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
     @Autowired
     private SeasonManager seasonManager;
 
-    @Test
-    public void processScheduledEvent_ShouldHandleInProgressSchedule() throws NATCException {
-        final List<Schedule> initialScheduleList = Arrays.asList(
-                Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
-                Schedule.builder().year("2001").sequence(26).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now()).status(ScheduleStatus.SCHEDULED.getValue()).build()
-        );
+    @Nested
+    class ProcessScheduledEvent {
 
-        scheduleRepository.saveAll(initialScheduleList);
+        @Test
+        public void shouldHandleInProgressSchedule() throws NATCException {
+            final List<Schedule> initialScheduleList = Arrays.asList(
+                    Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(26).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now()).status(ScheduleStatus.SCHEDULED.getValue()).build()
+            );
 
-        seasonManager.processScheduledEvent();
+            scheduleRepository.saveAll(initialScheduleList);
 
-        final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
-        final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
+            seasonManager.processScheduledEvent();
 
-        assertEquals(ScheduleStatus.SCHEDULED.getValue(), afterScheduleList.get(0).getStatus());
-    }
+            final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
+            final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-    @Test
-    public void processScheduledEvent_ShouldGenerateANewScheduleWhenNoSchedulesExistAndPutBeginningOfSeasonInProgress() throws NATCException {
-        testHelpers.seedFirstAndLastNames();
+            assertEquals(ScheduleStatus.SCHEDULED.getValue(), afterScheduleList.get(0).getStatus());
+        }
 
-        seasonManager.processScheduledEvent();
+        @Test
+        public void shouldGenerateANewScheduleWhenNoSchedulesExistAndPutBeginningOfSeasonInProgress() throws NATCException {
+            testHelpers.seedFirstAndLastNames();
 
-        final Example<Schedule> example = Example.of(Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(1).build());
-        final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
+            seasonManager.processScheduledEvent();
 
-        assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
-        assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
-    }
+            final Example<Schedule> example = Example.of(Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(1).build());
+            final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-    @Test
-    public void processScheduledEvent_ShouldGenerateANewLeagueWhenNoSchedulesExist() throws NATCException {
-        testHelpers.seedFirstAndLastNames();
+            assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
+            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+        }
 
-        seasonManager.processScheduledEvent();
+        @Test
+        public void shouldGenerateANewLeagueWhenNoSchedulesExist() throws NATCException {
+            testHelpers.seedFirstAndLastNames();
 
-        final List<Team> teamList = teamRepository.findAll();
-        final List<Manager> managerList = managerRepository.findAll();
-        final List<Player> playerList = playerRepository.findAll();
+            seasonManager.processScheduledEvent();
 
-        assertFalse(teamList.isEmpty());
-        assertFalse(managerList.isEmpty());
-        assertFalse(playerList.isEmpty());
-    }
+            final List<Team> teamList = teamRepository.findAll();
+            final List<Manager> managerList = managerRepository.findAll();
+            final List<Player> playerList = playerRepository.findAll();
 
-    @Test
-    public void processScheduledEvent_ShouldUpdateLeagueToNextYearWhenEndOfSeason() throws NATCException {
-        final List<Schedule> initialScheduleList = Arrays.asList(
-                Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(26).type(ScheduleType.END_OF_SEASON.getValue())
-                        .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
-        );
+            assertFalse(teamList.isEmpty());
+            assertFalse(managerList.isEmpty());
+            assertFalse(playerList.isEmpty());
+        }
 
-        scheduleRepository.saveAll(initialScheduleList);
-        teamRepository.save(Team.builder().teamId(1).year("2001").build());
-        managerRepository.save(Manager.builder().managerId(1).year("2001").build());
-        playerRepository.save(Player.builder().playerId(1).year("2001").build());
+        @Test
+        public void shouldUpdateLeagueToNextYearWhenEndOfSeason() throws NATCException {
+            final List<Schedule> initialScheduleList = Arrays.asList(
+                    Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(26).type(ScheduleType.END_OF_SEASON.getValue())
+                            .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
+            );
 
-        seasonManager.processScheduledEvent();
+            scheduleRepository.saveAll(initialScheduleList);
+            teamRepository.save(Team.builder().teamId(1).year("2001").build());
+            managerRepository.save(Manager.builder().managerId(1).year("2001").build());
+            playerRepository.save(Player.builder().playerId(1).year("2001").build());
 
-        final List<Team> teamList = teamRepository.findAll(Example.of(Team.builder().year("2002").build()));
-        final List<Manager> managerList = managerRepository.findAll(Example.of(Manager.builder().year("2002").build()));
-        final List<Player> playerList = playerRepository.findAll(Example.of(Player.builder().year("2002").build()));
+            seasonManager.processScheduledEvent();
 
-        assertFalse(teamList.isEmpty());
-        assertFalse(managerList.isEmpty());
-        assertFalse(playerList.isEmpty());
-    }
+            final List<Team> teamList = teamRepository.findAll(Example.of(Team.builder().year("2002").build()));
+            final List<Manager> managerList = managerRepository.findAll(Example.of(Manager.builder().year("2002").build()));
+            final List<Player> playerList = playerRepository.findAll(Example.of(Player.builder().year("2002").build()));
 
-    @Test
-    public void processScheduledEvent_ShouldGenerateANewScheduleForNextYearWhenEndOfSeasonAndPutNewBeginningOfSeasonInProgress() throws NATCException {
-        final List<Schedule> initialScheduleList = Arrays.asList(
-                Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(26).type(ScheduleType.END_OF_SEASON.getValue())
-                        .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
-        );
+            assertFalse(teamList.isEmpty());
+            assertFalse(managerList.isEmpty());
+            assertFalse(playerList.isEmpty());
+        }
 
-        scheduleRepository.saveAll(initialScheduleList);
+        @Test
+        public void shouldGenerateANewScheduleForNextYearWhenEndOfSeasonAndPutNewBeginningOfSeasonInProgress() throws NATCException {
+            final List<Schedule> initialScheduleList = Arrays.asList(
+                    Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(26).type(ScheduleType.END_OF_SEASON.getValue())
+                            .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
+            );
 
-        seasonManager.processScheduledEvent();
+            scheduleRepository.saveAll(initialScheduleList);
 
-        final Example<Schedule> example = Example.of(Schedule.builder().year("2002").sequence(1).build());
-        final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
+            seasonManager.processScheduledEvent();
 
-        assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
-        assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
-    }
+            final Example<Schedule> example = Example.of(Schedule.builder().year("2002").sequence(1).build());
+            final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-    @Test
-    public void processScheduledEvent_ShouldThrowScheduleProcessingExceptionWhenNoScheduledEntriesExist() {
-        final List<Schedule> initialScheduleList = Arrays.asList(
-                Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(26).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
-        );
+            assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
+            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+        }
 
-        scheduleRepository.saveAll(initialScheduleList);
+        @Test
+        public void shouldThrowScheduleProcessingExceptionWhenNoScheduledEntriesExist() {
+            final List<Schedule> initialScheduleList = Arrays.asList(
+                    Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(26).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now()).status(ScheduleStatus.COMPLETED.getValue()).build()
+            );
 
-        assertThrows(ScheduleProcessingException.class, () -> seasonManager.processScheduledEvent());
-    }
+            scheduleRepository.saveAll(initialScheduleList);
 
-    @Test
-    public void processScheduledEvent_ShouldSetScheduleStatusToInProgress() throws NATCException {
-        final List<Schedule> initialScheduleList = Arrays.asList(
-                Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
-                Schedule.builder().year("2001").sequence(26).type(ScheduleType.REGULAR_SEASON.getValue())
-                        .scheduled(LocalDate.now()).status(ScheduleStatus.SCHEDULED.getValue()).build()
-        );
+            assertThrows(ScheduleProcessingException.class, () -> seasonManager.processScheduledEvent());
+        }
 
-        scheduleRepository.saveAll(initialScheduleList);
+        @Test
+        public void shouldSetScheduleStatusToInProgress() throws NATCException {
+            final List<Schedule> initialScheduleList = Arrays.asList(
+                    Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(25).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now().minusDays(1)).status(ScheduleStatus.COMPLETED.getValue()).build(),
+                    Schedule.builder().year("2001").sequence(26).type(ScheduleType.REGULAR_SEASON.getValue())
+                            .scheduled(LocalDate.now()).status(ScheduleStatus.SCHEDULED.getValue()).build()
+            );
 
-        seasonManager.processScheduledEvent();
+            scheduleRepository.saveAll(initialScheduleList);
 
-        final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
-        final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
+            seasonManager.processScheduledEvent();
 
-        assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+            final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
+            final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
+
+            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+        }
     }
 }

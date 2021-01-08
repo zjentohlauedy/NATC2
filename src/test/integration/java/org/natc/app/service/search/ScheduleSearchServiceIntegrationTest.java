@@ -1,6 +1,7 @@
 package org.natc.app.service.search;
 
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.Schedule;
 import org.natc.app.entity.domain.ScheduleStatus;
@@ -27,184 +28,196 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     @Autowired
     private ScheduleSearchService scheduleSearchService;
 
-    @Test
-    public void shouldReturnAScheduleFromTheDatabaseMappedToAResponse() {
-        final Schedule schedule = Schedule.builder()
-                .year("2002")
-                .sequence(12)
-                .type(ScheduleType.CONFERENCE_CHAMPIONSHIP.getValue())
-                .status(ScheduleStatus.SCHEDULED.getValue())
-                .build();
+    @Nested
+    class FetchAll {
 
-        scheduleRepository.save(schedule);
+        @Test
+        public void shouldReturnAScheduleFromTheDatabaseMappedToAResponse() {
+            final Schedule schedule = Schedule.builder()
+                    .year("2002")
+                    .sequence(12)
+                    .type(ScheduleType.CONFERENCE_CHAMPIONSHIP.getValue())
+                    .status(ScheduleStatus.SCHEDULED.getValue())
+                    .build();
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
+            scheduleRepository.save(schedule);
 
-        assertEquals(1, result.size());
+            final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
 
-        final ScheduleResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertEquals(schedule.getYear(), response.getYear());
-        assertEquals(schedule.getSequence(), response.getSequence());
-        assertEquals(ScheduleType.CONFERENCE_CHAMPIONSHIP, response.getType());
-        assertEquals(ScheduleStatus.SCHEDULED, response.getStatus());
-    }
+            final ScheduleResponse response = result.get(0);
 
-    @Test
-    public void shouldMapAllScheduleFieldsToTheScheduleResponse() {
-        final Schedule schedule = Schedule.builder()
-                .year("2002")
-                .sequence(12)
-                .type(ScheduleType.CONFERENCE_CHAMPIONSHIP.getValue())
-                .data("schedule data string")
-                .scheduled(LocalDate.now())
-                .status(ScheduleStatus.SCHEDULED.getValue())
-                .build();
+            assertEquals(schedule.getYear(), response.getYear());
+            assertEquals(schedule.getSequence(), response.getSequence());
+            assertEquals(ScheduleType.CONFERENCE_CHAMPIONSHIP, response.getType());
+            assertEquals(ScheduleStatus.SCHEDULED, response.getStatus());
+        }
 
-        scheduleRepository.save(schedule);
+        @Test
+        public void shouldMapAllScheduleFieldsToTheScheduleResponse() {
+            final Schedule schedule = Schedule.builder()
+                    .year("2002")
+                    .sequence(12)
+                    .type(ScheduleType.CONFERENCE_CHAMPIONSHIP.getValue())
+                    .data("schedule data string")
+                    .scheduled(LocalDate.now())
+                    .status(ScheduleStatus.SCHEDULED.getValue())
+                    .build();
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
+            scheduleRepository.save(schedule);
 
-        assertEquals(1, result.size());
+            final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
 
-        final ScheduleResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNotNull(response.getYear());
-        assertNotNull(response.getSequence());
-        assertNotNull(response.getType());
-        assertNotNull(response.getData());
-        assertNotNull(response.getScheduled());
-        assertNotNull(response.getStatus());
-    }
+            final ScheduleResponse response = result.get(0);
 
-    @Test
-    public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
+            assertNotNull(response.getYear());
+            assertNotNull(response.getSequence());
+            assertNotNull(response.getType());
+            assertNotNull(response.getData());
+            assertNotNull(response.getScheduled());
+            assertNotNull(response.getStatus());
+        }
 
-        assertEquals(0, result.size());
-    }
+        @Test
+        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+            final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
 
-    @Test
-    public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
-        final List<Schedule> scheduleList = Arrays.asList(
-                Schedule.builder().year("2000").sequence(1).build(),
-                Schedule.builder().year("2000").sequence(2).build(),
-                Schedule.builder().year("2000").sequence(3).build()
-        );
+            assertEquals(0, result.size());
+        }
 
-        scheduleRepository.saveAll(scheduleList);
+        @Nested
+        class WithOneSearchParameter {
 
-        final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
-                .year("2000")
-                .build();
+            @Test
+            public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
+                final List<Schedule> scheduleList = Arrays.asList(
+                        Schedule.builder().year("2000").sequence(1).build(),
+                        Schedule.builder().year("2000").sequence(2).build(),
+                        Schedule.builder().year("2000").sequence(3).build()
+                );
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+                scheduleRepository.saveAll(scheduleList);
 
-        assertEquals(3, result.size());
-    }
+                final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
+                        .year("2000")
+                        .build();
 
-    @Test
-    public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
-        final List<Schedule> scheduleList = Arrays.asList(
-                Schedule.builder().year("2000").sequence(1).build(),
-                Schedule.builder().year("2001").sequence(1).build(),
-                Schedule.builder().year("2000").sequence(2).build(),
-                Schedule.builder().year("2002").sequence(2).build(),
-                Schedule.builder().year("2000").sequence(3).build()
-        );
+                final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
 
-        scheduleRepository.saveAll(scheduleList);
+                assertEquals(3, result.size());
+            }
 
-        final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
-                .year("2000")
-                .build();
+            @Test
+            public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
+                final List<Schedule> scheduleList = Arrays.asList(
+                        Schedule.builder().year("2000").sequence(1).build(),
+                        Schedule.builder().year("2001").sequence(1).build(),
+                        Schedule.builder().year("2000").sequence(2).build(),
+                        Schedule.builder().year("2002").sequence(2).build(),
+                        Schedule.builder().year("2000").sequence(3).build()
+                );
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+                scheduleRepository.saveAll(scheduleList);
 
-        assertEquals(3, result.size());
-        assertEquals(3, result.stream().filter(t -> t.getYear().equals("2000")).count());
-    }
+                final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
+                        .year("2000")
+                        .build();
 
-    @Test
-    public void shouldReturnAllEntriesForSequenceWhenSearchingBySequence() {
-        final List<Schedule> scheduleList = Arrays.asList(
-                Schedule.builder().year("2000").sequence(1).build(),
-                Schedule.builder().year("2001").sequence(1).build(),
-                Schedule.builder().year("2002").sequence(1).build()
-        );
+                final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
 
-        scheduleRepository.saveAll(scheduleList);
+                assertEquals(3, result.size());
+                assertEquals(3, result.stream().filter(t -> t.getYear().equals("2000")).count());
+            }
 
-        final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
-                .sequence(1)
-                .build();
+            @Test
+            public void shouldReturnAllEntriesForSequenceWhenSearchingBySequence() {
+                final List<Schedule> scheduleList = Arrays.asList(
+                        Schedule.builder().year("2000").sequence(1).build(),
+                        Schedule.builder().year("2001").sequence(1).build(),
+                        Schedule.builder().year("2002").sequence(1).build()
+                );
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+                scheduleRepository.saveAll(scheduleList);
 
-        assertEquals(3, result.size());
-    }
+                final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
+                        .sequence(1)
+                        .build();
 
-    @Test
-    public void shouldOnlyReturnEntriesForSequenceWhenSearchingBySequence() {
-        final List<Schedule> scheduleList = Arrays.asList(
-                Schedule.builder().year("2000").sequence(1).build(),
-                Schedule.builder().year("2000").sequence(2).build(),
-                Schedule.builder().year("2001").sequence(1).build(),
-                Schedule.builder().year("2001").sequence(3).build(),
-                Schedule.builder().year("2002").sequence(1).build()
-        );
+                final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
 
-        scheduleRepository.saveAll(scheduleList);
+                assertEquals(3, result.size());
+            }
 
-        final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
-                .sequence(1)
-                .build();
+            @Test
+            public void shouldOnlyReturnEntriesForSequenceWhenSearchingBySequence() {
+                final List<Schedule> scheduleList = Arrays.asList(
+                        Schedule.builder().year("2000").sequence(1).build(),
+                        Schedule.builder().year("2000").sequence(2).build(),
+                        Schedule.builder().year("2001").sequence(1).build(),
+                        Schedule.builder().year("2001").sequence(3).build(),
+                        Schedule.builder().year("2002").sequence(1).build()
+                );
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+                scheduleRepository.saveAll(scheduleList);
 
-        assertEquals(3, result.size());
-        assertEquals(3, result.stream().filter(t -> t.getSequence().equals(1)).count());
-    }
+                final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
+                        .sequence(1)
+                        .build();
 
-    @Test
-    public void shouldReturnAllEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
-        final List<Schedule> scheduleList = Collections.singletonList(
-                // Year & Sequence are the key fields, so only one record is possible
-                Schedule.builder().year("2000").sequence(1).build()
-        );
+                final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
 
-        scheduleRepository.saveAll(scheduleList);
+                assertEquals(3, result.size());
+                assertEquals(3, result.stream().filter(t -> t.getSequence().equals(1)).count());
+            }
+        }
 
-        final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
-                .year("2000")
-                .sequence(1)
-                .build();
+        @Nested
+        class WithTwoSearchParameters {
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+            @Test
+            public void shouldReturnAllEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
+                final List<Schedule> scheduleList = Collections.singletonList(
+                        // Year & Sequence are the key fields, so only one record is possible
+                        Schedule.builder().year("2000").sequence(1).build()
+                );
 
-        assertEquals(1, result.size());
-    }
+                scheduleRepository.saveAll(scheduleList);
 
-    @Test
-    public void shouldReturnOnlyEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
-        final List<Schedule> scheduleList = Arrays.asList(
-                Schedule.builder().year("2000").sequence(1).build(),
-                Schedule.builder().year("2001").sequence(1).build(),
-                Schedule.builder().year("2000").sequence(2).build()
-        );
+                final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
+                        .year("2000")
+                        .sequence(1)
+                        .build();
 
-        scheduleRepository.saveAll(scheduleList);
+                final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
 
-        final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
-                .year("2000")
-                .sequence(1)
-                .build();
+                assertEquals(1, result.size());
+            }
 
-        final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+            @Test
+            public void shouldReturnOnlyEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
+                final List<Schedule> scheduleList = Arrays.asList(
+                        Schedule.builder().year("2000").sequence(1).build(),
+                        Schedule.builder().year("2001").sequence(1).build(),
+                        Schedule.builder().year("2000").sequence(2).build()
+                );
 
-        assertEquals(1, result.size());
-        assertEquals(1, result.stream().filter(t ->
-                t.getYear().equals("2000") && t.getSequence().equals(1)
-        ).count());
+                scheduleRepository.saveAll(scheduleList);
+
+                final ScheduleSearchRequest request = ScheduleSearchRequest.builder()
+                        .year("2000")
+                        .sequence(1)
+                        .build();
+
+                final List<ScheduleResponse> result = scheduleSearchService.fetchAll(request);
+
+                assertEquals(1, result.size());
+                assertEquals(1, result.stream().filter(t ->
+                        t.getYear().equals("2000") && t.getSequence().equals(1)
+                ).count());
+            }
+        }
     }
 }

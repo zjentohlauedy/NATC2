@@ -1,5 +1,6 @@
 package org.natc.app.service;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.natc.app.entity.domain.FirstName;
 import org.natc.app.entity.domain.FullName;
@@ -39,182 +40,186 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
     @Autowired
     private NameService nameService;
 
-    @Test
-    public void generateName_ShouldBuildNameFromDataInFirstNameAndLastNameTables() throws NATCException {
-        firstNameRepository.save(FirstName.builder().name("Joe").frequency(1.0).build());
-        lastNameRepository.save(LastName.builder().name("Blow").frequency(1.0).build());
+    @Nested
+    class GenerateName {
 
-        final FullName generatedName = nameService.generateName();
+        @Test
+        public void shouldBuildNameFromDataInFirstNameAndLastNameTables() throws NATCException {
+            firstNameRepository.save(FirstName.builder().name("Joe").frequency(1.0).build());
+            lastNameRepository.save(LastName.builder().name("Blow").frequency(1.0).build());
 
-        assertEquals("Joe", generatedName.getFirstName());
-        assertEquals("Blow", generatedName.getLastName());
-    }
+            final FullName generatedName = nameService.generateName();
 
-    @Test
-    public void generateName_ShouldChooseFirstNamesRandomly() throws NATCException {
-        final List<FirstName> firstNameList = Arrays.asList(
-                FirstName.builder().name("James").frequency(1.0).build(),
-                FirstName.builder().name("John").frequency(1.0).build(),
-                FirstName.builder().name("Robert").frequency(1.0).build(),
-                FirstName.builder().name("Michael").frequency(1.0).build(),
-                FirstName.builder().name("William").frequency(1.0).build(),
-                FirstName.builder().name("David").frequency(1.0).build(),
-                FirstName.builder().name("Richard").frequency(1.0).build(),
-                FirstName.builder().name("Charles").frequency(1.0).build(),
-                FirstName.builder().name("Joseph").frequency(1.0).build(),
-                FirstName.builder().name("Thomas").frequency(1.0).build()
-        );
-
-        firstNameRepository.saveAll(firstNameList);
-        lastNameRepository.save(LastName.builder().name("Blow").frequency(1.0).build());
-
-        final List<FullName> fullNames = new ArrayList<>();
-
-        for (int i = 1; i <= 100; i++) {
-            fullNames.add(nameService.generateName());
+            assertEquals("Joe", generatedName.getFirstName());
+            assertEquals("Blow", generatedName.getLastName());
         }
 
-        final Set<String> generatedNames = fullNames.stream().map(FullName::getFirstName).collect(Collectors.toSet());
+        @Test
+        public void shouldChooseFirstNamesRandomly() throws NATCException {
+            final List<FirstName> firstNameList = Arrays.asList(
+                    FirstName.builder().name("James").frequency(1.0).build(),
+                    FirstName.builder().name("John").frequency(1.0).build(),
+                    FirstName.builder().name("Robert").frequency(1.0).build(),
+                    FirstName.builder().name("Michael").frequency(1.0).build(),
+                    FirstName.builder().name("William").frequency(1.0).build(),
+                    FirstName.builder().name("David").frequency(1.0).build(),
+                    FirstName.builder().name("Richard").frequency(1.0).build(),
+                    FirstName.builder().name("Charles").frequency(1.0).build(),
+                    FirstName.builder().name("Joseph").frequency(1.0).build(),
+                    FirstName.builder().name("Thomas").frequency(1.0).build()
+            );
 
-        assertEquals(10, generatedNames.size());
-    }
+            firstNameRepository.saveAll(firstNameList);
+            lastNameRepository.save(LastName.builder().name("Blow").frequency(1.0).build());
 
-    @Test
-    public void generateName_ShouldChooseLastNamesRandomly() throws NATCException {
-        final List<LastName> lastNameList = Arrays.asList(
-                LastName.builder().name("Smith").frequency(1.0).build(),
-                LastName.builder().name("Johnson").frequency(1.0).build(),
-                LastName.builder().name("Williams").frequency(1.0).build(),
-                LastName.builder().name("Jones").frequency(1.0).build(),
-                LastName.builder().name("Brown").frequency(1.0).build(),
-                LastName.builder().name("Davis").frequency(1.0).build(),
-                LastName.builder().name("Miller").frequency(1.0).build(),
-                LastName.builder().name("Wilson").frequency(1.0).build(),
-                LastName.builder().name("Moore").frequency(1.0).build(),
-                LastName.builder().name("Taylor").frequency(1.0).build()
-        );
+            final List<FullName> fullNames = new ArrayList<>();
 
-        firstNameRepository.save(FirstName.builder().name("Joe").frequency(1.0).build());
-        lastNameRepository.saveAll(lastNameList);
+            for (int i = 1; i <= 100; i++) {
+                fullNames.add(nameService.generateName());
+            }
 
-        final List<FullName> fullNames = new ArrayList<>();
+            final Set<String> generatedNames = fullNames.stream().map(FullName::getFirstName).collect(Collectors.toSet());
 
-        for (int i = 1; i <= 100; i++) {
-            fullNames.add(nameService.generateName());
+            assertEquals(10, generatedNames.size());
         }
 
-        final Set<String> generatedNames = fullNames.stream().map(FullName::getLastName).collect(Collectors.toSet());
+        @Test
+        public void shouldChooseLastNamesRandomly() throws NATCException {
+            final List<LastName> lastNameList = Arrays.asList(
+                    LastName.builder().name("Smith").frequency(1.0).build(),
+                    LastName.builder().name("Johnson").frequency(1.0).build(),
+                    LastName.builder().name("Williams").frequency(1.0).build(),
+                    LastName.builder().name("Jones").frequency(1.0).build(),
+                    LastName.builder().name("Brown").frequency(1.0).build(),
+                    LastName.builder().name("Davis").frequency(1.0).build(),
+                    LastName.builder().name("Miller").frequency(1.0).build(),
+                    LastName.builder().name("Wilson").frequency(1.0).build(),
+                    LastName.builder().name("Moore").frequency(1.0).build(),
+                    LastName.builder().name("Taylor").frequency(1.0).build()
+            );
 
-        assertEquals(10, generatedNames.size());
-    }
+            firstNameRepository.save(FirstName.builder().name("Joe").frequency(1.0).build());
+            lastNameRepository.saveAll(lastNameList);
 
-    @Test
-    public void generateName_ShouldChooseHighFrequencyFirstNamesMoreOftenThanLowFrequencyFirstNames() throws NATCException {
-        final List<FirstName> firstNameList = Arrays.asList(
-                FirstName.builder().name("James").frequency(1.0).build(),
-                FirstName.builder().name("Thomas").frequency(0.001).build()
-        );
+            final List<FullName> fullNames = new ArrayList<>();
 
-        final List<LastName> lastNameList = Arrays.asList(
-                LastName.builder().name("Smith").frequency(1.0).build(),
-                LastName.builder().name("Taylor").frequency(1.0).build()
-        );
+            for (int i = 1; i <= 100; i++) {
+                fullNames.add(nameService.generateName());
+            }
 
-        firstNameRepository.saveAll(firstNameList);
-        lastNameRepository.saveAll(lastNameList);
+            final Set<String> generatedNames = fullNames.stream().map(FullName::getLastName).collect(Collectors.toSet());
 
-        final List<FullName> fullNames = new ArrayList<>();
-
-        for (int i = 1; i <= 100; i++) {
-            fullNames.add(nameService.generateName());
+            assertEquals(10, generatedNames.size());
         }
 
-        final long jamesCount = fullNames.stream().filter(fullName -> fullName.getFirstName().equals("James")).count();
-        final long thomasCount = fullNames.stream().filter(fullName -> fullName.getFirstName().equals("Thomas")).count();
+        @Test
+        public void shouldChooseHighFrequencyFirstNamesMoreOftenThanLowFrequencyFirstNames() throws NATCException {
+            final List<FirstName> firstNameList = Arrays.asList(
+                    FirstName.builder().name("James").frequency(1.0).build(),
+                    FirstName.builder().name("Thomas").frequency(0.001).build()
+            );
 
-        assertTrue(jamesCount > thomasCount);
-    }
+            final List<LastName> lastNameList = Arrays.asList(
+                    LastName.builder().name("Smith").frequency(1.0).build(),
+                    LastName.builder().name("Taylor").frequency(1.0).build()
+            );
 
-    @Test
-    public void generateName_ShouldChooseHighFrequencyLastNamesMoreOftenThanLowFrequencyLastNames() throws NATCException {
-        final List<FirstName> firstNameList = Arrays.asList(
-                FirstName.builder().name("James").frequency(1.0).build(),
-                FirstName.builder().name("Thomas").frequency(1.0).build()
-        );
+            firstNameRepository.saveAll(firstNameList);
+            lastNameRepository.saveAll(lastNameList);
 
-        final List<LastName> lastNameList = Arrays.asList(
-                LastName.builder().name("Smith").frequency(0.001).build(),
-                LastName.builder().name("Taylor").frequency(1.0).build()
-        );
+            final List<FullName> fullNames = new ArrayList<>();
 
-        firstNameRepository.saveAll(firstNameList);
-        lastNameRepository.saveAll(lastNameList);
+            for (int i = 1; i <= 100; i++) {
+                fullNames.add(nameService.generateName());
+            }
 
-        final List<FullName> fullNames = new ArrayList<>();
+            final long jamesCount = fullNames.stream().filter(fullName -> fullName.getFirstName().equals("James")).count();
+            final long thomasCount = fullNames.stream().filter(fullName -> fullName.getFirstName().equals("Thomas")).count();
 
-        for (int i = 1; i <= 100; i++) {
-            fullNames.add(nameService.generateName());
+            assertTrue(jamesCount > thomasCount);
         }
 
-        final long smithCount = fullNames.stream().filter(fullName -> fullName.getLastName().equals("Smith")).count();
-        final long taylorCount = fullNames.stream().filter(fullName -> fullName.getLastName().equals("Taylor")).count();
+        @Test
+        public void shouldChooseHighFrequencyLastNamesMoreOftenThanLowFrequencyLastNames() throws NATCException {
+            final List<FirstName> firstNameList = Arrays.asList(
+                    FirstName.builder().name("James").frequency(1.0).build(),
+                    FirstName.builder().name("Thomas").frequency(1.0).build()
+            );
 
-        assertTrue(taylorCount > smithCount);
-    }
+            final List<LastName> lastNameList = Arrays.asList(
+                    LastName.builder().name("Smith").frequency(0.001).build(),
+                    LastName.builder().name("Taylor").frequency(1.0).build()
+            );
 
-    @Test
-    public void generateName_ShouldNotGenerateANameThatAlreadyExistsAsAManager() throws NATCException {
-        final List<FirstName> firstNameList = Arrays.asList(
-                FirstName.builder().name("James").frequency(1.0).build(),
-                FirstName.builder().name("Thomas").frequency(1.0).build()
-        );
+            firstNameRepository.saveAll(firstNameList);
+            lastNameRepository.saveAll(lastNameList);
 
-        final List<LastName> lastNameList = Arrays.asList(
-                LastName.builder().name("Smith").frequency(1.0).build(),
-                LastName.builder().name("Taylor").frequency(1.0).build()
-        );
+            final List<FullName> fullNames = new ArrayList<>();
 
-        final List<Manager> managerList = Arrays.asList(
-                Manager.builder().managerId(1).year("2000").firstName("James").lastName("Smith").build(),
-                Manager.builder().managerId(2).year("2000").firstName("James").lastName("Taylor").build(),
-                Manager.builder().managerId(3).year("2000").firstName("Thomas").lastName("Smith").build()
-        );
+            for (int i = 1; i <= 100; i++) {
+                fullNames.add(nameService.generateName());
+            }
 
-        firstNameRepository.saveAll(firstNameList);
-        lastNameRepository.saveAll(lastNameList);
-        managerRepository.saveAll(managerList);
+            final long smithCount = fullNames.stream().filter(fullName -> fullName.getLastName().equals("Smith")).count();
+            final long taylorCount = fullNames.stream().filter(fullName -> fullName.getLastName().equals("Taylor")).count();
 
-        final FullName generatedName = nameService.generateName();
+            assertTrue(taylorCount > smithCount);
+        }
 
-        assertEquals("Thomas", generatedName.getFirstName());
-        assertEquals("Taylor", generatedName.getLastName());
-    }
+        @Test
+        public void shouldNotGenerateANameThatAlreadyExistsAsAManager() throws NATCException {
+            final List<FirstName> firstNameList = Arrays.asList(
+                    FirstName.builder().name("James").frequency(1.0).build(),
+                    FirstName.builder().name("Thomas").frequency(1.0).build()
+            );
 
-    @Test
-    public void generateName_ShouldNotGenerateANameThatAlreadyExistsAsAPlayer() throws NATCException {
-        final List<FirstName> firstNameList = Arrays.asList(
-                FirstName.builder().name("James").frequency(1.0).build(),
-                FirstName.builder().name("Thomas").frequency(1.0).build()
-        );
+            final List<LastName> lastNameList = Arrays.asList(
+                    LastName.builder().name("Smith").frequency(1.0).build(),
+                    LastName.builder().name("Taylor").frequency(1.0).build()
+            );
 
-        final List<LastName> lastNameList = Arrays.asList(
-                LastName.builder().name("Smith").frequency(1.0).build(),
-                LastName.builder().name("Taylor").frequency(1.0).build()
-        );
+            final List<Manager> managerList = Arrays.asList(
+                    Manager.builder().managerId(1).year("2000").firstName("James").lastName("Smith").build(),
+                    Manager.builder().managerId(2).year("2000").firstName("James").lastName("Taylor").build(),
+                    Manager.builder().managerId(3).year("2000").firstName("Thomas").lastName("Smith").build()
+            );
 
-        final List<Player> playerList = Arrays.asList(
-                Player.builder().playerId(1).year("2000").firstName("James").lastName("Smith").build(),
-                Player.builder().playerId(2).year("2000").firstName("James").lastName("Taylor").build(),
-                Player.builder().playerId(3).year("2000").firstName("Thomas").lastName("Smith").build()
-        );
+            firstNameRepository.saveAll(firstNameList);
+            lastNameRepository.saveAll(lastNameList);
+            managerRepository.saveAll(managerList);
 
-        firstNameRepository.saveAll(firstNameList);
-        lastNameRepository.saveAll(lastNameList);
-        playerRepository.saveAll(playerList);
+            final FullName generatedName = nameService.generateName();
 
-        final FullName generatedName = nameService.generateName();
+            assertEquals("Thomas", generatedName.getFirstName());
+            assertEquals("Taylor", generatedName.getLastName());
+        }
 
-        assertEquals("Thomas", generatedName.getFirstName());
-        assertEquals("Taylor", generatedName.getLastName());
+        @Test
+        public void shouldNotGenerateANameThatAlreadyExistsAsAPlayer() throws NATCException {
+            final List<FirstName> firstNameList = Arrays.asList(
+                    FirstName.builder().name("James").frequency(1.0).build(),
+                    FirstName.builder().name("Thomas").frequency(1.0).build()
+            );
+
+            final List<LastName> lastNameList = Arrays.asList(
+                    LastName.builder().name("Smith").frequency(1.0).build(),
+                    LastName.builder().name("Taylor").frequency(1.0).build()
+            );
+
+            final List<Player> playerList = Arrays.asList(
+                    Player.builder().playerId(1).year("2000").firstName("James").lastName("Smith").build(),
+                    Player.builder().playerId(2).year("2000").firstName("James").lastName("Taylor").build(),
+                    Player.builder().playerId(3).year("2000").firstName("Thomas").lastName("Smith").build()
+            );
+
+            firstNameRepository.saveAll(firstNameList);
+            lastNameRepository.saveAll(lastNameList);
+            playerRepository.saveAll(playerList);
+
+            final FullName generatedName = nameService.generateName();
+
+            assertEquals("Thomas", generatedName.getFirstName());
+            assertEquals("Taylor", generatedName.getLastName());
+        }
     }
 }
