@@ -46,7 +46,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
     private LeagueService leagueService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         testHelpers.seedFirstAndLastNames();
     }
 
@@ -54,7 +54,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GenerateNewLeague {
 
         @Test
-        public void shouldCreateAllTeamsForTheFirstSeason() throws NATCException {
+        void shouldCreateAllTeamsForTheFirstSeason() throws NATCException {
             leagueService.generateNewLeague();
 
             final List<Team> teams = teamRepository.findAll();
@@ -64,7 +64,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateInitialManagersForTheFirstSeason() throws NATCException {
+        void shouldCreateInitialManagersForTheFirstSeason() throws NATCException {
             leagueService.generateNewLeague();
 
             final List<Manager> managers = managerRepository.findAll();
@@ -75,7 +75,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateInitialPlayersForTheFirstSeason() throws NATCException {
+        void shouldCreateInitialPlayersForTheFirstSeason() throws NATCException {
             leagueService.generateNewLeague();
 
             final List<Player> players = playerRepository.findAll();
@@ -86,7 +86,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldAssignEveryTeamAManager() throws NATCException {
+        void shouldAssignEveryTeamAManager() throws NATCException {
             leagueService.generateNewLeague();
 
             final List<Team> regularTeams = teamRepository.findAll().stream().filter(team -> team.getAllstarTeam() == 0).collect(Collectors.toList());
@@ -113,7 +113,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldAssignEveryTeamAPlayersPerTeamNumberOfPlayers() throws NATCException {
+        void shouldAssignEveryTeamAPlayersPerTeamNumberOfPlayers() throws NATCException {
             leagueService.generateNewLeague();
 
             final List<Team> regularTeams = teamRepository.findAll().stream().filter(team -> team.getAllstarTeam() == 0).collect(Collectors.toList());
@@ -145,7 +145,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdateLeagueForNewSeason {
 
         @Test
-        public void shouldDuplicateTheLeagueStructureFromPreviousYearToNewYear() throws NATCException {
+        void shouldDuplicateTheLeagueStructureFromPreviousYearToNewYear() throws NATCException {
             leagueService.generateNewLeague();
 
             final List<Team> previousYearTeams = teamRepository.findAll();

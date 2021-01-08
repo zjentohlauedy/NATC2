@@ -36,28 +36,28 @@ class ManagerSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<ManagerResponse>> response = managerSearchController.search(null, null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallManagerSearchService() {
+        void shouldCallManagerSearchService() {
             managerSearchController.search(null, null, null, null);
 
             verify(managerSearchService).fetchAll(any());
         }
 
         @Test
-        public void shouldConstructRequestObjectForManagerSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForManagerSearchServiceUsingRequestParameters() {
             final Integer managerId = 123;
             final Integer teamId = 321;
             final Integer playerId = 555;
@@ -77,7 +77,7 @@ class ManagerSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingManagersReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingManagersReturnedBySearchService() {
             final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
 
             when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);
@@ -88,7 +88,7 @@ class ManagerSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<ManagerResponse> managerList = Collections.singletonList(new ManagerResponse());
 
             when(managerSearchService.fetchAll(any(ManagerSearchRequest.class))).thenReturn(managerList);

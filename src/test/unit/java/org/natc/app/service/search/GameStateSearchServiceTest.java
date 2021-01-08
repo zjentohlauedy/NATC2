@@ -45,21 +45,21 @@ class GameStateSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfGameStateResponses() {
+        void shouldReturnAListOfGameStateResponses() {
             final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheGameStateRepositoryWithAnExampleGameState() {
+        void shouldCallTheGameStateRepositoryWithAnExampleGameState() {
             service.fetchAll(new GameStateSearchRequest());
 
             verify(repository).findAll(ArgumentMatchers.<Example<GameState>>any());
         }
 
         @Test
-        public void shouldCallGameStateRepositoryWithExampleGameStateBasedOnRequest() {
+        void shouldCallGameStateRepositoryWithExampleGameStateBasedOnRequest() {
             final GameStateSearchRequest request = GameStateSearchRequest.builder()
                     .gameId(111)
                     .build();
@@ -74,7 +74,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnGameStateResponsesMappedFromTheGameStatesReturnedByRepository() {
+        void shouldReturnGameStateResponsesMappedFromTheGameStatesReturnedByRepository() {
             final GameState gameState = generateGameState(Period.FOURTH, PossessionType.ROAD);
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -99,7 +99,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapStartedValueFromIntegerToBooleanInResponseWhenFalse() {
             final GameState gameState = GameState.builder().started(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -114,7 +114,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapStartedValueFromIntegerToBooleanInResponseWhenTrue() {
             final GameState gameState = GameState.builder().started(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -129,7 +129,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapStartedValueFromIntegerToBooleanInResponseWhenNull() {
             final GameState gameState = GameState.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -144,7 +144,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
             final GameState gameState = GameState.builder().overtime(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -159,7 +159,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
             final GameState gameState = GameState.builder().overtime(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -174,7 +174,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
             final GameState gameState = GameState.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -189,7 +189,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenFalse() {
             final GameState gameState = GameState.builder().clockStopped(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -204,7 +204,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenTrue() {
             final GameState gameState = GameState.builder().clockStopped(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -219,7 +219,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenNull() {
             final GameState gameState = GameState.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
@@ -234,7 +234,7 @@ class GameStateSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsGameStatesReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsGameStatesReturnedByRepository() {
             final List<GameState> gameStateList = Arrays.asList(
                     new GameState(),
                     new GameState(),

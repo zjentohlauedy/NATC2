@@ -18,12 +18,12 @@ public class NATCServiceIntegrationTest {
     private TransactionStatus transactionStatus;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         transactionManager.rollback(transactionStatus);
     }
 }

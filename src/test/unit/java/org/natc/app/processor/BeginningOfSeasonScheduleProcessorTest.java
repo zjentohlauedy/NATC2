@@ -30,14 +30,14 @@ class BeginningOfSeasonScheduleProcessorTest {
     class Process {
 
         @Test
-        public void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
+        void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
             processor.process(Schedule.builder().build());
 
             verify(scheduleService).updateScheduleEntry(any());
         }
 
         @Test
-        public void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
+        void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
             final Schedule schedule = Schedule.builder().year("2001").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
             final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
 

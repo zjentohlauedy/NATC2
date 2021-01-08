@@ -38,7 +38,7 @@ class ScheduleDataGeneratorManagerTest {
     class GetGeneratorFor {
 
         @Test
-        public void shouldGetScheduleDataGeneratorBeanFromApplicationContext() {
+        void shouldGetScheduleDataGeneratorBeanFromApplicationContext() {
             when(scheduleTypeDataGeneratorMap.get(any(ScheduleType.class))).thenReturn("anything");
 
             manager.getGeneratorFor(ScheduleType.PRESEASON);
@@ -47,7 +47,7 @@ class ScheduleDataGeneratorManagerTest {
         }
 
         @Test
-        public void shouldGetBeanFromApplicationContextBasedOnScheduleType() {
+        void shouldGetBeanFromApplicationContextBasedOnScheduleType() {
             final String expectedBeanName = "my-bean-name";
             final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
@@ -63,7 +63,7 @@ class ScheduleDataGeneratorManagerTest {
         }
 
         @Test
-        public void shouldReturnTheScheduleDataGeneratorFoundInTheApplicationContext() {
+        void shouldReturnTheScheduleDataGeneratorFoundInTheApplicationContext() {
             final ScheduleDataGenerator expectedGenerator = mock(ScheduleDataGenerator.class);
 
             when(scheduleTypeDataGeneratorMap.get(any(ScheduleType.class))).thenReturn("anything");

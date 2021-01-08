@@ -36,14 +36,14 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetCurrentScheduleEntry {
 
         @Test
-        public void shouldReturnNullIfNoSchedulesExist() {
+        void shouldReturnNullIfNoSchedulesExist() {
             final Schedule schedule = scheduleService.getCurrentScheduleEntry();
 
             assertNull(schedule);
         }
 
         @Test
-        public void shouldReturnNullIfNoInProgressSchedulesExist() {
+        void shouldReturnNullIfNoInProgressSchedulesExist() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.SCHEDULED.getValue()).build()
@@ -57,7 +57,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnInProgressSchedule() {
+        void shouldReturnInProgressSchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
@@ -73,7 +73,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnMostRecentlyScheduledInProgressSchedule() {
+        void shouldReturnMostRecentlyScheduledInProgressSchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
                     Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
@@ -93,14 +93,14 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetLastScheduleEntry {
 
         @Test
-        public void shouldReturnNullIfNoSchedulesExist() {
+        void shouldReturnNullIfNoSchedulesExist() {
             final Schedule schedule = scheduleService.getLastScheduleEntry();
 
             assertNull(schedule);
         }
 
         @Test
-        public void shouldReturnNullIfNoCompletedSchedulesExist() {
+        void shouldReturnNullIfNoCompletedSchedulesExist() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
                     Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.SCHEDULED.getValue()).build()
@@ -114,7 +114,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnCompletedSchedule() {
+        void shouldReturnCompletedSchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.IN_PROGRESS.getValue()).build(),
@@ -130,7 +130,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnMostRecentlyScheduledCompletedSchedule() {
+        void shouldReturnMostRecentlyScheduledCompletedSchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2020").sequence(1).scheduled(LocalDate.parse("2020-01-01")).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2020").sequence(2).scheduled(LocalDate.parse("2020-01-02")).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -150,14 +150,14 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetNextScheduleEntry {
 
         @Test
-        public void shouldReturnNullIfNoSchedulesExist() {
+        void shouldReturnNullIfNoSchedulesExist() {
             final Schedule schedule = scheduleService.getNextScheduleEntry(null);
 
             assertNull(schedule);
         }
 
         @Test
-        public void shouldReturnNullIfNoSchedulesExistGivenAPreviousSchedule() {
+        void shouldReturnNullIfNoSchedulesExistGivenAPreviousSchedule() {
             final Schedule currentSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -170,7 +170,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNullIfNoSchedulesExistGivenAnEndOfSeasonSchedule() {
+        void shouldReturnNullIfNoSchedulesExistGivenAnEndOfSeasonSchedule() {
             final Schedule currentSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -183,7 +183,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnFirstDefinedScheduleWhenGivenNull() {
+        void shouldReturnFirstDefinedScheduleWhenGivenNull() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE).status(ScheduleStatus.SCHEDULED.getValue()).build(),
                     Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(Schedule.FIRST_SEQUENCE + 1).status(ScheduleStatus.SCHEDULED.getValue()).build(),
@@ -199,7 +199,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNullIfFirstDefinedScheduleDoesNotExistWhenGivenNull() {
+        void shouldReturnNullIfFirstDefinedScheduleDoesNotExistWhenGivenNull() {
             final String differentYear = String.valueOf(Integer.parseInt(leagueConfiguration.getFirstSeason()) - 1);
 
             final List<Schedule> scheduleList = Arrays.asList(
@@ -217,7 +217,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnFirstSequenceOfTheFollowingYearGivenEndOfSeasonSchedule() {
+        void shouldReturnFirstSequenceOfTheFollowingYearGivenEndOfSeasonSchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2000").sequence(123).type(ScheduleType.END_OF_SEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2001").sequence(Schedule.FIRST_SEQUENCE).type(ScheduleType.PRESEASON.getValue()).status(ScheduleStatus.SCHEDULED.getValue()).build(),
@@ -239,7 +239,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNullIfFirstSequenceOfTheFollowingYearDoesNotExistGivenEndOfSeasonSchedule() {
+        void shouldReturnNullIfFirstSequenceOfTheFollowingYearDoesNotExistGivenEndOfSeasonSchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2000").sequence(121).type(ScheduleType.REGULAR_SEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2000").sequence(122).type(ScheduleType.REGULAR_SEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -260,7 +260,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNextSequenceScheduleOfSameYearGivenASchedule() {
+        void shouldReturnNextSequenceScheduleOfSameYearGivenASchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2000").sequence(4).type(ScheduleType.PRESEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2000").sequence(5).type(ScheduleType.PRESEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -282,7 +282,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNullIfNextSequenceScheduleOfSameYearDoesNotExistGivenASchedule() {
+        void shouldReturnNullIfNextSequenceScheduleOfSameYearDoesNotExistGivenASchedule() {
             final List<Schedule> scheduleList = Arrays.asList(
                     Schedule.builder().year("2000").sequence(4).type(ScheduleType.PRESEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
                     Schedule.builder().year("2000").sequence(5).type(ScheduleType.PRESEASON.getValue()).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -307,7 +307,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdateScheduleEntry {
 
         @Test
-        public void shouldUpdateScheduleRecord() {
+        void shouldUpdateScheduleRecord() {
             final Schedule schedule = Schedule.builder()
                     .year("2000")
                     .sequence(123)
@@ -339,7 +339,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GenerateSchedule {
 
         @Test
-        public void shouldCreateScheduleRecordsForGivenYear() {
+        void shouldCreateScheduleRecordsForGivenYear() {
             scheduleService.generateSchedule("2001");
 
             final List<Schedule> scheduleList = repository.findAll();
@@ -351,7 +351,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateScheduleRecordsForEveryTypeOfSchedule() {
+        void shouldCreateScheduleRecordsForEveryTypeOfSchedule() {
             scheduleService.generateSchedule("2001");
 
             final List<Schedule> scheduleList = repository.findAll();
@@ -383,7 +383,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateScheduleRecordsThatAreAllScheduledForSomeDate() {
+        void shouldCreateScheduleRecordsThatAreAllScheduledForSomeDate() {
             scheduleService.generateSchedule("2001");
 
             final List<Schedule> scheduleList = repository.findAll();

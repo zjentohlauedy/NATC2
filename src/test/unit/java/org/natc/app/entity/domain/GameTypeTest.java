@@ -12,17 +12,17 @@ class GameTypeTest {
     class GetByValue {
 
         @Test
-        public void shouldReturnNullWhenGivenNull() {
+        void shouldReturnNullWhenGivenNull() {
             assertNull(GameType.getByValue(null));
         }
 
         @Test
-        public void shouldReturnNullWhenGivenInvalidValue() {
+        void shouldReturnNullWhenGivenInvalidValue() {
             assertNull(GameType.getByValue(12));
         }
 
         @Test
-        public void shouldReturnAppropriateEnumWhenGivenValidValue() {
+        void shouldReturnAppropriateEnumWhenGivenValidValue() {
             assertEquals(GameType.PRESEASON, GameType.getByValue(1));
             assertEquals(GameType.REGULAR_SEASON, GameType.getByValue(2));
             assertEquals(GameType.POSTSEASON, GameType.getByValue(3));
@@ -34,12 +34,12 @@ class GameTypeTest {
     class GetValueFor {
 
         @Test
-        public void shouldReturnNullWhenGivenNull() {
+        void shouldReturnNullWhenGivenNull() {
             assertNull(GameType.getValueFor(null));
         }
 
         @Test
-        public void shouldReturnAppropriateValueGivenValidGameType() {
+        void shouldReturnAppropriateValueGivenValidGameType() {
             assertEquals(1, GameType.getValueFor(GameType.PRESEASON));
             assertEquals(2, GameType.getValueFor(GameType.REGULAR_SEASON));
             assertEquals(3, GameType.getValueFor(GameType.POSTSEASON));

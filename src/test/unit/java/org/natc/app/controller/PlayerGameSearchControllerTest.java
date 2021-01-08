@@ -38,28 +38,28 @@ class PlayerGameSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<PlayerGameResponse>> response = controller.search(null, null, null, null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<PlayerGameResponse>> response = controller.search(null, null, null, null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallTeamGameSearchService() {
+        void shouldCallTeamGameSearchService() {
             controller.search(null, null, null, null, null, null);
 
             verify(searchService).fetchAll(any(PlayerGameSearchRequest.class));
         }
 
         @Test
-        public void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
             final Integer gameId = 5338;
             final String year = "2003";
             final LocalDate datestamp = LocalDate.now();
@@ -83,7 +83,7 @@ class PlayerGameSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
             final List<PlayerGameResponse> playerGameList = Collections.singletonList(new PlayerGameResponse());
 
             when(searchService.fetchAll(any(PlayerGameSearchRequest.class))).thenReturn(playerGameList);
@@ -94,7 +94,7 @@ class PlayerGameSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<PlayerGameResponse> playerGameList = Collections.singletonList(new PlayerGameResponse());
 
             when(searchService.fetchAll(any(PlayerGameSearchRequest.class))).thenReturn(playerGameList);

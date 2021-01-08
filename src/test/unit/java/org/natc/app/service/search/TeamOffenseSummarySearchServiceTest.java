@@ -40,21 +40,21 @@ class TeamOffenseSummarySearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfTeamOffenseSummaryResponses() {
+        void shouldReturnAListOfTeamOffenseSummaryResponses() {
             final List<TeamOffenseSummaryResponse> result = service.fetchAll(new TeamOffenseSummarySearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheRepositoryWithAnExampleTeamOffenseSummary() {
+        void shouldCallTheRepositoryWithAnExampleTeamOffenseSummary() {
             service.fetchAll(new TeamOffenseSummarySearchRequest());
 
             verify(repository).findAll(ArgumentMatchers.<Example<TeamOffenseSummary>>any());
         }
 
         @Test
-        public void shouldCallRepositoryWithExampleBasedOnRequest() {
+        void shouldCallRepositoryWithExampleBasedOnRequest() {
             final TeamOffenseSummarySearchRequest request = TeamOffenseSummarySearchRequest.builder()
                     .year("2002")
                     .type(GameType.ALLSTAR)
@@ -73,7 +73,7 @@ class TeamOffenseSummarySearchServiceTest {
         }
 
         @Test
-        public void shouldReturnResponsesMappedFromTheTeamOffenseSummariesReturnedByRepository() {
+        void shouldReturnResponsesMappedFromTheTeamOffenseSummariesReturnedByRepository() {
             final TeamOffenseSummary teamOffenseSummary = generateTeamOffenseSummary(GameType.REGULAR_SEASON);
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamOffenseSummary>>any()))
@@ -105,7 +105,7 @@ class TeamOffenseSummarySearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsTeamOffenseSummariesReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsTeamOffenseSummariesReturnedByRepository() {
             final List<TeamOffenseSummary> teamOffenseSummaryList = Arrays.asList(
                     new TeamOffenseSummary(),
                     new TeamOffenseSummary(),

@@ -55,7 +55,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
     class ProcessScheduledEvent {
 
         @Test
-        public void shouldHandleInProgressSchedule() throws NATCException {
+        void shouldHandleInProgressSchedule() throws NATCException {
             final List<Schedule> initialScheduleList = Arrays.asList(
                     Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                             .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -76,7 +76,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldGenerateANewScheduleWhenNoSchedulesExistAndPutBeginningOfSeasonInProgress() throws NATCException {
+        void shouldGenerateANewScheduleWhenNoSchedulesExistAndPutBeginningOfSeasonInProgress() throws NATCException {
             testHelpers.seedFirstAndLastNames();
 
             seasonManager.processScheduledEvent();
@@ -89,7 +89,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldGenerateANewLeagueWhenNoSchedulesExist() throws NATCException {
+        void shouldGenerateANewLeagueWhenNoSchedulesExist() throws NATCException {
             testHelpers.seedFirstAndLastNames();
 
             seasonManager.processScheduledEvent();
@@ -104,7 +104,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldUpdateLeagueToNextYearWhenEndOfSeason() throws NATCException {
+        void shouldUpdateLeagueToNextYearWhenEndOfSeason() throws NATCException {
             final List<Schedule> initialScheduleList = Arrays.asList(
                     Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                             .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -131,7 +131,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldGenerateANewScheduleForNextYearWhenEndOfSeasonAndPutNewBeginningOfSeasonInProgress() throws NATCException {
+        void shouldGenerateANewScheduleForNextYearWhenEndOfSeasonAndPutNewBeginningOfSeasonInProgress() throws NATCException {
             final List<Schedule> initialScheduleList = Arrays.asList(
                     Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                             .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -153,7 +153,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldThrowScheduleProcessingExceptionWhenNoScheduledEntriesExist() {
+        void shouldThrowScheduleProcessingExceptionWhenNoScheduledEntriesExist() {
             final List<Schedule> initialScheduleList = Arrays.asList(
                     Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                             .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),
@@ -169,7 +169,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldSetScheduleStatusToInProgress() throws NATCException {
+        void shouldSetScheduleStatusToInProgress() throws NATCException {
             final List<Schedule> initialScheduleList = Arrays.asList(
                     Schedule.builder().year("2001").sequence(24).type(ScheduleType.REGULAR_SEASON.getValue())
                             .scheduled(LocalDate.now().minusDays(2)).status(ScheduleStatus.COMPLETED.getValue()).build(),

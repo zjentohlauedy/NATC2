@@ -22,7 +22,7 @@ class ManagerStyleTest {
         }
 
         @Test
-        public void shouldReturnAppropriateEnumWhenGivenValidValue() {
+        void shouldReturnAppropriateEnumWhenGivenValidValue() {
             assertEquals(ManagerStyle.OFFENSIVE, ManagerStyle.getByValue(1));
             assertEquals(ManagerStyle.DEFENSIVE, ManagerStyle.getByValue(2));
             assertEquals(ManagerStyle.INTANGIBLE, ManagerStyle.getByValue(3));

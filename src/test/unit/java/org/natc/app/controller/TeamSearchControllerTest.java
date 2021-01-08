@@ -36,28 +36,28 @@ class TeamSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<TeamResponse>> response = teamSearchController.search(null, null, null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallTeamSearchService() {
+        void shouldCallTeamSearchService() {
             teamSearchController.search(null, null, null, null, null);
 
             verify(teamSearchService).fetchAll(any(TeamSearchRequest.class));
         }
 
         @Test
-        public void shouldConstructRequestObjectForTeamSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForTeamSearchServiceUsingRequestParameters() {
             final Integer teamId = 123;
             final String year = "1999";
             final Integer conferenceId = 1;
@@ -79,7 +79,7 @@ class TeamSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingTeamsReturnedBySearchService() {
             final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
 
             when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);
@@ -90,7 +90,7 @@ class TeamSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<TeamResponse> teamList = Collections.singletonList(new TeamResponse());
 
             when(teamSearchService.fetchAll(any(TeamSearchRequest.class))).thenReturn(teamList);

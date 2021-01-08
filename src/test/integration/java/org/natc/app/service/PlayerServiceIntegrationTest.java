@@ -36,12 +36,12 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GeneratePlayers {
 
         @BeforeEach
-        public void setup() {
+        void setup() {
             testHelpers.seedFirstAndLastNames();
         }
 
         @Test
-        public void shouldCreateTheGivenNumberOfPlayersInTheDatabase() throws NATCException {
+        void shouldCreateTheGivenNumberOfPlayersInTheDatabase() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -50,7 +50,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateAllPlayersForTheGivenYear() throws NATCException {
+        void shouldCreateAllPlayersForTheGivenYear() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -59,7 +59,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateEveryPlayerWithAUniqueName() throws NATCException {
+        void shouldCreateEveryPlayerWithAUniqueName() throws NATCException {
             playerService.generatePlayers("2222", 1000);
 
             final List<Player> players = playerRepository.findAll();
@@ -70,7 +70,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateEveryPlayerWithAUniquePlayerId() throws NATCException {
+        void shouldCreateEveryPlayerWithAUniquePlayerId() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -81,7 +81,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateEveryPlayerWithAnAgeBetweenEighteenAndThirty() throws NATCException {
+        void shouldCreateEveryPlayerWithAnAgeBetweenEighteenAndThirty() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -90,7 +90,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateEveryPlayerWithRatingsBetweenZeroAndOne() throws NATCException {
+        void shouldCreateEveryPlayerWithRatingsBetweenZeroAndOne() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -112,7 +112,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateEveryPlayerWithAllPlayerLifecycleFlagsAsZero() throws NATCException {
+        void shouldCreateEveryPlayerWithAllPlayerLifecycleFlagsAsZero() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -127,7 +127,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateEveryPlayerWithSeasonsPlayedAsZero() throws NATCException {
+        void shouldCreateEveryPlayerWithSeasonsPlayedAsZero() throws NATCException {
             playerService.generatePlayers("2222", 100);
 
             final List<Player> players = playerRepository.findAll();
@@ -136,7 +136,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldContinueToIncrementPlayerIdsOnSubsequentCalls() throws NATCException {
+        void shouldContinueToIncrementPlayerIdsOnSubsequentCalls() throws NATCException {
             playerService.generatePlayers("2222", 5);
             playerService.generatePlayers("2222", 5);
             playerService.generatePlayers("2222", 5);
@@ -154,7 +154,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdatePlayer {
 
         @Test
-        public void shouldModifyAnExistingPlayerRecordInTheDatabase() {
+        void shouldModifyAnExistingPlayerRecordInTheDatabase() {
             final Player originalPlayer = Player.builder().playerId(333).year("1999").build();
 
             playerRepository.save(originalPlayer);
@@ -178,7 +178,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdatePlayersForNewSeason {
 
         @Test
-        public void shouldCopyPlayerRecordsFromOneYearToAnother() {
+        void shouldCopyPlayerRecordsFromOneYearToAnother() {
             final List<Player> originalPlayers = Arrays.asList(
                     Player.builder().playerId(1).year("2015").build(),
                     Player.builder().playerId(2).year("2015").build(),
@@ -196,7 +196,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyCopyPlayerRecordsFromPreviousYear() {
+        void shouldOnlyCopyPlayerRecordsFromPreviousYear() {
             final List<Player> originalPlayers = Arrays.asList(
                     Player.builder().playerId(1).year("2015").build(),
                     Player.builder().playerId(2).year("2016").build(),
@@ -215,7 +215,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyCopyNecessaryFieldsToNewYear() {
+        void shouldOnlyCopyNecessaryFieldsToNewYear() {
             final Player originalPlayer = Player.builder()
                     .playerId(123)
                     .teamId(321)
@@ -303,12 +303,12 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetManagerialCandidates {
 
         @Test
-        public void shouldReturnAnEmptyListIfThereAreNoPlayers() {
+        void shouldReturnAnEmptyListIfThereAreNoPlayers() {
             assertEquals(0, playerService.getManagerialCandidates("2005").size());
         }
 
         @Test
-        public void shouldReturnOnePlayerIfOnlyOnePlayerExists() {
+        void shouldReturnOnePlayerIfOnlyOnePlayerExists() {
             final Player expectedPlayer = Player.builder().playerId(1).year("2005").retired(1).build();
 
             playerRepository.save(expectedPlayer);
@@ -323,7 +323,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnAtMostTwoPlayers() {
+        void shouldReturnAtMostTwoPlayers() {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().playerId(1).year("1997").retired(1).build(),
                     Player.builder().playerId(2).year("1997").retired(1).build(),
@@ -338,7 +338,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyConsiderRetiredPlayers() {
+        void shouldOnlyConsiderRetiredPlayers() {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().playerId(1).year("1997").retired(0).build(),
                     Player.builder().playerId(2).year("1997").retired(0).build(),
@@ -359,7 +359,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyConsiderPlayersForTheGivenYear() {
+        void shouldOnlyConsiderPlayersForTheGivenYear() {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().playerId(1).year("1995").retired(1).build(),
                     Player.builder().playerId(2).year("1996").retired(1).build(),
@@ -380,7 +380,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
         
         @Test
-        public void shouldReturnTheTwoHighestRatedPlayers() {
+        void shouldReturnTheTwoHighestRatedPlayers() {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().playerId(1).year("1998").retired(1).scoring(0.2).passing(0.2).blocking(0.2).tackling(0.2).stealing(0.2).presence(0.2).discipline(0.2).endurance(0.2).penaltyShot(0.2).penaltyOffense(0.2).penaltyDefense(0.2).build(),
                     Player.builder().playerId(2).year("1998").retired(1).scoring(0.8).passing(0.8).blocking(0.8).tackling(0.8).stealing(0.8).presence(0.8).discipline(0.8).endurance(0.8).penaltyShot(0.8).penaltyOffense(0.8).penaltyDefense(0.8).build(),

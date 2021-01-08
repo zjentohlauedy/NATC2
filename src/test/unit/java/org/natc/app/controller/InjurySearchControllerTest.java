@@ -36,28 +36,28 @@ class InjurySearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<InjuryResponse>> response = injurySearchController.search(null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallInjurySearchService() {
+        void shouldCallInjurySearchService() {
             injurySearchController.search(null, null, null);
 
             verify(injurySearchService).fetchAll(any(InjurySearchRequest.class));
         }
 
         @Test
-        public void shouldConstructRequestObjectForInjurySearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForInjurySearchServiceUsingRequestParameters() {
             final Integer gameId = 123;
             final Integer playerId = 4321;
             final Integer teamId = 56;
@@ -75,7 +75,7 @@ class InjurySearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingInjuriesReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingInjuriesReturnedBySearchService() {
             final List<InjuryResponse> injuryList = Collections.singletonList(new InjuryResponse());
 
             when(injurySearchService.fetchAll(any(InjurySearchRequest.class))).thenReturn(injuryList);
@@ -86,7 +86,7 @@ class InjurySearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<InjuryResponse> injuryList = Collections.singletonList(new InjuryResponse());
 
             when(injurySearchService.fetchAll(any(InjurySearchRequest.class))).thenReturn(injuryList);

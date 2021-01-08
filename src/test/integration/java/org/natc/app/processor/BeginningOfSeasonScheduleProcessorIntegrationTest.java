@@ -27,7 +27,7 @@ class BeginningOfSeasonScheduleProcessorIntegrationTest extends NATCServiceInteg
     class Process {
 
         @Test
-        public void shouldUpdateTheGivenScheduleStatusToCompleted() throws NATCException {
+        void shouldUpdateTheGivenScheduleStatusToCompleted() throws NATCException {
             final Schedule schedule = Schedule.builder()
                     .year("2005")
                     .sequence(1)

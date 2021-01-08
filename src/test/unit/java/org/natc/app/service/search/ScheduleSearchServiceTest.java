@@ -41,21 +41,21 @@ class ScheduleSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfScheduleResponses() {
+        void shouldReturnAListOfScheduleResponses() {
             final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheScheduleRepositoryWithAnExampleSchedule() {
+        void shouldCallTheScheduleRepositoryWithAnExampleSchedule() {
             scheduleSearchService.fetchAll(new ScheduleSearchRequest());
 
             verify(scheduleRepository).findAll(ArgumentMatchers.<Example<Schedule>>any());
         }
 
         @Test
-        public void shouldCallScheduleRepositoryWithExampleScheduleBasedOnRequest() {
+        void shouldCallScheduleRepositoryWithExampleScheduleBasedOnRequest() {
             final ScheduleSearchRequest request = ScheduleSearchRequest.builder().year("1999").sequence(5).build();
 
             scheduleSearchService.fetchAll(request);
@@ -69,7 +69,7 @@ class ScheduleSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnScheduleResponsesMappedFromTheSchedulesReturnedByRepository() {
+        void shouldReturnScheduleResponsesMappedFromTheSchedulesReturnedByRepository() {
             final Schedule schedule = generateSchedule(ScheduleType.REGULAR_SEASON, ScheduleStatus.IN_PROGRESS);
 
             when(scheduleRepository.findAll(ArgumentMatchers.<Example<Schedule>>any()))

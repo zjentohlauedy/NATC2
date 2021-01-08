@@ -47,35 +47,35 @@ class TeamServiceTest {
     class GenerateTeams {
 
         @Test
-        public void shouldReturnAListOfTeamsGenerated() {
+        void shouldReturnAListOfTeamsGenerated() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertFalse(teamList.isEmpty());
         }
 
         @Test
-        public void shouldGenerateFourtyFourTeams() {
+        void shouldGenerateFourtyFourTeams() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(44, teamList.size());
         }
 
         @Test
-        public void shouldGenerateFourtyRegularTeams() {
+        void shouldGenerateFourtyRegularTeams() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(40, teamList.stream().filter(team -> team.getAllstarTeam().equals(0)).count());
         }
 
         @Test
-        public void shouldGenerateFourAllstarTeams() {
+        void shouldGenerateFourAllstarTeams() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(4, teamList.stream().filter(team -> team.getAllstarTeam().equals(1)).count());
         }
 
         @Test
-        public void shouldGenerateTwentyTwoTeamsPerConference() {
+        void shouldGenerateTwentyTwoTeamsPerConference() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(22, teamList.stream().filter(team -> team.getConference().equals(0)).count());
@@ -83,7 +83,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateElevenTeamsPerDivision() {
+        void shouldGenerateElevenTeamsPerDivision() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(11, teamList.stream().filter(team -> team.getDivision().equals(0)).count());
@@ -93,7 +93,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateTeamsWithUniqueTeamIdsFromOneToFourtyFour() {
+        void shouldGenerateTeamsWithUniqueTeamIdsFromOneToFourtyFour() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<Integer> teamIds = teamList.stream().map(Team::getTeamId).collect(Collectors.toSet());
@@ -104,7 +104,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateTeamsForTheGivenYear() {
+        void shouldGenerateTeamsForTheGivenYear() {
             final String expectedYear = "2020";
 
             final List<Team> teamList = teamService.generateTeams(expectedYear);
@@ -113,7 +113,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateRegularTeamsAllWithDifferentLocations() {
+        void shouldGenerateRegularTeamsAllWithDifferentLocations() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> locations = teamList.stream()
@@ -125,7 +125,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateRegularTeamsAllWithDifferentNames() {
+        void shouldGenerateRegularTeamsAllWithDifferentNames() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> names = teamList.stream()
@@ -137,7 +137,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateRegularTeamsAllWithDifferentAbbreviations() {
+        void shouldGenerateRegularTeamsAllWithDifferentAbbreviations() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> abbreviations = teamList.stream()
@@ -149,7 +149,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateRegularTeamsAllWithATimeZone() {
+        void shouldGenerateRegularTeamsAllWithATimeZone() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(40, teamList.stream()
@@ -157,7 +157,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateRegularTeamsAllWithAGameTimeOf965() {
+        void shouldGenerateRegularTeamsAllWithAGameTimeOf965() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(40, teamList.stream()
@@ -165,7 +165,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateAllstarTeamsWithLocationAsDivisionNames() {
+        void shouldGenerateAllstarTeamsWithLocationAsDivisionNames() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> locations = teamList.stream()
@@ -181,7 +181,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateAllstarTeamsWithNameAsAllStars() {
+        void shouldGenerateAllstarTeamsWithNameAsAllStars() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> name = teamList.stream()
@@ -194,7 +194,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateAllstarTeamsWithAbbreviationsBasedOnDivisionNames() {
+        void shouldGenerateAllstarTeamsWithAbbreviationsBasedOnDivisionNames() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> abbreviations = teamList.stream()
@@ -210,7 +210,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateAllstarTeamsWithTimeZoneAsNewYork() {
+        void shouldGenerateAllstarTeamsWithTimeZoneAsNewYork() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             final Set<String> timeZones = teamList.stream()
@@ -223,7 +223,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldGenerateAllstarTeamsAllWithAGameTimeOf965() {
+        void shouldGenerateAllstarTeamsAllWithAGameTimeOf965() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             assertEquals(4, teamList.stream()
@@ -231,7 +231,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldCallTeamRepositoryToSaveTheTeams() {
+        void shouldCallTeamRepositoryToSaveTheTeams() {
             final List<Team> teamList = teamService.generateTeams(null);
 
             verify(teamRepository).saveAll(teamList);
@@ -242,14 +242,14 @@ class TeamServiceTest {
     class UpdateTeamsForNewSeason {
 
         @Test
-        public void shouldCallTheRepositoryToCopyTeamsForNewYear() {
+        void shouldCallTheRepositoryToCopyTeamsForNewYear() {
             teamService.updateTeamsForNewSeason(null, null);
 
             verify(teamRepository).copyTeamsForNewYear(any(), any());
         }
 
         @Test
-        public void shouldPassThePreviousYearAndNewYearToTheRepository() {
+        void shouldPassThePreviousYearAndNewYearToTheRepository() {
             teamService.updateTeamsForNewSeason("2008", "2009");
 
             verify(teamRepository).copyTeamsForNewYear("2008", "2009");
@@ -260,14 +260,14 @@ class TeamServiceTest {
     class WillTeamReleaseManager {
 
         @Test
-        public void shouldReturnFalseIfManagerHasLessThanThreeSeasons() {
+        void shouldReturnFalseIfManagerHasLessThanThreeSeasons() {
             final Manager manager = Manager.builder().managerId(1).year("2002").seasons(0).build();
 
             assertFalse(teamService.willTeamReleaseManager(manager));
         }
 
         @Test
-        public void shouldCallTeamRepositoryToGetManagersTeamsTwoPreviousYearRecords() {
+        void shouldCallTeamRepositoryToGetManagersTeamsTwoPreviousYearRecords() {
             final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
 
             teamService.willTeamReleaseManager(manager);
@@ -285,7 +285,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldNotCallRepositoryIfManagerHasLessThanThreeSeasons() {
+        void shouldNotCallRepositoryIfManagerHasLessThanThreeSeasons() {
             final Manager manager = Manager.builder().managerId(1).year("2002").seasons(2).build();
 
             teamService.willTeamReleaseManager(manager);
@@ -294,7 +294,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnFalseIfPreviousYearsTeamRecordIsNotFound() {
+        void shouldReturnFalseIfPreviousYearsTeamRecordIsNotFound() {
             final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
 
             when(teamRepository.findOne(any())).thenReturn(Optional.empty());
@@ -303,7 +303,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnFalseIfTwoYearsBackTeamRecordIsNotFound() {
+        void shouldReturnFalseIfTwoYearsBackTeamRecordIsNotFound() {
             final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
 
             when(teamRepository.findOne(any()))
@@ -314,7 +314,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnFalseIfPlayoffRankImprovedBetweenYears() {
+        void shouldReturnFalseIfPlayoffRankImprovedBetweenYears() {
             final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
 
             when(teamRepository.findOne(any()))
@@ -325,7 +325,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnFalseIfWinsImprovedBetweenYears() {
+        void shouldReturnFalseIfWinsImprovedBetweenYears() {
             final Manager manager = Manager.builder().managerId(1).year("2002").teamId(5).seasons(4).build();
 
             when(teamRepository.findOne(any()))
@@ -336,7 +336,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnFalseIfManagerPerformanceRatingIsGreaterThanExpectation() {
+        void shouldReturnFalseIfManagerPerformanceRatingIsGreaterThanExpectation() {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2002")
@@ -355,7 +355,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnTrueIfManagerHasNotImprovedAndExpectationIsNotMet() {
+        void shouldReturnTrueIfManagerHasNotImprovedAndExpectationIsNotMet() {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2002")
@@ -378,7 +378,7 @@ class TeamServiceTest {
     class GetTeamByTeamIdAndYear {
 
         @Test
-        public void shouldCallTeamRepositoryToFindTeam() throws TeamNotFoundException {
+        void shouldCallTeamRepositoryToFindTeam() throws TeamNotFoundException {
             when(teamRepository.findOne(any())).thenReturn(Optional.of(Team.builder().build()));
 
             teamService.getTeamByTeamIdAndYear(123, "2000");
@@ -387,7 +387,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldPassTheGivenTeamIdAndYearToTheTeamRepository() throws TeamNotFoundException {
+        void shouldPassTheGivenTeamIdAndYearToTheTeamRepository() throws TeamNotFoundException {
             when(teamRepository.findOne(any())).thenReturn(Optional.of(Team.builder().build()));
 
             teamService.getTeamByTeamIdAndYear(123, "2000");
@@ -401,7 +401,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldReturnTheTeamReturnedByTheTeamRepositoryIfAMatchingTeamIsFound() throws TeamNotFoundException {
+        void shouldReturnTheTeamReturnedByTheTeamRepositoryIfAMatchingTeamIsFound() throws TeamNotFoundException {
             final Team expectedTeam = Team.builder().teamId(123).year("2000").build();
 
             when(teamRepository.findOne(any())).thenReturn(Optional.of(expectedTeam));
@@ -412,7 +412,7 @@ class TeamServiceTest {
         }
 
         @Test
-        public void shouldThrowTeamNotFoundExceptionIfAMatchingTeamIsNotFound() {
+        void shouldThrowTeamNotFoundExceptionIfAMatchingTeamIsNotFound() {
             when(teamRepository.findOne(any())).thenReturn(Optional.empty());
 
             assertThrows(TeamNotFoundException.class, () -> teamService.getTeamByTeamIdAndYear(123, "2000"));

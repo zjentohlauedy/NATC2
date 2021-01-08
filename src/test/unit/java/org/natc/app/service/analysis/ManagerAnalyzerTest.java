@@ -21,7 +21,7 @@ class ManagerAnalyzerTest {
     class DetermineManagerStyle {
 
         @Test
-        public void shouldReturnAManagerStyle() {
+        void shouldReturnAManagerStyle() {
             final Manager manager = Manager.builder()
                     .offense(1.0)
                     .defense(1.0)
@@ -35,7 +35,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnOffensiveWhenOffenseIsTheHighestRatingByAtLeastOneTenth() {
+        void shouldReturnOffensiveWhenOffenseIsTheHighestRatingByAtLeastOneTenth() {
             final Manager manager = Manager.builder()
                     .offense(0.8)
                     .defense(0.7)
@@ -49,7 +49,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnDefensiveWhenDefenseIsTheHighestRatingByAtLeastOneTenth() {
+        void shouldReturnDefensiveWhenDefenseIsTheHighestRatingByAtLeastOneTenth() {
             final Manager manager = Manager.builder()
                     .offense(0.3)
                     .defense(0.4)
@@ -63,7 +63,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnIntangibleWhenIntangibleIsTheHighestRatingByAtLeastOneTenth() {
+        void shouldReturnIntangibleWhenIntangibleIsTheHighestRatingByAtLeastOneTenth() {
             final Manager manager = Manager.builder()
                     .offense(0.7)
                     .defense(0.7)
@@ -77,7 +77,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnPenaltiesWhenPenaltiesIsTheHighestRatingByAtLeastOneTenth() {
+        void shouldReturnPenaltiesWhenPenaltiesIsTheHighestRatingByAtLeastOneTenth() {
             final Manager manager = Manager.builder()
                     .offense(0.1)
                     .defense(0.1)
@@ -91,7 +91,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnBalancedWhenOffenseAndDefenseAreTopTwoLessThanOneTenthApart() {
+        void shouldReturnBalancedWhenOffenseAndDefenseAreTopTwoLessThanOneTenthApart() {
             final Manager manager = Manager.builder()
                     .offense(0.8)
                     .defense(0.75)
@@ -105,7 +105,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnBalancedWhenTopTwoAreLessThanOneTenthApartAndThirdIsLessThanOneTenthBehindThem() {
+        void shouldReturnBalancedWhenTopTwoAreLessThanOneTenthApartAndThirdIsLessThanOneTenthBehindThem() {
             final Manager manager = Manager.builder()
                     .offense(0.8)
                     .defense(0.4)
@@ -119,7 +119,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndOffenseIsHigher() {
+        void shouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndOffenseIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.8)
                     .defense(0.4)
@@ -133,7 +133,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
+        void shouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.75)
                     .defense(0.4)
@@ -147,7 +147,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndDefenseIsHigher() {
+        void shouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndDefenseIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.4)
                     .defense(0.8)
@@ -161,7 +161,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
+        void shouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.4)
                     .defense(0.75)
@@ -175,7 +175,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndPenaltiesIsHigher() {
+        void shouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndPenaltiesIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.4)
                     .defense(0.6)
@@ -189,7 +189,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndIntangibleIsHigher() {
+        void shouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndIntangibleIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.4)
                     .defense(0.6)
@@ -203,7 +203,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndOffenseIsHigher() {
+        void shouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndOffenseIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.8)
                     .defense(0.4)
@@ -217,7 +217,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
+        void shouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.75)
                     .defense(0.4)
@@ -231,7 +231,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndDefenseIsHigher() {
+        void shouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndDefenseIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.4)
                     .defense(0.8)
@@ -245,7 +245,7 @@ class ManagerAnalyzerTest {
         }
 
         @Test
-        public void shouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
+        void shouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
             final Manager manager = Manager.builder()
                     .offense(0.4)
                     .defense(0.75)

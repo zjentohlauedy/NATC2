@@ -32,7 +32,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAScheduleFromTheDatabaseMappedToAResponse() {
+        void shouldReturnAScheduleFromTheDatabaseMappedToAResponse() {
             final Schedule schedule = Schedule.builder()
                     .year("2002")
                     .sequence(12)
@@ -55,7 +55,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldMapAllScheduleFieldsToTheScheduleResponse() {
+        void shouldMapAllScheduleFieldsToTheScheduleResponse() {
             final Schedule schedule = Schedule.builder()
                     .year("2002")
                     .sequence(12)
@@ -82,7 +82,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
             final List<ScheduleResponse> result = scheduleSearchService.fetchAll(new ScheduleSearchRequest());
 
             assertEquals(0, result.size());
@@ -92,7 +92,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithOneSearchParameter {
 
             @Test
-            public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
+            void shouldReturnAllEntriesForYearWhenSearchingByYear() {
                 final List<Schedule> scheduleList = Arrays.asList(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2000").sequence(2).build(),
@@ -111,7 +111,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
+            void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
                 final List<Schedule> scheduleList = Arrays.asList(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2001").sequence(1).build(),
@@ -133,7 +133,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForSequenceWhenSearchingBySequence() {
+            void shouldReturnAllEntriesForSequenceWhenSearchingBySequence() {
                 final List<Schedule> scheduleList = Arrays.asList(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2001").sequence(1).build(),
@@ -152,7 +152,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForSequenceWhenSearchingBySequence() {
+            void shouldOnlyReturnEntriesForSequenceWhenSearchingBySequence() {
                 final List<Schedule> scheduleList = Arrays.asList(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2000").sequence(2).build(),
@@ -178,7 +178,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithTwoSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
+            void shouldReturnAllEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
                 final List<Schedule> scheduleList = Collections.singletonList(
                         // Year & Sequence are the key fields, so only one record is possible
                         Schedule.builder().year("2000").sequence(1).build()
@@ -197,7 +197,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnOnlyEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
+            void shouldReturnOnlyEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
                 final List<Schedule> scheduleList = Arrays.asList(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2001").sequence(1).build(),

@@ -28,7 +28,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnATeamFromTheDatabaseMappedToAResponse() {
+        void shouldReturnATeamFromTheDatabaseMappedToAResponse() {
             final Team team = Team.builder()
                     .teamId(1)
                     .year("1994")
@@ -53,7 +53,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldMapAllTeamFieldsToTheTeamResponse() {
+        void shouldMapAllTeamFieldsToTheTeamResponse() {
             final Team team = Team.builder()
                     .teamId(123)
                     .year("1999")
@@ -136,7 +136,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnAllEntriesWhenSearchingWithoutValues() {
+        void shouldReturnAllEntriesWhenSearchingWithoutValues() {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2001").division(2).conference(2).allstarTeam(1).build(),
@@ -153,7 +153,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
             final TeamSearchRequest request = TeamSearchRequest.builder().build();
 
             final List<TeamResponse> result = teamSearchService.fetchAll(request);
@@ -165,7 +165,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithOneSearchParameter {
 
             @Test
-            public void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
+            void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(2).allstarTeam(1).build(),
@@ -184,7 +184,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
+            void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -206,7 +206,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
+            void shouldReturnAllEntriesForYearWhenSearchingByYear() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(2).allstarTeam(1).build(),
@@ -225,7 +225,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
+            void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -247,7 +247,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForConferenceWhenSearchingByConferenceId() {
+            void shouldReturnAllEntriesForConferenceWhenSearchingByConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(2).conference(1).allstarTeam(1).build(),
@@ -266,7 +266,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForConferenceWhenSearchingByConferenceId() {
+            void shouldOnlyReturnEntriesForConferenceWhenSearchingByConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(2).allstarTeam(0).build(),
@@ -288,7 +288,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForDivisionWhenSearchingByDivisionId() {
+            void shouldReturnAllEntriesForDivisionWhenSearchingByDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(1).conference(2).allstarTeam(1).build(),
@@ -307,7 +307,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForDivisionWhenSearchingByDivisionId() {
+            void shouldOnlyReturnEntriesForDivisionWhenSearchingByDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(1).allstarTeam(0).build(),
@@ -329,7 +329,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForAllstarTeamWhenSearchingByAllstarTeam() {
+            void shouldReturnAllEntriesForAllstarTeamWhenSearchingByAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(2).conference(2).allstarTeam(0).build(),
@@ -348,7 +348,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForAllstarTeamWhenSearchingByAllstarTeam() {
+            void shouldOnlyReturnEntriesForAllstarTeamWhenSearchingByAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(1).build(),
@@ -374,7 +374,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithTwoSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForTeamAndYearWhenSearchingByTeamIdAndYear() {
+            void shouldReturnAllEntriesForTeamAndYearWhenSearchingByTeamIdAndYear() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -393,7 +393,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamAndYearWhenSearchingByTeamIdAndYear() {
+            void shouldOnlyReturnEntriesForTeamAndYearWhenSearchingByTeamIdAndYear() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -416,7 +416,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamAndConferenceWhenSearchingByTeamIdAndConferenceId() {
+            void shouldReturnAllEntriesForTeamAndConferenceWhenSearchingByTeamIdAndConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(1).allstarTeam(1).build(),
@@ -436,7 +436,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamAndConferenceWhenSearchingByTeamIdAndConferenceId() {
+            void shouldOnlyReturnEntriesForTeamAndConferenceWhenSearchingByTeamIdAndConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -463,7 +463,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamAndDivisionWhenSearchingByTeamIdAndDivisionId() {
+            void shouldReturnAllEntriesForTeamAndDivisionWhenSearchingByTeamIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(2).allstarTeam(1).build(),
@@ -483,7 +483,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamAndDivisionWhenSearchingByTeamIdAndDivisionId() {
+            void shouldOnlyReturnEntriesForTeamAndDivisionWhenSearchingByTeamIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -510,7 +510,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamAndAllstarTeamWhenSearchingByTeamIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForTeamAndAllstarTeamWhenSearchingByTeamIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(2).allstarTeam(0).build(),
@@ -530,7 +530,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamAndAllstarTeamWhenSearchingByTeamIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamAndAllstarTeamWhenSearchingByTeamIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -557,7 +557,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndConferenceWhenSearchingByYearAndConferenceId() {
+            void shouldReturnAllEntriesForYearAndConferenceWhenSearchingByYearAndConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(1).allstarTeam(1).build(),
@@ -577,7 +577,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndConferenceWhenSearchingByYearAndConferenceId() {
+            void shouldOnlyReturnEntriesForYearAndConferenceWhenSearchingByYearAndConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -604,7 +604,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndDivisionWhenSearchingByYearAndDivisionId() {
+            void shouldReturnAllEntriesForYearAndDivisionWhenSearchingByYearAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(2).allstarTeam(1).build(),
@@ -624,7 +624,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndDivisionWhenSearchingByYearAndDivisionId() {
+            void shouldOnlyReturnEntriesForYearAndDivisionWhenSearchingByYearAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -651,7 +651,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndAllstarTeamWhenSearchingByYearAndAllstarTeam() {
+            void shouldReturnAllEntriesForYearAndAllstarTeamWhenSearchingByYearAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(2).allstarTeam(0).build(),
@@ -671,7 +671,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndAllstarTeamWhenSearchingByYearAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForYearAndAllstarTeamWhenSearchingByYearAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -698,7 +698,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForConferenceAndDivisionWhenSearchingByConferenceIdAndDivisionId() {
+            void shouldReturnAllEntriesForConferenceAndDivisionWhenSearchingByConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(1).build(),
@@ -718,7 +718,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForConferenceAndDivisionWhenSearchingByConferenceIdAndDivisionId() {
+            void shouldOnlyReturnEntriesForConferenceAndDivisionWhenSearchingByConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(1).allstarTeam(0).build(),
@@ -745,7 +745,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForConferenceAndAllstarTeamWhenSearchingByConferenceIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForConferenceAndAllstarTeamWhenSearchingByConferenceIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(2).conference(1).allstarTeam(0).build(),
@@ -765,7 +765,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForConferenceAndAllstarTeamWhenSearchingByConferenceIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForConferenceAndAllstarTeamWhenSearchingByConferenceIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(2).allstarTeam(0).build(),
@@ -792,7 +792,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForDivisionAndAllstarTeamWhenSearchingByDivisionIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForDivisionAndAllstarTeamWhenSearchingByDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(2).allstarTeam(0).build(),
@@ -812,7 +812,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForDivisionAndAllstarTeamWhenSearchingByDivisionIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForDivisionAndAllstarTeamWhenSearchingByDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(1).allstarTeam(0).build(),
@@ -843,7 +843,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithThreeSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForTeamYearAndConferenceWhenSearchingByTeamIdYearAndConferenceId() {
+            void shouldReturnAllEntriesForTeamYearAndConferenceWhenSearchingByTeamIdYearAndConferenceId() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -863,7 +863,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamYearAndConferenceWhenSearchingByTeamIdYearAndConferenceId() {
+            void shouldOnlyReturnEntriesForTeamYearAndConferenceWhenSearchingByTeamIdYearAndConferenceId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -887,7 +887,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearAndConferenceWhenSearchingByTeamIdYearAndConferenceIdAndConferenceIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearAndConferenceWhenSearchingByTeamIdYearAndConferenceIdAndConferenceIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(2).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(2).allstarTeam(0).build(),
@@ -910,7 +910,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamYearAndDivisionWhenSearchingByTeamIdYearAndDivisionId() {
+            void shouldReturnAllEntriesForTeamYearAndDivisionWhenSearchingByTeamIdYearAndDivisionId() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -930,7 +930,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamYearAndDivisionWhenSearchingByTeamIdYearAndDivisionId() {
+            void shouldOnlyReturnEntriesForTeamYearAndDivisionWhenSearchingByTeamIdYearAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -956,7 +956,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearAndDivisionWhenSearchingByTeamIdYearAndDivisionIdAndDivisionIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearAndDivisionWhenSearchingByTeamIdYearAndDivisionIdAndDivisionIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(2).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(1).allstarTeam(0).build(),
@@ -979,7 +979,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamYearAndAllstarTeamWhenSearchingByTeamIdYearAndAllstarTeam() {
+            void shouldReturnAllEntriesForTeamYearAndAllstarTeamWhenSearchingByTeamIdYearAndAllstarTeam() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -999,7 +999,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamYearAndAllstarTeamWhenSearchingByTeamIdYearAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamYearAndAllstarTeamWhenSearchingByTeamIdYearAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -1025,7 +1025,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearAndAllstarTeamWhenSearchingByTeamIdYearAndAllstarTeamIdAndAllstarTeamIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearAndAllstarTeamWhenSearchingByTeamIdYearAndAllstarTeamIdAndAllstarTeamIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(1).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(1).build(),
@@ -1048,7 +1048,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamConferenceAndDivisionWhenSearchingByTeamIdConferenceIdAndDivisionId() {
+            void shouldReturnAllEntriesForTeamConferenceAndDivisionWhenSearchingByTeamIdConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(1).build(),
@@ -1069,7 +1069,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamConferenceAndDivisionWhenSearchingByTeamIdConferenceIdAndDivisionId() {
+            void shouldOnlyReturnEntriesForTeamConferenceAndDivisionWhenSearchingByTeamIdConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -1099,7 +1099,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamConferenceAndAllstarTeamWhenSearchingByTeamIdConferenceIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForTeamConferenceAndAllstarTeamWhenSearchingByTeamIdConferenceIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(2).conference(1).allstarTeam(0).build(),
@@ -1120,7 +1120,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamConferenceAndAllstarTeamWhenSearchingByTeamIdConferenceIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamConferenceAndAllstarTeamWhenSearchingByTeamIdConferenceIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -1150,7 +1150,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamDivisionAndAllstarTeamWhenSearchingByTeamIdDivisionIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForTeamDivisionAndAllstarTeamWhenSearchingByTeamIdDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(2).allstarTeam(0).build(),
@@ -1171,7 +1171,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamDivisionAndAllstarTeamWhenSearchingByTeamIdDivisionIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamDivisionAndAllstarTeamWhenSearchingByTeamIdDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -1201,7 +1201,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearConferenceAndDivisionWhenSearchingByYearConferenceIdAndDivisionId() {
+            void shouldReturnAllEntriesForYearConferenceAndDivisionWhenSearchingByYearConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(1).build(),
@@ -1222,7 +1222,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearConferenceAndDivisionWhenSearchingByYearConferenceIdAndDivisionId() {
+            void shouldOnlyReturnEntriesForYearConferenceAndDivisionWhenSearchingByYearConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(1).conference(1).allstarTeam(0).build(),
@@ -1252,7 +1252,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearConferenceAndAllstarTeamWhenSearchingByYearConferenceIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForYearConferenceAndAllstarTeamWhenSearchingByYearConferenceIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(1).allstarTeam(0).build(),
@@ -1273,7 +1273,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearConferenceAndAllstarTeamWhenSearchingByYearConferenceIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForYearConferenceAndAllstarTeamWhenSearchingByYearConferenceIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(1).conference(1).allstarTeam(0).build(),
@@ -1303,7 +1303,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearDivisionAndAllstarTeamWhenSearchingByYearDivisionIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForYearDivisionAndAllstarTeamWhenSearchingByYearDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(2).allstarTeam(0).build(),
@@ -1324,7 +1324,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearDivisionAndAllstarTeamWhenSearchingByYearDivisionIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForYearDivisionAndAllstarTeamWhenSearchingByYearDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(1).conference(1).allstarTeam(0).build(),
@@ -1354,7 +1354,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForConferenceDivisionAndAllstarTeamWhenSearchingByConferenceIdDivisionIdAndAllstarTeam() {
+            void shouldReturnAllEntriesForConferenceDivisionAndAllstarTeamWhenSearchingByConferenceIdDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -1375,7 +1375,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForConferenceDivisionAndAllstarTeamWhenSearchingByConferenceIdDivisionIdAndAllstarTeam() {
+            void shouldOnlyReturnEntriesForConferenceDivisionAndAllstarTeamWhenSearchingByConferenceIdDivisionIdAndAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(1).allstarTeam(0).build(),
@@ -1409,7 +1409,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithFourSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionId() {
+            void shouldReturnAllEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionId() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -1430,7 +1430,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionId() {
+            void shouldOnlyReturnEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionId() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -1460,7 +1460,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionIdAndConferenceIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionIdAndConferenceIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(2).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(2).allstarTeam(0).build(),
@@ -1484,7 +1484,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionIdAndDivisionIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearConferenceAndDivisionWhenSearchingByTeamIdYearConferenceIdAndDivisionIdAndDivisionIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(2).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(1).allstarTeam(0).build(),
@@ -1508,7 +1508,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeam() {
+            void shouldReturnAllEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeam() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -1529,7 +1529,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -1559,7 +1559,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeamAndConferenceIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeamAndConferenceIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(2).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(2).allstarTeam(0).build(),
@@ -1583,7 +1583,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeamAndAllstarTeamIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearConferenceAndAllstarTeamWhenSearchingByTeamIdYearConferenceIdAllstarTeamAndAllstarTeamIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(1).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(1).build(),
@@ -1607,7 +1607,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamYearDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeam() {
+            void shouldReturnAllEntriesForTeamYearDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeam() {
                 final List<Team> teamList = Collections.singletonList(
                         // Team ID & Year are the key fields, so only one record is possible
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
@@ -1628,7 +1628,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamYearDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamYearDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -1658,7 +1658,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamYearDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeamAndDivisionIsDifferent() {
+            void shouldReturnNoEntriesForTeamYearDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeamAndDivisionIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(2).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(2).conference(1).allstarTeam(0).build(),
@@ -1682,7 +1682,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForTeamDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeamAndAllstarTeamIsDifferent() {
+            void shouldReturnNoEntriesForTeamDivisionAndAllstarTeamWhenSearchingByTeamIdYearDivisionIdAllstarTeamAndAllstarTeamIsDifferent() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(1).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(1).build(),
@@ -1706,7 +1706,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamConferenceDivisionAndAllstarTeamWhenSearchingByTeamIdConferenceIdDivisionIdAllstarTeam() {
+            void shouldReturnAllEntriesForTeamConferenceDivisionAndAllstarTeamWhenSearchingByTeamIdConferenceIdDivisionIdAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(0).build(),
@@ -1728,7 +1728,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamConferenceDivisionAndAllstarTeamWhenSearchingByTeamIdConferenceIdDivisionIdAllstarTeam() {
+            void shouldOnlyReturnEntriesForTeamConferenceDivisionAndAllstarTeamWhenSearchingByTeamIdConferenceIdDivisionIdAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2001").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(1).conference(1).allstarTeam(0).build(),
@@ -1764,7 +1764,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearConferenceDivisionAndAllstarTeamWhenSearchingByYearConferenceIdDivisionIdAllstarTeam() {
+            void shouldReturnAllEntriesForYearConferenceDivisionAndAllstarTeamWhenSearchingByYearConferenceIdDivisionIdAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),
@@ -1786,7 +1786,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearConferenceDivisionAndAllstarTeamWhenSearchingByYearConferenceIdDivisionIdAllstarTeam() {
+            void shouldOnlyReturnEntriesForYearConferenceDivisionAndAllstarTeamWhenSearchingByYearConferenceIdDivisionIdAllstarTeam() {
                 final List<Team> teamList = Arrays.asList(
                         Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                         Team.builder().teamId(2).year("2002").division(1).conference(1).allstarTeam(0).build(),
@@ -1823,7 +1823,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<Team> teamList = Collections.singletonList(
                     Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build()
             );
@@ -1844,7 +1844,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("2000").division(1).conference(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2000").division(1).conference(1).allstarTeam(0).build(),

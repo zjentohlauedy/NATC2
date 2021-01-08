@@ -27,7 +27,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
     class AssignManagersToTeams {
 
         @Test
-        public void shouldAssignManagersToTeamsInOrderOfPreviousSeasonsStats() throws NATCException {
+        void shouldAssignManagersToTeamsInOrderOfPreviousSeasonsStats() throws NATCException {
             final List<Team> previousYearTeams = Arrays.asList(
                     Team.builder().teamId(1).year("1999").games(100).wins(55).build(),
                     Team.builder().teamId(2).year("1999").games(100).wins(40).build(),
@@ -63,7 +63,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
         }
 
         @Test
-        public void shouldOnlyConsiderPreviousSeasonTeamRecords() throws NATCException {
+        void shouldOnlyConsiderPreviousSeasonTeamRecords() throws NATCException {
             final List<Team> previousYearTeams = Arrays.asList(
                     Team.builder().teamId(1).year("1997").games(100).wins(55).build(),
                     Team.builder().teamId(1).year("1998").games(100).wins(40).build(),
@@ -97,7 +97,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
         }
 
         @Test
-        public void shouldOnlyConsiderRecordsForTheGivenTeams() throws NATCException {
+        void shouldOnlyConsiderRecordsForTheGivenTeams() throws NATCException {
             final List<Team> previousYearTeams = Arrays.asList(
                     Team.builder().teamId(1).year("1999").games(100).wins(55).build(),
                     Team.builder().teamId(2).year("1999").games(100).wins(35).build(),

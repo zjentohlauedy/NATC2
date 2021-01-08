@@ -37,28 +37,28 @@ class TeamDefenseSummarySearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<TeamDefenseSummaryResponse>> response = controller.search(null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallTeamDefenseSummarySearchService() {
+        void shouldCallTeamDefenseSummarySearchService() {
             controller.search(null, null, null);
 
             verify(searchService).fetchAll(any());
         }
 
         @Test
-        public void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
             final String year = "1989";
             final GameType type = GameType.REGULAR_SEASON;
             final Integer teamId = 33;
@@ -76,7 +76,7 @@ class TeamDefenseSummarySearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
             final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
 
             when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);
@@ -87,7 +87,7 @@ class TeamDefenseSummarySearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<TeamDefenseSummaryResponse> teamDefenseSummaryList = Collections.singletonList(new TeamDefenseSummaryResponse());
 
             when(searchService.fetchAll(any(TeamDefenseSummarySearchRequest.class))).thenReturn(teamDefenseSummaryList);

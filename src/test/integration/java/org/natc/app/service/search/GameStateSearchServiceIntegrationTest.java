@@ -30,7 +30,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAPlayerFromTheDatabaseMappedToAResponse() {
+        void shouldReturnAPlayerFromTheDatabaseMappedToAResponse() {
             final GameState gameState = GameState.builder()
                     .gameId(123)
                     .started(0)
@@ -51,7 +51,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldMapAllGameStateFieldsToTheGameStateResponse() {
+        void shouldMapAllGameStateFieldsToTheGameStateResponse() {
             final GameState gameState = GameState.builder()
                     .gameId(123)
                     .started(1)
@@ -86,7 +86,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnAllEntriesWhenSearchingWithoutValues() {
+        void shouldReturnAllEntriesWhenSearchingWithoutValues() {
             final List<GameState> gameStateList = Arrays.asList(
                     GameState.builder().gameId(1).build(),
                     GameState.builder().gameId(2).build(),
@@ -101,14 +101,14 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
             final List<GameStateResponse> result = searchService.fetchAll(new GameStateSearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldReturnAllEntriesForGameWhenSearchingByGameId() {
+        void shouldReturnAllEntriesForGameWhenSearchingByGameId() {
             final List<GameState> gameStateList = Collections.singletonList(
                     // Game ID is the key field, so only one record is possible
                     GameState.builder().gameId(1).build()
@@ -124,7 +124,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnOnlyEntriesForGameWhenSearchingByGameId() {
+        void shouldReturnOnlyEntriesForGameWhenSearchingByGameId() {
             final List<GameState> gameStateList = Arrays.asList(
                     GameState.builder().gameId(1).build(),
                     GameState.builder().gameId(2).build(),

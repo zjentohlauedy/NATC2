@@ -60,14 +60,14 @@ class ScheduleServiceTest {
     class GetCurrentScheduleEntry {
 
         @Test
-        public void shouldCallScheduleRepository() {
+        void shouldCallScheduleRepository() {
             scheduleService.getCurrentScheduleEntry();
 
             verify(scheduleRepository).findFirstByStatusOrderByScheduledDesc(ScheduleStatus.IN_PROGRESS.getValue());
         }
 
         @Test
-        public void shouldReturnScheduleReturnedByRepository() {
+        void shouldReturnScheduleReturnedByRepository() {
             final Schedule expectedSchedule = new Schedule();
 
             when(scheduleRepository.findFirstByStatusOrderByScheduledDesc(any())).thenReturn(Optional.of(expectedSchedule));
@@ -78,7 +78,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldReturnNullIfRepositoryDoesNotReturnASchedule() {
+        void shouldReturnNullIfRepositoryDoesNotReturnASchedule() {
             when(scheduleRepository.findFirstByStatusOrderByScheduledDesc(any())).thenReturn(Optional.empty());
 
             final Schedule actualSchedule = scheduleService.getCurrentScheduleEntry();
@@ -91,14 +91,14 @@ class ScheduleServiceTest {
     class GetLastScheduleEntry {
 
         @Test
-        public void shouldCallScheduleRepository() {
+        void shouldCallScheduleRepository() {
             scheduleService.getLastScheduleEntry();
 
             verify(scheduleRepository).findFirstByStatusOrderByScheduledDesc(ScheduleStatus.COMPLETED.getValue());
         }
 
         @Test
-        public void shouldReturnScheduleReturnedByRepository() {
+        void shouldReturnScheduleReturnedByRepository() {
             final Schedule expectedSchedule = new Schedule();
 
             when(scheduleRepository.findFirstByStatusOrderByScheduledDesc(any())).thenReturn(Optional.of(expectedSchedule));
@@ -109,7 +109,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldReturnNullIfRepositoryDoesNotReturnASchedule() {
+        void shouldReturnNullIfRepositoryDoesNotReturnASchedule() {
             when(scheduleRepository.findFirstByStatusOrderByScheduledDesc(any())).thenReturn(Optional.empty());
 
             final Schedule actualSchedule = scheduleService.getLastScheduleEntry();
@@ -122,7 +122,7 @@ class ScheduleServiceTest {
     class GetNextScheduleEntry {
 
         @Test
-        public void shouldCallScheduleRepositoryWithSameYearAndNextSequenceGivenASchedule() {
+        void shouldCallScheduleRepositoryWithSameYearAndNextSequenceGivenASchedule() {
             final Schedule input = Schedule.builder().year("2020").sequence(20).build();
 
             scheduleService.getNextScheduleEntry(input);
@@ -131,7 +131,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldCallScheduleRepositoryWithFirstSeasonAndSequenceGivenNullInput() {
+        void shouldCallScheduleRepositoryWithFirstSeasonAndSequenceGivenNullInput() {
             final String expectedYear = "1984";
 
             when(leagueConfiguration.getFirstSeason()).thenReturn(expectedYear);
@@ -142,7 +142,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldCallScheduleRepositoryWithNextYearAndFirstSequenceGiveEndOfSeasonSchedule() {
+        void shouldCallScheduleRepositoryWithNextYearAndFirstSequenceGiveEndOfSeasonSchedule() {
             final Schedule input = Schedule.builder().year("2020").sequence(45).type(ScheduleType.END_OF_SEASON.getValue()).build();
 
             scheduleService.getNextScheduleEntry(input);
@@ -151,7 +151,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldReturnScheduleReturnedByRepository() {
+        void shouldReturnScheduleReturnedByRepository() {
             final Schedule input = Schedule.builder().year("2020").sequence(1).build();
             final Schedule expectedSchedule = new Schedule();
 
@@ -167,14 +167,14 @@ class ScheduleServiceTest {
     class UpdateScheduleEntry {
 
         @Test
-        public void shouldCallScheduleRepository() {
+        void shouldCallScheduleRepository() {
             scheduleService.updateScheduleEntry(null);
 
             verify(scheduleRepository).save(any());
         }
 
         @Test
-        public void shouldCallScheduleRepositorySaveOnGivenSchedule() {
+        void shouldCallScheduleRepositorySaveOnGivenSchedule() {
             final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
             final Schedule expectedSchedule = Schedule.builder()
                     .year("2000")
@@ -201,7 +201,7 @@ class ScheduleServiceTest {
         private ArgumentCaptor<List<Schedule>> captor;
 
         @Test
-        public void shouldCallScheduleRepositoryToSaveAListOfSchedules() {
+        void shouldCallScheduleRepositoryToSaveAListOfSchedules() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("1999");
@@ -210,7 +210,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveABeginningOfSeasonScheduleEntryForJanuaryFirstOfGivenYear() {
+        void shouldSaveABeginningOfSeasonScheduleEntryForJanuaryFirstOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -231,7 +231,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAManagerChangesScheduleEntryForFirstMondayInFebruaryOfGivenYear() {
+        void shouldSaveAManagerChangesScheduleEntryForFirstMondayInFebruaryOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -252,7 +252,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAPlayerChangesScheduleEntryForFebruaryTwentyEightOfGivenYear() {
+        void shouldSaveAPlayerChangesScheduleEntryForFebruaryTwentyEightOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -273,7 +273,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveTheRookieDraftRoundOneScheduleEntryForFirstMondayInMarchOfGivenYear() {
+        void shouldSaveTheRookieDraftRoundOneScheduleEntryForFirstMondayInMarchOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -294,7 +294,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveTheRookieDraftRoundTwoScheduleEntryForTheDayAfterRoundOneOfGivenYear() {
+        void shouldSaveTheRookieDraftRoundTwoScheduleEntryForTheDayAfterRoundOneOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -315,7 +315,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveTheTrainingCampScheduleEntryForThirdMondayInMarchOfGivenYear() {
+        void shouldSaveTheTrainingCampScheduleEntryForThirdMondayInMarchOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -336,7 +336,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldCallScheduleDataGeneratorManagerToGetPreseasonScheduleDataGenerator() {
+        void shouldCallScheduleDataGeneratorManagerToGetPreseasonScheduleDataGenerator() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -345,7 +345,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldUseThePreseasonScheduleDataGeneratorToGenerateThePreseasonSchedule() {
+        void shouldUseThePreseasonScheduleDataGeneratorToGenerateThePreseasonSchedule() {
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
             when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
@@ -357,7 +357,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSavePreseasonScheduleEntriesFromScheduleDataGeneratorStartingFirstMondayInAprilOfGivenYear() {
+        void shouldSavePreseasonScheduleEntriesFromScheduleDataGeneratorStartingFirstMondayInAprilOfGivenYear() {
             final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -395,7 +395,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSchedulePreseasonGamesOnDifferentDays() {
+        void shouldSchedulePreseasonGamesOnDifferentDays() {
             final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -419,7 +419,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldNotSchedulePreseasonGamesOnTheWeekend() {
+        void shouldNotSchedulePreseasonGamesOnTheWeekend() {
             final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -444,7 +444,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSchedulePreseasonGamesOnConsecutiveWeekdays() {
+        void shouldSchedulePreseasonGamesOnConsecutiveWeekdays() {
             final List<ScheduleData> preseasonScheduleData = generateFakePreseasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -486,7 +486,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAEndOfPreseasonScheduleEntryForTheDayAfterPreseasonGames() {
+        void shouldSaveAEndOfPreseasonScheduleEntryForTheDayAfterPreseasonGames() {
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
             when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(generator);
@@ -515,7 +515,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveARosterCutScheduleEntryForAprilThirtiethOfGivenYear() {
+        void shouldSaveARosterCutScheduleEntryForAprilThirtiethOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -543,7 +543,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldCallScheduleDataGeneratorManagerToGetRegularSeasonScheduleDataGenerator() {
+        void shouldCallScheduleDataGeneratorManagerToGetRegularSeasonScheduleDataGenerator() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -552,7 +552,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldUseTheRegularSeasonScheduleDataGeneratorToGenerateTheRegularSeasonSchedule() {
+        void shouldUseTheRegularSeasonScheduleDataGeneratorToGenerateTheRegularSeasonSchedule() {
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
             when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
@@ -564,7 +564,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveRegularSeasonScheduleEntriesFromScheduleDataGeneratorStartingFirstMondayInMayOfGivenYear() {
+        void shouldSaveRegularSeasonScheduleEntriesFromScheduleDataGeneratorStartingFirstMondayInMayOfGivenYear() {
             final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -607,7 +607,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldScheduleRegularSeasonGamesOnDifferentDays() {
+        void shouldScheduleRegularSeasonGamesOnDifferentDays() {
             final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -631,7 +631,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldNotScheduleRegularSeasonGamesOnTheWeekend() {
+        void shouldNotScheduleRegularSeasonGamesOnTheWeekend() {
             final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -656,7 +656,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldScheduleRegularSeasonGamesOnConsecutiveWeekdays() {
+        void shouldScheduleRegularSeasonGamesOnConsecutiveWeekdays() {
             final List<ScheduleData> regularSeasonScheduleData = generateFakeRegularSeasonData();
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
@@ -697,7 +697,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAEndOfRegularSeasonScheduleEntryForTheDayAfterRegularSeasonGames() {
+        void shouldSaveAEndOfRegularSeasonScheduleEntryForTheDayAfterRegularSeasonGames() {
             final ScheduleDataGenerator generator = mock(ScheduleDataGenerator.class);
 
             when(scheduleDataGeneratorManager.getGeneratorFor(ScheduleType.PRESEASON)).thenReturn(mock(ScheduleDataGenerator.class));
@@ -726,7 +726,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAnAwardsScheduleEntryForTheMondayAfterEndOfRegularSeason() {
+        void shouldSaveAnAwardsScheduleEntryForTheMondayAfterEndOfRegularSeason() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -757,7 +757,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAPostseasonScheduleEntryForTheFridayAfterAwards() {
+        void shouldSaveAPostseasonScheduleEntryForTheFridayAfterAwards() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -788,7 +788,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveConfiguredNumberOfDivisionPlayoffScheduleEntriesStartingSundayAfterPostseason() {
+        void shouldSaveConfiguredNumberOfDivisionPlayoffScheduleEntriesStartingSundayAfterPostseason() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
@@ -833,7 +833,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveConfiguredNumberOfDivisionChampionshipScheduleEntriesStartingSundayAfterDivisionPlayoffs() {
+        void shouldSaveConfiguredNumberOfDivisionChampionshipScheduleEntriesStartingSundayAfterDivisionPlayoffs() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
@@ -876,7 +876,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveConfiguredNumberOfConferenceChampionshipScheduleEntriesStartingSundayAfterDivisionChampionships() {
+        void shouldSaveConfiguredNumberOfConferenceChampionshipScheduleEntriesStartingSundayAfterDivisionChampionships() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
@@ -920,7 +920,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveANATCChampionshipScheduleEntryForTheSundayAfterDivisionChampionships() {
+        void shouldSaveANATCChampionshipScheduleEntryForTheSundayAfterDivisionChampionships() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             when(leagueConfiguration.getPlayoffGamesRoundOne()).thenReturn(7);
@@ -952,7 +952,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAEndOfPostseasonScheduleEntryForTheDayAfterNATCChampionship() {
+        void shouldSaveAEndOfPostseasonScheduleEntryForTheDayAfterNATCChampionship() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -980,7 +980,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAnAllStarsScheduleEntryForTheDayAfterEndOfPostseason() {
+        void shouldSaveAnAllStarsScheduleEntryForTheDayAfterEndOfPostseason() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -1008,7 +1008,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAnAllStarDayOneScheduleEntryForTheSaturdayAfterAllStars() {
+        void shouldSaveAnAllStarDayOneScheduleEntryForTheSaturdayAfterAllStars() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -1039,7 +1039,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAnAllStarDayTwoScheduleEntryForTheDayAfterAllStarDayOne() {
+        void shouldSaveAnAllStarDayTwoScheduleEntryForTheDayAfterAllStarDayOne() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -1067,7 +1067,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAnEndOfAllStarGamesScheduleEntryForTheDayAfterAllStarDayTwo() {
+        void shouldSaveAnEndOfAllStarGamesScheduleEntryForTheDayAfterAllStarDayTwo() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");
@@ -1095,7 +1095,7 @@ class ScheduleServiceTest {
         }
 
         @Test
-        public void shouldSaveAnEndOfSeasonScheduleEntryForFirstMondayInNovemberFirstOfGivenYear() {
+        void shouldSaveAnEndOfSeasonScheduleEntryForFirstMondayInNovemberFirstOfGivenYear() {
             when(scheduleDataGeneratorManager.getGeneratorFor(any())).thenReturn(mock(ScheduleDataGenerator.class));
 
             scheduleService.generateSchedule("2005");

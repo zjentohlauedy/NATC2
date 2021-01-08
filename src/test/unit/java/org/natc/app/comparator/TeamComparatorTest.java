@@ -50,14 +50,14 @@ class TeamComparatorTest {
     class Compare {
 
         @Test
-        public void shouldReturnZeroIfWhenBothTeamsAreTheSameTeam() {
+        void shouldReturnZeroIfWhenBothTeamsAreTheSameTeam() {
             final Team team = Team.builder().teamId(1).year("2000").build();
 
             assertEquals(0, teamComparator.compare(team, team));
         }
 
         @Test
-        public void shouldReturnZeroWhenBothTeamsHaveNotPlayedAnyGames() {
+        void shouldReturnZeroWhenBothTeamsHaveNotPlayedAnyGames() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(0).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(0).build();
 
@@ -65,7 +65,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnZeroWhenBothTeamsHaveNullGames() {
+        void shouldReturnZeroWhenBothTeamsHaveNullGames() {
             final Team team1 = Team.builder().teamId(1).year("2000").build();
             final Team team2 = Team.builder().teamId(2).year("2000").build();
 
@@ -73,7 +73,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnZeroWhenOneTeamHasZeroGamesAndTheOtherHasNullGames() {
+        void shouldReturnZeroWhenOneTeamHasZeroGamesAndTheOtherHasNullGames() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(0).build();
             final Team team2 = Team.builder().teamId(2).year("2000").build();
             final Team team3 = Team.builder().teamId(1).year("2000").build();
@@ -86,7 +86,7 @@ class TeamComparatorTest {
         // vvv both teams have non-null games and at least one is non-zero vvv
 
         @Test
-        public void shouldReturnDifferenceBetweenPlayoffRanksWhenTeam1HasAHigherPlayoffRankThanTeam2() {
+        void shouldReturnDifferenceBetweenPlayoffRanksWhenTeam1HasAHigherPlayoffRankThanTeam2() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(1).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(0).build();
 
@@ -94,7 +94,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnNegativeDifferenceBetweenPlayoffRanksWhenTeam2HasAHigherPlayoffRankThanTeam1() {
+        void shouldReturnNegativeDifferenceBetweenPlayoffRanksWhenTeam2HasAHigherPlayoffRankThanTeam1() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(1).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(4).build();
 
@@ -102,7 +102,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnTeam1PlayoffRankWhenTeam1HasAPlayoffRankAndTeam2PlayoffRankIsNull() {
+        void shouldReturnTeam1PlayoffRankWhenTeam1HasAPlayoffRankAndTeam2PlayoffRankIsNull() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(2).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).build();
 
@@ -110,7 +110,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnNegativeTeam2PlayoffRankWhenTeam2HasAPlayoffRankAndTeam1PlayoffRankIsNull() {
+        void shouldReturnNegativeTeam2PlayoffRankWhenTeam2HasAPlayoffRankAndTeam1PlayoffRankIsNull() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(5).build();
 
@@ -120,7 +120,7 @@ class TeamComparatorTest {
         // vvv playoff ranks are the same vvv
 
         @Test
-        public void shouldReturnDifferenceBetweenWinsWhenTeam1HasHigherWinsThanTeam2() {
+        void shouldReturnDifferenceBetweenWinsWhenTeam1HasHigherWinsThanTeam2() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(0).wins(63).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(0).wins(55).build();
 
@@ -128,7 +128,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnNegativeDifferenceBetweenWinsWhenTeam2HasHigherWinsThanTeam1() {
+        void shouldReturnNegativeDifferenceBetweenWinsWhenTeam2HasHigherWinsThanTeam1() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(0).wins(46).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(0).wins(72).build();
 
@@ -136,7 +136,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnTeam1WinsWhenTeam1HasWinsAndTeam2WinsIsNull() {
+        void shouldReturnTeam1WinsWhenTeam1HasWinsAndTeam2WinsIsNull() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(0).wins(46).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(0).build();
 
@@ -144,7 +144,7 @@ class TeamComparatorTest {
         }
 
         @Test
-        public void shouldReturnNegativeTeam2WinsWhenTeam2HasWinsAndTeam1WinsIsNull() {
+        void shouldReturnNegativeTeam2WinsWhenTeam2HasWinsAndTeam1WinsIsNull() {
             final Team team1 = Team.builder().teamId(1).year("2000").games(100).playoffRank(0).build();
             final Team team2 = Team.builder().teamId(2).year("2000").games(100).playoffRank(0).wins(37).build();
 
@@ -157,7 +157,7 @@ class TeamComparatorTest {
         class WhenSameDivision {
 
             @Test
-            public void shouldReturnOneWhenTeam1HasABetterDivisionRecordThanTeam2() {
+            void shouldReturnOneWhenTeam1HasABetterDivisionRecordThanTeam2() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(10).divisionLosses(6).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(12).divisionLosses(9).build();
 
@@ -165,7 +165,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnNegativeOneWhenTeam2HasABetterDivisionRecordThanTeam1() {
+            void shouldReturnNegativeOneWhenTeam2HasABetterDivisionRecordThanTeam1() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(10).divisionLosses(8).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(12).divisionLosses(9).build();
 
@@ -173,7 +173,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldTreatZeroDivisionWinsAndLossesAsHavingARecordOfZero() {
+            void shouldTreatZeroDivisionWinsAndLossesAsHavingARecordOfZero() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(1).divisionLosses(0).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(0).divisionLosses(0).build();
                 final Team team3 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(0).divisionLosses(0).build();
@@ -184,7 +184,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldTreatAnyNullDivisionWinsOrLossesAsHavingARecordOfZero() {
+            void shouldTreatAnyNullDivisionWinsOrLossesAsHavingARecordOfZero() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(1).divisionLosses(0).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(null).divisionLosses(0).build();
                 final Team team3 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).divisionWins(0).divisionLosses(null).build();
@@ -201,7 +201,7 @@ class TeamComparatorTest {
         class CompareHeadToHead {
 
             @Test
-            public void shouldCallTeamGameRepositoryToGetTeam1WinsVsTeam2WhenDifferentDivisions() {
+            void shouldCallTeamGameRepositoryToGetTeam1WinsVsTeam2WhenDifferentDivisions() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -217,7 +217,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldCallTeamGameRepositoryToGetTeam1WinsVsTeam2WhenSameDivisionsAndSameDivisionRecord() {
+            void shouldCallTeamGameRepositoryToGetTeam1WinsVsTeam2WhenSameDivisionsAndSameDivisionRecord() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(2).games(100).playoffRank(0).wins(46).divisionWins(14).divisionLosses(8).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).divisionWins(14).divisionLosses(8).build();
 
@@ -233,7 +233,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldCallTeamGameRepositoryToGetTeam2WinsVsTeam1WhenDifferentDivisions() {
+            void shouldCallTeamGameRepositoryToGetTeam2WinsVsTeam1WhenDifferentDivisions() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -249,7 +249,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldCallTeamGameRepositoryToGetTeam2WinsVsTeam1WhenSameDivisionsAndSameDivisionRecord() {
+            void shouldCallTeamGameRepositoryToGetTeam2WinsVsTeam1WhenSameDivisionsAndSameDivisionRecord() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(2).games(100).playoffRank(0).wins(46).divisionWins(14).divisionLosses(8).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).divisionWins(14).divisionLosses(8).build();
 
@@ -265,7 +265,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnDifferenceBetweenHeadToHeadWinsWhenTeam1HasHigherWinsThanTeam2() {
+            void shouldReturnDifferenceBetweenHeadToHeadWinsWhenTeam1HasHigherWinsThanTeam2() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -288,7 +288,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnNegativeDifferenceBetweenHeadToHeadWinsWhenTeam2HasHigherWinsThanTeam1() {
+            void shouldReturnNegativeDifferenceBetweenHeadToHeadWinsWhenTeam2HasHigherWinsThanTeam1() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -317,7 +317,7 @@ class TeamComparatorTest {
         class CompareScoringDifferential {
 
             @Test
-            public void shouldCallTeamOffenseSummaryToGetOffenseStatsForTeam1ThenTeam2() {
+            void shouldCallTeamOffenseSummaryToGetOffenseStatsForTeam1ThenTeam2() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -341,7 +341,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldCallTeamDefenseSummaryToGetDefenseStatsForTeam1ThenTeam2() {
+            void shouldCallTeamDefenseSummaryToGetDefenseStatsForTeam1ThenTeam2() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -365,7 +365,7 @@ class TeamComparatorTest {
             }
             
             @Test
-            public void shouldReturnTheDifferenceBetweenScoringDifferentialsWhenTeam1HasHigherDifferentialThanTeam2() {
+            void shouldReturnTheDifferenceBetweenScoringDifferentialsWhenTeam1HasHigherDifferentialThanTeam2() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(555).build();
@@ -385,7 +385,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnTheNegativeDifferenceBetweenScoringDifferentialsWhenTeam2HasHigherDifferentialThanTeam1() {
+            void shouldReturnTheNegativeDifferenceBetweenScoringDifferentialsWhenTeam2HasHigherDifferentialThanTeam1() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(420).build();
@@ -405,7 +405,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnTheDifferenceBetweenScoringDifferentialsWhenTeam1HasHigherDifferentialThanTeam2WhenDifferentialsAreNegative() {
+            void shouldReturnTheDifferenceBetweenScoringDifferentialsWhenTeam1HasHigherDifferentialThanTeam2WhenDifferentialsAreNegative() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(537).build();
@@ -425,7 +425,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnTheNegativeDifferenceBetweenScoringDifferentialsWhenTeam2HasHigherDifferentialThanTeam1WhenDifferentialsAreNegative() {
+            void shouldReturnTheNegativeDifferenceBetweenScoringDifferentialsWhenTeam2HasHigherDifferentialThanTeam1WhenDifferentialsAreNegative() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(404).build();
@@ -445,7 +445,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldReturnZeroWhenBothTeamsHaveTheSameDifferential() {
+            void shouldReturnZeroWhenBothTeamsHaveTheSameDifferential() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(500).build();
@@ -465,7 +465,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldTreatMissingDefenseSummaryRecordsAsAScoreOfZero() {
+            void shouldTreatMissingDefenseSummaryRecordsAsAScoreOfZero() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamOffenseSummary team1OffenseSummary = TeamOffenseSummary.builder().score(500).build();
@@ -480,7 +480,7 @@ class TeamComparatorTest {
             }
 
             @Test
-            public void shouldTreatMissingOffenseSummaryRecordsAsAScoreOfZero() {
+            void shouldTreatMissingOffenseSummaryRecordsAsAScoreOfZero() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 final TeamDefenseSummary team1DefenseSummary = TeamDefenseSummary.builder().score(400).build();

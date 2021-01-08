@@ -42,21 +42,21 @@ class TeamSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfTeamResponses() {
+        void shouldReturnAListOfTeamResponses() {
             final List<TeamResponse> result = teamSearchService.fetchAll(new TeamSearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheTeamRepositoryWithAnExampleTeam() {
+        void shouldCallTheTeamRepositoryWithAnExampleTeam() {
             teamSearchService.fetchAll(new TeamSearchRequest());
 
             verify(teamRepository).findAll(ArgumentMatchers.<Example<Team>>any());
         }
 
         @Test
-        public void shouldCallTeamRepositoryWithExampleTeamBasedOnRequest() {
+        void shouldCallTeamRepositoryWithExampleTeamBasedOnRequest() {
             final TeamSearchRequest request = TeamSearchRequest.builder()
                     .teamId(123)
                     .year("1999")
@@ -80,7 +80,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldSetAllstarTeamTo0WhenArgIsFalse() {
+        void shouldSetAllstarTeamTo0WhenArgIsFalse() {
             final TeamSearchRequest request = TeamSearchRequest.builder().allstarTeam(false).build();
 
             teamSearchService.fetchAll(request);
@@ -91,7 +91,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldSetAllstarTeamTo1WhenArgIsTrue() {
+        void shouldSetAllstarTeamTo1WhenArgIsTrue() {
             final TeamSearchRequest request = TeamSearchRequest.builder().allstarTeam(true).build();
 
             teamSearchService.fetchAll(request);
@@ -102,7 +102,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldSetAllstarTeamToNullWhenArgIsNull() {
+        void shouldSetAllstarTeamToNullWhenArgIsNull() {
             teamSearchService.fetchAll(new TeamSearchRequest());
 
             verify(teamRepository).findAll(captor.capture());
@@ -111,7 +111,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnTeamResponsesMappedFromTheTeamsReturnedByRepository() {
+        void shouldReturnTeamResponsesMappedFromTheTeamsReturnedByRepository() {
             final Team team = generateTeam();
 
             when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
@@ -160,7 +160,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenFalse() {
             final Team team = Team.builder().allstarTeam(0).build();
 
             when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
@@ -175,7 +175,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenTrue() {
             final Team team = Team.builder().allstarTeam(1).build();
 
             when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
@@ -190,7 +190,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapAllstarTeamValueFromIntegerToBooleanInResponseWhenNull() {
             final Team team = new Team();
 
             when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(Collections.singletonList(team));
@@ -205,7 +205,7 @@ class TeamSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsTeamsReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsTeamsReturnedByRepository() {
             final List<Team> teamList = Arrays.asList(new Team(), new Team(), new Team());
 
             when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(teamList);

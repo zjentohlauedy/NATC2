@@ -12,14 +12,14 @@ class ScheduleDataTest {
     class ToString {
 
         @Test
-        public void shouldReturnAString() {
+        void shouldReturnAString() {
             final ScheduleData scheduleData = new ScheduleData();
 
             assertFalse(scheduleData.toString().isBlank());
         }
 
         @Test
-        public void shouldEncodeTheNumberOfGamesInTheFirstCharacterAsASCIIZeroPlusValue() {
+        void shouldEncodeTheNumberOfGamesInTheFirstCharacterAsASCIIZeroPlusValue() {
             final ScheduleData scheduleData = new ScheduleData();
 
             assertEquals('0', scheduleData.toString().charAt(0));
@@ -41,7 +41,7 @@ class ScheduleDataTest {
         }
 
         @Test
-        public void shouldEncodeEachMatchAsRoadFollowedByHomeAsASCIIZeroPlusValue() {
+        void shouldEncodeEachMatchAsRoadFollowedByHomeAsASCIIZeroPlusValue() {
             final ScheduleData scheduleData = new ScheduleData();
 
             scheduleData.getMatches().add(new ScheduleData.Match(11, 21));
@@ -50,7 +50,7 @@ class ScheduleDataTest {
         }
 
         @Test
-        public void shouldEncodeEveryMatch() {
+        void shouldEncodeEveryMatch() {
             final ScheduleData scheduleData = new ScheduleData();
 
             scheduleData.getMatches().add(new ScheduleData.Match(1, 20));

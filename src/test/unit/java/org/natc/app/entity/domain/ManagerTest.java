@@ -300,7 +300,7 @@ class ManagerTest {
         @Nested
         class WhenSeasonsAndTotalSeasonsAreTheSame {
             @Test
-            public void ShouldReturnScoreDividedBySeasons() {
+            void ShouldReturnScoreDividedBySeasons() {
                 assertEquals((12.0 / 5.0),
                         Manager.builder().score(12).seasons(5).totalScore(12).totalSeasons(5).build().getPerformanceRating()
                 );
@@ -320,7 +320,7 @@ class ManagerTest {
         }
 
         @Test
-        public void ShouldReturnTheGreaterOfSeasonsScoreRatioOrTotalSeasonsTotalScoreRatio() {
+        void ShouldReturnTheGreaterOfSeasonsScoreRatioOrTotalSeasonsTotalScoreRatio() {
             assertEquals((12.0 / 5.0),
                     Manager.builder().score(12).seasons(5).totalScore(10).totalSeasons(8).build().getPerformanceRating()
             );

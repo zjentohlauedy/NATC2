@@ -33,28 +33,28 @@ class PreseasonScheduleDataGeneratorTest {
     class Generate {
 
         @BeforeEach
-        public void setup() {
+        void setup() {
             when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
             when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
             when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
         }
 
         @Test
-        public void shouldReturnAListOfScheduleDataObjects() {
+        void shouldReturnAListOfScheduleDataObjects() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
         }
 
         @Test
-        public void shouldReturnAsManyScheduleDataObjectsAsThereAreDaysInPreseason() {
+        void shouldReturnAsManyScheduleDataObjectsAsThereAreDaysInPreseason() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertEquals(leagueConfiguration.getDaysInPreseason(), scheduleDataList.size());
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryDayIsComprisedOfEveryTeam() {
+        void shouldReturnScheduleDataWhereEveryDayIsComprisedOfEveryTeam() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -72,7 +72,7 @@ class PreseasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
+        void shouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -83,7 +83,7 @@ class PreseasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -97,7 +97,7 @@ class PreseasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesAtHome() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesAtHome() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -111,7 +111,7 @@ class PreseasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesOnTheRoad() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesOnTheRoad() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -125,7 +125,7 @@ class PreseasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnSchedleDateWhereEveryTeamPlaysADifferentTeamEveryGame() {
+        void shouldReturnSchedleDateWhereEveryTeamPlaysADifferentTeamEveryGame() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -142,7 +142,7 @@ class PreseasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnADifferentResultEveryTime() {
+        void shouldReturnADifferentResultEveryTime() {
             final List<ScheduleData> firstRun = generator.generate();
             final List<ScheduleData> secondRun = generator.generate();
 

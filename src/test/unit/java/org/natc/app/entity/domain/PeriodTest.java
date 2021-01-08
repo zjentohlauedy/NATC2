@@ -12,17 +12,17 @@ class PeriodTest {
     class GetByValue {
 
         @Test
-        public void shouldReturnNullWhenGivenNull() {
+        void shouldReturnNullWhenGivenNull() {
             assertNull(Period.getByValue(null));
         }
 
         @Test
-        public void shouldReturnNullWhenGivenInvalidValue() {
+        void shouldReturnNullWhenGivenInvalidValue() {
             assertNull(Period.getByValue(10));
         }
 
         @Test
-        public void shouldReturnAppropriateEnumWhenGivenValidValue() {
+        void shouldReturnAppropriateEnumWhenGivenValidValue() {
             assertEquals(Period.NONE, Period.getByValue(0));
             assertEquals(Period.FIRST, Period.getByValue(1));
             assertEquals(Period.SECOND, Period.getByValue(2));
@@ -36,12 +36,12 @@ class PeriodTest {
     class GetValueFor {
 
         @Test
-        public void shouldReturnNullWhenGivenNull() {
+        void shouldReturnNullWhenGivenNull() {
             assertNull(Period.getValueFor(null));
         }
 
         @Test
-        public void shouldReturnAppropriateValueGivenValidPeriod() {
+        void shouldReturnAppropriateValueGivenValidPeriod() {
             assertEquals(0, Period.getValueFor(Period.NONE));
             assertEquals(1, Period.getValueFor(Period.FIRST));
             assertEquals(2, Period.getValueFor(Period.SECOND));

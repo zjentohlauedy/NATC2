@@ -20,7 +20,7 @@ class PlayerTest {
     class GetOffensiveRating {
 
         @Test
-        public void shouldReturnAverageOfScoringPassingAndBlockingRatings() {
+        void shouldReturnAverageOfScoringPassingAndBlockingRatings() {
             assertEquals(1.0,
                     Player.builder().scoring(1.0).passing(1.0).blocking(1.0).build().getOffensiveRating(),
                     0.0001
@@ -44,7 +44,7 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnZeroIfAnyOffensiveRatingIsNull() {
+        void shouldReturnZeroIfAnyOffensiveRatingIsNull() {
             assertEquals(0, Player.builder().scoring(1.0).passing(1.0).blocking(null).build().getOffensiveRating());
             assertEquals(0, Player.builder().scoring(1.0).passing(null).blocking(1.0).build().getOffensiveRating());
             assertEquals(0, Player.builder().scoring(1.0).passing(null).blocking(null).build().getOffensiveRating());
@@ -59,7 +59,7 @@ class PlayerTest {
     class GetDefensiveRating {
 
         @Test
-        public void shouldReturnAverageOfTacklingStealingAndPresenceRatings() {
+        void shouldReturnAverageOfTacklingStealingAndPresenceRatings() {
             assertEquals(1.0,
                     Player.builder().tackling(1.0).stealing(1.0).presence(1.0).build().getDefensiveRating(),
                     0.0001
@@ -83,7 +83,7 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnZeroIfAnyDefensiveRatingIsNull() {
+        void shouldReturnZeroIfAnyDefensiveRatingIsNull() {
             assertEquals(0.0, Player.builder().tackling(1.0).stealing(1.0).presence(null).build().getDefensiveRating());
             assertEquals(0.0, Player.builder().tackling(1.0).stealing(null).presence(1.0).build().getDefensiveRating());
             assertEquals(0.0, Player.builder().tackling(1.0).stealing(null).presence(null).build().getDefensiveRating());
@@ -98,7 +98,7 @@ class PlayerTest {
     class GetIntangibleRating {
 
         @Test
-        public void shouldReturnAverageOfBlockingPresenceDisciplineAndEndurance() {
+        void shouldReturnAverageOfBlockingPresenceDisciplineAndEndurance() {
             assertEquals(1.0,
                     Player.builder().blocking(1.0).presence(1.0).discipline(1.0).endurance(1.0).build().getIntangibleRating(),
                     0.0001
@@ -122,7 +122,7 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnZeroIfAnyIntangibleRatingIsNull() {
+        void shouldReturnZeroIfAnyIntangibleRatingIsNull() {
             assertEquals(0,
                     Player.builder().blocking(1.0).presence(1.0).discipline(1.0).endurance(null).build().getIntangibleRating()
             );
@@ -169,7 +169,7 @@ class PlayerTest {
     class GetPenaltyRating {
 
         @Test
-        public void shouldReturnAverageOfPenaltyShotPenaltyOffenseAndPenaltyDefense() {
+        void shouldReturnAverageOfPenaltyShotPenaltyOffenseAndPenaltyDefense() {
             assertEquals(1.0,
                     Player.builder().penaltyShot(1.0).penaltyOffense(1.0).penaltyDefense(1.0).build().getPenaltyRating(),
                     0.0001
@@ -193,7 +193,7 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnZeroIfAnyPenaltyRatingIsNull() {
+        void shouldReturnZeroIfAnyPenaltyRatingIsNull() {
             assertEquals(0.0, Player.builder().penaltyShot(1.0).penaltyOffense(1.0).penaltyDefense(null).build().getPenaltyRating());
             assertEquals(0.0, Player.builder().penaltyShot(1.0).penaltyOffense(null).penaltyDefense(1.0).build().getPenaltyRating());
             assertEquals(0.0, Player.builder().penaltyShot(1.0).penaltyOffense(null).penaltyDefense(null).build().getPenaltyRating());
@@ -208,7 +208,7 @@ class PlayerTest {
     class GetPerformanceRating {
 
         @Test
-        public void shouldReturnAverageOfScoringPassingBlockingTacklingStealingPresenceDisciplineAndEndurance() {
+        void shouldReturnAverageOfScoringPassingBlockingTacklingStealingPresenceDisciplineAndEndurance() {
             assertEquals(1.0,
                     Player.builder()
                             .scoring(1.0).passing(1.0).blocking(1.0)
@@ -252,7 +252,7 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnZeroIfAnyRatingIsNull() {
+        void shouldReturnZeroIfAnyRatingIsNull() {
             assertEquals(0.0, Player.builder()
                     .scoring(null).passing(1.0).blocking(1.0)
                     .tackling(1.0).stealing(1.0).presence(1.0)
@@ -308,28 +308,28 @@ class PlayerTest {
     class Generate {
 
         @Test
-        public void shouldReturnAPlayer() {
+        void shouldReturnAPlayer() {
             final Player player = Player.generate(null, null, null, null);
 
             assertNotNull(player);
         }
 
         @Test
-        public void shouldReturnAPlayerWithTheGivenPlayerId() {
+        void shouldReturnAPlayerWithTheGivenPlayerId() {
             final Player player = Player.generate(321, null, null, null);
 
             assertEquals(321, player.getPlayerId());
         }
 
         @Test
-        public void shouldReturnAPlayerWithTheGivenYear() {
+        void shouldReturnAPlayerWithTheGivenYear() {
             final Player player = Player.generate(null, "2020", null, null);
 
             assertEquals("2020", player.getYear());
         }
 
         @Test
-        public void shouldReturnAPlayerWithTheGivenName() {
+        void shouldReturnAPlayerWithTheGivenName() {
             final Player player = Player.generate(null, null, "David", "Montgomery");
 
             assertEquals("David", player.getFirstName());
@@ -337,14 +337,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithWithAnAgeBetweenEighteenAndThirty() {
+        void shouldReturnAPlayerWithWithAnAgeBetweenEighteenAndThirty() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getAge() >= 18 && player.getAge() <= 30);
         }
 
         @Test
-        public void shouldChooseThePlayerAgeRandomly() {
+        void shouldChooseThePlayerAgeRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -357,14 +357,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAScoringRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAScoringRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getScoring() >= 0.0 && player.getScoring() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheScoringRatingRandomly() {
+        void shouldChooseTheScoringRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -377,14 +377,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAPassingRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAPassingRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getPassing() >= 0.0 && player.getPassing() <= 1.0);
         }
 
         @Test
-        public void shouldChooseThePassingRatingRandomly() {
+        void shouldChooseThePassingRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -397,14 +397,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithABlockingRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithABlockingRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getBlocking() >= 0.0 && player.getBlocking() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheBlockingRatingRandomly() {
+        void shouldChooseTheBlockingRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -417,14 +417,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithATacklingRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithATacklingRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getTackling() >= 0.0 && player.getTackling() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheTacklingRatingRandomly() {
+        void shouldChooseTheTacklingRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -437,14 +437,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAStealingRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAStealingRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getStealing() >= 0.0 && player.getStealing() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheStealingRatingRandomly() {
+        void shouldChooseTheStealingRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -457,14 +457,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAPresenceRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAPresenceRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getPresence() >= 0.0 && player.getPresence() <= 1.0);
         }
 
         @Test
-        public void shouldChooseThePresenceRatingRandomly() {
+        void shouldChooseThePresenceRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -477,14 +477,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithADisciplineRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithADisciplineRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getDiscipline() >= 0.0 && player.getDiscipline() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheDisciplineRatingRandomly() {
+        void shouldChooseTheDisciplineRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -497,14 +497,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAPenaltyShotRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAPenaltyShotRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getPenaltyShot() >= 0.0 && player.getPenaltyShot() <= 1.0);
         }
 
         @Test
-        public void shouldChooseThePenaltyShotRatingRandomly() {
+        void shouldChooseThePenaltyShotRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -517,14 +517,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAPenaltyOffenseRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAPenaltyOffenseRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getPenaltyOffense() >= 0.0 && player.getPenaltyOffense() <= 1.0);
         }
 
         @Test
-        public void shouldChooseThePenaltyOffenseRatingRandomly() {
+        void shouldChooseThePenaltyOffenseRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -537,14 +537,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAPenaltyDefenseRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAPenaltyDefenseRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getPenaltyDefense() >= 0.0 && player.getPenaltyDefense() <= 1.0);
         }
 
         @Test
-        public void shouldChooseThePenaltyDefenseRatingRandomly() {
+        void shouldChooseThePenaltyDefenseRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -557,14 +557,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAnEnduranceRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAnEnduranceRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getEndurance() >= 0.0 && player.getEndurance() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheEnduranceRatingRandomly() {
+        void shouldChooseTheEnduranceRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -577,14 +577,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAConfidenceRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAConfidenceRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getConfidence() >= 0.0 && player.getConfidence() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheConfidenceRatingRandomly() {
+        void shouldChooseTheConfidenceRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -597,14 +597,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithAVitalityRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithAVitalityRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getVitality() >= 0.0 && player.getVitality() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheVitalityRatingRandomly() {
+        void shouldChooseTheVitalityRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -617,14 +617,14 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerWithADurabilityRatingBetweenZeroAndOne() {
+        void shouldReturnAPlayerWithADurabilityRatingBetweenZeroAndOne() {
             final Player player = Player.generate(null, null, null, null);
 
             assertTrue(player.getDurability() >= 0.0 && player.getDurability() <= 1.0);
         }
 
         @Test
-        public void shouldChooseTheDurabilityRatingRandomly() {
+        void shouldChooseTheDurabilityRatingRandomly() {
             final List<Player> players = new ArrayList<>();
 
             for (int i = 0; i <= 100; i++) {
@@ -637,56 +637,56 @@ class PlayerTest {
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotARookie() {
+        void shouldReturnAPlayerThatIsNotARookie() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getRookie()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotInjured() {
+        void shouldReturnAPlayerThatIsNotInjured() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getInjured()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotAFreeAgent() {
+        void shouldReturnAPlayerThatIsNotAFreeAgent() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getFreeAgent()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotSignedToATeam() {
+        void shouldReturnAPlayerThatIsNotSignedToATeam() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getSigned()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotReleased() {
+        void shouldReturnAPlayerThatIsNotReleased() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getReleased()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotRetired() {
+        void shouldReturnAPlayerThatIsNotRetired() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getRetired()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatIsNotAnAllstarAlternate() {
+        void shouldReturnAPlayerThatIsNotAnAllstarAlternate() {
             final Player player = Player.generate(null, null, null, null);
 
             assertFalse(valueOf(player.getAllstarAlternate()));
         }
 
         @Test
-        public void shouldReturnAPlayerThatHasZeroSeasonsPlayed() {
+        void shouldReturnAPlayerThatHasZeroSeasonsPlayed() {
             final Player player = Player.generate(null, null, null, null);
 
             assertEquals(0, player.getSeasonsPlayed());

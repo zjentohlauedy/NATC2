@@ -12,17 +12,17 @@ class BooleanHelperTest {
     class ValueOf {
 
         @Test
-        public void shouldReturnNullWhenArgumentIsNull() {
+        void shouldReturnNullWhenArgumentIsNull() {
             assertNull(BooleanHelper.valueOf(null));
         }
 
         @Test
-        public void shouldReturnTrueWhenArgumentValueIs1() {
+        void shouldReturnTrueWhenArgumentValueIs1() {
             assertEquals(true, BooleanHelper.valueOf(1));
         }
 
         @Test
-        public void shouldReturnFalseWhenArgumentValueIs0() {
+        void shouldReturnFalseWhenArgumentValueIs0() {
             assertEquals(false, BooleanHelper.valueOf(0));
         }
     }

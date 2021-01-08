@@ -38,7 +38,7 @@ class ScheduleProcessorManagerTest {
     class GetProcessorFor {
 
         @Test
-        public void shouldGetScheduleProcessorBeanFromApplicationContext() {
+        void shouldGetScheduleProcessorBeanFromApplicationContext() {
             when(scheduleTypeProcessorMap.get(any(ScheduleType.class))).thenReturn("bean-name");
 
             scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
@@ -47,7 +47,7 @@ class ScheduleProcessorManagerTest {
         }
 
         @Test
-        public void shouldGetBeanFromApplicationContextBasedOnScheduleType() {
+        void shouldGetBeanFromApplicationContextBasedOnScheduleType() {
             final String expectedBeanName = "my-bean-name";
             final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
@@ -63,7 +63,7 @@ class ScheduleProcessorManagerTest {
         }
 
         @Test
-        public void shouldReturnTheScheduleProcessorFoundInTheApplicationContext() {
+        void shouldReturnTheScheduleProcessorFoundInTheApplicationContext() {
             final ScheduleProcessor expectedScheduleProcessor = mock(ScheduleProcessor.class);
 
             when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn("bean-name");

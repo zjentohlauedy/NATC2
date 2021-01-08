@@ -38,28 +38,28 @@ class TeamGameSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<TeamGameResponse>> response = controller.search(null, null, null, null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallTeamGameSearchService() {
+        void shouldCallTeamGameSearchService() {
             controller.search(null, null, null, null, null, null);
 
             verify(searchService).fetchAll(any(TeamGameSearchRequest.class));
         }
 
         @Test
-        public void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForSearchServiceUsingRequestParameters() {
             final Integer gameId = 24;
             final String year = "1998";
             final LocalDate datestamp = LocalDate.now();
@@ -83,7 +83,7 @@ class TeamGameSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingResponsesReturnedBySearchService() {
             final List<TeamGameResponse> teamGameList = Collections.singletonList(new TeamGameResponse());
 
             when(searchService.fetchAll(any(TeamGameSearchRequest.class))).thenReturn(teamGameList);
@@ -94,7 +94,7 @@ class TeamGameSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<TeamGameResponse> teamGameList = Collections.singletonList(new TeamGameResponse());
 
             when(searchService.fetchAll(any(TeamGameSearchRequest.class))).thenReturn(teamGameList);

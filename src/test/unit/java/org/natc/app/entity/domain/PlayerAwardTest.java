@@ -22,7 +22,7 @@ class PlayerAwardTest {
         }
 
         @Test
-        public void shouldReturnAppropriateEnumWhenGivenValidValue() {
+        void shouldReturnAppropriateEnumWhenGivenValidValue() {
             assertEquals(PlayerAward.NONE, PlayerAward.getByValue(0));
             assertEquals(PlayerAward.SILVER, PlayerAward.getByValue(1));
             assertEquals(PlayerAward.GOLD, PlayerAward.getByValue(2));

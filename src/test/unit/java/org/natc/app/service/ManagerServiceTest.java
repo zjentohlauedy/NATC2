@@ -58,26 +58,26 @@ class ManagerServiceTest {
     class GenerateManagers {
 
         @BeforeEach
-        public void setup() throws NATCException {
+        void setup() throws NATCException {
             when(nameService.generateName()).thenReturn(FullName.builder().build());
         }
 
         @Test
-        public void shouldReturnAListOfManagersGenerated() throws NATCException {
+        void shouldReturnAListOfManagersGenerated() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers(null, 1);
 
             assertFalse(managerList.isEmpty());
         }
 
         @Test
-        public void shouldCreateTheGivenNumberOfManagers() throws NATCException {
+        void shouldCreateTheGivenNumberOfManagers() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers(null, 10);
 
             assertEquals(10, managerList.size());
         }
 
         @Test
-        public void shouldCreateManagersForTheGivenYear() throws NATCException {
+        void shouldCreateManagersForTheGivenYear() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2017", 10);
 
             final Set<String> years = managerList.stream().map(Manager::getYear).collect(Collectors.toSet());
@@ -87,14 +87,14 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerRepositoryToGetTheLastManagerId() throws NATCException {
+        void shouldCallManagerRepositoryToGetTheLastManagerId() throws NATCException {
             managerService.generateManagers("2001", 1);
 
             verify(managerRepository).findMaxManagerId();
         }
 
         @Test
-        public void shouldSetTheManagerIdToTheNumberAfterTheMaxValueReturnedByRepository() throws NATCException {
+        void shouldSetTheManagerIdToTheNumberAfterTheMaxValueReturnedByRepository() throws NATCException {
             when(managerRepository.findMaxManagerId()).thenReturn(Optional.of(27));
 
             final List<Manager> managerList = managerService.generateManagers("2017", 1);
@@ -104,7 +104,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldSetTheManagerIdToOneIfNoValueIsFoundInTheRepository() throws NATCException {
+        void shouldSetTheManagerIdToOneIfNoValueIsFoundInTheRepository() throws NATCException {
             when(managerRepository.findMaxManagerId()).thenReturn(Optional.empty());
 
             final List<Manager> managerList = managerService.generateManagers("2017", 1);
@@ -114,14 +114,14 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldOnlyGetTheMaxManagerIdOnceEvenWhenGeneratingMultipleManagers() throws NATCException {
+        void shouldOnlyGetTheMaxManagerIdOnceEvenWhenGeneratingMultipleManagers() throws NATCException {
             managerService.generateManagers("2001", 10);
 
             verify(managerRepository, atMostOnce()).findMaxManagerId();
         }
 
         @Test
-        public void shouldGenerateEveryManagerWithAManagerId() throws NATCException {
+        void shouldGenerateEveryManagerWithAManagerId() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2017", 10);
 
             assertEquals(10, managerList.size());
@@ -129,7 +129,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldGenerateManagersWithUniqueManagerIdsIncrementingFromMaxValueInRepository() throws NATCException {
+        void shouldGenerateManagersWithUniqueManagerIdsIncrementingFromMaxValueInRepository() throws NATCException {
             when(managerRepository.findMaxManagerId()).thenReturn(Optional.of(27));
 
             final List<Manager> managerList = managerService.generateManagers("2017", 5);
@@ -141,21 +141,21 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallNameServiceToGenerateANameForTheManager() throws NATCException {
+        void shouldCallNameServiceToGenerateANameForTheManager() throws NATCException {
             managerService.generateManagers("2001", 1);
 
             verify(nameService).generateName();
         }
 
         @Test
-        public void shouldGenerateANameForEveryManager() throws NATCException {
+        void shouldGenerateANameForEveryManager() throws NATCException {
             managerService.generateManagers("2001", 25);
 
             verify(nameService, times(25)).generateName();
         }
 
         @Test
-        public void shouldSetTheNamesFromNameServiceOnTheGeneratedManagers() throws NATCException {
+        void shouldSetTheNamesFromNameServiceOnTheGeneratedManagers() throws NATCException {
             reset(nameService);
 
             when(nameService.generateName())
@@ -178,7 +178,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldGenerateManagersBetweenFortyAndFiftyYearsOld() throws NATCException {
+        void shouldGenerateManagersBetweenFortyAndFiftyYearsOld() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2001", 100);
 
             assertEquals(100, managerList.size());
@@ -187,7 +187,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldGenerateManagersWithARandomAge() throws NATCException {
+        void shouldGenerateManagersWithARandomAge() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2001", 100);
 
             assertEquals(100, managerList.size());
@@ -198,7 +198,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldInitializeNewHireReleasedAndRetiredFlags() throws NATCException {
+        void shouldInitializeNewHireReleasedAndRetiredFlags() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
 
             assertEquals(1, managerList.size());
@@ -211,7 +211,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldInitializeSeasonsCountersToZero() throws NATCException {
+        void shouldInitializeSeasonsCountersToZero() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
 
             assertEquals(1, managerList.size());
@@ -223,7 +223,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldInitializeScoreAccumulatorsToZero() throws NATCException {
+        void shouldInitializeScoreAccumulatorsToZero() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
 
             assertEquals(1, managerList.size());
@@ -235,7 +235,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldSetManagerRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
+        void shouldSetManagerRatingsToRandomValueBetweenZeroAndOne() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
 
             assertEquals(1, managerList.size());
@@ -250,14 +250,14 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerAnalyzerToGetTheAppropriateManagerStyle() throws NATCException {
+        void shouldCallManagerAnalyzerToGetTheAppropriateManagerStyle() throws NATCException {
             managerService.generateManagers("2001", 1);
 
             verify(managerAnalyzer).determineManagerStyle(any(Manager.class));
         }
 
         @Test
-        public void shouldPassTheGeneratedManagerToTheManagerAnalyzer() throws NATCException {
+        void shouldPassTheGeneratedManagerToTheManagerAnalyzer() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
 
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
@@ -273,7 +273,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldSetTheManagerStyleWithTheValueReturnedFromTheManagerAnalyzer() throws NATCException {
+        void shouldSetTheManagerStyleWithTheValueReturnedFromTheManagerAnalyzer() throws NATCException {
             when(managerAnalyzer.determineManagerStyle(any())).thenReturn(ManagerStyle.DEFENSIVE);
 
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
@@ -284,7 +284,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerAnalyzerForEveryManagerGenerated() throws NATCException {
+        void shouldCallManagerAnalyzerForEveryManagerGenerated() throws NATCException {
             when(managerAnalyzer.determineManagerStyle(any()))
                     .thenReturn(ManagerStyle.OFFENSIVE)
                     .thenReturn(ManagerStyle.DEFENSIVE)
@@ -304,14 +304,14 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerRepositoryToPersistGeneratedManager() throws NATCException {
+        void shouldCallManagerRepositoryToPersistGeneratedManager() throws NATCException {
             managerService.generateManagers("2001", 1);
 
             verify(managerRepository).save(any(Manager.class));
         }
 
         @Test
-        public void shouldCallManagerRepositoryWithGeneratedManager() throws NATCException {
+        void shouldCallManagerRepositoryWithGeneratedManager() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
 
             final List<Manager> managerList = managerService.generateManagers("2001", 1);
@@ -327,7 +327,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerRepositoryForEveryManagerGenerated() throws NATCException {
+        void shouldCallManagerRepositoryForEveryManagerGenerated() throws NATCException {
             managerService.generateManagers("2001", 10);
 
             verify(managerRepository, times(10)).save(any(Manager.class));
@@ -338,7 +338,7 @@ class ManagerServiceTest {
     class GenerateManagerFromPlayer {
 
         @Test
-        public void shouldGenerateAManagerForTheGivenYear() {
+        void shouldGenerateAManagerForTheGivenYear() {
             final Player player = Player.builder().playerId(1).year("2006").age(35).build();
 
             final Manager manager = managerService.generateManagerFromPlayer("2016", player);
@@ -347,7 +347,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldReturnAManagerWithTheSameNameAsThePlayer() {
+        void shouldReturnAManagerWithTheSameNameAsThePlayer() {
             final Player player = Player.builder().playerId(1).year("2006").age(35).firstName("Ralph").lastName("Johnson").build();
 
             final Manager manager = managerService.generateManagerFromPlayer("2016", player);
@@ -357,7 +357,7 @@ class ManagerServiceTest {
         }
         
         @Test
-        public void shouldReturnAManagerWithTheSameAgeAsThePlayerWouldBeInCurrentYear() {
+        void shouldReturnAManagerWithTheSameAgeAsThePlayerWouldBeInCurrentYear() {
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
 
             final Manager manager = managerService.generateManagerFromPlayer("2016", player);
@@ -366,7 +366,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldReturnAManagerWithRatingsBasedOnThePlayerRatings() {
+        void shouldReturnAManagerWithRatingsBasedOnThePlayerRatings() {
             final Player player = Player.builder()
                     .playerId(1)
                     .year("2006")
@@ -396,7 +396,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldReturnAManagerWithPlayerIdOfGivenPlayer() {
+        void shouldReturnAManagerWithPlayerIdOfGivenPlayer() {
             final Player player = Player.builder().playerId(15243).year("2006").age(32).build();
 
             final Manager manager = managerService.generateManagerFromPlayer("2016", player);
@@ -405,7 +405,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerRepositoryToGetTheLastManagerId() throws NATCException {
+        void shouldCallManagerRepositoryToGetTheLastManagerId() throws NATCException {
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
 
             managerService.generateManagerFromPlayer("2016", player);
@@ -414,7 +414,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldSetTheManagerIdToTheNumberAfterTheMaxValueReturnedByRepository() throws NATCException {
+        void shouldSetTheManagerIdToTheNumberAfterTheMaxValueReturnedByRepository() throws NATCException {
             when(managerRepository.findMaxManagerId()).thenReturn(Optional.of(27));
 
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
@@ -425,7 +425,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldSetTheManagerIdToOneIfNoValueIsFoundInTheRepository() throws NATCException {
+        void shouldSetTheManagerIdToOneIfNoValueIsFoundInTheRepository() throws NATCException {
             when(managerRepository.findMaxManagerId()).thenReturn(Optional.empty());
 
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
@@ -436,7 +436,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerAnalyzerToGetTheAppropriateManagerStyle() throws NATCException {
+        void shouldCallManagerAnalyzerToGetTheAppropriateManagerStyle() throws NATCException {
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
 
             managerService.generateManagerFromPlayer("2016", player);
@@ -445,7 +445,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldPassTheGeneratedManagerToTheManagerAnalyzer() throws NATCException {
+        void shouldPassTheGeneratedManagerToTheManagerAnalyzer() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
 
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
@@ -460,7 +460,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldSetTheManagerStyleWithTheValueReturnedFromTheManagerAnalyzer() throws NATCException {
+        void shouldSetTheManagerStyleWithTheValueReturnedFromTheManagerAnalyzer() throws NATCException {
             when(managerAnalyzer.determineManagerStyle(any())).thenReturn(ManagerStyle.DEFENSIVE);
 
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
@@ -471,7 +471,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerRepositoryToPersistGeneratedManager() throws NATCException {
+        void shouldCallManagerRepositoryToPersistGeneratedManager() throws NATCException {
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
 
             managerService.generateManagerFromPlayer("2016", player);
@@ -480,7 +480,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldCallManagerRepositoryWithGeneratedManager() throws NATCException {
+        void shouldCallManagerRepositoryWithGeneratedManager() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
 
             final Player player = Player.builder().playerId(1).year("2006").age(32).build();
@@ -499,7 +499,7 @@ class ManagerServiceTest {
     class UpdateManager {
 
         @Test
-        public void shouldCallTheManagerRepositoryToSaveTheGivenManager() {
+        void shouldCallTheManagerRepositoryToSaveTheGivenManager() {
             final Manager manager = Manager.builder().managerId(1234).build();
 
             managerService.updateManager(manager);
@@ -512,14 +512,14 @@ class ManagerServiceTest {
     class UpdateManagersForNewSeason {
 
         @Test
-        public void shouldCallTheRepositoryToCopyManagersForNewYear() {
+        void shouldCallTheRepositoryToCopyManagersForNewYear() {
             managerService.updateManagersForNewSeason(null, null);
 
             verify(managerRepository).copyManagersForNewYear(any(), any());
         }
 
         @Test
-        public void shouldCallPassThePreviousYearAndNewYearToTheRepository() {
+        void shouldCallPassThePreviousYearAndNewYearToTheRepository() {
             managerService.updateManagersForNewSeason("2001", "2010");
 
             verify(managerRepository).copyManagersForNewYear("2001", "2010");
@@ -530,7 +530,7 @@ class ManagerServiceTest {
     class GetActiveManagersForYear {
 
         @Test
-        public void shouldCallRepositoryToRetrieveManagersForGivenYearThatAreNotRetired() {
+        void shouldCallRepositoryToRetrieveManagersForGivenYearThatAreNotRetired() {
             managerService.getActiveManagersForYear("1999");
 
             verify(managerRepository).findAll(captor.capture());
@@ -542,7 +542,7 @@ class ManagerServiceTest {
         }
 
         @Test
-        public void shouldReturnTheManagersReturnedByTheRepository() {
+        void shouldReturnTheManagersReturnedByTheRepository() {
             final List<Manager> expectedManagers = Collections.singletonList(Manager.builder().managerId(1).build());
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(expectedManagers);
@@ -557,7 +557,7 @@ class ManagerServiceTest {
     class UpdateManagers {
 
         @Test
-        public void shouldCallTheManagerRepositoryToSaveTheGivenManagerList() {
+        void shouldCallTheManagerRepositoryToSaveTheGivenManagerList() {
             final List<Manager> managerList = Collections.singletonList(Manager.builder().managerId(1).year("2000").build());
 
             managerService.updateManagers(managerList);

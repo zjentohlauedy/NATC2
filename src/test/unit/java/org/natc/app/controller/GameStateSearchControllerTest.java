@@ -36,28 +36,28 @@ class GameStateSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<GameStateResponse>> response = gameStateSearchController.search(null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallGameStateSearchService() {
+        void shouldCallGameStateSearchService() {
             gameStateSearchController.search(null);
 
             verify(gameStateSearchService).fetchAll(any(GameStateSearchRequest.class));
         }
 
         @Test
-        public void shouldConstructRequestObjectForGameStateSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForGameStateSearchServiceUsingRequestParameters() {
             final Integer gameId = 123;
             final ArgumentCaptor<GameStateSearchRequest> captor = ArgumentCaptor.forClass(GameStateSearchRequest.class);
 
@@ -71,7 +71,7 @@ class GameStateSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingGameStatesReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingGameStatesReturnedBySearchService() {
             final List<GameStateResponse> gameStateList = Collections.singletonList(new GameStateResponse());
 
             when(gameStateSearchService.fetchAll(any(GameStateSearchRequest.class))).thenReturn(gameStateList);
@@ -82,7 +82,7 @@ class GameStateSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<GameStateResponse> gameStateList = Collections.singletonList(new GameStateResponse());
 
             when(gameStateSearchService.fetchAll(any(GameStateSearchRequest.class))).thenReturn(gameStateList);

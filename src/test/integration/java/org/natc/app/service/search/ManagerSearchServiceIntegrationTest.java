@@ -31,7 +31,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAManagerFromTheDatabaseMappedToAResponse() {
+        void shouldReturnAManagerFromTheDatabaseMappedToAResponse() {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("1998")
@@ -56,7 +56,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldMapAllManagerFieldsToTheManagerResponse() {
+        void shouldMapAllManagerFieldsToTheManagerResponse() {
             final Manager manager = Manager.builder()
                     .managerId(123)
                     .teamId(321)
@@ -117,7 +117,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnAllEntriesWhenSearchingWithoutValues() {
+        void shouldReturnAllEntriesWhenSearchingWithoutValues() {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2000").teamId(2).playerId(3).build(),
                     Manager.builder().managerId(2).year("2001").teamId(3).playerId(4).build(),
@@ -134,7 +134,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
             final ManagerSearchRequest request = ManagerSearchRequest.builder().build();
 
             final List<ManagerResponse> result = managerSearchService.fetchAll(request);
@@ -146,7 +146,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithOneSearchParameter {
 
             @Test
-            public void shouldReturnAllEntriesForManagerWhenSearchingByManagerId() {
+            void shouldReturnAllEntriesForManagerWhenSearchingByManagerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(1).year("2001").teamId(2).playerId(2).build(),
@@ -165,7 +165,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerWhenSearchingByManagerId() {
+            void shouldOnlyReturnEntriesForManagerWhenSearchingByManagerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(1).playerId(1).build(),
@@ -187,7 +187,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
+            void shouldReturnAllEntriesForYearWhenSearchingByYear() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(2).playerId(2).build(),
@@ -206,7 +206,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
+            void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(1).year("2001").teamId(1).playerId(1).build(),
@@ -228,7 +228,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
+            void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(2).build(),
@@ -247,7 +247,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
+            void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(2).playerId(1).build(),
@@ -269,7 +269,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForPlayerWhenSearchingByPlayerId() {
+            void shouldReturnAllEntriesForPlayerWhenSearchingByPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(2).playerId(1).build(),
@@ -288,7 +288,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForPlayerWhenSearchingByPlayerId() {
+            void shouldOnlyReturnEntriesForPlayerWhenSearchingByPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(1).playerId(2).build(),
@@ -314,7 +314,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithTwoSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForManagerAndYearWhenSearchingByManagerIdAndYear() {
+            void shouldReturnAllEntriesForManagerAndYearWhenSearchingByManagerIdAndYear() {
                 final List<Manager> managerList = Collections.singletonList(
                         // Manager ID & Year are the key fields, so only one record is possible
                         Manager.builder().managerId(1).year("2000").teamId(2).playerId(3).build()
@@ -333,7 +333,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerAndYearWhenSearchingByManagerIdAndYear() {
+            void shouldOnlyReturnEntriesForManagerAndYearWhenSearchingByManagerIdAndYear() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(3).playerId(4).build(),
                         Manager.builder().managerId(2).year("2001").teamId(3).playerId(4).build(),
@@ -356,7 +356,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForManagerAndTeamWhenSearchingByManagerIdAndTeamId() {
+            void shouldReturnAllEntriesForManagerAndTeamWhenSearchingByManagerIdAndTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(1).year("2001").teamId(1).playerId(2).build(),
@@ -376,7 +376,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerAndTeamWhenSearchingByManagerIdAndTeamId() {
+            void shouldOnlyReturnEntriesForManagerAndTeamWhenSearchingByManagerIdAndTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -403,7 +403,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForManagerAndPlayerWhenSearchingByManagerIdAndPlayerId() {
+            void shouldReturnAllEntriesForManagerAndPlayerWhenSearchingByManagerIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(1).year("2001").teamId(2).playerId(1).build(),
@@ -423,7 +423,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerAndPlayerWhenSearchingByManagerIdAndPlayerId() {
+            void shouldOnlyReturnEntriesForManagerAndPlayerWhenSearchingByManagerIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -450,7 +450,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
+            void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(1).playerId(2).build(),
@@ -470,7 +470,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
+            void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -497,7 +497,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndPlayerWhenSearchingByYearAndPlayerId() {
+            void shouldReturnAllEntriesForYearAndPlayerWhenSearchingByYearAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(2).playerId(1).build(),
@@ -517,7 +517,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndPlayerWhenSearchingByYearAndPlayerId() {
+            void shouldOnlyReturnEntriesForYearAndPlayerWhenSearchingByYearAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -544,7 +544,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamAndPlayerWhenSearchingByTeamIdAndPlayerId() {
+            void shouldReturnAllEntriesForTeamAndPlayerWhenSearchingByTeamIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -564,7 +564,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamAndPlayerWhenSearchingByTeamIdAndPlayerId() {
+            void shouldOnlyReturnEntriesForTeamAndPlayerWhenSearchingByTeamIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(2).playerId(1).build(),
@@ -595,7 +595,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithThreeSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForManagerYearAndTeamWhenSearchingByManagerIdYearAndTeamId() {
+            void shouldReturnAllEntriesForManagerYearAndTeamWhenSearchingByManagerIdYearAndTeamId() {
                 final List<Manager> managerList = Collections.singletonList(
                         // Manager ID & Year are the key fields, so only one record is possible
                         Manager.builder().managerId(1).year("2000").teamId(2).playerId(3).build()
@@ -615,7 +615,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerYearAndTeamWhenSearchingByManagerIdYearAndTeamId() {
+            void shouldOnlyReturnEntriesForManagerYearAndTeamWhenSearchingByManagerIdYearAndTeamId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(3).playerId(4).build(),
                         Manager.builder().managerId(2).year("2001").teamId(4).playerId(5).build(),
@@ -639,7 +639,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForManagerYearAndTeamWhenSearchingByManagerIdYearAndTeamIdAndTeamIdIsDifferent() {
+            void shouldReturnNoEntriesForManagerYearAndTeamWhenSearchingByManagerIdYearAndTeamIdAndTeamIdIsDifferent() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(3).playerId(4).build(),
                         Manager.builder().managerId(2).year("2001").teamId(4).playerId(5).build(),
@@ -660,7 +660,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForManagerYearAndPlayerWhenSearchingByManagerIdYearAndPlayerId() {
+            void shouldReturnAllEntriesForManagerYearAndPlayerWhenSearchingByManagerIdYearAndPlayerId() {
                 final List<Manager> managerList = Collections.singletonList(
                         // Manager ID & Year are the key fields, so only one record is possible
                         Manager.builder().managerId(1).year("2000").teamId(2).playerId(3).build()
@@ -680,7 +680,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerYearAndPlayerWhenSearchingByManagerIdYearAndPlayerId() {
+            void shouldOnlyReturnEntriesForManagerYearAndPlayerWhenSearchingByManagerIdYearAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(3).playerId(4).build(),
                         Manager.builder().managerId(2).year("2001").teamId(4).playerId(5).build(),
@@ -704,7 +704,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnNoEntriesForManagerYearAndPlayerWhenSearchingByManagerIdYearAndPlayerIdAndPlayerIdIsDifferent() {
+            void shouldReturnNoEntriesForManagerYearAndPlayerWhenSearchingByManagerIdYearAndPlayerIdAndPlayerIdIsDifferent() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(3).playerId(4).build(),
                         Manager.builder().managerId(2).year("2001").teamId(4).playerId(5).build(),
@@ -725,7 +725,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForManagerTeamAndPlayerWhenSearchingByManagerIdTeamIdAndPlayerId() {
+            void shouldReturnAllEntriesForManagerTeamAndPlayerWhenSearchingByManagerIdTeamIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(1).year("2001").teamId(1).playerId(1).build(),
@@ -746,7 +746,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForManagerTeamAndPlayerWhenSearchingByManagerIdTeamIdAndPlayerId() {
+            void shouldOnlyReturnEntriesForManagerTeamAndPlayerWhenSearchingByManagerIdTeamIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -776,7 +776,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearTeamAndPlayerWhenSearchingByYearTeamIdAndPlayerId() {
+            void shouldReturnAllEntriesForYearTeamAndPlayerWhenSearchingByYearTeamIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2000").teamId(1).playerId(1).build(),
@@ -797,7 +797,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearTeamAndPlayerWhenSearchingByYearTeamIdAndPlayerId() {
+            void shouldOnlyReturnEntriesForYearTeamAndPlayerWhenSearchingByYearTeamIdAndPlayerId() {
                 final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                         Manager.builder().managerId(2).year("2001").teamId(1).playerId(1).build(),
@@ -828,7 +828,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<Manager> managerList = Collections.singletonList(
                     Manager.builder().managerId(1).year("2000").teamId(2).playerId(3).build()
             );
@@ -848,7 +848,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2000").teamId(1).playerId(1).build(),
                     Manager.builder().managerId(2).year("2000").teamId(1).playerId(1).build(),

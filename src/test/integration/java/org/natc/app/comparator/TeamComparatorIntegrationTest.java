@@ -39,7 +39,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
         class HeadToHead {
 
             @Test
-            public void shouldDetermineHeadToHeadResultsFromTeamGameRecords() {
+            void shouldDetermineHeadToHeadResultsFromTeamGameRecords() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -63,7 +63,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderTeamGamesForTheSameYearAsTheGivenTeams() {
+            void shouldOnlyConsiderTeamGamesForTheSameYearAsTheGivenTeams() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -90,7 +90,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderTeamGamesThatAreBetweenTheGivenTeams() {
+            void shouldOnlyConsiderTeamGamesThatAreBetweenTheGivenTeams() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -122,7 +122,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderWins() {
+            void shouldOnlyConsiderWins() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -149,7 +149,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderRegularSeasonGames() {
+            void shouldOnlyConsiderRegularSeasonGames() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -180,7 +180,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
         class ScoringDifferential {
             
             @Test
-            public void shouldDetermineScoringDifferentialDifferenceFromTeamOffenseAndTeamDefenseSummaryRecords() {
+            void shouldDetermineScoringDifferentialDifferenceFromTeamOffenseAndTeamDefenseSummaryRecords() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
                 
@@ -201,7 +201,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderRecordsForTheSameYearAsTheGivenTeam() {
+            void shouldOnlyConsiderRecordsForTheSameYearAsTheGivenTeam() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -222,7 +222,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderRegularSeasonRecords() {
+            void shouldOnlyConsiderRegularSeasonRecords() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 
@@ -243,7 +243,7 @@ class TeamComparatorIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyConsiderRecordsForTheGivenTeams() {
+            void shouldOnlyConsiderRecordsForTheGivenTeams() {
                 final Team team1 = Team.builder().teamId(1).year("2000").division(1).games(100).playoffRank(0).wins(46).build();
                 final Team team2 = Team.builder().teamId(2).year("2000").division(2).games(100).playoffRank(0).wins(46).build();
 

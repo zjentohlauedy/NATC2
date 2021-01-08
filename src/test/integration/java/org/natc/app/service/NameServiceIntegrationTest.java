@@ -44,7 +44,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GenerateName {
 
         @Test
-        public void shouldBuildNameFromDataInFirstNameAndLastNameTables() throws NATCException {
+        void shouldBuildNameFromDataInFirstNameAndLastNameTables() throws NATCException {
             firstNameRepository.save(FirstName.builder().name("Joe").frequency(1.0).build());
             lastNameRepository.save(LastName.builder().name("Blow").frequency(1.0).build());
 
@@ -55,7 +55,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldChooseFirstNamesRandomly() throws NATCException {
+        void shouldChooseFirstNamesRandomly() throws NATCException {
             final List<FirstName> firstNameList = Arrays.asList(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("John").frequency(1.0).build(),
@@ -84,7 +84,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldChooseLastNamesRandomly() throws NATCException {
+        void shouldChooseLastNamesRandomly() throws NATCException {
             final List<LastName> lastNameList = Arrays.asList(
                     LastName.builder().name("Smith").frequency(1.0).build(),
                     LastName.builder().name("Johnson").frequency(1.0).build(),
@@ -113,7 +113,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldChooseHighFrequencyFirstNamesMoreOftenThanLowFrequencyFirstNames() throws NATCException {
+        void shouldChooseHighFrequencyFirstNamesMoreOftenThanLowFrequencyFirstNames() throws NATCException {
             final List<FirstName> firstNameList = Arrays.asList(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(0.001).build()
@@ -140,7 +140,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldChooseHighFrequencyLastNamesMoreOftenThanLowFrequencyLastNames() throws NATCException {
+        void shouldChooseHighFrequencyLastNamesMoreOftenThanLowFrequencyLastNames() throws NATCException {
             final List<FirstName> firstNameList = Arrays.asList(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(1.0).build()
@@ -167,7 +167,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldNotGenerateANameThatAlreadyExistsAsAManager() throws NATCException {
+        void shouldNotGenerateANameThatAlreadyExistsAsAManager() throws NATCException {
             final List<FirstName> firstNameList = Arrays.asList(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(1.0).build()
@@ -195,7 +195,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldNotGenerateANameThatAlreadyExistsAsAPlayer() throws NATCException {
+        void shouldNotGenerateANameThatAlreadyExistsAsAPlayer() throws NATCException {
             final List<FirstName> firstNameList = Arrays.asList(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(1.0).build()

@@ -34,7 +34,7 @@ class RegularSeasonScheduleDataGeneratorTest {
     class Generate {
 
         @BeforeEach
-        public void setup() {
+        void setup() {
             when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
             when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
             when(leagueConfiguration.getTeamsPerConference()).thenReturn(20);
@@ -43,14 +43,14 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnAListOfScheduleDataObjects() {
+        void shouldReturnAListOfScheduleDataObjects() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
         }
 
         @Test
-        public void shouldReturnAsManyScheduleDataObjectsAsThereAreDaysInRegularSeason() {
+        void shouldReturnAsManyScheduleDataObjectsAsThereAreDaysInRegularSeason() {
             when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
 
             final List<ScheduleData> scheduleDataList = generator.generate();
@@ -59,7 +59,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryDayIsComprisedOfEveryTeam() {
+        void shouldReturnScheduleDataWhereEveryDayIsComprisedOfEveryTeam() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -77,7 +77,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
+        void shouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -88,7 +88,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
             when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
 
             final List<ScheduleData> scheduleDataList = generator.generate();
@@ -104,7 +104,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesAtHome() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesAtHome() {
             when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
 
             final List<ScheduleData> scheduleDataList = generator.generate();
@@ -120,7 +120,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesOnTheRoad() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesOnTheRoad() {
             when(leagueConfiguration.getDaysInRegularSeason()).thenReturn(100);
 
             final List<ScheduleData> scheduleDataList = generator.generate();
@@ -136,7 +136,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysOtherTeamsInOwnDivisionTeamsSevenTimes() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysOtherTeamsInOwnDivisionTeamsSevenTimes() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -161,7 +161,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysThreeOrFourHomeAndRoadGamesWithinDivision() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysThreeOrFourHomeAndRoadGamesWithinDivision() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -201,7 +201,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysOtherTeamsInRivalDivisionTeamsThreeTimes() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysOtherTeamsInRivalDivisionTeamsThreeTimes() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -226,7 +226,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysOneOrTwoHomeAndRoadGamesAgainstRivalDivision() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysOneOrTwoHomeAndRoadGamesAgainstRivalDivision() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -266,7 +266,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysSevenGamesAgainstCrossConferenceTeams() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysSevenGamesAgainstCrossConferenceTeams() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -283,7 +283,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnScheduleDataWhereEveryTeamPlaysThreeOrFourHomeAndRoadGamesAgainstCrossConferenceTeams() {
+        void shouldReturnScheduleDataWhereEveryTeamPlaysThreeOrFourHomeAndRoadGamesAgainstCrossConferenceTeams() {
             final List<ScheduleData> scheduleDataList = generator.generate();
 
             assertFalse(scheduleDataList.isEmpty());
@@ -313,7 +313,7 @@ class RegularSeasonScheduleDataGeneratorTest {
         }
 
         @Test
-        public void shouldReturnADifferentResultEveryTime() {
+        void shouldReturnADifferentResultEveryTime() {
             final List<ScheduleData> firstRun = generator.generate();
             final List<ScheduleData> secondRun = generator.generate();
 

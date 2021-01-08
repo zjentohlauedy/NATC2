@@ -29,7 +29,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
     class FetchAll {
 
         @Test
-        public void shouldReturnATeamOffenseSummaryFromTheDatabaseMappedToAResponse() {
+        void shouldReturnATeamOffenseSummaryFromTheDatabaseMappedToAResponse() {
             final TeamOffenseSummary teamOffenseSummary = TeamOffenseSummary.builder()
                     .year("2004")
                     .teamId(16)
@@ -58,7 +58,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         }
 
         @Test
-        public void shouldMapAllTeamFieldsToTheResponse() {
+        void shouldMapAllTeamFieldsToTheResponse() {
             final TeamOffenseSummary teamOffenseSummary = TeamOffenseSummary.builder()
                     .year("2016")
                     .type(GameType.REGULAR_SEASON.getValue())
@@ -107,7 +107,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         }
 
         @Test
-        public void shouldReturnAllEntriesWhenSearchingWithoutValues() {
+        void shouldReturnAllEntriesWhenSearchingWithoutValues() {
             final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                     TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                     TeamOffenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
@@ -122,7 +122,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         }
 
         @Test
-        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
             final List<TeamOffenseSummaryResponse> result = searchService.fetchAll(new TeamOffenseSummarySearchRequest());
 
             assertEquals(0, result.size());
@@ -132,7 +132,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         class WithOneSearchParameter {
 
             @Test
-            public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
+            void shouldReturnAllEntriesForYearWhenSearchingByYear() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
@@ -151,7 +151,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
+            void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
@@ -173,7 +173,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldReturnAllEntriesForTypeWhenSearchingByType() {
+            void shouldReturnAllEntriesForTypeWhenSearchingByType() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(2).build(),
@@ -192,7 +192,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTypeWhenSearchingByType() {
+            void shouldOnlyReturnEntriesForTypeWhenSearchingByType() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2000").type(GameType.POSTSEASON.getValue()).teamId(1).build(),
@@ -214,7 +214,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
+            void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2001").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
@@ -233,7 +233,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
+            void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(2).build(),
@@ -259,7 +259,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         class WithTwoSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForYearAndTypeWhenSearchingByYearAndType() {
+            void shouldReturnAllEntriesForYearAndTypeWhenSearchingByYearAndType() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(2).build(),
@@ -279,7 +279,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndTypeWhenSearchingByYearAndType() {
+            void shouldOnlyReturnEntriesForYearAndTypeWhenSearchingByYearAndType() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
@@ -306,7 +306,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
+            void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
@@ -326,7 +326,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
+            void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
@@ -353,7 +353,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldReturnAllEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
+            void shouldReturnAllEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),
@@ -373,7 +373,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
+            void shouldOnlyReturnEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
                 final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                         TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                         TeamOffenseSummary.builder().year("2000").type(GameType.REGULAR_SEASON.getValue()).teamId(1).build(),
@@ -401,7 +401,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         }
 
         @Test
-        public void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<TeamOffenseSummary> teamOffenseSummaries = Collections.singletonList(
                     TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build()
             );
@@ -420,7 +420,7 @@ class TeamOffenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
         }
 
         @Test
-        public void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<TeamOffenseSummary> teamOffenseSummaries = Arrays.asList(
                     TeamOffenseSummary.builder().year("2000").type(GameType.PRESEASON.getValue()).teamId(1).build(),
                     TeamOffenseSummary.builder().year("2001").type(GameType.PRESEASON.getValue()).teamId(1).build(),

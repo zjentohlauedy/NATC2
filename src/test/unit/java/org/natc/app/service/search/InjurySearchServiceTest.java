@@ -38,21 +38,21 @@ class InjurySearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfInjuryResponses() {
+        void shouldReturnAListOfInjuryResponses() {
             final List<InjuryResponse> result = service.fetchAll(new InjurySearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheInjuryRepositoryWithAnExampleInjury() {
+        void shouldCallTheInjuryRepositoryWithAnExampleInjury() {
             service.fetchAll(new InjurySearchRequest());
 
             verify(repository).findAll(ArgumentMatchers.<Example<Injury>>any());
         }
 
         @Test
-        public void shouldCallInjuryRepositoryWithExampleInjuryBasedOnRequest() {
+        void shouldCallInjuryRepositoryWithExampleInjuryBasedOnRequest() {
             final InjurySearchRequest request = InjurySearchRequest.builder()
                     .gameId(123)
                     .playerId(4321)
@@ -71,7 +71,7 @@ class InjurySearchServiceTest {
         }
 
         @Test
-        public void shouldReturnInjuryResponsesMappedFromTheInjuriesReturnedByRepository() {
+        void shouldReturnInjuryResponsesMappedFromTheInjuriesReturnedByRepository() {
             final Injury injury = generateInjury();
 
             when(repository.findAll(ArgumentMatchers.<Example<Injury>>any())).thenReturn(Collections.singletonList(injury));

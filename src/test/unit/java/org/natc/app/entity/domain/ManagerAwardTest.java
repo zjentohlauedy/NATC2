@@ -22,7 +22,7 @@ class ManagerAwardTest {
         }
 
         @Test
-        public void shouldReturnAppropriateEnumWhenGivenValidValue() {
+        void shouldReturnAppropriateEnumWhenGivenValidValue() {
             assertEquals(ManagerAward.NONE, ManagerAward.getByValue(0));
             assertEquals(ManagerAward.MANAGER_OF_THE_YEAR, ManagerAward.getByValue(1));
         }

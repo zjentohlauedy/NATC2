@@ -5,7 +5,7 @@ import org.natc.app.entity.domain.TeamOffenseSummary;
 import org.natc.app.repository.TeamOffenseSummaryRepository
 import org.springframework.beans.factory.annotation.Autowired
 
-public class TeamOffenseSummarySearchTest extends NATCFunctionalTest {
+class TeamOffenseSummarySearchTest extends NATCFunctionalTest {
 
     @Autowired
     TeamOffenseSummaryRepository repository

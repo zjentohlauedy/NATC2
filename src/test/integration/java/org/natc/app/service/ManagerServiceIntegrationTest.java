@@ -38,12 +38,12 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GenerateManagers {
 
         @BeforeEach
-        public void setup() {
+        void setup() {
             testHelpers.seedFirstAndLastNames();
         }
 
         @Test
-        public void generateManagers_ShouldCreateTheGivenNumberOfManagersInTheDatabase() throws NATCException {
+        void generateManagers_ShouldCreateTheGivenNumberOfManagersInTheDatabase() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -52,7 +52,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateAllManagersForTheGivenYear() throws NATCException {
+        void generateManagers_ShouldCreateAllManagersForTheGivenYear() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -61,7 +61,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithAUniqueName() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithAUniqueName() throws NATCException {
             managerService.generateManagers("1234", 1000);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -72,7 +72,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithAUniqueManagerId() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithAUniqueManagerId() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -83,7 +83,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithAnAgeBetweenFortyAndFifty() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithAnAgeBetweenFortyAndFifty() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -92,7 +92,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithRatingsBetweenZeroAndOne() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithRatingsBetweenZeroAndOne() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -105,7 +105,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithNewHireReleasedAndRetiredAsZero() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithNewHireReleasedAndRetiredAsZero() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -116,7 +116,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithScoresAndSeasonsAsZero() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithScoresAndSeasonsAsZero() throws NATCException {
             managerService.generateManagers("1234", 100);
 
             final List<Manager> managers = managerRepository.findAll();
@@ -128,7 +128,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldCreateEveryManagerWithAStyle() throws NATCException {
+        void generateManagers_ShouldCreateEveryManagerWithAStyle() throws NATCException {
             final List<Integer> managerStyles = Arrays.asList(
                     ManagerStyle.OFFENSIVE.getValue(),
                     ManagerStyle.DEFENSIVE.getValue(),
@@ -145,7 +145,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void generateManagers_ShouldContinueToIncrementManagerIdsOnSubsequentCalls() throws NATCException {
+        void generateManagers_ShouldContinueToIncrementManagerIdsOnSubsequentCalls() throws NATCException {
             managerService.generateManagers("1234", 5);
             managerService.generateManagers("1234", 5);
             managerService.generateManagers("1234", 5);
@@ -163,7 +163,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GenerateManagerFromPlayer {
 
         @Test
-        public void shouldCreateAManagerInTheDatabaseBasedOnTheGivenPlayer() {
+        void shouldCreateAManagerInTheDatabaseBasedOnTheGivenPlayer() {
             final Player player = Player.builder().playerId(3746).year("2006").firstName("Dom").lastName("Perignon").age(32).build();
 
             managerService.generateManagerFromPlayer("2016", player);
@@ -178,7 +178,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheManagerWithAnAgeBasedOnTheGivenPlayerAgeAndDifferenceInYears() {
+        void shouldCreateTheManagerWithAnAgeBasedOnTheGivenPlayerAgeAndDifferenceInYears() {
             final Player player = Player.builder().playerId(3746).year("2006").age(32).build();
 
             managerService.generateManagerFromPlayer("2010", player);
@@ -191,7 +191,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
         
         @Test
-        public void shouldCreateTheManagerWithRatingsBasedOnTheGivenPlayerRatings() {
+        void shouldCreateTheManagerWithRatingsBasedOnTheGivenPlayerRatings() {
             final Player player = Player.builder()
                     .playerId(1)
                     .year("2006")
@@ -225,7 +225,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheManagerWithTheNextAvailableManagerId() {
+        void shouldCreateTheManagerWithTheNextAvailableManagerId() {
             final Player player = Player.builder().playerId(3746).year("2006").age(32).build();
             final Manager manager = Manager.builder().managerId(123).year("2010").build();
 
@@ -241,7 +241,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheManagerWithTheAppropriateStyleBasedOnThePlayerRatings() {
+        void shouldCreateTheManagerWithTheAppropriateStyleBasedOnThePlayerRatings() {
             final Player player = Player.builder()
                     .playerId(1)
                     .year("2006")
@@ -275,7 +275,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdateManager {
 
         @Test
-        public void updateManager_ShouldModifyAnExistingManagerRecordInTheDatabase() {
+        void updateManager_ShouldModifyAnExistingManagerRecordInTheDatabase() {
             final Manager originalManager = Manager.builder().managerId(123).year("2001").build();
 
             managerRepository.save(originalManager);
@@ -299,7 +299,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdateManagers {
 
         @Test
-        public void updateManagers_ShouldModifyAllExistingManagerRecordsInTheDatabaseMatchingTheGivenList() {
+        void updateManagers_ShouldModifyAllExistingManagerRecordsInTheDatabaseMatchingTheGivenList() {
             final List<Manager> originalManagers = Arrays.asList(
                     Manager.builder().managerId(1).year("2001").build(),
                     Manager.builder().managerId(2).year("2001").build(),
@@ -330,7 +330,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdateManagersForNewSeason {
 
         @Test
-        public void updateManagersForNewSeason_ShouldCopyManagerRecordsFromOneYearToAnother() {
+        void updateManagersForNewSeason_ShouldCopyManagerRecordsFromOneYearToAnother() {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2001").build(),
                     Manager.builder().managerId(2).year("2001").build(),
@@ -348,7 +348,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void updateManagersForNewSeason_ShouldOnlyCopyManagerRecordsFromPreviousYear() {
+        void updateManagersForNewSeason_ShouldOnlyCopyManagerRecordsFromPreviousYear() {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2001").build(),
                     Manager.builder().managerId(2).year("2002").build(),
@@ -367,7 +367,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void updateManagersForNewSeason_ShouldOnlyCopyNecessaryFieldsToNewYear() {
+        void updateManagersForNewSeason_ShouldOnlyCopyNecessaryFieldsToNewYear() {
             final Manager originalManager = Manager.builder()
                     .managerId(123)
                     .teamId(321)
@@ -435,7 +435,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetActiveManagersForYear {
 
         @Test
-        public void getActiveManagersForYear_ShouldReturnAllActiveManagerRecordsMatchingTheGivenYear() {
+        void getActiveManagersForYear_ShouldReturnAllActiveManagerRecordsMatchingTheGivenYear() {
             final List<Manager> persistedManagers = Arrays.asList(
                     Manager.builder().managerId(1).year("2001").retired(0).build(),
                     Manager.builder().managerId(2).year("2001").retired(0).build(),
@@ -450,7 +450,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void getActiveManagersForYear_ShouldReturnOnlyActiveManagerRecordsMatchingTheGivenYear() {
+        void getActiveManagersForYear_ShouldReturnOnlyActiveManagerRecordsMatchingTheGivenYear() {
             final List<Manager> persistedManagers = Arrays.asList(
                     Manager.builder().managerId(1).year("2001").retired(0).build(),
                     Manager.builder().managerId(2).year("2002").retired(0).build(),

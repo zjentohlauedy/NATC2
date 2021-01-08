@@ -40,21 +40,21 @@ class TeamDefenseSummarySearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfTeamDefenseSummaryResponses() {
+        void shouldReturnAListOfTeamDefenseSummaryResponses() {
             final List<TeamDefenseSummaryResponse> result = service.fetchAll(new TeamDefenseSummarySearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheRepositoryWithAnExampleTeamDefenseSummary() {
+        void shouldCallTheRepositoryWithAnExampleTeamDefenseSummary() {
             service.fetchAll(new TeamDefenseSummarySearchRequest());
 
             verify(repository).findAll(ArgumentMatchers.<Example<TeamDefenseSummary>>any());
         }
 
         @Test
-        public void shouldCallRepositoryWithExampleBasedOnRequest() {
+        void shouldCallRepositoryWithExampleBasedOnRequest() {
             final TeamDefenseSummarySearchRequest request = TeamDefenseSummarySearchRequest.builder()
                     .year("1992")
                     .type(GameType.POSTSEASON)
@@ -73,7 +73,7 @@ class TeamDefenseSummarySearchServiceTest {
         }
 
         @Test
-        public void shouldReturnResponsesMappedFromTheTeamDefenseSummariesReturnedByRepository() {
+        void shouldReturnResponsesMappedFromTheTeamDefenseSummariesReturnedByRepository() {
             final TeamDefenseSummary teamDefenseSummary = generateTeamDefenseSummary(GameType.ALLSTAR);
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamDefenseSummary>>any()))
@@ -105,7 +105,7 @@ class TeamDefenseSummarySearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsTeamDefenseSummariesReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsTeamDefenseSummariesReturnedByRepository() {
             final List<TeamDefenseSummary> teamDefenseSummaryList = Arrays.asList(
                     new TeamDefenseSummary(),
                     new TeamDefenseSummary(),

@@ -45,21 +45,21 @@ class PlayerGameSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfPlayerGameResponses() {
+        void shouldReturnAListOfPlayerGameResponses() {
             final List<PlayerGameResponse> result = service.fetchAll(new PlayerGameSearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallThePlayerGameRepositoryWithAnExamplePlayerGame() {
+        void shouldCallThePlayerGameRepositoryWithAnExamplePlayerGame() {
             service.fetchAll(new PlayerGameSearchRequest());
 
             verify(repository).findAll(ArgumentMatchers.<Example<PlayerGame>>any());
         }
 
         @Test
-        public void shouldCallPlayerGameRepositoryWithExamplePlayerGameBasedOnRequest() {
+        void shouldCallPlayerGameRepositoryWithExamplePlayerGameBasedOnRequest() {
             final PlayerGameSearchRequest request = PlayerGameSearchRequest.builder()
                     .gameId(123)
                     .year("2014")
@@ -84,7 +84,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnResponsesMappedFromThePlayerGamesReturnedByRepository() {
+        void shouldReturnResponsesMappedFromThePlayerGamesReturnedByRepository() {
             final PlayerGame playerGame = generatePlayerGame(GameType.REGULAR_SEASON);
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -122,7 +122,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapInjuredValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapInjuredValueFromIntegerToBooleanInResponseWhenFalse() {
             final PlayerGame playerGame = PlayerGame.builder().injured(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -137,7 +137,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapInjuredValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapInjuredValueFromIntegerToBooleanInResponseWhenTrue() {
             final PlayerGame playerGame = PlayerGame.builder().injured(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -152,7 +152,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapInjuredValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapInjuredValueFromIntegerToBooleanInResponseWhenNull() {
             final PlayerGame playerGame = PlayerGame.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -167,7 +167,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapStartedValueFromIntegerToBooleanInResponseWhenFalse() {
             final PlayerGame playerGame = PlayerGame.builder().started(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -182,7 +182,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapStartedValueFromIntegerToBooleanInResponseWhenTrue() {
             final PlayerGame playerGame = PlayerGame.builder().started(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -197,7 +197,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapStartedValueFromIntegerToBooleanInResponseWhenNull() {
             final PlayerGame playerGame = PlayerGame.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<PlayerGame>>any())).thenReturn(Collections.singletonList(playerGame));
@@ -212,7 +212,7 @@ class PlayerGameSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsPlayerGamesReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsPlayerGamesReturnedByRepository() {
             final List<PlayerGame> playerGameList = Arrays.asList(
                     new PlayerGame(),
                     new PlayerGame(),

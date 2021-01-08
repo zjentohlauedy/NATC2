@@ -45,21 +45,21 @@ class TeamGameSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfTeamGameResponses() {
+        void shouldReturnAListOfTeamGameResponses() {
             final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
             assertEquals(0, result.size());
         }
 
         @Test
-        public void shouldCallTheTeamGameRepositoryWithAnExampleTeamGame() {
+        void shouldCallTheTeamGameRepositoryWithAnExampleTeamGame() {
             service.fetchAll(new TeamGameSearchRequest());
 
             verify(repository).findAll(ArgumentMatchers.<Example<TeamGame>>any());
         }
 
         @Test
-        public void shouldCallTeamGameRepositoryWithExampleTeamGameBasedOnRequest() {
+        void shouldCallTeamGameRepositoryWithExampleTeamGameBasedOnRequest() {
             final TeamGameSearchRequest request = TeamGameSearchRequest.builder()
                     .gameId(25)
                     .year("1994")
@@ -84,7 +84,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnResponsesMappedFromTheTeamGamesReturnedByRepository() {
+        void shouldReturnResponsesMappedFromTheTeamGamesReturnedByRepository() {
             final TeamGame teamGame = generateTeamGame(GameType.PRESEASON);
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -128,7 +128,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRoadValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapRoadValueFromIntegerToBooleanInResponseWhenFalse() {
             final TeamGame teamGame = TeamGame.builder().road(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -143,7 +143,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRoadValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapRoadValueFromIntegerToBooleanInResponseWhenTrue() {
             final TeamGame teamGame = TeamGame.builder().road(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -158,7 +158,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRoadValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapRoadValueFromIntegerToBooleanInResponseWhenNull() {
             final TeamGame teamGame = TeamGame.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -173,7 +173,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
             final TeamGame teamGame = TeamGame.builder().overtime(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -188,7 +188,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
             final TeamGame teamGame = TeamGame.builder().overtime(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -203,7 +203,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
             final TeamGame teamGame = TeamGame.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -218,7 +218,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapWinValueFromIntegerToBooleanInResponseWhenFalse() {
+        void shouldMapWinValueFromIntegerToBooleanInResponseWhenFalse() {
             final TeamGame teamGame = TeamGame.builder().win(0).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -233,7 +233,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapWinValueFromIntegerToBooleanInResponseWhenTrue() {
+        void shouldMapWinValueFromIntegerToBooleanInResponseWhenTrue() {
             final TeamGame teamGame = TeamGame.builder().win(1).build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -248,7 +248,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldMapWinValueFromIntegerToBooleanInResponseWhenNull() {
+        void shouldMapWinValueFromIntegerToBooleanInResponseWhenNull() {
             final TeamGame teamGame = TeamGame.builder().build();
 
             when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
@@ -263,7 +263,7 @@ class TeamGameSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsTeamGamesReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsTeamGamesReturnedByRepository() {
             final List<TeamGame> teamGameList = Arrays.asList(
                     new TeamGame(),
                     new TeamGame(),

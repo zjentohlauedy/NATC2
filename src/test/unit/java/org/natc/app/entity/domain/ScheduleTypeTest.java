@@ -12,17 +12,17 @@ class ScheduleTypeTest {
     class GetByValue {
 
         @Test
-        public void shouldReturnNullWhenGivenNull() {
+        void shouldReturnNullWhenGivenNull() {
             assertNull(ScheduleType.getByValue(null));
         }
 
         @Test
-        public void shouldReturnNullWhenGivenInvalidValue() {
+        void shouldReturnNullWhenGivenInvalidValue() {
             assertNull(ScheduleType.getByValue(99));
         }
 
         @Test
-        public void shouldReturnAppropriateEnumWhenGivenValidValue() {
+        void shouldReturnAppropriateEnumWhenGivenValidValue() {
             assertEquals(ScheduleType.BEGINNING_OF_SEASON, ScheduleType.getByValue(0));
             assertEquals(ScheduleType.MANAGER_CHANGES, ScheduleType.getByValue(1));
             assertEquals(ScheduleType.PLAYER_CHANGES, ScheduleType.getByValue(2));

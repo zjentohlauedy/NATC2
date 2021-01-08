@@ -51,7 +51,7 @@ class TeamManagerDraftServiceTest {
     class AssignManagersToTeams {
 
         @Test
-        public void shouldCallTeamRepositoryToRetrieveTeamRecordsForPreviousSeason() throws NATCException {
+        void shouldCallTeamRepositoryToRetrieveTeamRecordsForPreviousSeason() throws NATCException {
             final Team team = Team.builder().teamId(123).year("2011").build();
             final Manager manager = Manager.builder().managerId(1).year("2011").build();
             final List<Team> teams = Collections.singletonList(team);
@@ -68,7 +68,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldCallTeamRepositoryForEveryTeamGiven() throws NATCException {
+        void shouldCallTeamRepositoryForEveryTeamGiven() throws NATCException {
             final List<Team> teams = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -93,7 +93,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldAssignAManagerToATeamBySettingTheTeamIdOnTheManagerToTheTeamIdOfTheTeam() throws NATCException {
+        void shouldAssignAManagerToATeamBySettingTheTeamIdOnTheManagerToTheTeamIdOfTheTeam() throws NATCException {
             final Team team = Team.builder().teamId(123).year("2011").build();
             final Manager manager = Manager.builder().managerId(1).year("2011").build();
             final List<Team> teams = Collections.singletonList(team);
@@ -105,7 +105,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldSetNewHireToTrueWhenAssigningAManagerToATeam() throws NATCException {
+        void shouldSetNewHireToTrueWhenAssigningAManagerToATeam() throws NATCException {
             final Team team = Team.builder().teamId(123).year("2011").build();
             final Manager manager = Manager.builder().managerId(1).year("2011").build();
             final List<Team> teams = Collections.singletonList(team);
@@ -118,7 +118,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldResetScoreAndSeasonsToZeroWhenAssigningAManagerToATeam() throws NATCException {
+        void shouldResetScoreAndSeasonsToZeroWhenAssigningAManagerToATeam() throws NATCException {
             final Team team = Team.builder().teamId(123).year("2011").build();
             final Manager manager = Manager.builder().managerId(1).year("2011").build();
             final List<Team> teams = Collections.singletonList(team);
@@ -132,7 +132,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldAssignAManagerToEveryTeam() throws NATCException {
+        void shouldAssignAManagerToEveryTeam() throws NATCException {
             final List<Team> teams = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -159,7 +159,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldOnlyAssignOneManagerPerTeamIfThereAreMoreManagersThanTeams() throws NATCException {
+        void shouldOnlyAssignOneManagerPerTeamIfThereAreMoreManagersThanTeams() throws NATCException {
             final List<Team> teams = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(4).year("2000").build(),
@@ -180,7 +180,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldThrowATeamManagerDraftExceptionIfThereAreNotEnoughManagersForEveryTeam() {
+        void shouldThrowATeamManagerDraftExceptionIfThereAreNotEnoughManagersForEveryTeam() {
             final List<Team> teams = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -199,7 +199,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldAssignAManagerWithTheHighestPerformanceRatingFirst() throws NATCException {
+        void shouldAssignAManagerWithTheHighestPerformanceRatingFirst() throws NATCException {
             final Manager highestRatedManager = Manager.builder().managerId(1).year("2000").score(10).seasons(3).totalScore(10).totalSeasons(3).build();
             final Manager lowestRatedManager = Manager.builder().managerId(2).year("2000").score(5).seasons(3).totalScore(5).totalSeasons(3).build();
             final Team team = Team.builder().teamId(123).year("2011").build();
@@ -212,7 +212,7 @@ class TeamManagerDraftServiceTest {
         }
         
         @Test
-        public void shouldAssignAManagerWithTheHighestOverallRatingIfPerformanceRatingsAreTheSame() throws NATCException {
+        void shouldAssignAManagerWithTheHighestOverallRatingIfPerformanceRatingsAreTheSame() throws NATCException {
             final Manager highestRatedManager = Manager.builder().managerId(1).year("2000").seasons(0)
                     .offense(0.8).defense(0.8).intangible(0.8).penalties(0.8)
                     .build();
@@ -229,7 +229,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldNotAssignAManagerToATeamThatReleasedTheManager() throws NATCException {
+        void shouldNotAssignAManagerToATeamThatReleasedTheManager() throws NATCException {
             final Team team = Team.builder().teamId(123).year("2011").build();
             final Manager highestRatedManager = Manager.builder().managerId(1).year("2000").seasons(0)
                     .offense(0.8).defense(0.8).intangible(0.8).penalties(0.8).formerTeamId(team.getTeamId())
@@ -246,7 +246,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldAssignManagersToTeamsInARandomOrderGivenNoPreviousSeasonTeamRecordsExist() throws NATCException {
+        void shouldAssignManagersToTeamsInARandomOrderGivenNoPreviousSeasonTeamRecordsExist() throws NATCException {
             final List<Team> teams = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -273,7 +273,7 @@ class TeamManagerDraftServiceTest {
         }
 
         @Test
-        public void shouldThrowATeamManagerDraftExceptionIfOnlySomeOfThePreviousSeasonTeamRecordsExist() {
+        void shouldThrowATeamManagerDraftExceptionIfOnlySomeOfThePreviousSeasonTeamRecordsExist() {
             final List<Team> teams = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -311,7 +311,7 @@ class TeamManagerDraftServiceTest {
         class WhenPreviousSeasonTeamRecordsExist {
 
             @Test
-            public void shouldSortTeamsUsingTeamComparator() throws NATCException {
+            void shouldSortTeamsUsingTeamComparator() throws NATCException {
                 final List<Team> teams = Arrays.asList(
                         Team.builder().teamId(1).year("2000").build(),
                         Team.builder().teamId(2).year("2000").build(),
@@ -349,7 +349,7 @@ class TeamManagerDraftServiceTest {
             }
 
             @Test
-            public void shouldSelectManagersForTeamsInTheSortedOrder() throws NATCException {
+            void shouldSelectManagersForTeamsInTheSortedOrder() throws NATCException {
                 final List<Team> teams = Arrays.asList(
                         Team.builder().teamId(1).year("2000").build(),
                         Team.builder().teamId(2).year("2000").build()
@@ -380,7 +380,7 @@ class TeamManagerDraftServiceTest {
             }
 
             @Test
-            public void shouldSelectManagersForTeamsInTheSortedOrderWhenSortingOpposite() throws NATCException {
+            void shouldSelectManagersForTeamsInTheSortedOrderWhenSortingOpposite() throws NATCException {
                 final List<Team> teams = Arrays.asList(
                         Team.builder().teamId(1).year("2000").build(),
                         Team.builder().teamId(2).year("2000").build()

@@ -36,28 +36,28 @@ class ScheduleSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<ScheduleResponse>> response = scheduleSearchController.search(null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallScheduleSearchService() {
+        void shouldCallScheduleSearchService() {
             scheduleSearchController.search(null, null);
 
             verify(scheduleSearchService).fetchAll(any(ScheduleSearchRequest.class));
         }
 
         @Test
-        public void shouldConstructRequestObjectForScheduleSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForScheduleSearchServiceUsingRequestParameters() {
             final String year = "1992";
             final Integer sequence = 35;
             final ArgumentCaptor<ScheduleSearchRequest> captor = ArgumentCaptor.forClass(ScheduleSearchRequest.class);
@@ -73,7 +73,7 @@ class ScheduleSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingSchedulesReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingSchedulesReturnedBySearchService() {
             final List<ScheduleResponse> scheduleList = Collections.singletonList(new ScheduleResponse());
 
             when(scheduleSearchService.fetchAll(any(ScheduleSearchRequest.class))).thenReturn(scheduleList);
@@ -84,7 +84,7 @@ class ScheduleSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<ScheduleResponse> scheduleList = Collections.singletonList(new ScheduleResponse());
 
             when(scheduleSearchService.fetchAll(any(ScheduleSearchRequest.class))).thenReturn(scheduleList);

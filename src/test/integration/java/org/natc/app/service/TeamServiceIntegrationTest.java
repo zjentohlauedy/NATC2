@@ -30,7 +30,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GenerateTeams {
 
         @Test
-        public void shouldPersistFourDivisionsOfTenTeamsEachEvenlySplitBetweenTwoConferences() {
+        void shouldPersistFourDivisionsOfTenTeamsEachEvenlySplitBetweenTwoConferences() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().allstarTeam(0).build());
@@ -46,7 +46,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldPersistFourAllstarTeamsWithOneForEachDivision() {
+        void shouldPersistFourAllstarTeamsWithOneForEachDivision() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().allstarTeam(1).build());
@@ -62,7 +62,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheIndianapolisTitansForTheGivenYear() {
+        void shouldCreateTheIndianapolisTitansForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Indianapolis").build());
@@ -83,7 +83,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheCincinnatiWhirlwindForTheGivenYear() {
+        void shouldCreateTheCincinnatiWhirlwindForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Cincinnati").build());
@@ -104,7 +104,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheKansasCityFlamesForTheGivenYear() {
+        void shouldCreateTheKansasCityFlamesForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Kansas City").build());
@@ -125,7 +125,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheDallasRustlersForTheGivenYear() {
+        void shouldCreateTheDallasRustlersForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Dallas").build());
@@ -146,7 +146,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheWashingtonOlympiansForTheGivenYear() {
+        void shouldCreateTheWashingtonOlympiansForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Washington").build());
@@ -167,7 +167,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheMinneapolisMaraudersForTheGivenYear() {
+        void shouldCreateTheMinneapolisMaraudersForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Minneapolis").build());
@@ -188,7 +188,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheNewOrleansTigersharksForTheGivenYear() {
+        void shouldCreateTheNewOrleansTigersharksForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("New Orleans").build());
@@ -209,7 +209,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheOaklandAcesForTheGivenYear() {
+        void shouldCreateTheOaklandAcesForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Oakland").build());
@@ -230,7 +230,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheVancouverCometsForTheGivenYear() {
+        void shouldCreateTheVancouverCometsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Vancouver").build());
@@ -251,7 +251,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheSaltLakeCityLightningForTheGivenYear() {
+        void shouldCreateTheSaltLakeCityLightningForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Salt Lake City").build());
@@ -272,7 +272,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheBostonBlacksForTheGivenYear() {
+        void shouldCreateTheBostonBlacksForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Boston").build());
@@ -293,7 +293,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateThePittsburghPirahnasForTheGivenYear() {
+        void shouldCreateThePittsburghPirahnasForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Pittsburgh").build());
@@ -314,7 +314,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheSanDiegoStingraysForTheGivenYear() {
+        void shouldCreateTheSanDiegoStingraysForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("San Diego").build());
@@ -335,7 +335,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateThePhiladelphiaPhotonsForTheGivenYear() {
+        void shouldCreateThePhiladelphiaPhotonsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Philadelphia").build());
@@ -356,7 +356,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheDetroitThunderForTheGivenYear() {
+        void shouldCreateTheDetroitThunderForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Detroit").build());
@@ -377,7 +377,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheAtlantaRenegadesForTheGivenYear() {
+        void shouldCreateTheAtlantaRenegadesForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Atlanta").build());
@@ -398,7 +398,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheBaltimoreCrabbersForTheGivenYear() {
+        void shouldCreateTheBaltimoreCrabbersForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Baltimore").build());
@@ -419,7 +419,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheStLouisJuggernautsForTheGivenYear() {
+        void shouldCreateTheStLouisJuggernautsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("St. Louis").build());
@@ -440,7 +440,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheOrlandoHurricanesForTheGivenYear() {
+        void shouldCreateTheOrlandoHurricanesForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Orlando").build());
@@ -461,7 +461,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheLasVegasVampiresForTheGivenYear() {
+        void shouldCreateTheLasVegasVampiresForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Las Vegas").build());
@@ -482,7 +482,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheMiamiVoyagersForTheGivenYear() {
+        void shouldCreateTheMiamiVoyagersForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Miami").build());
@@ -503,7 +503,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheHoustonHammersForTheGivenYear() {
+        void shouldCreateTheHoustonHammersForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Houston").build());
@@ -524,7 +524,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheLosAngelesLegendsForTheGivenYear() {
+        void shouldCreateTheLosAngelesLegendsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Los Angeles").build());
@@ -545,7 +545,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheNewYorkKnightsForTheGivenYear() {
+        void shouldCreateTheNewYorkKnightsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("New York").build());
@@ -566,7 +566,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheChicagoGoblinsForTheGivenYear() {
+        void shouldCreateTheChicagoGoblinsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Chicago").build());
@@ -587,7 +587,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheTampaBayTerrorForTheGivenYear() {
+        void shouldCreateTheTampaBayTerrorForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Tampa Bay").build());
@@ -608,7 +608,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheMontrealDragonsForTheGivenYear() {
+        void shouldCreateTheMontrealDragonsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Montreal").build());
@@ -629,7 +629,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheNewJerseyPhantomsForTheGivenYear() {
+        void shouldCreateTheNewJerseyPhantomsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("New Jersey").build());
@@ -650,7 +650,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheMexicoCityAztecsForTheGivenYear() {
+        void shouldCreateTheMexicoCityAztecsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Mexico City").build());
@@ -671,7 +671,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheBuffaloIcersForTheGivenYear() {
+        void shouldCreateTheBuffaloIcersForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Buffalo").build());
@@ -692,7 +692,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheClevelandScorpionsForTheGivenYear() {
+        void shouldCreateTheClevelandScorpionsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Cleveland").build());
@@ -713,7 +713,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheDenverNukesForTheGivenYear() {
+        void shouldCreateTheDenverNukesForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Denver").build());
@@ -734,7 +734,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheSeattlePsychoticsForTheGivenYear() {
+        void shouldCreateTheSeattlePsychoticsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Seattle").build());
@@ -755,7 +755,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateThePhoenixEclipseForTheGivenYear() {
+        void shouldCreateThePhoenixEclipseForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Phoenix").build());
@@ -776,7 +776,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheMilwaukeeWarriorsForTheGivenYear() {
+        void shouldCreateTheMilwaukeeWarriorsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Milwaukee").build());
@@ -797,7 +797,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheKingstonOutlawsForTheGivenYear() {
+        void shouldCreateTheKingstonOutlawsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Kingston").build());
@@ -818,7 +818,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheTorontoOverlordsForTheGivenYear() {
+        void shouldCreateTheTorontoOverlordsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Toronto").build());
@@ -839,7 +839,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheCharlotteSerpentsForTheGivenYear() {
+        void shouldCreateTheCharlotteSerpentsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Charlotte").build());
@@ -860,7 +860,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateThePortlandRhinosForTheGivenYear() {
+        void shouldCreateThePortlandRhinosForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Portland").build());
@@ -881,7 +881,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheGreeneDivisionAllstarsForTheGivenYear() {
+        void shouldCreateTheGreeneDivisionAllstarsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Greene").build());
@@ -902,7 +902,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheDavisDivisionAllstarsForTheGivenYear() {
+        void shouldCreateTheDavisDivisionAllstarsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Davis").build());
@@ -923,7 +923,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldCreateTheLawrenceDivisionAllstarsForTheGivenYear() {
+        void shouldCreateTheLawrenceDivisionAllstarsForTheGivenYear() {
             teamService.generateTeams("2001");
 
             final Example<Team> queryCriteria = Example.of(Team.builder().location("Lawrence").build());
@@ -948,7 +948,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
     class UpdateTeamsForNewSeason {
 
         @Test
-        public void shouldCopyTeamRecordsFromOneYearToAnother() {
+        void shouldCopyTeamRecordsFromOneYearToAnother() {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("2002").build(),
                     Team.builder().teamId(2).year("2002").build(),
@@ -966,7 +966,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyCopyTeamRecordsFromPreviousYear() {
+        void shouldOnlyCopyTeamRecordsFromPreviousYear() {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("2001").build(),
                     Team.builder().teamId(2).year("2002").build(),
@@ -985,7 +985,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyCopyNecessaryFieldsToNewYear() {
+        void shouldOnlyCopyNecessaryFieldsToNewYear() {
             final Team originalTeam = Team.builder()
                     .teamId(123)
                     .year("1999")
@@ -1075,7 +1075,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
     class WillTeamReleaseManager {
 
         @Test
-        public void shouldReturnFalseIfPreviousSeasonTeamIsDoesNotExist() {
+        void shouldReturnFalseIfPreviousSeasonTeamIsDoesNotExist() {
             final Team team = Team.builder().teamId(1).year("2000").build();
             final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
 
@@ -1085,7 +1085,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnFalseIfTwoYearsBackSeasonTeamIsDoesNotExist() {
+        void shouldReturnFalseIfTwoYearsBackSeasonTeamIsDoesNotExist() {
             final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("1999").build(),
@@ -1098,7 +1098,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnTrueIfBothYearsTeamsExistAndTheManagerFailsOnCriteria() {
+        void shouldReturnTrueIfBothYearsTeamsExistAndTheManagerFailsOnCriteria() {
             final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).totalSeasons(5).score(0).totalScore(0).build();
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).wins(55).playoffRank(1).expectation(0.6).year("1998").build(),
@@ -1116,7 +1116,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetTeamByTeamIdAndYear {
 
         @Test
-        public void shouldReturnTheMatchingTeam() throws TeamNotFoundException {
+        void shouldReturnTheMatchingTeam() throws TeamNotFoundException {
             final Team expectedTeam = Team.builder().teamId(123).year("2012").build();
 
             teamRepository.save(expectedTeam);
@@ -1128,7 +1128,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnTheOnlyMatchingTeam() throws TeamNotFoundException {
+        void shouldReturnTheOnlyMatchingTeam() throws TeamNotFoundException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("1999").build(),
@@ -1146,7 +1146,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldThrowATeamNotFoundExceptionIfMatchingTeamDoesntExist() throws TeamNotFoundException {
+        void shouldThrowATeamNotFoundExceptionIfMatchingTeamDoesntExist() throws TeamNotFoundException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("1999").build(),

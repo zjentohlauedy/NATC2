@@ -37,28 +37,28 @@ class PlayerSearchControllerTest {
     class Search {
 
         @Test
-        public void shouldReturnOKResponse() {
+        void shouldReturnOKResponse() {
             final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
         }
 
         @Test
-        public void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
+        void shouldReturnEnvelopeWithNotFoundStatusWhenNoRecordsAreFound() {
             final ResponseEntity<ResponseEnvelope<PlayerResponse>> response = playerSearchController.search(null, null, null);
 
             assertEquals(ResponseStatus.NOT_FOUND, response.getBody().getStatus());
         }
 
         @Test
-        public void shouldCallPlayerSearchService() {
+        void shouldCallPlayerSearchService() {
             playerSearchController.search(null, null, null);
 
             verify(playerSearchService).fetchAll(any());
         }
 
         @Test
-        public void shouldConstructRequestObjectForPlayerSearchServiceUsingRequestParameters() {
+        void shouldConstructRequestObjectForPlayerSearchServiceUsingRequestParameters() {
             final Integer playerId = 123;
             final Integer teamId = 321;
             final String year = "1991";
@@ -76,7 +76,7 @@ class PlayerSearchControllerTest {
         }
 
         @Test
-        public void shouldRespondWithEnvelopContainingPlayersReturnedBySearchService() {
+        void shouldRespondWithEnvelopContainingPlayersReturnedBySearchService() {
             final List<PlayerResponse> playerList = Collections.singletonList(new PlayerResponse());
 
             when(playerSearchService.fetchAll(any(PlayerSearchRequest.class))).thenReturn(playerList);
@@ -87,7 +87,7 @@ class PlayerSearchControllerTest {
         }
 
         @Test
-        public void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
+        void shouldReturnEnvelopeWithSuccessStatusWhenRecordsAreFound() {
             final List<PlayerResponse> playerList = Collections.singletonList(new PlayerResponse());
 
             when(playerSearchService.fetchAll(any(PlayerSearchRequest.class))).thenReturn(playerList);

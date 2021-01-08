@@ -30,7 +30,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAPlayerFromTheDatabaseMappedToAResponse() {
+        void shouldReturnAPlayerFromTheDatabaseMappedToAResponse() {
             final Player player = Player.builder()
                     .playerId(1)
                     .year("2020")
@@ -55,7 +55,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldMapAllPlayerFieldsToThePlayerResponse() {
+        void shouldMapAllPlayerFieldsToThePlayerResponse() {
             final Player player = Player.builder()
                     .playerId(123)
                     .teamId(321)
@@ -136,7 +136,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnAllEntriesWhenSearchingWithoutValues() {
+        void shouldReturnAllEntriesWhenSearchingWithoutValues() {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().playerId(1).year("2000").teamId(1).build(),
                     Player.builder().playerId(2).year("2001").teamId(2).build(),
@@ -153,7 +153,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
+        void shouldReturnNoEntriesWhenSearchingGivenNoDataInTheDatabase() {
             final PlayerSearchRequest request = PlayerSearchRequest.builder().build();
 
             final List<PlayerResponse> result = playerSearchService.fetchAll(request);
@@ -165,7 +165,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithOneSearchParameter {
 
             @Test
-            public void shouldReturnAllEntriesForPlayerWhenSearchingByPlayerId() {
+            void shouldReturnAllEntriesForPlayerWhenSearchingByPlayerId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(1).year("2001").teamId(2).build(),
@@ -184,7 +184,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForPlayerWhenSearchingByPlayerId() {
+            void shouldOnlyReturnEntriesForPlayerWhenSearchingByPlayerId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(2).year("2000").teamId(1).build(),
@@ -206,7 +206,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearWhenSearchingByYear() {
+            void shouldReturnAllEntriesForYearWhenSearchingByYear() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(2).year("2000").teamId(2).build(),
@@ -225,7 +225,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
+            void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(1).year("2001").teamId(1).build(),
@@ -247,7 +247,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
+            void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(2).year("2001").teamId(1).build(),
@@ -266,7 +266,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
+            void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(1).year("2001").teamId(2).build(),
@@ -292,7 +292,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         class WithTwoSearchParameters {
 
             @Test
-            public void shouldReturnAllEntriesForPlayerAndYearWhenSearchingByPlayerIdAndYear() {
+            void shouldReturnAllEntriesForPlayerAndYearWhenSearchingByPlayerIdAndYear() {
                 final List<Player> playerList = Collections.singletonList(
                         // Player ID & Year are the key fields, so only one record is possible
                         Player.builder().playerId(1).year("2000").teamId(2).build()
@@ -311,7 +311,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnOnlyEntriesForPlayerAndYearWhenSearchingByPlayerIdAndYear() {
+            void shouldReturnOnlyEntriesForPlayerAndYearWhenSearchingByPlayerIdAndYear() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(2).build(),
                         Player.builder().playerId(2).year("2000").teamId(2).build(),
@@ -334,7 +334,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForPlayerAndTeamWhenSearchingByPlayerIdAndTeamId() {
+            void shouldReturnAllEntriesForPlayerAndTeamWhenSearchingByPlayerIdAndTeamId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(1).year("2001").teamId(1).build(),
@@ -354,7 +354,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForPlayerAndTeamWhenSearchingByPlayerIdAndTeamId() {
+            void shouldOnlyReturnEntriesForPlayerAndTeamWhenSearchingByPlayerIdAndTeamId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(2).year("2001").teamId(1).build(),
@@ -381,7 +381,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
+            void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(2).year("2000").teamId(1).build(),
@@ -401,7 +401,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
             }
 
             @Test
-            public void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
+            void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).year("2000").teamId(1).build(),
                         Player.builder().playerId(2).year("2001").teamId(1).build(),
@@ -429,7 +429,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<Player> playerList = Collections.singletonList(
                     Player.builder().playerId(1).year("2000").teamId(2).build()
             );
@@ -448,7 +448,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
         }
 
         @Test
-        public void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
+        void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().playerId(1).year("2000").teamId(3).build(),
                     Player.builder().playerId(2).year("2000").teamId(3).build(),

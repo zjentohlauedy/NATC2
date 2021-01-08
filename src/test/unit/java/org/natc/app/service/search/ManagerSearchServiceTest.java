@@ -45,21 +45,21 @@ class ManagerSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfManagerResponses() {
+        void shouldReturnAListOfManagerResponses() {
             final List<ManagerResponse> managerList = managerSearchService.fetchAll(new ManagerSearchRequest());
 
             assertEquals(0, managerList.size());
         }
 
         @Test
-        public void shouldCallTheManagerRepositoryWithAnExampleManager() {
+        void shouldCallTheManagerRepositoryWithAnExampleManager() {
             managerSearchService.fetchAll(new ManagerSearchRequest());
 
             verify(managerRepository).findAll(ArgumentMatchers.<Example<Manager>>any());
         }
 
         @Test
-        public void shouldCallManagerRepositoryWithExampleManagerBasedOnRequest() {
+        void shouldCallManagerRepositoryWithExampleManagerBasedOnRequest() {
             final ManagerSearchRequest request = ManagerSearchRequest.builder()
                     .managerId(123)
                     .teamId(321)
@@ -80,7 +80,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnManagerResponsesMappedFromTheManagersReturnedByRepository() {
+        void shouldReturnManagerResponsesMappedFromTheManagersReturnedByRepository() {
             final Manager manager = generateManager(ManagerStyle.PENALTIES, ManagerAward.MANAGER_OF_THE_YEAR);
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -118,7 +118,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapNewHireValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapNewHireValueFromIntegerToBooleanInReponseWhenFalse() {
             final Manager manager = Manager.builder().newHire(0).build();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -133,7 +133,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapNewHireValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapNewHireValueFromIntegerToBooleanInReponseWhenTrue() {
             final Manager manager = Manager.builder().newHire(1).build();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -148,7 +148,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapNewHireValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapNewHireValueFromIntegerToBooleanInReponseWhenNull() {
             final Manager manager = new Manager();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -163,7 +163,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenFalse() {
             final Manager manager = Manager.builder().released(0).build();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -178,7 +178,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenTrue() {
             final Manager manager = Manager.builder().released(1).build();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -193,7 +193,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenNull() {
             final Manager manager = new Manager();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -208,7 +208,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenFalse() {
             final Manager manager = Manager.builder().retired(0).build();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -223,7 +223,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenTrue() {
             final Manager manager = Manager.builder().retired(1).build();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -238,7 +238,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenNull() {
             final Manager manager = new Manager();
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(Collections.singletonList(manager));
@@ -253,7 +253,7 @@ class ManagerSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsManagersReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsManagersReturnedByRepository() {
             final List<Manager> managerList = Arrays.asList(new Manager(), new Manager(), new Manager(), new Manager());
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(managerList);

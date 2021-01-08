@@ -75,14 +75,14 @@ class ManagerChangesScheduleProcessorTest {
     class Process {
 
         @Test
-        public void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
+        void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
             processor.process(Schedule.builder().year("2005").build());
 
             verify(scheduleService).updateScheduleEntry(any());
         }
 
         @Test
-        public void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
+        void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
             final Schedule schedule = Schedule.builder().year("2001").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
             final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
 
@@ -95,14 +95,14 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallManagerServiceToGetActiveManagersForSameYearAsEvent() throws NATCException {
+        void shouldCallManagerServiceToGetActiveManagersForSameYearAsEvent() throws NATCException {
             processor.process(Schedule.builder().year("2005").build());
 
             verify(managerService).getActiveManagersForYear("2005");
         }
 
         @Test
-        public void shouldCallManagerServiceToUpdateTheManagersFoundForTheGivenYear() throws NATCException {
+        void shouldCallManagerServiceToUpdateTheManagersFoundForTheGivenYear() throws NATCException {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2005").age(50).vitality(0.5).build(),
                     Manager.builder().managerId(2).year("2005").age(50).vitality(0.5).build(),
@@ -117,7 +117,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldIncrementTheAgeOfEachManagerFoundForTheGivenYear() throws NATCException {
+        void shouldIncrementTheAgeOfEachManagerFoundForTheGivenYear() throws NATCException {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2005").age(45).vitality(0.5).build(),
                     Manager.builder().managerId(2).year("2005").age(37).vitality(0.5).build(),
@@ -134,7 +134,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldMarkRetiredAnyFreeManagersThatAreNowReadyToRetire() throws NATCException {
+        void shouldMarkRetiredAnyFreeManagersThatAreNowReadyToRetire() throws NATCException {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2005").age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").age(47).vitality(0.5).retired(0).build(),
@@ -151,7 +151,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldMarkRetiredAnyTeamManagersThatAreNowReadyToRetire() throws NATCException {
+        void shouldMarkRetiredAnyTeamManagersThatAreNowReadyToRetire() throws NATCException {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2005").teamId(4).age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(5).age(47).vitality(0.5).retired(0).build(),
@@ -168,7 +168,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldSetFormerTeamIdToTeamIdAndClearTeamIdForTeamManagersThatRetire() throws NATCException {
+        void shouldSetFormerTeamIdToTeamIdAndClearTeamIdForTeamManagersThatRetire() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -188,7 +188,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamServiceForManagerToDetermineIfManagerShouldBeReleased() throws NATCException {
+        void shouldCallTeamServiceForManagerToDetermineIfManagerShouldBeReleased() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -205,7 +205,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamServiceForEveryApplicableManagerToDetermineIfManagerShouldBeReleased() throws NATCException {
+        void shouldCallTeamServiceForEveryApplicableManagerToDetermineIfManagerShouldBeReleased() throws NATCException {
             final List<Manager> managerList = Arrays.asList(
                     Manager.builder().managerId(1).year("2005").teamId(4).age(45).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(5).age(45).vitality(0.5).retired(0).build(),
@@ -220,7 +220,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldNotCallTeamServiceForManagerIfManagerDoesNotHaveATeam() throws NATCException {
+        void shouldNotCallTeamServiceForManagerIfManagerDoesNotHaveATeam() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -236,7 +236,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldNotCallTeamServiceForManagerIfManagerRetires() throws NATCException {
+        void shouldNotCallTeamServiceForManagerIfManagerRetires() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -254,7 +254,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldMarkManagerAsReleasedIfTeamWillReleaseTheManager() throws NATCException {
+        void shouldMarkManagerAsReleasedIfTeamWillReleaseTheManager() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -273,7 +273,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldNotMarkManagerAsReleasedIfTeamWillNotReleaseTheManager() throws NATCException {
+        void shouldNotMarkManagerAsReleasedIfTeamWillNotReleaseTheManager() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -292,7 +292,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldSetFormerTeamIdAndClearTeamIdForManagersThatAreReleased() throws NATCException {
+        void shouldSetFormerTeamIdAndClearTeamIdForManagersThatAreReleased() throws NATCException {
             final Manager manager = Manager.builder()
                     .managerId(1)
                     .year("2005")
@@ -313,14 +313,14 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallLeagueConfigurationToGetNumberOfNewManagersToCreate() throws NATCException {
+        void shouldCallLeagueConfigurationToGetNumberOfNewManagersToCreate() throws NATCException {
             processor.process(Schedule.builder().year("2005").build());
 
             verify(leagueConfiguration).getNewManagersPerSeason();
         }
 
         @Test
-        public void shouldGenerateTheConfiguredNumberOfNewManagers() throws NATCException {
+        void shouldGenerateTheConfiguredNumberOfNewManagers() throws NATCException {
             when(leagueConfiguration.getNewManagersPerSeason()).thenReturn(8);
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.emptyList());
 
@@ -330,14 +330,14 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallLeagueConfigurationToGetTheNewManagerStartingAge() throws NATCException {
+        void shouldCallLeagueConfigurationToGetTheNewManagerStartingAge() throws NATCException {
             processor.process(Schedule.builder().year("2005").build());
 
             verify(leagueConfiguration).getNewManagerStartingAge();
         }
 
         @Test
-        public void shouldSetTheManagersAgeToTheConfiguredStartingManagerAge() throws NATCException {
+        void shouldSetTheManagersAgeToTheConfiguredStartingManagerAge() throws NATCException {
             final Manager manager = Manager.builder().build();
 
             when(leagueConfiguration.getNewManagerStartingAge()).thenReturn(44);
@@ -353,7 +353,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldSaveTheNewGeneratedManagers() throws NATCException {
+        void shouldSaveTheNewGeneratedManagers() throws NATCException {
             final List<Manager> newManagers = Arrays.asList(
                     Manager.builder().build(),
                     Manager.builder().build(),
@@ -373,21 +373,21 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallPlayerServiceToCheckForManagerialCandidatesInFormerPlayers() throws NATCException {
+        void shouldCallPlayerServiceToCheckForManagerialCandidatesInFormerPlayers() throws NATCException {
             processor.process(Schedule.builder().year("2005").build());
 
             verify(playerService).getManagerialCandidates(any());
         }
 
         @Test
-        public void shouldCallLeagueConfigurationToGetNumberOfYearsAPlayerMustSpendRetiredBeforeBecomingAManager() throws NATCException {
+        void shouldCallLeagueConfigurationToGetNumberOfYearsAPlayerMustSpendRetiredBeforeBecomingAManager() throws NATCException {
             processor.process(Schedule.builder().year("2005").build());
 
             verify(leagueConfiguration).getPlayerManagerYearsRetired();
         }
 
         @Test
-        public void shouldSearchForCandidatePlayersThatRetiredTheConfiguredNumberOfYearsInThePast() throws NATCException {
+        void shouldSearchForCandidatePlayersThatRetiredTheConfiguredNumberOfYearsInThePast() throws NATCException {
             when(leagueConfiguration.getPlayerManagerYearsRetired()).thenReturn(10);
 
             processor.process(Schedule.builder().year("2005").build());
@@ -396,7 +396,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallManagerServiceToGenerateAManagerFromACandidatePlayer() throws NATCException {
+        void shouldCallManagerServiceToGenerateAManagerFromACandidatePlayer() throws NATCException {
             final Player player = Player.builder().build();
 
             when(playerService.getManagerialCandidates(any())).thenReturn(Collections.singletonList(player));
@@ -408,7 +408,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallManagerServiceToGenerateAManagerFromACandidatePlayerWithScheduleYear() throws NATCException {
+        void shouldCallManagerServiceToGenerateAManagerFromACandidatePlayerWithScheduleYear() throws NATCException {
             when(playerService.getManagerialCandidates(any())).thenReturn(Collections.singletonList(Player.builder().build()));
             when(managerService.generateManagerFromPlayer(any(), any())).thenReturn(Manager.builder().build());
 
@@ -418,7 +418,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldGenerateManagersFromAllCandidatePlayers() throws NATCException {
+        void shouldGenerateManagersFromAllCandidatePlayers() throws NATCException {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().build(),
                     Player.builder().build(),
@@ -436,7 +436,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldSaveTheManagerGeneratedFromAPlayerCandidate() throws NATCException {
+        void shouldSaveTheManagerGeneratedFromAPlayerCandidate() throws NATCException {
             final Player player = Player.builder().playerId(123).build();
             final Manager managerFromPlayer = Manager.builder().playerId(player.getPlayerId()).build();
 
@@ -454,7 +454,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldOnlyGenerateConfiguredNumberOfNewManagersIncludingPlayerCandidateManagers() throws NATCException {
+        void shouldOnlyGenerateConfiguredNumberOfNewManagersIncludingPlayerCandidateManagers() throws NATCException {
             final List<Player> playerList = Arrays.asList(
                     Player.builder().build(),
                     Player.builder().build()
@@ -470,7 +470,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamServiceToRetrieveTeamRecordsForTeamsThatHadManagersRetire() throws NATCException {
+        void shouldCallTeamServiceToRetrieveTeamRecordsForTeamsThatHadManagersRetire() throws NATCException {
             final Integer teamId = 123;
             final Manager manager = Manager.builder().managerId(2).year("2005").teamId(teamId).age(55).vitality(0.2).retired(0).build();
 
@@ -482,7 +482,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamServiceToRetrieveTeamRecordsForTeamsThatReleasedManagers() throws NATCException {
+        void shouldCallTeamServiceToRetrieveTeamRecordsForTeamsThatReleasedManagers() throws NATCException {
             final Integer teamId = 123;
             final Manager manager = Manager.builder().managerId(1).year("2005").teamId(teamId).age(45).vitality(1.0).released(0).build();
 
@@ -495,7 +495,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldOnlyCallTeamServiceToRetrieveTeamRecordsForReleasedOrRetiredManagersWithFormerTeams() throws NATCException {
+        void shouldOnlyCallTeamServiceToRetrieveTeamRecordsForReleasedOrRetiredManagersWithFormerTeams() throws NATCException {
             final ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class);
             final Integer retiredManagerTeamId = 25;
             final Integer releasedManagerTeamId = 18;
@@ -523,7 +523,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamManagerDraftServiceToAssignManagersToTeamsWhenManagersRetireFromTeams() throws NATCException {
+        void shouldCallTeamManagerDraftServiceToAssignManagersToTeamsWhenManagersRetireFromTeams() throws NATCException {
             final Manager manager = Manager.builder().managerId(2).year("2005").teamId(123).age(55).vitality(0.2).retired(0).build();
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
@@ -534,7 +534,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamManagerDraftServiceToAssignManagersToTeamsWhenManagersAreReleasedFromTeams() throws NATCException {
+        void shouldCallTeamManagerDraftServiceToAssignManagersToTeamsWhenManagersAreReleasedFromTeams() throws NATCException {
             final Manager manager = Manager.builder().managerId(2).year("2005").teamId(123).age(45).vitality(0.2).retired(0).build();
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
@@ -546,7 +546,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldNotCallTeamManagerDraftServiceIfNoManagersAreReleasedOrRetireFromTeams() throws NATCException {
+        void shouldNotCallTeamManagerDraftServiceIfNoManagersAreReleasedOrRetireFromTeams() throws NATCException {
             final Manager manager = Manager.builder().managerId(2).year("2005").teamId(123).age(45).vitality(0.2).retired(0).build();
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
@@ -557,7 +557,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldPassTheTeamsReturnedByTheTeamServiceToTheTeamManagerDraftService() throws NATCException {
+        void shouldPassTheTeamsReturnedByTheTeamServiceToTheTeamManagerDraftService() throws NATCException {
             final Integer retiredManagerTeamId = 25;
             final Integer releasedManagerTeamId = 18;
             final List<Manager> managerList = Arrays.asList(
@@ -592,7 +592,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldPassOnlyTheManagersWithoutTeamsThatAreNotRetiredToTheTeamManagerDraftService() throws NATCException {
+        void shouldPassOnlyTheManagersWithoutTeamsThatAreNotRetiredToTheTeamManagerDraftService() throws NATCException {
             final Manager managerRetiredFromTeam = Manager.builder().managerId(1).year("2005").teamId(25).age(55).vitality(0.2).retired(0).build();
             final Manager managerRetired = Manager.builder().managerId(2).year("2005").age(62).vitality(0.5).retired(0).build();
             final Manager managerOnTeam1 = Manager.builder().managerId(3).year("2005").teamId(17).age(46).vitality(0.5).retired(0).build();
@@ -646,7 +646,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldCallTeamManagerDraftServiceAfterCallingTeamServiceToReleaseAManagerAndBeforeUpdatingManagers() throws NATCException {
+        void shouldCallTeamManagerDraftServiceAfterCallingTeamServiceToReleaseAManagerAndBeforeUpdatingManagers() throws NATCException {
             final Manager manager = Manager.builder().managerId(2).year("2005").teamId(123).age(45).vitality(0.2).retired(0).build();
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
@@ -662,7 +662,7 @@ class ManagerChangesScheduleProcessorTest {
         }
 
         @Test
-        public void shouldNotUpdateManagersIfScheduleYearIsFirstSeasonYear() throws NATCException {
+        void shouldNotUpdateManagersIfScheduleYearIsFirstSeasonYear() throws NATCException {
             final String firstSeason = "1989";
 
             when(leagueConfiguration.getFirstSeason()).thenReturn(firstSeason);

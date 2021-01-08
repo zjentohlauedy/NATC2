@@ -52,14 +52,14 @@ class LeagueServiceTest {
     class GenerateNewLeague {
 
         @Test
-        public void shouldCallTeamServiceToGenerateTeams() throws NATCException {
+        void shouldCallTeamServiceToGenerateTeams() throws NATCException {
             leagueService.generateNewLeague();
 
             verify(teamService).generateTeams(any());
         }
 
         @Test
-        public void shouldCallTeamServiceToGenerateTeamsForFirstSeason() throws NATCException {
+        void shouldCallTeamServiceToGenerateTeamsForFirstSeason() throws NATCException {
             final String expectedYear = "2112";
 
             when(leagueConfiguration.getFirstSeason()).thenReturn(expectedYear);
@@ -70,14 +70,14 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldCallManagerServiceToGenerateManagers() throws NATCException {
+        void shouldCallManagerServiceToGenerateManagers() throws NATCException {
             leagueService.generateNewLeague();
 
             verify(managerService).generateManagers(any(), any());
         }
 
         @Test
-        public void shouldCallManagerServiceToGenerateTheInitialNumberOfManagers() throws NATCException {
+        void shouldCallManagerServiceToGenerateTheInitialNumberOfManagers() throws NATCException {
             when(leagueConfiguration.getInitialManagers()).thenReturn(25);
 
             leagueService.generateNewLeague();
@@ -86,7 +86,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldCallManagerServiceToGenerateManagersForTheFirstSeason() throws NATCException {
+        void shouldCallManagerServiceToGenerateManagersForTheFirstSeason() throws NATCException {
             when(leagueConfiguration.getFirstSeason()).thenReturn("1992");
 
             leagueService.generateNewLeague();
@@ -95,14 +95,14 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldCallPlayerServiceToGeneratePlayers() throws NATCException {
+        void shouldCallPlayerServiceToGeneratePlayers() throws NATCException {
             leagueService.generateNewLeague();
 
             verify(playerService).generatePlayers(any(), any());
         }
 
         @Test
-        public void shouldCallPlayerServiceToGenerateTheInitialNumberOfPlayers() throws NATCException {
+        void shouldCallPlayerServiceToGenerateTheInitialNumberOfPlayers() throws NATCException {
             when(leagueConfiguration.getInitialPlayers()).thenReturn(100);
 
             leagueService.generateNewLeague();
@@ -111,7 +111,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldCallPlayerServiceToGeneratePlayersForTheFirstSeason() throws NATCException {
+        void shouldCallPlayerServiceToGeneratePlayersForTheFirstSeason() throws NATCException {
             when(leagueConfiguration.getFirstSeason()).thenReturn("1992");
 
             leagueService.generateNewLeague();
@@ -120,7 +120,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldUpdateAManagerReturnedByManagerServiceWithATeamReturnedByTeamService() throws NATCException {
+        void shouldUpdateAManagerReturnedByManagerServiceWithATeamReturnedByTeamService() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).build();
 
@@ -135,7 +135,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldMarkTheManagerAsANewHireWhenUpdatingWithATeam() throws NATCException {
+        void shouldMarkTheManagerAsANewHireWhenUpdatingWithATeam() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).build();
 
@@ -148,7 +148,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldUpdateAUniqueManagerForAllTeamsReturnedByTeamService() throws NATCException {
+        void shouldUpdateAUniqueManagerForAllTeamsReturnedByTeamService() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -179,7 +179,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldNotAssignAManagerToAnAllstarTeam() throws NATCException {
+        void shouldNotAssignAManagerToAnAllstarTeam() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(1).build();
             final Manager manager = Manager.builder().managerId(321).build();
 
@@ -192,7 +192,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldOnlyAssignAsManyManagersAsThereAreTeamsGivenMoreManagersThanTeams() throws NATCException {
+        void shouldOnlyAssignAsManyManagersAsThereAreTeamsGivenMoreManagersThanTeams() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -218,7 +218,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanManagers() throws NATCException {
+        void shouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanManagers() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -240,7 +240,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedManager() throws NATCException {
+        void shouldSelectHighestRatedManager() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager highRatedManager = Manager.builder().managerId(321).offense(0.8).defense(0.5).intangible(0.6).penalties(0.6).build();
             final Manager lowRatedManager = Manager.builder().managerId(322).offense(0.5).defense(0.5).intangible(0.3).penalties(0.2).build();
@@ -254,7 +254,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldAssignManagersInOrderFromHighestRatedToLowestRated() throws NATCException {
+        void shouldAssignManagersInOrderFromHighestRatedToLowestRated() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
@@ -289,7 +289,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldRandomizeTeamOrderWhenAssigningManagers() throws NATCException {
+        void shouldRandomizeTeamOrderWhenAssigningManagers() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
@@ -332,7 +332,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldUpdateAPlayerReturnedByPlayerServiceWithATeamReturnedByTeamService() throws NATCException {
+        void shouldUpdateAPlayerReturnedByPlayerServiceWithATeamReturnedByTeamService() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
             final Player player = Player.builder().playerId(555).build();
@@ -350,7 +350,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldUpdateAsManyUniquePlayersWithSameTeamAsPlayersPerTeamConfiguration() throws NATCException {
+        void shouldUpdateAsManyUniquePlayersWithSameTeamAsPlayersPerTeamConfiguration() throws NATCException {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
@@ -380,7 +380,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldUpdateAUniquePlayerForAllTeamsReturnedByTeamService() throws NATCException {
+        void shouldUpdateAUniquePlayerForAllTeamsReturnedByTeamService() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -421,7 +421,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldAssignAsManyPlayersAsThereAreTeamsTimesPlayersPerTeam() throws NATCException {
+        void shouldAssignAsManyPlayersAsThereAreTeamsTimesPlayersPerTeam() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -457,7 +457,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldNotAssignAPlayerToAnAllstarTeam() throws NATCException {
+        void shouldNotAssignAPlayerToAnAllstarTeam() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(1).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
             final Player player = Player.builder().playerId(555).build();
@@ -473,7 +473,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldOnlyAssignAsManyPlayersAsThereAreTeamsGivenMorePlayersThanTeams() throws NATCException {
+        void shouldOnlyAssignAsManyPlayersAsThereAreTeamsGivenMorePlayersThanTeams() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -507,7 +507,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanPlayers() throws NATCException {
+        void shouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanPlayers() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -539,7 +539,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldThrowLeagueProcessingExceptionIfThereAreNotEnoughPlayersConsideringPlayersPerTeam() throws NATCException {
+        void shouldThrowLeagueProcessingExceptionIfThereAreNotEnoughPlayersConsideringPlayersPerTeam() throws NATCException {
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
@@ -578,7 +578,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldReverseTheTeamOrderForEachRoundOfPlayerAssignment() throws NATCException {
+        void shouldReverseTheTeamOrderForEachRoundOfPlayerAssignment() throws NATCException {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
@@ -627,7 +627,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedPlayer() throws NATCException {
+        void shouldSelectHighestRatedPlayer() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
             final Player highRatedPlayer = Player.builder().playerId(101)
@@ -652,7 +652,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldAssignPlayersInOrderFromHighestRatedToLowestRatedAcrossTeams() throws NATCException {
+        void shouldAssignPlayersInOrderFromHighestRatedToLowestRatedAcrossTeams() throws NATCException {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
             final List<Team> teamList = Arrays.asList(
                     Team.builder().teamId(1).allstarTeam(0).build(),
@@ -702,7 +702,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldAssignPlayersInOrderFromHighestRatedToLowestRatedForATeam() throws NATCException {
+        void shouldAssignPlayersInOrderFromHighestRatedToLowestRatedForATeam() throws NATCException {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
             final List<Team> teamList = Collections.singletonList(
                     Team.builder().teamId(1).allstarTeam(0).build()
@@ -744,7 +744,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedOffensivePlayerWhenTheTeamManagerStyleIsOffensive() throws NATCException {
+        void shouldSelectHighestRatedOffensivePlayerWhenTheTeamManagerStyleIsOffensive() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.OFFENSIVE.getValue()).build();
             final Player highRatedPlayer = Player.builder().playerId(101)
@@ -767,7 +767,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedDefensivePlayerWhenTheTeamManagerStyleIsDefensive() throws NATCException {
+        void shouldSelectHighestRatedDefensivePlayerWhenTheTeamManagerStyleIsDefensive() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.DEFENSIVE.getValue()).build();
             final Player highRatedPlayer = Player.builder().playerId(101)
@@ -790,7 +790,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedIntangiblePlayerWhenTheTeamManagerStyleIsIntangible() throws NATCException {
+        void shouldSelectHighestRatedIntangiblePlayerWhenTheTeamManagerStyleIsIntangible() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.INTANGIBLE.getValue()).build();
             final Player highRatedPlayer = Player.builder().playerId(101)
@@ -813,7 +813,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedPenaltiesPlayerWhenTheTeamManagerStyleIsPenalties() throws NATCException {
+        void shouldSelectHighestRatedPenaltiesPlayerWhenTheTeamManagerStyleIsPenalties() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.PENALTIES.getValue()).build();
             final Player highRatedPlayer = Player.builder().playerId(101)
@@ -836,7 +836,7 @@ class LeagueServiceTest {
         }
 
         @Test
-        public void shouldSelectHighestRatedPlayerWhenTheTeamManagerStyleIsBalanced() throws NATCException {
+        void shouldSelectHighestRatedPlayerWhenTheTeamManagerStyleIsBalanced() throws NATCException {
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
             final Player highRatedPlayer = Player.builder().playerId(101)
@@ -863,42 +863,42 @@ class LeagueServiceTest {
     class UpdateLeagueForNewSeason {
 
         @Test
-        public void shouldCallTeamServiceToUpdateTeamsForNewSeason() {
+        void shouldCallTeamServiceToUpdateTeamsForNewSeason() {
             leagueService.updateLeagueForNewSeason(null, null);
 
             verify(teamService).updateTeamsForNewSeason(any(), any());
         }
 
         @Test
-        public void shouldPassTheGivenPreviousAndNewYearsToTheTeamService() {
+        void shouldPassTheGivenPreviousAndNewYearsToTheTeamService() {
             leagueService.updateLeagueForNewSeason("2001", "2002");
 
             verify(teamService).updateTeamsForNewSeason("2001", "2002");
         }
 
         @Test
-        public void shouldCallManagerServiceToUpdateManagersForNewSeason() {
+        void shouldCallManagerServiceToUpdateManagersForNewSeason() {
             leagueService.updateLeagueForNewSeason(null, null);
 
             verify(managerService).updateManagersForNewSeason(any(), any());
         }
 
         @Test
-        public void shouldPassTheGivenPreviousAndNewYearsToTheManagerService() {
+        void shouldPassTheGivenPreviousAndNewYearsToTheManagerService() {
             leagueService.updateLeagueForNewSeason("2001", "2002");
 
             verify(managerService).updateManagersForNewSeason("2001", "2002");
         }
 
         @Test
-        public void shouldCallPlayerServiceToUpdatePlayersForNewSeason() {
+        void shouldCallPlayerServiceToUpdatePlayersForNewSeason() {
             leagueService.updateLeagueForNewSeason(null, null);
 
             verify(playerService).updatePlayersForNewSeason(any(), any());
         }
 
         @Test
-        public void shouldPassTheGivenPreviousAndNewYearsToThePlayerService() {
+        void shouldPassTheGivenPreviousAndNewYearsToThePlayerService() {
             leagueService.updateLeagueForNewSeason("2001", "2002");
 
             verify(playerService).updatePlayersForNewSeason("2001", "2002");

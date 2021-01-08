@@ -45,21 +45,21 @@ class PlayerSearchServiceTest {
     class FetchAll {
 
         @Test
-        public void shouldReturnAListOfPlayerResponses() {
+        void shouldReturnAListOfPlayerResponses() {
             final List<PlayerResponse> playerList = playerSearchService.fetchAll(new PlayerSearchRequest());
 
             assertEquals(0, playerList.size());
         }
 
         @Test
-        public void shouldCallThePlayerRepositoryWithAnExamplePlayer() {
+        void shouldCallThePlayerRepositoryWithAnExamplePlayer() {
             playerSearchService.fetchAll(new PlayerSearchRequest());
 
             verify(playerRepository).findAll(ArgumentMatchers.<Example<Player>>any());
         }
 
         @Test
-        public void shouldCallPlayerRepositoryWithExamplePlayerBasedOnRequest() {
+        void shouldCallPlayerRepositoryWithExamplePlayerBasedOnRequest() {
             final PlayerSearchRequest request = PlayerSearchRequest.builder()
                     .playerId(123)
                     .teamId(321)
@@ -78,7 +78,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnPlayerResponsesMappedFromThePlayersReturnedByRepository() {
+        void shouldReturnPlayerResponsesMappedFromThePlayersReturnedByRepository() {
             final Player player = generatePlayer(PlayerAward.GOLD);
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -126,7 +126,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRookieValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapRookieValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().rookie(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -141,7 +141,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRookieValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapRookieValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().rookie(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -157,7 +157,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRookieValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapRookieValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -172,7 +172,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapInjuredValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapInjuredValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().injured(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -187,7 +187,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapInjuredValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapInjuredValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().injured(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -202,7 +202,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapInjuredValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapInjuredValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -217,7 +217,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapFreeAgentValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapFreeAgentValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().freeAgent(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -232,7 +232,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapFreeAgentValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapFreeAgentValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().freeAgent(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -247,7 +247,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapFreeAgentValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapFreeAgentValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -262,7 +262,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapSignedValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapSignedValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().signed(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -277,7 +277,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapSignedValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapSignedValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().signed(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -292,7 +292,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapSignedValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapSignedValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -307,7 +307,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().released(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -322,7 +322,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().released(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -337,7 +337,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapReleasedValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -352,7 +352,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().retired(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -367,7 +367,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().retired(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -382,7 +382,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapRetiredValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -397,7 +397,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapAllstarAlternateValueFromIntegerToBooleanInReponseWhenFalse() {
+        void shouldMapAllstarAlternateValueFromIntegerToBooleanInReponseWhenFalse() {
             final Player player = Player.builder().allstarAlternate(0).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -412,7 +412,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapAllstarAlternateValueFromIntegerToBooleanInReponseWhenTrue() {
+        void shouldMapAllstarAlternateValueFromIntegerToBooleanInReponseWhenTrue() {
             final Player player = Player.builder().allstarAlternate(1).build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -427,7 +427,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldMapAllstarAlternateValueFromIntegerToBooleanInReponseWhenNull() {
+        void shouldMapAllstarAlternateValueFromIntegerToBooleanInReponseWhenNull() {
             final Player player = Player.builder().build();
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(Collections.singletonList(player));
@@ -442,7 +442,7 @@ class PlayerSearchServiceTest {
         }
 
         @Test
-        public void shouldReturnSameNumberOfResponsesAsPlayersReturnedByRepository() {
+        void shouldReturnSameNumberOfResponsesAsPlayersReturnedByRepository() {
             final List<Player> playerList = Arrays.asList(new Player(), new Player(), new Player(), new Player());
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(playerList);

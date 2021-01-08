@@ -56,7 +56,7 @@ class SeasonManagerTest {
     class ProcessScheduledEvent {
 
         @BeforeEach
-        public void setup() {
+        void setup() {
             final Schedule validTodaySchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -71,21 +71,21 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldCallScheduleServiceToGetCurrentScheduleEntry() throws NATCException {
+        void shouldCallScheduleServiceToGetCurrentScheduleEntry() throws NATCException {
             seasonManager.processScheduledEvent();
 
             verify(scheduleService).getCurrentScheduleEntry();
         }
 
         @Test
-        public void shouldCallScheduleServiceToGetLastScheduleEntry() throws NATCException {
+        void shouldCallScheduleServiceToGetLastScheduleEntry() throws NATCException {
             seasonManager.processScheduledEvent();
 
             verify(scheduleService).getLastScheduleEntry();
         }
 
         @Test
-        public void shouldNotGetLastScheduleEntryIfCurrentScheduleEntryFound() throws NATCException {
+        void shouldNotGetLastScheduleEntryIfCurrentScheduleEntryFound() throws NATCException {
             final Schedule currentSchedule = Schedule.builder().year("2000").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
 
             when(scheduleService.getCurrentScheduleEntry()).thenReturn(currentSchedule);
@@ -96,7 +96,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldCallLeagueServiceToGenerateLeagueIfLastScheduleEntryIsNotFound() throws NATCException {
+        void shouldCallLeagueServiceToGenerateLeagueIfLastScheduleEntryIsNotFound() throws NATCException {
             when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
             seasonManager.processScheduledEvent();
@@ -105,7 +105,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldCallScheduleServiceToGenerateScheduleForFirstSeasonIfLastScheduleEntryIsNotFound() throws NATCException {
+        void shouldCallScheduleServiceToGenerateScheduleForFirstSeasonIfLastScheduleEntryIsNotFound() throws NATCException {
             final String expectedYear = "1999";
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(null);
@@ -117,7 +117,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldGenerateNewLeagueBeforeGeneratingNewSchedule() throws NATCException {
+        void shouldGenerateNewLeagueBeforeGeneratingNewSchedule() throws NATCException {
             when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
             final InOrder inOrder = inOrder(leagueService, scheduleService);
@@ -129,7 +129,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotGenerateNewLeagueIfCurrentScheduleEntryIsFound() throws NATCException {
+        void shouldNotGenerateNewLeagueIfCurrentScheduleEntryIsFound() throws NATCException {
             when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
             seasonManager.processScheduledEvent();
@@ -138,7 +138,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotGenerateNewLeagueIfLastScheduleEntryIsFound() throws NATCException {
+        void shouldNotGenerateNewLeagueIfLastScheduleEntryIsFound() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -149,7 +149,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotGenerateNewLeagueIfLastScheduleEntryIsEndOfSeason() throws NATCException {
+        void shouldNotGenerateNewLeagueIfLastScheduleEntryIsEndOfSeason() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -160,7 +160,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldUpdateLeagueForNewSeasonWhenLastScheduleEntryIsEndOfSeason() throws NATCException {
+        void shouldUpdateLeagueForNewSeasonWhenLastScheduleEntryIsEndOfSeason() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -171,7 +171,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldCallScheduleServiceToGenerateScheduleForNextYearWhenLastScheduleEntryIsEndOfSeason() throws NATCException {
+        void shouldCallScheduleServiceToGenerateScheduleForNextYearWhenLastScheduleEntryIsEndOfSeason() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -182,7 +182,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldUpdateLeagueBeforeGeneratingNewSchedule() throws NATCException {
+        void shouldUpdateLeagueBeforeGeneratingNewSchedule() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.END_OF_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -196,7 +196,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotUpdateLeagueIfCurrentScheduleEntryIsFound() throws NATCException {
+        void shouldNotUpdateLeagueIfCurrentScheduleEntryIsFound() throws NATCException {
             when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
             seasonManager.processScheduledEvent();
@@ -205,7 +205,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotUpdateLeagueIfLastScheduleEntryIsNotFound() throws NATCException {
+        void shouldNotUpdateLeagueIfLastScheduleEntryIsNotFound() throws NATCException {
             when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
             seasonManager.processScheduledEvent();
@@ -214,7 +214,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotUpdateLeagueIfLastScheduleEntryIsNotEndOfSeason() throws NATCException {
+        void shouldNotUpdateLeagueIfLastScheduleEntryIsNotEndOfSeason() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -225,7 +225,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotGenerateScheduleIfCurrentScheduleEntryIsFound() throws NATCException {
+        void shouldNotGenerateScheduleIfCurrentScheduleEntryIsFound() throws NATCException {
             when(scheduleService.getCurrentScheduleEntry()).thenReturn(new Schedule());
 
             seasonManager.processScheduledEvent();
@@ -234,7 +234,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotGenerateScheduleIfLastScheduleEntryIsFoundAndIsNotEndOfSeason() throws NATCException {
+        void shouldNotGenerateScheduleIfLastScheduleEntryIsFoundAndIsNotEndOfSeason() throws NATCException {
             final Schedule lastSchedule = Schedule.builder().year("2000").type(ScheduleType.REGULAR_SEASON.getValue()).build();
 
             when(scheduleService.getLastScheduleEntry()).thenReturn(lastSchedule);
@@ -245,14 +245,14 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldCallScheduleServiceToGetNextScheduleEntry() throws NATCException {
+        void shouldCallScheduleServiceToGetNextScheduleEntry() throws NATCException {
             seasonManager.processScheduledEvent();
 
             verify(scheduleService).getNextScheduleEntry(any());
         }
 
         @Test
-        public void shouldUseLastScheduleEntryToGetNextScheduleEntry() throws NATCException {
+        void shouldUseLastScheduleEntryToGetNextScheduleEntry() throws NATCException {
             final Schedule lastSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -268,7 +268,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldUseLastScheduleEntryToGetNextScheduleEntryEvenIfNull() throws NATCException {
+        void shouldUseLastScheduleEntryToGetNextScheduleEntryEvenIfNull() throws NATCException {
             when(scheduleService.getLastScheduleEntry()).thenReturn(null);
 
             seasonManager.processScheduledEvent();
@@ -277,7 +277,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotGetNextScheduleEntryIfCurrentScheduleEntryFound() throws NATCException {
+        void shouldNotGetNextScheduleEntryIfCurrentScheduleEntryFound() throws NATCException {
             final Schedule currentSchedule = Schedule.builder().year("2000").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
 
             when(scheduleService.getCurrentScheduleEntry()).thenReturn(currentSchedule);
@@ -288,7 +288,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldCallScheduleServiceToUpdateScheduleStatusToInProgress() throws NATCException {
+        void shouldCallScheduleServiceToUpdateScheduleStatusToInProgress() throws NATCException {
             final Schedule nextSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -312,7 +312,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldUpdateScheduleStatusToInProgressWhenScheduledDateIsInThePast() throws NATCException {
+        void shouldUpdateScheduleStatusToInProgressWhenScheduledDateIsInThePast() throws NATCException {
             final Schedule nextSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -336,7 +336,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotUpdateScheduleStatusToInProgressWhenScheduledDateIsInTheFuture() throws NATCException {
+        void shouldNotUpdateScheduleStatusToInProgressWhenScheduledDateIsInTheFuture() throws NATCException {
             final Schedule nextSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -353,7 +353,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldThrowScheduleProcessingExceptionIfNextScheduleEntryNotFound() {
+        void shouldThrowScheduleProcessingExceptionIfNextScheduleEntryNotFound() {
             reset(scheduleService);
             when(scheduleService.getNextScheduleEntry(any())).thenReturn(null);
 
@@ -361,14 +361,14 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldGetScheduleProcessorFromScheduleProcessorManager() throws NATCException {
+        void shouldGetScheduleProcessorFromScheduleProcessorManager() throws NATCException {
             seasonManager.processScheduledEvent();
 
             verify(scheduleProcessorManager).getProcessorFor(any(ScheduleType.class));
         }
 
         @Test
-        public void shouldNotGetScheduleProcessorIfCurrentScheduleEntryFound() throws NATCException {
+        void shouldNotGetScheduleProcessorIfCurrentScheduleEntryFound() throws NATCException {
             final Schedule currentSchedule = Schedule.builder().year("2000").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
 
             when(scheduleService.getCurrentScheduleEntry()).thenReturn(currentSchedule);
@@ -379,7 +379,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldNotgetScheduleProcessorWhenNextEntryScheduledDateIsInTheFuture() throws NATCException {
+        void shouldNotgetScheduleProcessorWhenNextEntryScheduledDateIsInTheFuture() throws NATCException {
             final Schedule nextSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -396,7 +396,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldUseScheduleTypeFromNextScheduleEntryToGetScheduleProcessor() throws NATCException {
+        void shouldUseScheduleTypeFromNextScheduleEntryToGetScheduleProcessor() throws NATCException {
             final Schedule nextSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
@@ -414,7 +414,7 @@ class SeasonManagerTest {
         }
 
         @Test
-        public void shouldUseScheduleProcessorToProcessNextScheduleEntry() throws NATCException {
+        void shouldUseScheduleProcessorToProcessNextScheduleEntry() throws NATCException {
             final Schedule nextSchedule = Schedule.builder()
                     .year("2000")
                     .sequence(1)
