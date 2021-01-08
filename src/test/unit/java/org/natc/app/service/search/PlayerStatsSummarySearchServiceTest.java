@@ -1,5 +1,6 @@
 package org.natc.app.service.search;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -12,7 +13,6 @@ import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.domain.PlayerStatsSummary;
 import org.natc.app.entity.request.PlayerStatsSummarySearchRequest;
 import org.natc.app.entity.response.PlayerStatsSummaryResponse;
-import org.natc.app.service.search.PlayerStatsSummarySearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -36,113 +36,117 @@ class PlayerStatsSummarySearchServiceTest {
     @InjectMocks
     private PlayerStatsSummarySearchService service;
 
-    @Test
-    public void fetchAll_ShouldReturnAListOfPlayerStatsSummaryResponses() {
-        final List<PlayerStatsSummaryResponse> result = service.fetchAll(new PlayerStatsSummarySearchRequest());
+    @Nested
+    class FetchAll {
 
-        assertEquals(0, result.size());
-    }
+        @Test
+        public void shouldReturnAListOfPlayerStatsSummaryResponses() {
+            final List<PlayerStatsSummaryResponse> result = service.fetchAll(new PlayerStatsSummarySearchRequest());
 
-    @Test
-    public void fetchAll_ShouldCallTheRepositoryWithAnExamplePlayerStatsSummary() {
-        service.fetchAll(new PlayerStatsSummarySearchRequest());
+            assertEquals(0, result.size());
+        }
 
-        verify(repository).findAll(ArgumentMatchers.<Example<PlayerStatsSummary>>any());
-    }
+        @Test
+        public void shouldCallTheRepositoryWithAnExamplePlayerStatsSummary() {
+            service.fetchAll(new PlayerStatsSummarySearchRequest());
 
-    @Test
-    public void fetchAll_ShouldCallRepositoryWithExampleBasedOnRequest() {
-        final PlayerStatsSummarySearchRequest request = PlayerStatsSummarySearchRequest.builder()
-                .year("1888")
-                .type(GameType.POSTSEASON)
-                .playerId(444)
-                .teamId(22)
-                .build();
+            verify(repository).findAll(ArgumentMatchers.<Example<PlayerStatsSummary>>any());
+        }
 
-        final List<PlayerStatsSummaryResponse> result = service.fetchAll(request);
+        @Test
+        public void shouldCallRepositoryWithExampleBasedOnRequest() {
+            final PlayerStatsSummarySearchRequest request = PlayerStatsSummarySearchRequest.builder()
+                    .year("1888")
+                    .type(GameType.POSTSEASON)
+                    .playerId(444)
+                    .teamId(22)
+                    .build();
 
-        verify(repository).findAll(captor.capture());
+            final List<PlayerStatsSummaryResponse> result = service.fetchAll(request);
 
-        final PlayerStatsSummary playerStatsSummary = captor.getValue().getProbe();
+            verify(repository).findAll(captor.capture());
 
-        assertEquals(request.getYear(), playerStatsSummary.getYear());
-        assertEquals(request.getType().getValue(), playerStatsSummary.getType());
-        assertEquals(request.getPlayerId(), playerStatsSummary.getPlayerId());
-        assertEquals(request.getTeamId(), playerStatsSummary.getTeamId());
-    }
+            final PlayerStatsSummary playerStatsSummary = captor.getValue().getProbe();
 
-    @Test
-    public void fetchAll_ShouldReturnResponsesMappedFromThePlayerStatsSummariesReturnedByRepository() {
-        final PlayerStatsSummary playerStatsSummary = generatePlayerStatsSummary(GameType.PRESEASON);
+            assertEquals(request.getYear(), playerStatsSummary.getYear());
+            assertEquals(request.getType().getValue(), playerStatsSummary.getType());
+            assertEquals(request.getPlayerId(), playerStatsSummary.getPlayerId());
+            assertEquals(request.getTeamId(), playerStatsSummary.getTeamId());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<PlayerStatsSummary>>any()))
-                .thenReturn(Collections.singletonList(playerStatsSummary));
+        @Test
+        public void shouldReturnResponsesMappedFromThePlayerStatsSummariesReturnedByRepository() {
+            final PlayerStatsSummary playerStatsSummary = generatePlayerStatsSummary(GameType.PRESEASON);
 
-        final List<PlayerStatsSummaryResponse> result = service.fetchAll(new PlayerStatsSummarySearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<PlayerStatsSummary>>any()))
+                    .thenReturn(Collections.singletonList(playerStatsSummary));
 
-        assertEquals(1, result.size());
+            final List<PlayerStatsSummaryResponse> result = service.fetchAll(new PlayerStatsSummarySearchRequest());
 
-        final PlayerStatsSummaryResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertEquals(playerStatsSummary.getYear(), response.getYear());
-        assertEquals(GameType.PRESEASON, response.getType());
-        assertEquals(playerStatsSummary.getPlayerId(), response.getPlayerId());
-        assertEquals(playerStatsSummary.getGames(), response.getGames());
-        assertEquals(playerStatsSummary.getGamesStarted(), response.getGamesStarted());
-        assertEquals(playerStatsSummary.getPlayingTime(), response.getPlayingTime());
-        assertEquals(playerStatsSummary.getAttempts(), response.getAttempts());
-        assertEquals(playerStatsSummary.getGoals(), response.getGoals());
-        assertEquals(playerStatsSummary.getAssists(), response.getAssists());
-        assertEquals(playerStatsSummary.getTurnovers(), response.getTurnovers());
-        assertEquals(playerStatsSummary.getStops(), response.getStops());
-        assertEquals(playerStatsSummary.getSteals(), response.getSteals());
-        assertEquals(playerStatsSummary.getPenalties(), response.getPenalties());
-        assertEquals(playerStatsSummary.getOffensivePenalties(), response.getOffensivePenalties());
-        assertEquals(playerStatsSummary.getPenaltyShotsAttempted(), response.getPenaltyShotsAttempted());
-        assertEquals(playerStatsSummary.getPenaltyShotsMade(), response.getPenaltyShotsMade());
-        assertEquals(playerStatsSummary.getOvertimePenaltyShotsAttempted(), response.getOvertimePenaltyShotsAttempted());
-        assertEquals(playerStatsSummary.getOvertimePenaltyShotsMade(), response.getOvertimePenaltyShotsMade());
-        assertEquals(playerStatsSummary.getTeamId(), response.getTeamId());
-    }
+            final PlayerStatsSummaryResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldReturnSameNumberOfResponsesAsPlayerStatsSummariesReturnedByRepository() {
-        final List<PlayerStatsSummary> playerStatsSummaryList = Arrays.asList(
-                new PlayerStatsSummary(),
-                new PlayerStatsSummary(),
-                new PlayerStatsSummary(),
-                new PlayerStatsSummary()
-        );
+            assertEquals(playerStatsSummary.getYear(), response.getYear());
+            assertEquals(GameType.PRESEASON, response.getType());
+            assertEquals(playerStatsSummary.getPlayerId(), response.getPlayerId());
+            assertEquals(playerStatsSummary.getGames(), response.getGames());
+            assertEquals(playerStatsSummary.getGamesStarted(), response.getGamesStarted());
+            assertEquals(playerStatsSummary.getPlayingTime(), response.getPlayingTime());
+            assertEquals(playerStatsSummary.getAttempts(), response.getAttempts());
+            assertEquals(playerStatsSummary.getGoals(), response.getGoals());
+            assertEquals(playerStatsSummary.getAssists(), response.getAssists());
+            assertEquals(playerStatsSummary.getTurnovers(), response.getTurnovers());
+            assertEquals(playerStatsSummary.getStops(), response.getStops());
+            assertEquals(playerStatsSummary.getSteals(), response.getSteals());
+            assertEquals(playerStatsSummary.getPenalties(), response.getPenalties());
+            assertEquals(playerStatsSummary.getOffensivePenalties(), response.getOffensivePenalties());
+            assertEquals(playerStatsSummary.getPenaltyShotsAttempted(), response.getPenaltyShotsAttempted());
+            assertEquals(playerStatsSummary.getPenaltyShotsMade(), response.getPenaltyShotsMade());
+            assertEquals(playerStatsSummary.getOvertimePenaltyShotsAttempted(), response.getOvertimePenaltyShotsAttempted());
+            assertEquals(playerStatsSummary.getOvertimePenaltyShotsMade(), response.getOvertimePenaltyShotsMade());
+            assertEquals(playerStatsSummary.getTeamId(), response.getTeamId());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<PlayerStatsSummary>>any()))
-                .thenReturn(playerStatsSummaryList);
+        @Test
+        public void shouldReturnSameNumberOfResponsesAsPlayerStatsSummariesReturnedByRepository() {
+            final List<PlayerStatsSummary> playerStatsSummaryList = Arrays.asList(
+                    new PlayerStatsSummary(),
+                    new PlayerStatsSummary(),
+                    new PlayerStatsSummary(),
+                    new PlayerStatsSummary()
+            );
 
-        final List<PlayerStatsSummaryResponse> result = service.fetchAll(new PlayerStatsSummarySearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<PlayerStatsSummary>>any()))
+                    .thenReturn(playerStatsSummaryList);
 
-        assertEquals(playerStatsSummaryList.size(), result.size());
-    }
+            final List<PlayerStatsSummaryResponse> result = service.fetchAll(new PlayerStatsSummarySearchRequest());
 
-    private PlayerStatsSummary generatePlayerStatsSummary(final GameType gameType) {
-        return PlayerStatsSummary.builder()
-                .year("2002")
-                .type(gameType.getValue())
-                .playerId(123)
-                .games(99)
-                .gamesStarted(88)
-                .playingTime(1234)
-                .attempts(77)
-                .goals(66)
-                .assists(55)
-                .turnovers(44)
-                .stops(33)
-                .steals(22)
-                .penalties(11)
-                .offensivePenalties(9)
-                .penaltyShotsAttempted(8)
-                .penaltyShotsMade(7)
-                .overtimePenaltyShotsAttempted(6)
-                .overtimePenaltyShotsMade(5)
-                .teamId(321)
-                .build();
+            assertEquals(playerStatsSummaryList.size(), result.size());
+        }
+
+        private PlayerStatsSummary generatePlayerStatsSummary(final GameType gameType) {
+            return PlayerStatsSummary.builder()
+                    .year("2002")
+                    .type(gameType.getValue())
+                    .playerId(123)
+                    .games(99)
+                    .gamesStarted(88)
+                    .playingTime(1234)
+                    .attempts(77)
+                    .goals(66)
+                    .assists(55)
+                    .turnovers(44)
+                    .stops(33)
+                    .steals(22)
+                    .penalties(11)
+                    .offensivePenalties(9)
+                    .penaltyShotsAttempted(8)
+                    .penaltyShotsMade(7)
+                    .overtimePenaltyShotsAttempted(6)
+                    .overtimePenaltyShotsMade(5)
+                    .teamId(321)
+                    .build();
+        }
     }
 }

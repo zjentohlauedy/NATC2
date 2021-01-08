@@ -1,5 +1,6 @@
 package org.natc.app.service.analysis;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,241 +17,245 @@ class ManagerAnalyzerTest {
     @InjectMocks
     private ManagerAnalyzer managerAnalyzer;
 
-    @Test
-    public void determineManagerStyle_ShouldReturnAManagerStyle() {
-        final Manager manager = Manager.builder()
-                .offense(1.0)
-                .defense(1.0)
-                .intangible(1.0)
-                .penalties(1.0)
-                .build();
+    @Nested
+    class DetermineManagerStyle {
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnAManagerStyle() {
+            final Manager manager = Manager.builder()
+                    .offense(1.0)
+                    .defense(1.0)
+                    .intangible(1.0)
+                    .penalties(1.0)
+                    .build();
 
-        assertNotNull(managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnOffensiveWhenOffenseIsTheHighestRatingByAtLeastOneTenth() {
-        final Manager manager = Manager.builder()
-                .offense(0.8)
-                .defense(0.7)
-                .intangible(0.7)
-                .penalties(0.7)
-                .build();
+            assertNotNull(managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnOffensiveWhenOffenseIsTheHighestRatingByAtLeastOneTenth() {
+            final Manager manager = Manager.builder()
+                    .offense(0.8)
+                    .defense(0.7)
+                    .intangible(0.7)
+                    .penalties(0.7)
+                    .build();
 
-        assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnDefensiveWhenDefenseIsTheHighestRatingByAtLeastOneTenth() {
-        final Manager manager = Manager.builder()
-                .offense(0.3)
-                .defense(0.4)
-                .intangible(0.3)
-                .penalties(0.3)
-                .build();
+            assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnDefensiveWhenDefenseIsTheHighestRatingByAtLeastOneTenth() {
+            final Manager manager = Manager.builder()
+                    .offense(0.3)
+                    .defense(0.4)
+                    .intangible(0.3)
+                    .penalties(0.3)
+                    .build();
 
-        assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnIntangibleWhenIntangibleIsTheHighestRatingByAtLeastOneTenth() {
-        final Manager manager = Manager.builder()
-                .offense(0.7)
-                .defense(0.7)
-                .intangible(0.8)
-                .penalties(0.7)
-                .build();
+            assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnIntangibleWhenIntangibleIsTheHighestRatingByAtLeastOneTenth() {
+            final Manager manager = Manager.builder()
+                    .offense(0.7)
+                    .defense(0.7)
+                    .intangible(0.8)
+                    .penalties(0.7)
+                    .build();
 
-        assertEquals(ManagerStyle.INTANGIBLE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnPenaltiesWhenPenaltiesIsTheHighestRatingByAtLeastOneTenth() {
-        final Manager manager = Manager.builder()
-                .offense(0.1)
-                .defense(0.1)
-                .intangible(0.1)
-                .penalties(0.2)
-                .build();
+            assertEquals(ManagerStyle.INTANGIBLE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnPenaltiesWhenPenaltiesIsTheHighestRatingByAtLeastOneTenth() {
+            final Manager manager = Manager.builder()
+                    .offense(0.1)
+                    .defense(0.1)
+                    .intangible(0.1)
+                    .penalties(0.2)
+                    .build();
 
-        assertEquals(ManagerStyle.PENALTIES, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnBalancedWhenOffenseAndDefenseAreTopTwoLessThanOneTenthApart() {
-        final Manager manager = Manager.builder()
-                .offense(0.8)
-                .defense(0.75)
-                .intangible(0.7)
-                .penalties(0.7)
-                .build();
+            assertEquals(ManagerStyle.PENALTIES, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnBalancedWhenOffenseAndDefenseAreTopTwoLessThanOneTenthApart() {
+            final Manager manager = Manager.builder()
+                    .offense(0.8)
+                    .defense(0.75)
+                    .intangible(0.7)
+                    .penalties(0.7)
+                    .build();
 
-        assertEquals(ManagerStyle.BALANCED, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnBalancedWhenTopTwoAreLessThanOneTenthApartAndThirdIsLessThanOneTenthBehindThem() {
-        final Manager manager = Manager.builder()
-                .offense(0.8)
-                .defense(0.4)
-                .intangible(0.75)
-                .penalties(0.7)
-                .build();
+            assertEquals(ManagerStyle.BALANCED, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnBalancedWhenTopTwoAreLessThanOneTenthApartAndThirdIsLessThanOneTenthBehindThem() {
+            final Manager manager = Manager.builder()
+                    .offense(0.8)
+                    .defense(0.4)
+                    .intangible(0.75)
+                    .penalties(0.7)
+                    .build();
 
-        assertEquals(ManagerStyle.BALANCED, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndOffenseIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.8)
-                .defense(0.4)
-                .intangible(0.75)
-                .penalties(0.6)
-                .build();
+            assertEquals(ManagerStyle.BALANCED, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndOffenseIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.8)
+                    .defense(0.4)
+                    .intangible(0.75)
+                    .penalties(0.6)
+                    .build();
 
-        assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.75)
-                .defense(0.4)
-                .intangible(0.8)
-                .penalties(0.6)
-                .build();
+            assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnOffenseWhenOffenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.75)
+                    .defense(0.4)
+                    .intangible(0.8)
+                    .penalties(0.6)
+                    .build();
 
-        assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndDefenseIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.4)
-                .defense(0.8)
-                .intangible(0.75)
-                .penalties(0.6)
-                .build();
+            assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndDefenseIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.4)
+                    .defense(0.8)
+                    .intangible(0.75)
+                    .penalties(0.6)
+                    .build();
 
-        assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.4)
-                .defense(0.75)
-                .intangible(0.8)
-                .penalties(0.6)
-                .build();
+            assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnDefenseWhenDefenseAndIntangibleAreTopTwoAndIntangibleIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.4)
+                    .defense(0.75)
+                    .intangible(0.8)
+                    .penalties(0.6)
+                    .build();
 
-        assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndPenaltiesIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.4)
-                .defense(0.6)
-                .intangible(0.75)
-                .penalties(0.8)
-                .build();
+            assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndPenaltiesIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.4)
+                    .defense(0.6)
+                    .intangible(0.75)
+                    .penalties(0.8)
+                    .build();
 
-        assertEquals(ManagerStyle.PENALTIES, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndIntangibleIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.4)
-                .defense(0.6)
-                .intangible(0.8)
-                .penalties(0.75)
-                .build();
+            assertEquals(ManagerStyle.PENALTIES, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnPenaltiesWhenPenaltiesAndIntangibleAreTopTwoAndIntangibleIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.4)
+                    .defense(0.6)
+                    .intangible(0.8)
+                    .penalties(0.75)
+                    .build();
 
-        assertEquals(ManagerStyle.PENALTIES, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndOffenseIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.8)
-                .defense(0.4)
-                .intangible(0.6)
-                .penalties(0.75)
-                .build();
+            assertEquals(ManagerStyle.PENALTIES, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndOffenseIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.8)
+                    .defense(0.4)
+                    .intangible(0.6)
+                    .penalties(0.75)
+                    .build();
 
-        assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.75)
-                .defense(0.4)
-                .intangible(0.6)
-                .penalties(0.8)
-                .build();
+            assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnOffenseWhenOffenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.75)
+                    .defense(0.4)
+                    .intangible(0.6)
+                    .penalties(0.8)
+                    .build();
 
-        assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndDefenseIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.4)
-                .defense(0.8)
-                .intangible(0.6)
-                .penalties(0.75)
-                .build();
+            assertEquals(ManagerStyle.OFFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndDefenseIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.4)
+                    .defense(0.8)
+                    .intangible(0.6)
+                    .penalties(0.75)
+                    .build();
 
-        assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
-    }
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
 
-    @Test
-    public void determineManagerStyle_ShouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
-        final Manager manager = Manager.builder()
-                .offense(0.4)
-                .defense(0.75)
-                .intangible(0.6)
-                .penalties(0.8)
-                .build();
+            assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
+        }
 
-        final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+        @Test
+        public void shouldReturnDefenseWhenDefenseAndPenaltiesAreTopTwoAndPenaltiesIsHigher() {
+            final Manager manager = Manager.builder()
+                    .offense(0.4)
+                    .defense(0.75)
+                    .intangible(0.6)
+                    .penalties(0.8)
+                    .build();
 
-        assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
+            final ManagerStyle managerStyle = managerAnalyzer.determineManagerStyle(manager);
+
+            assertEquals(ManagerStyle.DEFENSIVE, managerStyle);
+        }
     }
 }

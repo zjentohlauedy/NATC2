@@ -1,5 +1,6 @@
 package org.natc.app.service.search;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -11,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.entity.domain.Injury;
 import org.natc.app.entity.request.InjurySearchRequest;
 import org.natc.app.entity.response.InjuryResponse;
-import org.natc.app.service.search.InjurySearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -34,63 +34,67 @@ class InjurySearchServiceTest {
     @InjectMocks
     private InjurySearchService service;
 
-    @Test
-    public void fetchAll_ShouldReturnAListOfInjuryResponses() {
-        final List<InjuryResponse> result = service.fetchAll(new InjurySearchRequest());
+    @Nested
+    class FetchAll {
 
-        assertEquals(0, result.size());
-    }
+        @Test
+        public void shouldReturnAListOfInjuryResponses() {
+            final List<InjuryResponse> result = service.fetchAll(new InjurySearchRequest());
 
-    @Test
-    public void fetchAll_ShouldCallTheInjuryRepositoryWithAnExampleInjury() {
-        service.fetchAll(new InjurySearchRequest());
+            assertEquals(0, result.size());
+        }
 
-        verify(repository).findAll(ArgumentMatchers.<Example<Injury>>any());
-    }
+        @Test
+        public void shouldCallTheInjuryRepositoryWithAnExampleInjury() {
+            service.fetchAll(new InjurySearchRequest());
 
-    @Test
-    public void fetchAll_ShouldCallInjuryRepositoryWithExampleInjuryBasedOnRequest() {
-        final InjurySearchRequest request = InjurySearchRequest.builder()
-                .gameId(123)
-                .playerId(4321)
-                .teamId(56)
-                .build();
+            verify(repository).findAll(ArgumentMatchers.<Example<Injury>>any());
+        }
 
-        service.fetchAll(request);
+        @Test
+        public void shouldCallInjuryRepositoryWithExampleInjuryBasedOnRequest() {
+            final InjurySearchRequest request = InjurySearchRequest.builder()
+                    .gameId(123)
+                    .playerId(4321)
+                    .teamId(56)
+                    .build();
 
-        verify(repository).findAll(captor.capture());
+            service.fetchAll(request);
 
-        final Injury injury = captor.getValue().getProbe();
+            verify(repository).findAll(captor.capture());
 
-        assertEquals(request.getGameId(), injury.getGameId());
-        assertEquals(request.getPlayerId(), injury.getPlayerId());
-        assertEquals(request.getTeamId(), injury.getTeamId());
-    }
+            final Injury injury = captor.getValue().getProbe();
 
-    @Test
-    public void fetchAll_ShouldReturnInjuryResponsesMappedFromTheInjuriesReturnedByRepository() {
-        final Injury injury = generateInjury();
+            assertEquals(request.getGameId(), injury.getGameId());
+            assertEquals(request.getPlayerId(), injury.getPlayerId());
+            assertEquals(request.getTeamId(), injury.getTeamId());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<Injury>>any())).thenReturn(Collections.singletonList(injury));
+        @Test
+        public void shouldReturnInjuryResponsesMappedFromTheInjuriesReturnedByRepository() {
+            final Injury injury = generateInjury();
 
-        final List<InjuryResponse> result = service.fetchAll(new InjurySearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<Injury>>any())).thenReturn(Collections.singletonList(injury));
 
-        assertEquals(1, result.size());
+            final List<InjuryResponse> result = service.fetchAll(new InjurySearchRequest());
 
-        final InjuryResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertEquals(injury.getGameId(), response.getGameId());
-        assertEquals(injury.getPlayerId(), response.getPlayerId());
-        assertEquals(injury.getTeamId(), response.getTeamId());
-        assertEquals(injury.getDuration(), response.getDuration());
-    }
+            final InjuryResponse response = result.get(0);
 
-    private Injury generateInjury() {
-        return Injury.builder()
-                .gameId(123)
-                .playerId(4321)
-                .teamId(56)
-                .duration(7)
-                .build();
+            assertEquals(injury.getGameId(), response.getGameId());
+            assertEquals(injury.getPlayerId(), response.getPlayerId());
+            assertEquals(injury.getTeamId(), response.getTeamId());
+            assertEquals(injury.getDuration(), response.getDuration());
+        }
+
+        private Injury generateInjury() {
+            return Injury.builder()
+                    .gameId(123)
+                    .playerId(4321)
+                    .teamId(56)
+                    .duration(7)
+                    .build();
+        }
     }
 }

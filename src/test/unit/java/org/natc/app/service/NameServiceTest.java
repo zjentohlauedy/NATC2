@@ -1,5 +1,6 @@
 package org.natc.app.service;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -54,124 +55,128 @@ class NameServiceTest {
     @InjectMocks
     private NameService nameService;
 
-    @Test
-    public void generateName_ShouldCallFirstNameRepositoryToGetRandomFirstName() throws NATCException {
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(FirstName.builder().build()));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(LastName.builder().build()));
+    @Nested
+    class GenerateName {
 
-        nameService.generateName();
+        @Test
+        public void shouldCallFirstNameRepositoryToGetRandomFirstName() throws NATCException {
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(FirstName.builder().build()));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(LastName.builder().build()));
 
-        verify(firstNameRepository).findRandomName();
-    }
+            nameService.generateName();
 
-    @Test
-    public void generateName_ShouldCallLastNameRepositoryToGetRandomLastName() throws NATCException {
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(FirstName.builder().build()));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(LastName.builder().build()));
+            verify(firstNameRepository).findRandomName();
+        }
 
-        nameService.generateName();
+        @Test
+        public void shouldCallLastNameRepositoryToGetRandomLastName() throws NATCException {
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(FirstName.builder().build()));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(LastName.builder().build()));
 
-        verify(lastNameRepository).findRandomName();
-    }
+            nameService.generateName();
 
-    @Test
-    public void generateName_ShouldReturnAFullName() throws NATCException {
-        final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
-        final LastName expectedLastName = LastName.builder().name("Jacobs").build();
+            verify(lastNameRepository).findRandomName();
+        }
 
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
+        @Test
+        public void shouldReturnAFullName() throws NATCException {
+            final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
+            final LastName expectedLastName = LastName.builder().name("Jacobs").build();
 
-        final FullName fullName = nameService.generateName();
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
 
-        assertEquals(expectedFirstName.getName(), fullName.getFirstName());
-        assertEquals(expectedLastName.getName(), fullName.getLastName());
-    }
+            final FullName fullName = nameService.generateName();
 
-    @Test
-    public void generateName_ShouldThrowNameGenerationExceptionIfFirstNameCannotBeFound() {
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.empty());
+            assertEquals(expectedFirstName.getName(), fullName.getFirstName());
+            assertEquals(expectedLastName.getName(), fullName.getLastName());
+        }
 
-        assertThrows(NameGenerationException.class, () -> nameService.generateName());
-    }
+        @Test
+        public void shouldThrowNameGenerationExceptionIfFirstNameCannotBeFound() {
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.empty());
 
-    @Test
-    public void generateName_ShouldThrowNameGenerationExceptionIfLastNameCannotBeFound() {
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(FirstName.builder().build()));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.empty());
+            assertThrows(NameGenerationException.class, () -> nameService.generateName());
+        }
 
-        assertThrows(NameGenerationException.class, () -> nameService.generateName());
-    }
+        @Test
+        public void shouldThrowNameGenerationExceptionIfLastNameCannotBeFound() {
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(FirstName.builder().build()));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.empty());
 
-    @Test
-    public void generateName_ShouldCallManagerRepositoryToFindExistingManagerWithSameNameGenerated() throws NATCException {
-        final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
-        final LastName expectedLastName = LastName.builder().name("Jacobs").build();
+            assertThrows(NameGenerationException.class, () -> nameService.generateName());
+        }
 
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
+        @Test
+        public void shouldCallManagerRepositoryToFindExistingManagerWithSameNameGenerated() throws NATCException {
+            final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
+            final LastName expectedLastName = LastName.builder().name("Jacobs").build();
 
-        nameService.generateName();
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
 
-        verify(managerRepository).findAll(managerCaptor.capture());
+            nameService.generateName();
 
-        final Manager manager = managerCaptor.getValue().getProbe();
+            verify(managerRepository).findAll(managerCaptor.capture());
 
-        assertEquals(expectedFirstName.getName(), manager.getFirstName());
-        assertEquals(expectedLastName.getName(), manager.getLastName());
-    }
+            final Manager manager = managerCaptor.getValue().getProbe();
 
-    @Test
-    public void generateName_ShouldCallPlayerRepositoryToFindExistingPlayerWithSameNameGenerated() throws NATCException {
-        final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
-        final LastName expectedLastName = LastName.builder().name("Jacobs").build();
+            assertEquals(expectedFirstName.getName(), manager.getFirstName());
+            assertEquals(expectedLastName.getName(), manager.getLastName());
+        }
 
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
+        @Test
+        public void shouldCallPlayerRepositoryToFindExistingPlayerWithSameNameGenerated() throws NATCException {
+            final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
+            final LastName expectedLastName = LastName.builder().name("Jacobs").build();
 
-        nameService.generateName();
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
 
-        verify(playerRepository).findAll(playerCaptor.capture());
+            nameService.generateName();
 
-        final Player player = playerCaptor.getValue().getProbe();
+            verify(playerRepository).findAll(playerCaptor.capture());
 
-        assertEquals(expectedFirstName.getName(), player.getFirstName());
-        assertEquals(expectedLastName.getName(), player.getLastName());
-    }
+            final Player player = playerCaptor.getValue().getProbe();
 
-    @Test
-    public void generateName_ShouldRegenerateNameIfManagerIsFoundWithTheSameName() throws NATCException {
-        final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
-        final LastName expectedLastName = LastName.builder().name("Jacobs").build();
+            assertEquals(expectedFirstName.getName(), player.getFirstName());
+            assertEquals(expectedLastName.getName(), player.getLastName());
+        }
 
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
+        @Test
+        public void shouldRegenerateNameIfManagerIsFoundWithTheSameName() throws NATCException {
+            final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
+            final LastName expectedLastName = LastName.builder().name("Jacobs").build();
 
-        when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any()))
-                .thenReturn(Collections.singletonList(Manager.builder().build()))
-                .thenReturn(Collections.emptyList());
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
 
-        nameService.generateName();
+            when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any()))
+                    .thenReturn(Collections.singletonList(Manager.builder().build()))
+                    .thenReturn(Collections.emptyList());
 
-        verify(firstNameRepository, times(2)).findRandomName();
-        verify(lastNameRepository, times(2)).findRandomName();
-    }
+            nameService.generateName();
 
-    @Test
-    public void generateName_ShouldRegenerateNameIfPlayerIsFoundWithTheSameName() throws NATCException {
-        final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
-        final LastName expectedLastName = LastName.builder().name("Jacobs").build();
+            verify(firstNameRepository, times(2)).findRandomName();
+            verify(lastNameRepository, times(2)).findRandomName();
+        }
 
-        when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
-        when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
+        @Test
+        public void shouldRegenerateNameIfPlayerIsFoundWithTheSameName() throws NATCException {
+            final FirstName expectedFirstName = FirstName.builder().name("Isaac").build();
+            final LastName expectedLastName = LastName.builder().name("Jacobs").build();
 
-        when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any()))
-                .thenReturn(Collections.singletonList(Player.builder().build()))
-                .thenReturn(Collections.emptyList());
+            when(firstNameRepository.findRandomName()).thenReturn(Optional.of(expectedFirstName));
+            when(lastNameRepository.findRandomName()).thenReturn(Optional.of(expectedLastName));
 
-        nameService.generateName();
+            when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any()))
+                    .thenReturn(Collections.singletonList(Player.builder().build()))
+                    .thenReturn(Collections.emptyList());
 
-        verify(firstNameRepository, times(2)).findRandomName();
-        verify(lastNameRepository, times(2)).findRandomName();
+            nameService.generateName();
+
+            verify(firstNameRepository, times(2)).findRandomName();
+            verify(lastNameRepository, times(2)).findRandomName();
+        }
     }
 }

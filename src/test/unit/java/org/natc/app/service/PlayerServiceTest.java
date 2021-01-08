@@ -303,69 +303,81 @@ class PlayerServiceTest {
         }
     }
 
-    @Test
-    public void updatePlayer_ShouldCallThePlayerRepositoryToSaveTheGivenPlayer() {
-        final Player player = Player.builder().playerId(555).build();
+    @Nested
+    class UpdatePlayer {
 
-        playerService.updatePlayer(player);
+        @Test
+        public void shouldCallThePlayerRepositoryToSaveTheGivenPlayer() {
+            final Player player = Player.builder().playerId(555).build();
 
-        verify(playerRepository).save(player);
-    }
-    
-    @Test
-    public void updatePlayersForNewSeason_ShouldCallTheRepositoryToCopyPlayersForNewYear() {
-        playerService.updatePlayersForNewSeason(null, null);
+            playerService.updatePlayer(player);
 
-        verify(playerRepository).copyPlayersForNewYear(any(), any());
-    }
-    
-    @Test
-    public void updatePlayersForNewSeason_ShouldCallPassThePreviousYearAndNewYearToTheRepository() {
-        playerService.updatePlayersForNewSeason("2004", "2005");
-
-        verify(playerRepository).copyPlayersForNewYear("2004", "2005");
+            verify(playerRepository).save(player);
+        }
     }
 
-    @Test
-    public void getManagerialCandidates_ShouldReturnAListOfPlayers() {
-        final List<Player> playerList = playerService.getManagerialCandidates("2020");
+    @Nested
+    class UpdatePlayersForNewSeason {
 
-        assertNotNull(playerList);
+        @Test
+        public void shouldCallTheRepositoryToCopyPlayersForNewYear() {
+            playerService.updatePlayersForNewSeason(null, null);
+
+            verify(playerRepository).copyPlayersForNewYear(any(), any());
+        }
+
+        @Test
+        public void shouldCallPassThePreviousYearAndNewYearToTheRepository() {
+            playerService.updatePlayersForNewSeason("2004", "2005");
+
+            verify(playerRepository).copyPlayersForNewYear("2004", "2005");
+        }
     }
 
-    @Test
-    public void getManagerialCandidates_ShouldCallThePlayerRepositoryWithTheGivenYearToFindTheCandidates() {
-        playerService.getManagerialCandidates("2007");
+    @Nested
+    class GetManagerialCandidates {
 
-        verify(playerRepository).findTopNumRetiredPlayersForYear(eq("2007"), any());
-    }
+        @Test
+        public void shouldReturnAListOfPlayers() {
+            final List<Player> playerList = playerService.getManagerialCandidates("2020");
 
-    @Test
-    public void getManagerialCandidates_ShouldCallTheLeagueConfigurationToGetTheMaxNumberOfPlayerManagersPerSeason() {
-        playerService.getManagerialCandidates("2007");
+            assertNotNull(playerList);
+        }
 
-        verify(leagueConfiguration).getMaxPlayerManagersPerSeason();
-    }
+        @Test
+        public void shouldCallThePlayerRepositoryWithTheGivenYearToFindTheCandidates() {
+            playerService.getManagerialCandidates("2007");
 
-    @Test
-    public void getManagerialCandidates_ShouldCallThePlayerRepositoryWithTheConfiguredMaxNumberOfPlayerManagersPerSeason() {
-        when(leagueConfiguration.getMaxPlayerManagersPerSeason()).thenReturn(5);
+            verify(playerRepository).findTopNumRetiredPlayersForYear(eq("2007"), any());
+        }
 
-        playerService.getManagerialCandidates("2007");
+        @Test
+        public void shouldCallTheLeagueConfigurationToGetTheMaxNumberOfPlayerManagersPerSeason() {
+            playerService.getManagerialCandidates("2007");
 
-        verify(playerRepository).findTopNumRetiredPlayersForYear(eq("2007"), any());
-    }
+            verify(leagueConfiguration).getMaxPlayerManagersPerSeason();
+        }
 
-    @Test
-    public void getManagerialCandidates_ShouldReturnTheResponseFromTheRepository() {
-        final List<Player> playerList = Arrays.asList(
-                Player.builder().build(),
-                Player.builder().build(),
-                Player.builder().build()
-        );
+        @Test
+        public void shouldCallThePlayerRepositoryWithTheConfiguredMaxNumberOfPlayerManagersPerSeason() {
+            when(leagueConfiguration.getMaxPlayerManagersPerSeason()).thenReturn(5);
 
-        when(playerRepository.findTopNumRetiredPlayersForYear(anyString(), any())).thenReturn(playerList);
+            playerService.getManagerialCandidates("2007");
 
-        assertEquals(playerList, playerService.getManagerialCandidates("2012"));
+            verify(playerRepository).findTopNumRetiredPlayersForYear(eq("2007"), any());
+        }
+
+        @Test
+        public void shouldReturnTheResponseFromTheRepository() {
+            final List<Player> playerList = Arrays.asList(
+                    Player.builder().build(),
+                    Player.builder().build(),
+                    Player.builder().build()
+            );
+
+            when(playerRepository.findTopNumRetiredPlayersForYear(anyString(), any())).thenReturn(playerList);
+
+            assertEquals(playerList, playerService.getManagerialCandidates("2012"));
+        }
     }
 }

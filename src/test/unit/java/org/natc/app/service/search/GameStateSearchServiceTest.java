@@ -1,5 +1,6 @@
 package org.natc.app.service.search;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -40,223 +41,227 @@ class GameStateSearchServiceTest {
     @InjectMocks
     private GameStateSearchService service;
 
-    @Test
-    public void fetchAll_ShouldReturnAListOfGameStateResponses() {
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+    @Nested
+    class FetchAll {
 
-        assertEquals(0, result.size());
-    }
+        @Test
+        public void shouldReturnAListOfGameStateResponses() {
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-    @Test
-    public void fetchAll_ShouldCallTheGameStateRepositoryWithAnExampleGameState() {
-        service.fetchAll(new GameStateSearchRequest());
+            assertEquals(0, result.size());
+        }
 
-        verify(repository).findAll(ArgumentMatchers.<Example<GameState>>any());
-    }
+        @Test
+        public void shouldCallTheGameStateRepositoryWithAnExampleGameState() {
+            service.fetchAll(new GameStateSearchRequest());
 
-    @Test
-    public void fetchAll_ShouldCallGameStateRepositoryWithExampleGameStateBasedOnRequest() {
-        final GameStateSearchRequest request = GameStateSearchRequest.builder()
-                .gameId(111)
-                .build();
+            verify(repository).findAll(ArgumentMatchers.<Example<GameState>>any());
+        }
 
-        service.fetchAll(request);
+        @Test
+        public void shouldCallGameStateRepositoryWithExampleGameStateBasedOnRequest() {
+            final GameStateSearchRequest request = GameStateSearchRequest.builder()
+                    .gameId(111)
+                    .build();
 
-        verify(repository).findAll(captor.capture());
+            service.fetchAll(request);
 
-        final GameState gameState = captor.getValue().getProbe();
+            verify(repository).findAll(captor.capture());
 
-        assertEquals(request.getGameId(), gameState.getGameId());
-    }
+            final GameState gameState = captor.getValue().getProbe();
 
-    @Test
-    public void fetchAll_ShouldReturnGameStateResponsesMappedFromTheGameStatesReturnedByRepository() {
-        final GameState gameState = generateGameState(Period.FOURTH, PossessionType.ROAD);
+            assertEquals(request.getGameId(), gameState.getGameId());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldReturnGameStateResponsesMappedFromTheGameStatesReturnedByRepository() {
+            final GameState gameState = generateGameState(Period.FOURTH, PossessionType.ROAD);
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertEquals(gameState.getGameId(), response.getGameId());
-        assertEquals(gameState.getStartTime(), response.getStartTime());
-        assertEquals(gameState.getSequence(), response.getSequence());
-        assertEquals(Period.FOURTH, response.getPeriod());
-        assertEquals(gameState.getTimeRemaining(), response.getTimeRemaining());
-        assertEquals(PossessionType.ROAD, response.getPossession());
-        assertEquals(gameState.getLastEvent(), response.getLastEvent());
+            final GameStateResponse response = result.get(0);
 
-        assertNotNull(response.getStarted());
-        assertNotNull(response.getOvertime());
-        assertNotNull(response.getClockStopped());
-    }
+            assertEquals(gameState.getGameId(), response.getGameId());
+            assertEquals(gameState.getStartTime(), response.getStartTime());
+            assertEquals(gameState.getSequence(), response.getSequence());
+            assertEquals(Period.FOURTH, response.getPeriod());
+            assertEquals(gameState.getTimeRemaining(), response.getTimeRemaining());
+            assertEquals(PossessionType.ROAD, response.getPossession());
+            assertEquals(gameState.getLastEvent(), response.getLastEvent());
 
-    @Test
-    public void fetchAll_ShouldMapStartedValueFromIntegerToBooleanInResponseWhenFalse() {
-        final GameState gameState = GameState.builder().started(0).build();
+            assertNotNull(response.getStarted());
+            assertNotNull(response.getOvertime());
+            assertNotNull(response.getClockStopped());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenFalse() {
+            final GameState gameState = GameState.builder().started(0).build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertFalse(response.getStarted());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapStartedValueFromIntegerToBooleanInResponseWhenTrue() {
-        final GameState gameState = GameState.builder().started(1).build();
+            assertFalse(response.getStarted());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenTrue() {
+            final GameState gameState = GameState.builder().started(1).build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertTrue(response.getStarted());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapStartedValueFromIntegerToBooleanInResponseWhenNull() {
-        final GameState gameState = GameState.builder().build();
+            assertTrue(response.getStarted());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapStartedValueFromIntegerToBooleanInResponseWhenNull() {
+            final GameState gameState = GameState.builder().build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNull(response.getStarted());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
-        final GameState gameState = GameState.builder().overtime(0).build();
+            assertNull(response.getStarted());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
+            final GameState gameState = GameState.builder().overtime(0).build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertFalse(response.getOvertime());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
-        final GameState gameState = GameState.builder().overtime(1).build();
+            assertFalse(response.getOvertime());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
+            final GameState gameState = GameState.builder().overtime(1).build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertTrue(response.getOvertime());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
-        final GameState gameState = GameState.builder().build();
+            assertTrue(response.getOvertime());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
+            final GameState gameState = GameState.builder().build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNull(response.getOvertime());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenFalse() {
-        final GameState gameState = GameState.builder().clockStopped(0).build();
+            assertNull(response.getOvertime());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenFalse() {
+            final GameState gameState = GameState.builder().clockStopped(0).build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertFalse(response.getClockStopped());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenTrue() {
-        final GameState gameState = GameState.builder().clockStopped(1).build();
+            assertFalse(response.getClockStopped());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenTrue() {
+            final GameState gameState = GameState.builder().clockStopped(1).build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertTrue(response.getClockStopped());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenNull() {
-        final GameState gameState = GameState.builder().build();
+            assertTrue(response.getClockStopped());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
+        @Test
+        public void shouldMapClockStoppedValueFromIntegerToBooleanInResponseWhenNull() {
+            final GameState gameState = GameState.builder().build();
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(Collections.singletonList(gameState));
 
-        assertEquals(1, result.size());
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-        final GameStateResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNull(response.getClockStopped());
-    }
+            final GameStateResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldReturnSameNumberOfResponsesAsGameStatesReturnedByRepository() {
-        final List<GameState> gameStateList = Arrays.asList(
-                new GameState(),
-                new GameState(),
-                new GameState(),
-                new GameState()
-        );
+            assertNull(response.getClockStopped());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(gameStateList);
+        @Test
+        public void shouldReturnSameNumberOfResponsesAsGameStatesReturnedByRepository() {
+            final List<GameState> gameStateList = Arrays.asList(
+                    new GameState(),
+                    new GameState(),
+                    new GameState(),
+                    new GameState()
+            );
 
-        final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<GameState>>any())).thenReturn(gameStateList);
 
-        assertEquals(gameStateList.size(), result.size());
-    }
+            final List<GameStateResponse> result = service.fetchAll(new GameStateSearchRequest());
 
-    private GameState generateGameState(final Period period, final PossessionType possessionType) {
-        return GameState.builder()
-                .gameId(123)
-                .started(1)
-                .startTime(55555)
-                .sequence(111)
-                .period(period.getValue())
-                .overtime(0)
-                .timeRemaining(222)
-                .clockStopped(1)
-                .possession(possessionType.getValue())
-                .lastEvent("This is the last event description.")
-                .build();
+            assertEquals(gameStateList.size(), result.size());
+        }
+
+        private GameState generateGameState(final Period period, final PossessionType possessionType) {
+            return GameState.builder()
+                    .gameId(123)
+                    .started(1)
+                    .startTime(55555)
+                    .sequence(111)
+                    .period(period.getValue())
+                    .overtime(0)
+                    .timeRemaining(222)
+                    .clockStopped(1)
+                    .possession(possessionType.getValue())
+                    .lastEvent("This is the last event description.")
+                    .build();
+        }
     }
 }

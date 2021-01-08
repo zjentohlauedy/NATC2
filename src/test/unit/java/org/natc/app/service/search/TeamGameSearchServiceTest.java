@@ -1,5 +1,6 @@
 package org.natc.app.service.search;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -12,7 +13,6 @@ import org.natc.app.entity.domain.GameType;
 import org.natc.app.entity.domain.TeamGame;
 import org.natc.app.entity.request.TeamGameSearchRequest;
 import org.natc.app.entity.response.TeamGameResponse;
-import org.natc.app.service.search.TeamGameSearchService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -41,271 +41,275 @@ class TeamGameSearchServiceTest {
     @InjectMocks
     private TeamGameSearchService service;
 
-    @Test
-    public void fetchAll_ShouldReturnAListOfTeamGameResponses() {
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
-
-        assertEquals(0, result.size());
-    }
-
-    @Test
-    public void fetchAll_ShouldCallTheTeamGameRepositoryWithAnExampleTeamGame() {
-        service.fetchAll(new TeamGameSearchRequest());
-
-        verify(repository).findAll(ArgumentMatchers.<Example<TeamGame>>any());
-    }
-
-    @Test
-    public void fetchAll_ShouldCallTeamGameRepositoryWithExampleTeamGameBasedOnRequest() {
-        final TeamGameSearchRequest request = TeamGameSearchRequest.builder()
-                .gameId(25)
-                .year("1994")
-                .datestamp(LocalDate.now())
-                .type(GameType.REGULAR_SEASON)
-                .teamId(33)
-                .opponent(12)
-                .build();
+    @Nested
+    class FetchAll {
+
+        @Test
+        public void shouldReturnAListOfTeamGameResponses() {
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+
+            assertEquals(0, result.size());
+        }
+
+        @Test
+        public void shouldCallTheTeamGameRepositoryWithAnExampleTeamGame() {
+            service.fetchAll(new TeamGameSearchRequest());
+
+            verify(repository).findAll(ArgumentMatchers.<Example<TeamGame>>any());
+        }
 
-        service.fetchAll(request);
+        @Test
+        public void shouldCallTeamGameRepositoryWithExampleTeamGameBasedOnRequest() {
+            final TeamGameSearchRequest request = TeamGameSearchRequest.builder()
+                    .gameId(25)
+                    .year("1994")
+                    .datestamp(LocalDate.now())
+                    .type(GameType.REGULAR_SEASON)
+                    .teamId(33)
+                    .opponent(12)
+                    .build();
 
-        verify(repository).findAll(captor.capture());
+            service.fetchAll(request);
 
-        final TeamGame teamGame = captor.getValue().getProbe();
+            verify(repository).findAll(captor.capture());
 
-        assertEquals(request.getGameId(), teamGame.getGameId());
-        assertEquals(request.getYear(), teamGame.getYear());
-        assertEquals(request.getDatestamp(), teamGame.getDatestamp());
-        assertEquals(request.getType().getValue(), teamGame.getType());
-        assertEquals(request.getTeamId(), teamGame.getTeamId());
-        assertEquals(request.getOpponent(), teamGame.getOpponent());
-    }
+            final TeamGame teamGame = captor.getValue().getProbe();
 
-    @Test
-    public void fetchAll_ShouldReturnResponsesMappedFromTheTeamGamesReturnedByRepository() {
-        final TeamGame teamGame = generateTeamGame(GameType.PRESEASON);
+            assertEquals(request.getGameId(), teamGame.getGameId());
+            assertEquals(request.getYear(), teamGame.getYear());
+            assertEquals(request.getDatestamp(), teamGame.getDatestamp());
+            assertEquals(request.getType().getValue(), teamGame.getType());
+            assertEquals(request.getTeamId(), teamGame.getTeamId());
+            assertEquals(request.getOpponent(), teamGame.getOpponent());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldReturnResponsesMappedFromTheTeamGamesReturnedByRepository() {
+            final TeamGame teamGame = generateTeamGame(GameType.PRESEASON);
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertEquals(teamGame.getGameId(), response.getGameId());
-        assertEquals(teamGame.getYear(), response.getYear());
-        assertEquals(teamGame.getDatestamp(), response.getDatestamp());
-        assertEquals(GameType.PRESEASON, response.getType());
-        assertEquals(teamGame.getPlayoffRound(), response.getPlayoffRound());
-        assertEquals(teamGame.getTeamId(), response.getTeamId());
-        assertEquals(teamGame.getOpponent(), response.getOpponent());
-        assertEquals(teamGame.getPossessions(), response.getPossessions());
-        assertEquals(teamGame.getPossessionTime(), response.getPossessionTime());
-        assertEquals(teamGame.getAttempts(), response.getAttempts());
-        assertEquals(teamGame.getGoals(), response.getGoals());
-        assertEquals(teamGame.getTurnovers(), response.getTurnovers());
-        assertEquals(teamGame.getSteals(), response.getSteals());
-        assertEquals(teamGame.getPenalties(), response.getPenalties());
-        assertEquals(teamGame.getOffensivePenalties(), response.getOffensivePenalties());
-        assertEquals(teamGame.getPenaltyShotsAttempted(), response.getPenaltyShotsAttempted());
-        assertEquals(teamGame.getPenaltyShotsMade(), response.getPenaltyShotsMade());
-        assertEquals(teamGame.getOvertimePenaltyShotsAttempted(), response.getOvertimePenaltyShotsAttempted());
-        assertEquals(teamGame.getOvertimePenaltyShotsMade(), response.getOvertimePenaltyShotsMade());
-        assertEquals(teamGame.getPeriod1Score(), response.getPeriod1Score());
-        assertEquals(teamGame.getPeriod2Score(), response.getPeriod2Score());
-        assertEquals(teamGame.getPeriod3Score(), response.getPeriod3Score());
-        assertEquals(teamGame.getPeriod4Score(), response.getPeriod4Score());
-        assertEquals(teamGame.getPeriod5Score(), response.getPeriod5Score());
-        assertEquals(teamGame.getOvertimeScore(), response.getOvertimeScore());
-        assertEquals(teamGame.getTotalScore(), response.getTotalScore());
+            final TeamGameResponse response = result.get(0);
 
-        assertNotNull(response.getRoad());
-        assertNotNull(response.getOvertime());
-        assertNotNull(response.getWin());
-    }
+            assertEquals(teamGame.getGameId(), response.getGameId());
+            assertEquals(teamGame.getYear(), response.getYear());
+            assertEquals(teamGame.getDatestamp(), response.getDatestamp());
+            assertEquals(GameType.PRESEASON, response.getType());
+            assertEquals(teamGame.getPlayoffRound(), response.getPlayoffRound());
+            assertEquals(teamGame.getTeamId(), response.getTeamId());
+            assertEquals(teamGame.getOpponent(), response.getOpponent());
+            assertEquals(teamGame.getPossessions(), response.getPossessions());
+            assertEquals(teamGame.getPossessionTime(), response.getPossessionTime());
+            assertEquals(teamGame.getAttempts(), response.getAttempts());
+            assertEquals(teamGame.getGoals(), response.getGoals());
+            assertEquals(teamGame.getTurnovers(), response.getTurnovers());
+            assertEquals(teamGame.getSteals(), response.getSteals());
+            assertEquals(teamGame.getPenalties(), response.getPenalties());
+            assertEquals(teamGame.getOffensivePenalties(), response.getOffensivePenalties());
+            assertEquals(teamGame.getPenaltyShotsAttempted(), response.getPenaltyShotsAttempted());
+            assertEquals(teamGame.getPenaltyShotsMade(), response.getPenaltyShotsMade());
+            assertEquals(teamGame.getOvertimePenaltyShotsAttempted(), response.getOvertimePenaltyShotsAttempted());
+            assertEquals(teamGame.getOvertimePenaltyShotsMade(), response.getOvertimePenaltyShotsMade());
+            assertEquals(teamGame.getPeriod1Score(), response.getPeriod1Score());
+            assertEquals(teamGame.getPeriod2Score(), response.getPeriod2Score());
+            assertEquals(teamGame.getPeriod3Score(), response.getPeriod3Score());
+            assertEquals(teamGame.getPeriod4Score(), response.getPeriod4Score());
+            assertEquals(teamGame.getPeriod5Score(), response.getPeriod5Score());
+            assertEquals(teamGame.getOvertimeScore(), response.getOvertimeScore());
+            assertEquals(teamGame.getTotalScore(), response.getTotalScore());
 
-    @Test
-    public void fetchAll_ShouldMapRoadValueFromIntegerToBooleanInResponseWhenFalse() {
-        final TeamGame teamGame = TeamGame.builder().road(0).build();
+            assertNotNull(response.getRoad());
+            assertNotNull(response.getOvertime());
+            assertNotNull(response.getWin());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapRoadValueFromIntegerToBooleanInResponseWhenFalse() {
+            final TeamGame teamGame = TeamGame.builder().road(0).build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertFalse(response.getRoad());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapRoadValueFromIntegerToBooleanInResponseWhenTrue() {
-        final TeamGame teamGame = TeamGame.builder().road(1).build();
+            assertFalse(response.getRoad());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapRoadValueFromIntegerToBooleanInResponseWhenTrue() {
+            final TeamGame teamGame = TeamGame.builder().road(1).build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertTrue(response.getRoad());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapRoadValueFromIntegerToBooleanInResponseWhenNull() {
-        final TeamGame teamGame = TeamGame.builder().build();
+            assertTrue(response.getRoad());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapRoadValueFromIntegerToBooleanInResponseWhenNull() {
+            final TeamGame teamGame = TeamGame.builder().build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNull(response.getRoad());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
-        final TeamGame teamGame = TeamGame.builder().overtime(0).build();
+            assertNull(response.getRoad());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenFalse() {
+            final TeamGame teamGame = TeamGame.builder().overtime(0).build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertFalse(response.getOvertime());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
-        final TeamGame teamGame = TeamGame.builder().overtime(1).build();
+            assertFalse(response.getOvertime());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenTrue() {
+            final TeamGame teamGame = TeamGame.builder().overtime(1).build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertTrue(response.getOvertime());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
-        final TeamGame teamGame = TeamGame.builder().build();
+            assertTrue(response.getOvertime());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapOvertimeValueFromIntegerToBooleanInResponseWhenNull() {
+            final TeamGame teamGame = TeamGame.builder().build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNull(response.getOvertime());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapWinValueFromIntegerToBooleanInResponseWhenFalse() {
-        final TeamGame teamGame = TeamGame.builder().win(0).build();
+            assertNull(response.getOvertime());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapWinValueFromIntegerToBooleanInResponseWhenFalse() {
+            final TeamGame teamGame = TeamGame.builder().win(0).build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertFalse(response.getWin());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapWinValueFromIntegerToBooleanInResponseWhenTrue() {
-        final TeamGame teamGame = TeamGame.builder().win(1).build();
+            assertFalse(response.getWin());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapWinValueFromIntegerToBooleanInResponseWhenTrue() {
+            final TeamGame teamGame = TeamGame.builder().win(1).build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertTrue(response.getWin());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldMapWinValueFromIntegerToBooleanInResponseWhenNull() {
-        final TeamGame teamGame = TeamGame.builder().build();
+            assertTrue(response.getWin());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
+        @Test
+        public void shouldMapWinValueFromIntegerToBooleanInResponseWhenNull() {
+            final TeamGame teamGame = TeamGame.builder().build();
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(Collections.singletonList(teamGame));
 
-        assertEquals(1, result.size());
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-        final TeamGameResponse response = result.get(0);
+            assertEquals(1, result.size());
 
-        assertNull(response.getWin());
-    }
+            final TeamGameResponse response = result.get(0);
 
-    @Test
-    public void fetchAll_ShouldReturnSameNumberOfResponsesAsTeamGamesReturnedByRepository() {
-        final List<TeamGame> teamGameList = Arrays.asList(
-                new TeamGame(),
-                new TeamGame(),
-                new TeamGame(),
-                new TeamGame()
-        );
+            assertNull(response.getWin());
+        }
 
-        when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(teamGameList);
+        @Test
+        public void shouldReturnSameNumberOfResponsesAsTeamGamesReturnedByRepository() {
+            final List<TeamGame> teamGameList = Arrays.asList(
+                    new TeamGame(),
+                    new TeamGame(),
+                    new TeamGame(),
+                    new TeamGame()
+            );
 
-        final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
+            when(repository.findAll(ArgumentMatchers.<Example<TeamGame>>any())).thenReturn(teamGameList);
 
-        assertEquals(teamGameList.size(), result.size());
-    }
+            final List<TeamGameResponse> result = service.fetchAll(new TeamGameSearchRequest());
 
-    private TeamGame generateTeamGame(final GameType gameType) {
-        return TeamGame.builder()
-                .gameId(1234)
-                .year("1984")
-                .datestamp(LocalDate.now())
-                .type(gameType.getValue())
-                .playoffRound(3)
-                .teamId(22)
-                .opponent(33)
-                .road(0)
-                .overtime(1)
-                .win(1)
-                .possessions(4321)
-                .possessionTime(9999)
-                .attempts(555)
-                .goals(111)
-                .turnovers(66)
-                .steals(55)
-                .penalties(44)
-                .offensivePenalties(11)
-                .penaltyShotsAttempted(9)
-                .penaltyShotsMade(5)
-                .overtimePenaltyShotsAttempted(6)
-                .overtimePenaltyShotsMade(2)
-                .period1Score(19)
-                .period2Score(18)
-                .period3Score(17)
-                .period4Score(16)
-                .period5Score(15)
-                .overtimeScore(12)
-                .totalScore(99)
-                .build();
+            assertEquals(teamGameList.size(), result.size());
+        }
+
+        private TeamGame generateTeamGame(final GameType gameType) {
+            return TeamGame.builder()
+                    .gameId(1234)
+                    .year("1984")
+                    .datestamp(LocalDate.now())
+                    .type(gameType.getValue())
+                    .playoffRound(3)
+                    .teamId(22)
+                    .opponent(33)
+                    .road(0)
+                    .overtime(1)
+                    .win(1)
+                    .possessions(4321)
+                    .possessionTime(9999)
+                    .attempts(555)
+                    .goals(111)
+                    .turnovers(66)
+                    .steals(55)
+                    .penalties(44)
+                    .offensivePenalties(11)
+                    .penaltyShotsAttempted(9)
+                    .penaltyShotsMade(5)
+                    .overtimePenaltyShotsAttempted(6)
+                    .overtimePenaltyShotsMade(2)
+                    .period1Score(19)
+                    .period2Score(18)
+                    .period3Score(17)
+                    .period4Score(16)
+                    .period5Score(15)
+                    .overtimeScore(12)
+                    .totalScore(99)
+                    .build();
+        }
     }
 }
