@@ -1,5 +1,6 @@
 package org.natc.app.processor;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -25,23 +26,27 @@ class BeginningOfSeasonScheduleProcessorTest {
     @InjectMocks
     private BeginningOfSeasonScheduleProcessor processor;
 
-    @Test
-    public void process_ShouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
-        processor.process(Schedule.builder().build());
+    @Nested
+    class Process {
 
-        verify(scheduleService).updateScheduleEntry(any());
-    }
+        @Test
+        public void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
+            processor.process(Schedule.builder().build());
 
-    @Test
-    public void process_ShouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
-        final Schedule schedule = Schedule.builder().year("2001").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
-        final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
+            verify(scheduleService).updateScheduleEntry(any());
+        }
 
-        processor.process(schedule);
+        @Test
+        public void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
+            final Schedule schedule = Schedule.builder().year("2001").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
+            final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
 
-        verify(scheduleService).updateScheduleEntry(captor.capture());
+            processor.process(schedule);
 
-        assertSame(schedule, captor.getValue());
-        assertEquals(ScheduleStatus.COMPLETED.getValue(), captor.getValue().getStatus());
+            verify(scheduleService).updateScheduleEntry(captor.capture());
+
+            assertSame(schedule, captor.getValue());
+            assertEquals(ScheduleStatus.COMPLETED.getValue(), captor.getValue().getStatus());
+        }
     }
 }

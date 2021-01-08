@@ -1,5 +1,6 @@
 package org.natc.app.manager;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,40 +34,44 @@ class ScheduleProcessorManagerTest {
     @InjectMocks
     private ScheduleProcessorManager scheduleProcessorManager;
 
-    @Test
-    public void getProcessorFor_ShouldGetScheduleProcessorBeanFromApplicationContext() {
-        when(scheduleTypeProcessorMap.get(any(ScheduleType.class))).thenReturn("bean-name");
+    @Nested
+    class GetProcessorFor {
 
-        scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
+        @Test
+        public void shouldGetScheduleProcessorBeanFromApplicationContext() {
+            when(scheduleTypeProcessorMap.get(any(ScheduleType.class))).thenReturn("bean-name");
 
-        verify(context).getBean(anyString(), eq(ScheduleProcessor.class));
-    }
+            scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
 
-    @Test
-    public void getProcessorFor_ShouldGetBeanFromApplicationContextBasedOnScheduleType() {
-        final String expectedBeanName = "my-bean-name";
-        final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+            verify(context).getBean(anyString(), eq(ScheduleProcessor.class));
+        }
 
-        when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn(expectedBeanName);
+        @Test
+        public void shouldGetBeanFromApplicationContextBasedOnScheduleType() {
+            final String expectedBeanName = "my-bean-name";
+            final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
-        scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
+            when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn(expectedBeanName);
 
-        verify(context).getBean(captor.capture(), eq(ScheduleProcessor.class));
+            scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
 
-        final String actualBeanName = captor.getValue();
+            verify(context).getBean(captor.capture(), eq(ScheduleProcessor.class));
 
-        assertEquals(expectedBeanName, actualBeanName);
-    }
+            final String actualBeanName = captor.getValue();
 
-    @Test
-    public void getProcessorFor_ShouldReturnTheScheduleProcessorFoundInTheApplicationContext() {
-        final ScheduleProcessor expectedScheduleProcessor = mock(ScheduleProcessor.class);
+            assertEquals(expectedBeanName, actualBeanName);
+        }
 
-        when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn("bean-name");
-        when(context.getBean("bean-name", ScheduleProcessor.class)).thenReturn(expectedScheduleProcessor);
+        @Test
+        public void shouldReturnTheScheduleProcessorFoundInTheApplicationContext() {
+            final ScheduleProcessor expectedScheduleProcessor = mock(ScheduleProcessor.class);
 
-        final ScheduleProcessor actualScheduleProcessor = scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
+            when(scheduleTypeProcessorMap.get(ScheduleType.AWARDS)).thenReturn("bean-name");
+            when(context.getBean("bean-name", ScheduleProcessor.class)).thenReturn(expectedScheduleProcessor);
 
-        assertSame(expectedScheduleProcessor, actualScheduleProcessor);
+            final ScheduleProcessor actualScheduleProcessor = scheduleProcessorManager.getProcessorFor(ScheduleType.AWARDS);
+
+            assertSame(expectedScheduleProcessor, actualScheduleProcessor);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package org.natc.app.manager;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,40 +34,44 @@ class ScheduleDataGeneratorManagerTest {
     @InjectMocks
     private ScheduleDataGeneratorManager manager;
 
-    @Test
-    public void getGeneratorFor_ShouldGetScheduleDataGeneratorBeanFromApplicationContext() {
-        when(scheduleTypeDataGeneratorMap.get(any(ScheduleType.class))).thenReturn("anything");
+    @Nested
+    class GetGeneratorFor {
 
-        manager.getGeneratorFor(ScheduleType.PRESEASON);
+        @Test
+        public void shouldGetScheduleDataGeneratorBeanFromApplicationContext() {
+            when(scheduleTypeDataGeneratorMap.get(any(ScheduleType.class))).thenReturn("anything");
 
-        verify(context).getBean(anyString(), eq(ScheduleDataGenerator.class));
-    }
+            manager.getGeneratorFor(ScheduleType.PRESEASON);
 
-    @Test
-    public void getGeneratorFor_ShouldGetBeanFromApplicationContextBasedOnScheduleType() {
-        final String expectedBeanName = "my-bean-name";
-        final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+            verify(context).getBean(anyString(), eq(ScheduleDataGenerator.class));
+        }
 
-        when(scheduleTypeDataGeneratorMap.get(ScheduleType.PRESEASON)).thenReturn(expectedBeanName);
+        @Test
+        public void shouldGetBeanFromApplicationContextBasedOnScheduleType() {
+            final String expectedBeanName = "my-bean-name";
+            final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
-        manager.getGeneratorFor(ScheduleType.PRESEASON);
+            when(scheduleTypeDataGeneratorMap.get(ScheduleType.PRESEASON)).thenReturn(expectedBeanName);
 
-        verify(context).getBean(captor.capture(), eq(ScheduleDataGenerator.class));
+            manager.getGeneratorFor(ScheduleType.PRESEASON);
 
-        final String actualBeanName = captor.getValue();
+            verify(context).getBean(captor.capture(), eq(ScheduleDataGenerator.class));
 
-        assertEquals(expectedBeanName, actualBeanName);
-    }
+            final String actualBeanName = captor.getValue();
 
-    @Test
-    public void getGeneratorFor_ShouldReturnTheScheduleDataGeneratorFoundInTheApplicationContext() {
-        final ScheduleDataGenerator expectedGenerator = mock(ScheduleDataGenerator.class);
+            assertEquals(expectedBeanName, actualBeanName);
+        }
 
-        when(scheduleTypeDataGeneratorMap.get(any(ScheduleType.class))).thenReturn("anything");
-        when(context.getBean("anything", ScheduleDataGenerator.class)).thenReturn(expectedGenerator);
+        @Test
+        public void shouldReturnTheScheduleDataGeneratorFoundInTheApplicationContext() {
+            final ScheduleDataGenerator expectedGenerator = mock(ScheduleDataGenerator.class);
 
-        final ScheduleDataGenerator actualGenerator = manager.getGeneratorFor(ScheduleType.PRESEASON);
+            when(scheduleTypeDataGeneratorMap.get(any(ScheduleType.class))).thenReturn("anything");
+            when(context.getBean("anything", ScheduleDataGenerator.class)).thenReturn(expectedGenerator);
 
-        assertSame(expectedGenerator, actualGenerator);
+            final ScheduleDataGenerator actualGenerator = manager.getGeneratorFor(ScheduleType.PRESEASON);
+
+            assertSame(expectedGenerator, actualGenerator);
+        }
     }
 }

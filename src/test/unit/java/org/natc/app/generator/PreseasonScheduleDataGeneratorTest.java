@@ -1,6 +1,7 @@
 package org.natc.app.generator;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,127 +29,131 @@ class PreseasonScheduleDataGeneratorTest {
     @InjectMocks
     private PreseasonScheduleDataGenerator generator;
 
-    @BeforeEach
-    public void setup() {
-        when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
-        when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
-        when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
-    }
+    @Nested
+    class Generate {
 
-    @Test
-    public void generate_ShouldReturnAListOfScheduleDataObjects() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+        @BeforeEach
+        public void setup() {
+            when(leagueConfiguration.getDaysInPreseason()).thenReturn(10);
+            when(leagueConfiguration.getNumberOfTeams()).thenReturn(40);
+            when(leagueConfiguration.getGamesPerDay()).thenReturn(20);
+        }
 
-        assertFalse(scheduleDataList.isEmpty());
-    }
+        @Test
+        public void shouldReturnAListOfScheduleDataObjects() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-    @Test
-    public void generate_ShouldReturnAsManyScheduleDataObjectsAsThereAreDaysInPreseason() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+            assertFalse(scheduleDataList.isEmpty());
+        }
 
-        assertEquals(leagueConfiguration.getDaysInPreseason(), scheduleDataList.size());
-    }
+        @Test
+        public void shouldReturnAsManyScheduleDataObjectsAsThereAreDaysInPreseason() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-    @Test
-    public void generate_ShouldReturnScheduleDataWhereEveryDayIsComprisedOfEveryTeam() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+            assertEquals(leagueConfiguration.getDaysInPreseason(), scheduleDataList.size());
+        }
 
-        assertFalse(scheduleDataList.isEmpty());
+        @Test
+        public void shouldReturnScheduleDataWhereEveryDayIsComprisedOfEveryTeam() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-        for (final ScheduleData data : scheduleDataList) {
-            final Set<Integer> teams = new TreeSet<>();
+            assertFalse(scheduleDataList.isEmpty());
 
-            for (final ScheduleData.Match match : data.getMatches()) {
-                teams.add(match.getHomeTeam());
-                teams.add(match.getRoadTeam());
+            for (final ScheduleData data : scheduleDataList) {
+                final Set<Integer> teams = new TreeSet<>();
+
+                for (final ScheduleData.Match match : data.getMatches()) {
+                    teams.add(match.getHomeTeam());
+                    teams.add(match.getRoadTeam());
+                }
+
+                assertEquals(leagueConfiguration.getNumberOfTeams(), teams.size());
             }
-
-            assertEquals(leagueConfiguration.getNumberOfTeams(), teams.size());
         }
-    }
 
-    @Test
-    public void generate_ShouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+        @Test
+        public void shouldReturnScheduleDataWhereEveryDayHasAConfiguredNumberOfGames() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-        assertFalse(scheduleDataList.isEmpty());
+            assertFalse(scheduleDataList.isEmpty());
 
-        for (final ScheduleData data : scheduleDataList) {
-            assertEquals(leagueConfiguration.getGamesPerDay(), data.getMatches().size());
+            for (final ScheduleData data : scheduleDataList) {
+                assertEquals(leagueConfiguration.getGamesPerDay(), data.getMatches().size());
+            }
         }
-    }
 
-    @Test
-    public void generate_ShouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+        @Test
+        public void shouldReturnScheduleDataWhereEveryTeamPlaysAConfiguredNumberOfGames() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-        assertFalse(scheduleDataList.isEmpty());
+            assertFalse(scheduleDataList.isEmpty());
 
-        for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
-            final int team = i;
-            assertEquals(leagueConfiguration.getDaysInPreseason().longValue(),
-            scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream()).filter(match ->
-                    match.getHomeTeam().equals(team) || match.getRoadTeam().equals(team)).count());
+            for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
+                final int team = i;
+                assertEquals(leagueConfiguration.getDaysInPreseason().longValue(),
+                        scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream()).filter(match ->
+                                match.getHomeTeam().equals(team) || match.getRoadTeam().equals(team)).count());
+            }
         }
-    }
 
-    @Test
-    public void generate_ShouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesAtHome() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+        @Test
+        public void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesAtHome() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-        assertFalse(scheduleDataList.isEmpty());
+            assertFalse(scheduleDataList.isEmpty());
 
-        for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
-            final int team = i;
-            assertEquals(leagueConfiguration.getDaysInPreseason().longValue() / 2,
-                    scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream()).filter(match ->
-                            match.getHomeTeam().equals(team)).count());
+            for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
+                final int team = i;
+                assertEquals(leagueConfiguration.getDaysInPreseason().longValue() / 2,
+                        scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream()).filter(match ->
+                                match.getHomeTeam().equals(team)).count());
+            }
         }
-    }
 
-    @Test
-    public void generate_ShouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesOnTheRoad() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+        @Test
+        public void shouldReturnScheduleDataWhereEveryTeamPlaysHalfTheGamesOnTheRoad() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-        assertFalse(scheduleDataList.isEmpty());
+            assertFalse(scheduleDataList.isEmpty());
 
-        for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
-            final int team = i;
-            assertEquals(leagueConfiguration.getDaysInPreseason().longValue() / 2,
-                    scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream()).filter(match ->
-                            match.getRoadTeam().equals(team)).count());
+            for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
+                final int team = i;
+                assertEquals(leagueConfiguration.getDaysInPreseason().longValue() / 2,
+                        scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream()).filter(match ->
+                                match.getRoadTeam().equals(team)).count());
+            }
         }
-    }
 
-    @Test
-    public void generate_ShouldReturnSchedleDateWhereEveryTeamPlaysADifferentTeamEveryGame() {
-        final List<ScheduleData> scheduleDataList = generator.generate();
+        @Test
+        public void shouldReturnSchedleDateWhereEveryTeamPlaysADifferentTeamEveryGame() {
+            final List<ScheduleData> scheduleDataList = generator.generate();
 
-        assertFalse(scheduleDataList.isEmpty());
+            assertFalse(scheduleDataList.isEmpty());
 
-        for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
-            final int team = i;
-            assertEquals(leagueConfiguration.getDaysInPreseason().longValue(),
-                    scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
-                            .filter(match -> match.getHomeTeam().equals(team) || match.getRoadTeam().equals(team))
-                            .map(match -> match.getHomeTeam().equals(team) ? match.getRoadTeam() : match.getHomeTeam())
-                            .collect(Collectors.toSet())
-                            .size());
+            for (int i = 1; i <= leagueConfiguration.getNumberOfTeams(); ++i) {
+                final int team = i;
+                assertEquals(leagueConfiguration.getDaysInPreseason().longValue(),
+                        scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
+                                .filter(match -> match.getHomeTeam().equals(team) || match.getRoadTeam().equals(team))
+                                .map(match -> match.getHomeTeam().equals(team) ? match.getRoadTeam() : match.getHomeTeam())
+                                .collect(Collectors.toSet())
+                                .size());
+            }
         }
-    }
 
-    @Test
-    public void generate_ShouldReturnADifferentResultEveryTime() {
-        final List<ScheduleData> firstRun = generator.generate();
-        final List<ScheduleData> secondRun = generator.generate();
+        @Test
+        public void shouldReturnADifferentResultEveryTime() {
+            final List<ScheduleData> firstRun = generator.generate();
+            final List<ScheduleData> secondRun = generator.generate();
 
-        assertNotEquals(
-                firstRun.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
-                        .map(match -> match.getRoadTeam().toString() + match.getHomeTeam().toString())
-                        .collect(Collectors.toList()),
-                secondRun.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
-                        .map(match -> match.getRoadTeam().toString() + match.getHomeTeam().toString())
-                        .collect(Collectors.toList())
-        );
+            assertNotEquals(
+                    firstRun.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
+                            .map(match -> match.getRoadTeam().toString() + match.getHomeTeam().toString())
+                            .collect(Collectors.toList()),
+                    secondRun.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
+                            .map(match -> match.getRoadTeam().toString() + match.getHomeTeam().toString())
+                            .collect(Collectors.toList())
+            );
+        }
     }
 }
