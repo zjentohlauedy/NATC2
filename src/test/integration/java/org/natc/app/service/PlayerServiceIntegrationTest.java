@@ -14,8 +14,6 @@ import org.springframework.data.domain.Example;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -64,9 +62,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Player> players = playerRepository.findAll();
 
-            final Set<String> names = players.stream().map(player -> player.getFirstName() + player.getLastName()).collect(Collectors.toSet());
-
-            assertEquals(1000, names.size());
+            assertEquals(1000, players.stream().map(player -> player.getFirstName() + player.getLastName()).distinct().count());
         }
 
         @Test
@@ -75,9 +71,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Player> players = playerRepository.findAll();
 
-            final Set<Integer> playerIds = players.stream().map(Player::getPlayerId).collect(Collectors.toSet());
-
-            assertEquals(100, playerIds.size());
+            assertEquals(100, players.stream().map(Player::getPlayerId).distinct().count());
         }
 
         @Test

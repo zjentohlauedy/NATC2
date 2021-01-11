@@ -107,9 +107,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
                     .max(Comparator.comparing(Manager::getTeamId))
                     .map(Manager::getTeamId).orElse(0));
 
-            final Set<Integer> managerIds = signedManagers.stream().map(Manager::getTeamId).collect(Collectors.toSet());
-
-            assertEquals(totalTeams, managerIds.size());
+            assertEquals(totalTeams.longValue(), signedManagers.stream().map(Manager::getTeamId).distinct().count());
         }
 
         @Test

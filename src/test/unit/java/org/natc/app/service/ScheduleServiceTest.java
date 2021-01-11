@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -413,9 +412,7 @@ class ScheduleServiceTest {
 
             assertEquals(preseasonScheduleData.size(), preseason.size());
 
-            final Set<LocalDate> dates = preseason.stream().map(Schedule::getScheduled).collect(Collectors.toSet());
-
-            assertEquals(preseasonScheduleData.size(), dates.size());
+            assertEquals(preseasonScheduleData.size(), preseason.stream().map(Schedule::getScheduled).distinct().count());
         }
 
         @Test
@@ -625,9 +622,7 @@ class ScheduleServiceTest {
 
             assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
-            final Set<LocalDate> dates = regularSeason.stream().map(Schedule::getScheduled).collect(Collectors.toSet());
-
-            assertEquals(regularSeasonScheduleData.size(), dates.size());
+            assertEquals(regularSeasonScheduleData.size(), regularSeason.stream().map(Schedule::getScheduled).distinct().count());
         }
 
         @Test

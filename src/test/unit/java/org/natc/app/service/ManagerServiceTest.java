@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -80,10 +79,8 @@ class ManagerServiceTest {
         void shouldCreateManagersForTheGivenYear() throws NATCException {
             final List<Manager> managerList = managerService.generateManagers("2017", 10);
 
-            final Set<String> years = managerList.stream().map(Manager::getYear).collect(Collectors.toSet());
-
-            assertEquals(1, years.size());
-            assertEquals("2017", years.stream().findFirst().orElse(null));
+            assertEquals(1, managerList.stream().map(Manager::getYear).distinct().count());
+            assertEquals("2017", managerList.get(0).getYear());
         }
 
         @Test
@@ -191,10 +188,7 @@ class ManagerServiceTest {
             final List<Manager> managerList = managerService.generateManagers("2001", 100);
 
             assertEquals(100, managerList.size());
-
-            final Set<Integer> ages = managerList.stream().map(Manager::getAge).collect(Collectors.toSet());
-
-            assertEquals(10, ages.size());
+            assertEquals(10, managerList.stream().map(Manager::getAge).distinct().count());
         }
 
         @Test
@@ -298,9 +292,7 @@ class ManagerServiceTest {
 
             verify(managerAnalyzer, times(5)).determineManagerStyle(any());
 
-            final Set<Integer> styles = managerList.stream().map(Manager::getStyle).collect(Collectors.toSet());
-
-            assertEquals(5, styles.size());
+            assertEquals(5, managerList.stream().map(Manager::getStyle).distinct().count());
         }
 
         @Test

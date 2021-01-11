@@ -16,8 +16,6 @@ import org.springframework.data.domain.Example;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -66,9 +64,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Manager> managers = managerRepository.findAll();
 
-            final Set<String> names = managers.stream().map(manager -> manager.getFirstName() + manager.getLastName()).collect(Collectors.toSet());
-
-            assertEquals(1000, names.size());
+            assertEquals(1000, managers.stream().map(manager -> manager.getFirstName() + manager.getLastName()).distinct().count());
         }
 
         @Test
@@ -77,9 +73,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Manager> managers = managerRepository.findAll();
 
-            final Set<Integer> managerIds = managers.stream().map(Manager::getManagerId).collect(Collectors.toSet());
-
-            assertEquals(100, managerIds.size());
+            assertEquals(100, managers.stream().map(Manager::getManagerId).distinct().count());
         }
 
         @Test

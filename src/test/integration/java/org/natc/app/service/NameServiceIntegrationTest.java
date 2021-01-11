@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -78,9 +76,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
                 fullNames.add(nameService.generateName());
             }
 
-            final Set<String> generatedNames = fullNames.stream().map(FullName::getFirstName).collect(Collectors.toSet());
-
-            assertEquals(10, generatedNames.size());
+            assertEquals(10, fullNames.stream().map(FullName::getFirstName).distinct().count());
         }
 
         @Test
@@ -107,9 +103,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
                 fullNames.add(nameService.generateName());
             }
 
-            final Set<String> generatedNames = fullNames.stream().map(FullName::getLastName).collect(Collectors.toSet());
-
-            assertEquals(10, generatedNames.size());
+            assertEquals(10, fullNames.stream().map(FullName::getLastName).distinct().count());
         }
 
         @Test

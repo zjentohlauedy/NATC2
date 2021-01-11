@@ -344,10 +344,8 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Schedule> scheduleList = repository.findAll();
 
-            final Set<String> years = scheduleList.stream().map(Schedule::getYear).collect(Collectors.toSet());
-
-            assertEquals(1, years.size());
-            assertEquals("2001", years.stream().findFirst().orElse(null));
+            assertEquals(1, scheduleList.stream().map(Schedule::getYear).distinct().count());
+            assertEquals("2001", scheduleList.get(0).getYear());
         }
 
         @Test
@@ -388,10 +386,8 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Schedule> scheduleList = repository.findAll();
 
-            final Set<Integer> statuses = scheduleList.stream().map(Schedule::getStatus).collect(Collectors.toSet());
-
-            assertEquals(1, statuses.size());
-            assertEquals(ScheduleStatus.SCHEDULED.getValue(), statuses.stream().findFirst().orElse(null));
+            assertEquals(1, scheduleList.stream().map(Schedule::getStatus).distinct().count());
+            assertEquals(ScheduleStatus.SCHEDULED.getValue(), scheduleList.get(0).getStatus());
             assertEquals(0, scheduleList.stream().filter(schedule -> schedule.getScheduled() == null).count());
         }
     }

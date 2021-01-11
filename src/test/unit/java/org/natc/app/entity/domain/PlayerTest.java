@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -351,9 +349,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Integer> ages = players.stream().map(Player::getAge).collect(Collectors.toSet());
-
-            assertEquals(12, ages.size());
+            assertEquals(12, players.stream().map(Player::getAge).distinct().count());
         }
 
         @Test
@@ -371,9 +367,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getScoring).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getScoring).distinct().count() >= 85);
         }
 
         @Test
@@ -391,9 +385,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getPassing).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getPassing).distinct().count() >= 85);
         }
 
         @Test
@@ -411,9 +403,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getBlocking).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getBlocking).distinct().count() >= 85);
         }
 
         @Test
@@ -431,9 +421,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getTackling).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getTackling).distinct().count() >= 85);
         }
 
         @Test
@@ -451,9 +439,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getStealing).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getStealing).distinct().count() >= 85);
         }
 
         @Test
@@ -471,9 +457,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getPresence).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getPresence).distinct().count() >= 85);
         }
 
         @Test
@@ -491,9 +475,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getDiscipline).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getDiscipline).distinct().count() >= 85);
         }
 
         @Test
@@ -511,9 +493,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getPenaltyShot).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getPenaltyShot).distinct().count() >= 85);
         }
 
         @Test
@@ -531,9 +511,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getPenaltyOffense).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getPenaltyOffense).distinct().count() >= 85);
         }
 
         @Test
@@ -551,9 +529,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getPenaltyDefense).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getPenaltyDefense).distinct().count() >= 85);
         }
 
         @Test
@@ -571,9 +547,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getEndurance).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getEndurance).distinct().count() >= 85);
         }
 
         @Test
@@ -591,9 +565,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getConfidence).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getConfidence).distinct().count() >= 85);
         }
 
         @Test
@@ -611,9 +583,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getVitality).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getVitality).distinct().count() >= 85);
         }
 
         @Test
@@ -631,9 +601,7 @@ class PlayerTest {
                 players.add(Player.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = players.stream().map(Player::getDurability).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(players.stream().map(Player::getDurability).distinct().count() >= 85);
         }
 
         @Test

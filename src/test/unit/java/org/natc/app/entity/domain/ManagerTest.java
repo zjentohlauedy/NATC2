@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -63,9 +61,7 @@ class ManagerTest {
                 managers.add(Manager.generate(null, null, null, null));
             }
 
-            final Set<Integer> ages = managers.stream().map(Manager::getAge).collect(Collectors.toSet());
-
-            assertEquals(10, ages.size());
+            assertEquals(10, managers.stream().map(Manager::getAge).distinct().count());
         }
 
         @Test
@@ -83,9 +79,7 @@ class ManagerTest {
                 managers.add(Manager.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = managers.stream().map(Manager::getOffense).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(managers.stream().map(Manager::getOffense).distinct().count() >= 85);
         }
 
         @Test
@@ -103,9 +97,7 @@ class ManagerTest {
                 managers.add(Manager.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = managers.stream().map(Manager::getDefense).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(managers.stream().map(Manager::getDefense).distinct().count() >= 85);
         }
 
         @Test
@@ -123,9 +115,7 @@ class ManagerTest {
                 managers.add(Manager.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = managers.stream().map(Manager::getIntangible).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(managers.stream().map(Manager::getIntangible).distinct().count() >= 85);
         }
 
         @Test
@@ -143,9 +133,7 @@ class ManagerTest {
                 managers.add(Manager.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = managers.stream().map(Manager::getPenalties).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(managers.stream().map(Manager::getPenalties).distinct().count() >= 85);
         }
 
         @Test
@@ -163,9 +151,7 @@ class ManagerTest {
                 managers.add(Manager.generate(null, null, null, null));
             }
 
-            final Set<Double> uniqueValues = managers.stream().map(Manager::getVitality).collect(Collectors.toSet());
-
-            assertTrue(uniqueValues.size() >= 85);
+            assertTrue(managers.stream().map(Manager::getVitality).distinct().count() >= 85);
         }
 
         @Test

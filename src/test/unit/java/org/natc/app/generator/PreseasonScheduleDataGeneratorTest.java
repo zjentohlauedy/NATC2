@@ -136,8 +136,8 @@ class PreseasonScheduleDataGeneratorTest {
                         scheduleDataList.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
                                 .filter(match -> match.getHomeTeam().equals(team) || match.getRoadTeam().equals(team))
                                 .map(match -> match.getHomeTeam().equals(team) ? match.getRoadTeam() : match.getHomeTeam())
-                                .collect(Collectors.toSet())
-                                .size());
+                                .distinct()
+                                .count());
             }
         }
 

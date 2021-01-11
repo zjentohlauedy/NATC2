@@ -116,36 +116,30 @@ class TeamServiceTest {
         void shouldGenerateRegularTeamsAllWithDifferentLocations() {
             final List<Team> teamList = teamService.generateTeams(null);
 
-            final Set<String> locations = teamList.stream()
+            assertEquals(40, teamList.stream()
                     .filter(team -> team.getAllstarTeam().equals(0))
                     .map(Team::getLocation)
-                    .collect(Collectors.toSet());
-
-            assertEquals(40, locations.size());
+                    .distinct().count());
         }
 
         @Test
         void shouldGenerateRegularTeamsAllWithDifferentNames() {
             final List<Team> teamList = teamService.generateTeams(null);
 
-            final Set<String> names = teamList.stream()
+            assertEquals(40, teamList.stream()
                     .filter(team -> team.getAllstarTeam().equals(0))
                     .map(Team::getName)
-                    .collect(Collectors.toSet());
-
-            assertEquals(40, names.size());
+                    .distinct().count());
         }
 
         @Test
         void shouldGenerateRegularTeamsAllWithDifferentAbbreviations() {
             final List<Team> teamList = teamService.generateTeams(null);
 
-            final Set<String> abbreviations = teamList.stream()
+            assertEquals(40, teamList.stream()
                     .filter(team -> team.getAllstarTeam().equals(0))
                     .map(Team::getAbbreviation)
-                    .collect(Collectors.toSet());
-
-            assertEquals(40, abbreviations.size());
+                    .distinct().count());
         }
 
         @Test

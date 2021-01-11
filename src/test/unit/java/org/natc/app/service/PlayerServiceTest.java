@@ -17,7 +17,6 @@ import org.natc.app.repository.PlayerRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -74,10 +73,8 @@ class PlayerServiceTest {
         void shouldCreatePlayersForTheGivenYear() throws NATCException {
             final List<Player> playerList = playerService.generatePlayers("1995", 10);
 
-            final Set<String> years = playerList.stream().map(Player::getYear).collect(Collectors.toSet());
-
-            assertEquals(1, years.size());
-            assertEquals("1995", years.stream().findFirst().orElse(null));
+            assertEquals(1, playerList.stream().map(Player::getYear).distinct().count());
+            assertEquals("1995", playerList.get(0).getYear());
         }
 
         @Test
@@ -185,9 +182,7 @@ class PlayerServiceTest {
 
             assertEquals(100, playerList.size());
 
-            final Set<Integer> ages = playerList.stream().map(Player::getAge).collect(Collectors.toSet());
-
-            assertEquals(12, ages.size());
+            assertEquals(12, playerList.stream().map(Player::getAge).distinct().count());
         }
 
         @Test
