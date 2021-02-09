@@ -671,5 +671,21 @@ class ManagerChangesScheduleProcessorTest {
 
             verify(managerService, never()).updateManagers(any());
         }
+
+        @Test
+        public void shouldUpdateScheduleToCompletedIfFirstSeasonYear() throws NATCException {
+            final String firstSeason = "1989";
+            final Schedule schedule = Schedule.builder().year(firstSeason).sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
+            final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
+
+            when(leagueConfiguration.getFirstSeason()).thenReturn(firstSeason);
+
+            processor.process(schedule);
+
+            verify(scheduleService).updateScheduleEntry(captor.capture());
+
+            assertSame(schedule, captor.getValue());
+            assertEquals(ScheduleStatus.COMPLETED.getValue(), captor.getValue().getStatus());
+        }
     }
 }

@@ -12,12 +12,15 @@ import org.natc.app.service.PlayerService;
 import org.natc.app.service.ScheduleService;
 import org.natc.app.service.TeamManagerDraftService;
 import org.natc.app.service.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Component("manager-changes-schedule-processor")
 public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
 
     private final LeagueConfiguration leagueConfiguration;
@@ -27,6 +30,7 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
     private final TeamService teamService;
     private final TeamManagerDraftService teamManagerDraftService;
 
+    @Autowired
     public ManagerChangesScheduleProcessor(
             final LeagueConfiguration leagueConfiguration,
             final PlayerService playerService,
@@ -44,7 +48,10 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
 
     @Override
     public void process(final Schedule schedule) throws NATCException {
-        if (schedule.getYear().equals(leagueConfiguration.getFirstSeason())) return;
+        if (schedule.getYear().equals(leagueConfiguration.getFirstSeason())) {
+            completeSchedule(schedule);
+            return;
+        }
 
         final List<Manager> managerList = new ArrayList<>(managerService.getActiveManagersForYear(schedule.getYear()));
 
@@ -84,9 +91,7 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
 
         managerService.updateManagers(managerList);
 
-        schedule.setStatus(ScheduleStatus.COMPLETED.getValue());
-
-        scheduleService.updateScheduleEntry(schedule);
+        completeSchedule(schedule);
     }
     
     private List<Manager> generateNewManagers(final String year) throws NATCException {
@@ -108,5 +113,11 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
         }
 
         return managerList;
+    }
+
+    private void completeSchedule(final Schedule schedule) {
+        schedule.setStatus(ScheduleStatus.COMPLETED.getValue());
+
+        scheduleService.updateScheduleEntry(schedule);
     }
 }
