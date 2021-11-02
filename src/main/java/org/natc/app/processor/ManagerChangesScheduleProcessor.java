@@ -97,11 +97,11 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
     private List<Manager> generateNewManagers(final String year) throws NATCException {
         final Integer newManagerStartingAge = leagueConfiguration.getNewManagerStartingAge();
         final List<Manager> managerList = new ArrayList<>();
-        final String tenYearsAgo = String.valueOf(Integer.parseInt(year) - leagueConfiguration.getPlayerManagerYearsRetired());
+        final String playerManagerEligibleSeason = String.valueOf(Integer.parseInt(year) - leagueConfiguration.getPlayerManagerYearsRetired());
 
         int managersToGenerate = leagueConfiguration.getNewManagersPerSeason();
 
-        for (final Player candidate : playerService.getManagerialCandidates(tenYearsAgo)) {
+        for (final Player candidate : playerService.getManagerialCandidates(playerManagerEligibleSeason)) {
             managerList.add(managerService.generateManagerFromPlayer(year, candidate));
 
             managersToGenerate--;
