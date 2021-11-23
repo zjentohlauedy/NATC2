@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,8 +15,10 @@ import org.natc.app.entity.domain.FullName;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.exception.NATCException;
 import org.natc.app.repository.PlayerRepository;
+import org.springframework.data.domain.Example;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +38,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerServiceTest {
+
+    @Captor
+    private ArgumentCaptor<Example<Player>> captor;
 
     @Mock
     private LeagueConfiguration leagueConfiguration;
@@ -326,6 +333,33 @@ class PlayerServiceTest {
             playerService.updatePlayersForNewSeason("2004", "2005");
 
             verify(playerRepository).copyPlayersForNewYear("2004", "2005");
+        }
+    }
+
+    @Nested
+    class GetActivePlayersForYear {
+
+        @Test
+        void shouldCallRepositoryToRetrievePlayersForGivenYearThatAreNotRetired() {
+            playerService.getActivePlayersForYear("1999");
+
+            verify(playerRepository).findAll(captor.capture());
+
+            final Player player = captor.getValue().getProbe();
+
+            assertEquals("1999", player.getYear());
+            assertEquals(0, player.getRetired());
+        }
+
+        @Test
+        void shouldReturnThePlayersReturnedByTheRepository() {
+            final List<Player> expectedPlayers = Collections.singletonList(Player.builder().playerId(1).build());
+
+            when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(expectedPlayers);
+
+            final List<Player> actualPlayers = playerService.getActivePlayersForYear("1999");
+
+            assertEquals(expectedPlayers, actualPlayers);
         }
     }
 

@@ -6,6 +6,7 @@ import org.natc.app.entity.domain.Player;
 import org.natc.app.exception.NATCException;
 import org.natc.app.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -52,5 +53,9 @@ public class PlayerService {
 
     public List<Player> getManagerialCandidates(final String year) {
         return playerRepository.findTopNumRetiredPlayersForYear(year, leagueConfiguration.getMaxPlayerManagersPerSeason());
+    }
+
+    public List<Player> getActivePlayersForYear(String year) {
+        return playerRepository.findAll(Example.of(Player.builder().year(year).retired(0).build()));
     }
 }

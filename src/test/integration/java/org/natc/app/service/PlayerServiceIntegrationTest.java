@@ -294,6 +294,45 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
     }
 
     @Nested
+    class GetActivePlayersForYear {
+
+        @Test
+        void ShouldReturnAllActivePlayerRecordsMatchingTheGivenYear() {
+            final List<Player> persistedPlayers = Arrays.asList(
+                    Player.builder().playerId(1).year("2015").retired(0).build(),
+                    Player.builder().playerId(2).year("2015").retired(0).build(),
+                    Player.builder().playerId(3).year("2015").retired(0).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            final List<Player> foundPlayers = playerService.getActivePlayersForYear("2015");
+
+            assertEquals(persistedPlayers.size(), foundPlayers.size());
+        }
+
+        @Test
+        void ShouldReturnOnlyActivePlayerRecordsMatchingTheGivenYear() {
+            final List<Player> persistedPlayers = Arrays.asList(
+                    Player.builder().playerId(1).year("2015").retired(0).build(),
+                    Player.builder().playerId(2).year("2016").retired(0).build(),
+                    Player.builder().playerId(3).year("2015").retired(0).build(),
+                    Player.builder().playerId(4).year("2015").retired(1).build(),
+                    Player.builder().playerId(5).year("2015").retired(0).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            final List<Player> foundPlayers = playerService.getActivePlayersForYear("2015");
+
+            assertEquals(3, foundPlayers.size());
+            assertEquals(3, foundPlayers.stream().filter(player ->
+                    player.getYear().equals("2015") && player.getRetired().equals(0)
+            ).count());
+        }
+    }
+
+    @Nested
     class GetManagerialCandidates {
 
         @Test
