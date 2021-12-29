@@ -47,6 +47,10 @@ public class PlayerService {
         playerRepository.save(player);
     }
 
+    public void updatePlayers(final List<Player> playerList) {
+        playerRepository.saveAll(playerList);
+    }
+
     public void updatePlayersForNewSeason(final String previousYear, final String newYear) {
         playerRepository.copyPlayersForNewYear(previousYear, newYear);
     }
@@ -58,4 +62,5 @@ public class PlayerService {
     public List<Player> getActivePlayersForYear(String year) {
         return playerRepository.findAll(Example.of(Player.builder().year(year).retired(0).build()));
     }
+
 }

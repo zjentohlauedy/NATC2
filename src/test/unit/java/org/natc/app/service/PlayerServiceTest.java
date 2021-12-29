@@ -409,4 +409,16 @@ class PlayerServiceTest {
             assertEquals(playerList, playerService.getManagerialCandidates("2012"));
         }
     }
+
+    @Nested
+    class UpdatePlayers {
+        @Test
+        void shouldCallThePlayerRepositoryToSaveTheGivenPlayerList() {
+            final List<Player> playerList = Collections.singletonList(Player.builder().playerId(1).year("2000").build());
+
+            playerService.updatePlayers(playerList);
+
+            verify(playerRepository).saveAll(playerList);
+        }
+    }
 }
