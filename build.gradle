@@ -59,6 +59,14 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	afterSuite { desc, result ->
+		if (!desc.parent)
+			println("${result.resultType} " +
+					"(${result.testCount} tests, " +
+					"${result.successfulTestCount} successful, " +
+					"${result.failedTestCount} failures, " +
+					"${result.skippedTestCount} skipped)")
+	}
 }
 
 wrapper {
