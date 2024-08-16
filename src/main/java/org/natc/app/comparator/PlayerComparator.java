@@ -1,12 +1,15 @@
 package org.natc.app.comparator;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.entity.domain.PlayerRatingAdjustment;
 
 import java.util.Comparator;
 
+@Getter(AccessLevel.PROTECTED)
 public class PlayerComparator implements Comparator<Player> {
-    protected static enum PlayerComparatorMode {
+    protected enum PlayerComparatorMode {
         OFFENSIVE,
         DEFENSIVE,
         INTANGIBLE,
