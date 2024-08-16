@@ -12,7 +12,7 @@ public class PlayerComparatorFactory {
             entry(ManagerStyle.OFFENSIVE, PlayerComparator.PlayerComparatorMode.OFFENSIVE),
             entry(ManagerStyle.DEFENSIVE, PlayerComparator.PlayerComparatorMode.DEFENSIVE),
             entry(ManagerStyle.INTANGIBLE, PlayerComparator.PlayerComparatorMode.INTANGIBLE),
-            entry(ManagerStyle.PENALTIES, PlayerComparator.PlayerComparatorMode.PENALTY),
+            entry(ManagerStyle.PENALTIES, PlayerComparator.PlayerComparatorMode.PENALTIES),
             entry(ManagerStyle.BALANCED, PlayerComparator.PlayerComparatorMode.BALANCED)
     );
 

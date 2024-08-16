@@ -13,7 +13,7 @@ public class PlayerComparator implements Comparator<Player> {
         OFFENSIVE,
         DEFENSIVE,
         INTANGIBLE,
-        PENALTY,
+        PENALTIES,
         BALANCED
     }
 
@@ -31,7 +31,7 @@ public class PlayerComparator implements Comparator<Player> {
             case OFFENSIVE: return Double.compare(p1.getAdjustedOffensiveRating(adjustments), p2.getAdjustedOffensiveRating(adjustments));
             case DEFENSIVE: return Double.compare(p1.getAdjustedDefensiveRating(adjustments), p2.getAdjustedDefensiveRating(adjustments));
             case INTANGIBLE: return Double.compare(p1.getAdjustedIntangibleRating(adjustments), p2.getAdjustedIntangibleRating(adjustments));
-            case PENALTY: return Double.compare(p1.getAdjustedPenaltyRating(adjustments), p2.getAdjustedPenaltyRating(adjustments));
+            case PENALTIES: return Double.compare(p1.getAdjustedPenaltyRating(adjustments), p2.getAdjustedPenaltyRating(adjustments));
             case BALANCED: return Double.compare(p1.getAdjustedPerformanceRating(adjustments), p2.getAdjustedPerformanceRating(adjustments));
         }
 

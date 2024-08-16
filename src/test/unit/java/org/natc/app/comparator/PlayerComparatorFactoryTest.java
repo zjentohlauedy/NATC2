@@ -33,7 +33,7 @@ class PlayerComparatorFactoryTest {
             assertEquals(OFFENSIVE, factory.getPlayerComparatorForManager(ManagerStyle.OFFENSIVE).getMode());
             assertEquals(DEFENSIVE, factory.getPlayerComparatorForManager(ManagerStyle.DEFENSIVE).getMode());
             assertEquals(INTANGIBLE, factory.getPlayerComparatorForManager(ManagerStyle.INTANGIBLE).getMode());
-            assertEquals(PENALTY, factory.getPlayerComparatorForManager(ManagerStyle.PENALTIES).getMode());
+            assertEquals(PENALTIES, factory.getPlayerComparatorForManager(ManagerStyle.PENALTIES).getMode());
             assertEquals(BALANCED, factory.getPlayerComparatorForManager(ManagerStyle.BALANCED).getMode());
         }
 

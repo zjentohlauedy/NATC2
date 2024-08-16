@@ -405,7 +405,7 @@ class PlayerComparatorTest {
         class PenaltyMode {
             @Test
             void shouldGetAdjustedPenaltyRatingsWhenInPenaltyMode() {
-                final PlayerComparator playerComparator = new PlayerComparator(PENALTY);
+                final PlayerComparator playerComparator = new PlayerComparator(PENALTIES);
                 final Player player1 = mock(Player.class);
                 final Player player2 = mock(Player.class);
 
@@ -418,7 +418,7 @@ class PlayerComparatorTest {
             @Test
             void shouldPassTheAdjustmentsToTheRatingsMethodWhenInPenaltyMode() {
                 final PlayerRatingAdjustment[] adjustments = {APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE};
-                final PlayerComparator playerComparator = new PlayerComparator(PENALTY, adjustments);
+                final PlayerComparator playerComparator = new PlayerComparator(PENALTIES, adjustments);
                 final Player player1 = mock(Player.class);
                 final Player player2 = mock(Player.class);
 
@@ -430,7 +430,7 @@ class PlayerComparatorTest {
 
             @Test
             void shouldReturnGreaterThanZeroWhenPlayerOneHasHigherPenaltyRatingsInPenaltyMode() {
-                final PlayerComparator playerComparator = new PlayerComparator(PENALTY);
+                final PlayerComparator playerComparator = new PlayerComparator(PENALTIES);
                 final Player player1 = Player.builder()
                         .scoring(0.1)
                         .passing(0.1)
@@ -463,7 +463,7 @@ class PlayerComparatorTest {
 
             @Test
             void shouldReturnLessThanZeroWhenPlayerOneHasLowerPenaltyRatingsInPenaltyMode() {
-                final PlayerComparator playerComparator = new PlayerComparator(PENALTY);
+                final PlayerComparator playerComparator = new PlayerComparator(PENALTIES);
                 final Player player1 = Player.builder()
                         .scoring(0.9)
                         .passing(0.9)
@@ -496,7 +496,7 @@ class PlayerComparatorTest {
 
             @Test
             void shouldZeroWhenPlayersHaveSamePenaltyRatingsInPenaltyMode() {
-                final PlayerComparator playerComparator = new PlayerComparator(PENALTY);
+                final PlayerComparator playerComparator = new PlayerComparator(PENALTIES);
                 final Player player1 = Player.builder()
                         .scoring(0.9)
                         .passing(0.9)
