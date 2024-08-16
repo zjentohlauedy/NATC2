@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.natc.app.entity.domain.Player.*;
+import static org.natc.app.entity.domain.PlayerRatingAdjustment.*;
 import static org.natc.app.util.BooleanHelper.valueOf;
 
 class PlayerTest {
@@ -54,6 +58,96 @@ class PlayerTest {
     }
 
     @Nested
+    class GetAdjustedOffensiveRating {
+        @Test
+        void shouldReturnBaseOffensiveRatingGivenNoAdjustments() {
+            final Player player = Player.builder().scoring(0.5).passing(0.5).blocking(0.5).build();
+
+            assertEquals(player.getOffensiveRating(), player.getAdjustedOffensiveRating());
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerGetsOlderGivenAgeAdjustment() {
+            Player.PlayerBuilder player = Player.builder().scoring(0.5).passing(0.5).blocking(0.5).vitality(0.5);
+
+            assertTrue(player.age(35).build().getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.age(36).build().getAdjustedOffensiveRating(APPLY_AGE));
+            assertTrue(player.age(36).build().getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.age(37).build().getAdjustedOffensiveRating(APPLY_AGE));
+            assertTrue(player.age(38).build().getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.age(39).build().getAdjustedOffensiveRating(APPLY_AGE));
+            assertTrue(player.age(40).build().getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.age(41).build().getAdjustedOffensiveRating(APPLY_AGE));
+            assertTrue(player.age(41).build().getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.age(42).build().getAdjustedOffensiveRating(APPLY_AGE));
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerConfidenceDecreasesGivenConfidenceAdjustment() {
+            Player.PlayerBuilder player = Player.builder().scoring(0.5).passing(0.5).blocking(0.5).vitality(0.5).age(20);
+
+            assertTrue(player.confidence(1.0).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.9).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.9).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.8).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.8).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.7).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.7).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.6).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.6).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.5).build().getAdjustedOffensiveRating(APPLY_CONFIDENCE));
+        }
+
+        @Test
+        void shouldReturnReducedValuesAsPlayerFatigueIncreasesGivenFatigueAdjustment() {
+            Player.PlayerBuilder player = Player.builder().scoring(0.5).passing(0.5).blocking(0.5);
+
+            assertTrue(player.fatigue(1.0).build().getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.1).build().getAdjustedOffensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.1).build().getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.2).build().getAdjustedOffensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.2).build().getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.3).build().getAdjustedOffensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.3).build().getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.4).build().getAdjustedOffensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.4).build().getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.5).build().getAdjustedOffensiveRating(APPLY_FATIGUE));
+        }
+
+        @Test
+        void shouldApplyAllAdjustmentsGiven() {
+            Player player = Player.builder()
+                    .age(21)
+                    .scoring(0.5)
+                    .passing(0.5)
+                    .blocking(0.5)
+                    .vitality(0.0)
+                    .confidence(0.0)
+                    .fatigue(1.5)
+                    .build();
+
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_AGE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedOffensiveRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_FATIGUE) >
+                    player.getAdjustedOffensiveRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_CONFIDENCE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_FATIGUE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedOffensiveRating(APPLY_CONFIDENCE, APPLY_FATIGUE) >
+                    player.getAdjustedOffensiveRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+        }
+    }
+
+    @Nested
     class GetDefensiveRating {
 
         @Test
@@ -89,6 +183,96 @@ class PlayerTest {
             assertEquals(0.0, Player.builder().tackling(null).stealing(1.0).presence(null).build().getDefensiveRating());
             assertEquals(0.0, Player.builder().tackling(null).stealing(null).presence(1.0).build().getDefensiveRating());
             assertEquals(0.0, Player.builder().tackling(null).stealing(null).presence(null).build().getDefensiveRating());
+        }
+    }
+
+    @Nested
+    class GetAdjustedDefensiveRating {
+        @Test
+        void shouldReturnBaseDefensiveRatingGivenNoAdjustments() {
+            final Player player = Player.builder().tackling(0.5).stealing(0.5).presence(0.5).build();
+
+            assertEquals(player.getDefensiveRating(), player.getAdjustedDefensiveRating());
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerGetsOlderGivenAgeAdjustment() {
+            Player.PlayerBuilder player = Player.builder().tackling(0.5).stealing(0.5).presence(0.5).vitality(0.5);
+
+            assertTrue(player.age(35).build().getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.age(36).build().getAdjustedDefensiveRating(APPLY_AGE));
+            assertTrue(player.age(36).build().getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.age(37).build().getAdjustedDefensiveRating(APPLY_AGE));
+            assertTrue(player.age(38).build().getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.age(39).build().getAdjustedDefensiveRating(APPLY_AGE));
+            assertTrue(player.age(40).build().getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.age(41).build().getAdjustedDefensiveRating(APPLY_AGE));
+            assertTrue(player.age(41).build().getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.age(42).build().getAdjustedDefensiveRating(APPLY_AGE));
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerConfidenceDecreasesGivenConfidenceAdjustment() {
+            Player.PlayerBuilder player = Player.builder().tackling(0.5).stealing(0.5).presence(0.5).vitality(0.5).age(20);
+
+            assertTrue(player.confidence(1.0).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.9).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.9).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.8).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.8).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.7).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.7).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.6).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.6).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.5).build().getAdjustedDefensiveRating(APPLY_CONFIDENCE));
+        }
+
+        @Test
+        void shouldReturnReducedValuesAsPlayerFatigueIncreasesGivenFatigueAdjustment() {
+            Player.PlayerBuilder player = Player.builder().tackling(0.5).stealing(0.5).presence(0.5);
+
+            assertTrue(player.fatigue(1.0).build().getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.1).build().getAdjustedDefensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.1).build().getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.2).build().getAdjustedDefensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.2).build().getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.3).build().getAdjustedDefensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.3).build().getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.4).build().getAdjustedDefensiveRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.4).build().getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.fatigue(1.5).build().getAdjustedDefensiveRating(APPLY_FATIGUE));
+        }
+
+        @Test
+        void shouldApplyAllAdjustmentsGiven() {
+            Player player = Player.builder()
+                    .age(21)
+                    .tackling(0.5)
+                    .stealing(0.5)
+                    .presence(0.5)
+                    .vitality(0.0)
+                    .confidence(0.0)
+                    .fatigue(1.5)
+                    .build();
+
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_AGE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedDefensiveRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_FATIGUE) >
+                    player.getAdjustedDefensiveRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_CONFIDENCE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_FATIGUE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedDefensiveRating(APPLY_CONFIDENCE, APPLY_FATIGUE) >
+                    player.getAdjustedDefensiveRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
         }
     }
 
@@ -164,6 +348,97 @@ class PlayerTest {
     }
 
     @Nested
+    class GetAdjustedIntangibleRating {
+        @Test
+        void shouldReturnBaseIntangibleRatingGivenNoAdjustments() {
+            final Player player = Player.builder().blocking(0.5).presence(0.5).discipline(0.5).endurance(0.5).build();
+
+            assertEquals(player.getIntangibleRating(), player.getAdjustedIntangibleRating());
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerGetsOlderGivenAgeAdjustment() {
+            Player.PlayerBuilder player = Player.builder().blocking(0.5).presence(0.5).discipline(0.5).endurance(0.5).vitality(0.5);
+
+            assertTrue(player.age(35).build().getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.age(36).build().getAdjustedIntangibleRating(APPLY_AGE));
+            assertTrue(player.age(36).build().getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.age(37).build().getAdjustedIntangibleRating(APPLY_AGE));
+            assertTrue(player.age(38).build().getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.age(39).build().getAdjustedIntangibleRating(APPLY_AGE));
+            assertTrue(player.age(40).build().getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.age(41).build().getAdjustedIntangibleRating(APPLY_AGE));
+            assertTrue(player.age(41).build().getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.age(42).build().getAdjustedIntangibleRating(APPLY_AGE));
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerConfidenceDecreasesGivenConfidenceAdjustment() {
+            Player.PlayerBuilder player = Player.builder().blocking(0.5).presence(0.5).discipline(0.5).endurance(0.5).vitality(0.5).age(20);
+
+            assertTrue(player.confidence(1.0).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.9).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.9).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.8).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.8).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.7).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.7).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.6).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.6).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.5).build().getAdjustedIntangibleRating(APPLY_CONFIDENCE));
+        }
+
+        @Test
+        void shouldReturnReducedValuesAsPlayerFatigueIncreasesGivenFatigueAdjustment() {
+            Player.PlayerBuilder player = Player.builder().blocking(0.5).presence(0.5).discipline(0.5).endurance(0.5);
+
+            assertTrue(player.fatigue(1.0).build().getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.fatigue(1.1).build().getAdjustedIntangibleRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.1).build().getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.fatigue(1.2).build().getAdjustedIntangibleRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.2).build().getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.fatigue(1.3).build().getAdjustedIntangibleRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.3).build().getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.fatigue(1.4).build().getAdjustedIntangibleRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.4).build().getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.fatigue(1.5).build().getAdjustedIntangibleRating(APPLY_FATIGUE));
+        }
+
+        @Test
+        void shouldApplyAllAdjustmentsGiven() {
+            Player player = Player.builder()
+                    .age(21)
+                    .blocking(0.5)
+                    .presence(0.5)
+                    .discipline(0.5)
+                    .endurance(0.5)
+                    .vitality(0.0)
+                    .confidence(0.0)
+                    .fatigue(1.5)
+                    .build();
+
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_AGE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedIntangibleRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_FATIGUE) >
+                    player.getAdjustedIntangibleRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_CONFIDENCE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_FATIGUE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedIntangibleRating(APPLY_CONFIDENCE, APPLY_FATIGUE) >
+                    player.getAdjustedIntangibleRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+        }
+    }
+
+    @Nested
     class GetPenaltyRating {
 
         @Test
@@ -199,6 +474,96 @@ class PlayerTest {
             assertEquals(0.0, Player.builder().penaltyShot(null).penaltyOffense(1.0).penaltyDefense(null).build().getPenaltyRating());
             assertEquals(0.0, Player.builder().penaltyShot(null).penaltyOffense(null).penaltyDefense(1.0).build().getPenaltyRating());
             assertEquals(0.0, Player.builder().penaltyShot(null).penaltyOffense(null).penaltyDefense(null).build().getPenaltyRating());
+        }
+    }
+
+    @Nested
+    class GetAdjustedPenaltyRating {
+        @Test
+        void shouldReturnBasePenaltyRatingGivenNoAdjustments() {
+            final Player player = Player.builder().penaltyShot(0.5).penaltyOffense(0.5).penaltyDefense(0.5).build();
+
+            assertEquals(player.getPenaltyRating(), player.getAdjustedPenaltyRating());
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerGetsOlderGivenAgeAdjustment() {
+            Player.PlayerBuilder player = Player.builder().penaltyShot(0.5).penaltyOffense(0.5).penaltyDefense(0.5).vitality(0.5);
+
+            assertTrue(player.age(35).build().getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.age(36).build().getAdjustedPenaltyRating(APPLY_AGE));
+            assertTrue(player.age(36).build().getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.age(37).build().getAdjustedPenaltyRating(APPLY_AGE));
+            assertTrue(player.age(38).build().getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.age(39).build().getAdjustedPenaltyRating(APPLY_AGE));
+            assertTrue(player.age(40).build().getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.age(41).build().getAdjustedPenaltyRating(APPLY_AGE));
+            assertTrue(player.age(41).build().getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.age(42).build().getAdjustedPenaltyRating(APPLY_AGE));
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerConfidenceDecreasesGivenConfidenceAdjustment() {
+            Player.PlayerBuilder player = Player.builder().penaltyShot(0.5).penaltyOffense(0.5).penaltyDefense(0.5).vitality(0.5).age(20);
+
+            assertTrue(player.confidence(1.0).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.9).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.9).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.8).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.8).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.7).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.7).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.6).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.6).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.5).build().getAdjustedPenaltyRating(APPLY_CONFIDENCE));
+        }
+
+        @Test
+        void shouldReturnReducedValuesAsPlayerFatigueIncreasesGivenFatigueAdjustment() {
+            Player.PlayerBuilder player = Player.builder().penaltyShot(0.5).penaltyOffense(0.5).penaltyDefense(0.5);
+
+            assertTrue(player.fatigue(1.0).build().getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.fatigue(1.1).build().getAdjustedPenaltyRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.1).build().getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.fatigue(1.2).build().getAdjustedPenaltyRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.2).build().getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.fatigue(1.3).build().getAdjustedPenaltyRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.3).build().getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.fatigue(1.4).build().getAdjustedPenaltyRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.4).build().getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.fatigue(1.5).build().getAdjustedPenaltyRating(APPLY_FATIGUE));
+        }
+
+        @Test
+        void shouldApplyAllAdjustmentsGiven() {
+            Player player = Player.builder()
+                    .age(21)
+                    .penaltyShot(0.5)
+                    .penaltyOffense(0.5)
+                    .penaltyDefense(0.5)
+                    .vitality(0.0)
+                    .confidence(0.0)
+                    .fatigue(1.5)
+                    .build();
+
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_AGE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedPenaltyRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_FATIGUE) >
+                    player.getAdjustedPenaltyRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_CONFIDENCE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_FATIGUE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPenaltyRating(APPLY_CONFIDENCE, APPLY_FATIGUE) >
+                    player.getAdjustedPenaltyRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
         }
     }
 
@@ -299,6 +664,301 @@ class PlayerTest {
                     .discipline(1.0).endurance(null)
                     .build().getPerformanceRating()
             );
+        }
+    }
+
+    @Nested
+    class GetAdjustedPerformanceRating {
+        @Test
+        void shouldReturnBasePerformanceRatingGivenNoAdjustments() {
+            final Player player = Player.builder()
+                    .scoring(0.5)
+                    .passing(0.5)
+                    .blocking(0.5)
+                    .tackling(0.5)
+                    .stealing(0.5)
+                    .presence(0.5)
+                    .discipline(0.5)
+                    .endurance(0.5)
+                    .build();
+
+            assertEquals(player.getPerformanceRating(), player.getAdjustedPerformanceRating());
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerGetsOlderGivenAgeAdjustment() {
+            Player.PlayerBuilder player = Player.builder()
+                    .scoring(0.5)
+                    .passing(0.5)
+                    .blocking(0.5)
+                    .tackling(0.5)
+                    .stealing(0.5)
+                    .presence(0.5)
+                    .discipline(0.5)
+                    .endurance(0.5)
+                    .vitality(0.5);
+
+            assertTrue(player.age(35).build().getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.age(36).build().getAdjustedPerformanceRating(APPLY_AGE));
+            assertTrue(player.age(36).build().getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.age(37).build().getAdjustedPerformanceRating(APPLY_AGE));
+            assertTrue(player.age(38).build().getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.age(39).build().getAdjustedPerformanceRating(APPLY_AGE));
+            assertTrue(player.age(40).build().getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.age(41).build().getAdjustedPerformanceRating(APPLY_AGE));
+            assertTrue(player.age(41).build().getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.age(42).build().getAdjustedPerformanceRating(APPLY_AGE));
+        }
+
+        @Test
+        void shouldReturnReducedValueAsPlayerConfidenceDecreasesGivenConfidenceAdjustment() {
+            Player.PlayerBuilder player = Player.builder()
+                    .scoring(0.5)
+                    .passing(0.5)
+                    .blocking(0.5)
+                    .tackling(0.5)
+                    .stealing(0.5)
+                    .presence(0.5)
+                    .discipline(0.5)
+                    .endurance(0.5)
+                    .vitality(0.5)
+                    .age(20);
+
+            assertTrue(player.confidence(1.0).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.9).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.9).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.8).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.8).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.7).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.7).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.6).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE));
+            assertTrue(player.confidence(0.6).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.confidence(0.5).build().getAdjustedPerformanceRating(APPLY_CONFIDENCE));
+        }
+
+        @Test
+        void shouldReturnReducedValuesAsPlayerFatigueIncreasesGivenFatigueAdjustment() {
+            Player.PlayerBuilder player = Player.builder()
+                    .scoring(0.5)
+                    .passing(0.5)
+                    .blocking(0.5)
+                    .tackling(0.5)
+                    .stealing(0.5)
+                    .presence(0.5)
+                    .discipline(0.5)
+                    .endurance(0.5);
+
+            assertTrue(player.fatigue(1.0).build().getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.fatigue(1.1).build().getAdjustedPerformanceRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.1).build().getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.fatigue(1.2).build().getAdjustedPerformanceRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.2).build().getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.fatigue(1.3).build().getAdjustedPerformanceRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.3).build().getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.fatigue(1.4).build().getAdjustedPerformanceRating(APPLY_FATIGUE));
+            assertTrue(player.fatigue(1.4).build().getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.fatigue(1.5).build().getAdjustedPerformanceRating(APPLY_FATIGUE));
+        }
+
+        @Test
+        void shouldApplyAllAdjustmentsGiven() {
+            Player player = Player.builder()
+                    .age(21)
+                    .scoring(0.5)
+                    .passing(0.5)
+                    .blocking(0.5)
+                    .tackling(0.5)
+                    .stealing(0.5)
+                    .presence(0.5)
+                    .discipline(0.5)
+                    .endurance(0.5)
+                    .vitality(0.0)
+                    .confidence(0.0)
+                    .fatigue(1.5)
+                    .build();
+
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_CONFIDENCE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_AGE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_CONFIDENCE) >
+                    player.getAdjustedPerformanceRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_FATIGUE) >
+                    player.getAdjustedPerformanceRating(APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_CONFIDENCE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_FATIGUE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+            assertTrue(player.getAdjustedPerformanceRating(APPLY_CONFIDENCE, APPLY_FATIGUE) >
+                    player.getAdjustedPerformanceRating(APPLY_AGE, APPLY_CONFIDENCE, APPLY_FATIGUE));
+        }
+    }
+
+    @Nested
+    class GetAgeFactor {
+        @Test
+        void shouldReturnValueBetweenZeroAndOneGivenReasonableAge() {
+            final Player player = Player.builder().age(25).vitality(0.5).build();
+
+            final Double ageFactor = player.getAgeFactor();
+
+            assertTrue(ageFactor >= 0.0);
+            assertTrue(ageFactor <= 1.0);
+        }
+
+        @Test
+        void shouldReturnMaxFactorIfAgeIsUnderTwentyOneAndMinVitality() {
+            assertEquals(MAX_FACTOR, Player.builder().age(18).vitality(MIN_RATING).build().getAgeFactor());
+            assertEquals(MAX_FACTOR, Player.builder().age(19).vitality(MIN_RATING).build().getAgeFactor());
+            assertEquals(MAX_FACTOR, Player.builder().age(20).vitality(MIN_RATING).build().getAgeFactor());
+        }
+
+        @Test
+        void shouldReturnReducedValueIfAgeIsOverTwentyAndMinVitality() {
+            assertTrue(MAX_FACTOR > Player.builder().age(21).vitality(MIN_RATING).build().getAgeFactor());
+            assertTrue(MAX_FACTOR > Player.builder().age(22).vitality(MIN_RATING).build().getAgeFactor());
+            assertTrue(MAX_FACTOR > Player.builder().age(23).vitality(MIN_RATING).build().getAgeFactor());
+        }
+
+        @Test
+        void shouldReturnMaxFactorIfAgeIsUnderThirtySixAndMaxVitality() {
+            assertEquals(MAX_FACTOR, Player.builder().age(33).vitality(MAX_RATING).build().getAgeFactor());
+            assertEquals(MAX_FACTOR, Player.builder().age(34).vitality(MAX_RATING).build().getAgeFactor());
+            assertEquals(MAX_FACTOR, Player.builder().age(35).vitality(MAX_RATING).build().getAgeFactor());
+        }
+
+        @Test
+        void shouldReturnReducedValueIfAgeIsOverThirtyFiveAndMaxVitality() {
+            assertTrue(MAX_FACTOR > Player.builder().age(36).vitality(MAX_RATING).build().getAgeFactor());
+            assertTrue(MAX_FACTOR > Player.builder().age(37).vitality(MAX_RATING).build().getAgeFactor());
+            assertTrue(MAX_FACTOR > Player.builder().age(38).vitality(MAX_RATING).build().getAgeFactor());
+        }
+
+        @Test
+        void shouldReturnLowerNumberAsAgeIncreasesWhenVitalityIsTheSame() {
+            assertTrue(Player.builder().age(34).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(35).vitality(0.5).build().getAgeFactor());
+            assertTrue(Player.builder().age(35).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(36).vitality(0.5).build().getAgeFactor());
+            assertTrue(Player.builder().age(36).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(37).vitality(0.5).build().getAgeFactor());
+            assertTrue(Player.builder().age(37).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(38).vitality(0.5).build().getAgeFactor());
+            assertTrue(Player.builder().age(38).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(39).vitality(0.5).build().getAgeFactor());
+            assertTrue(Player.builder().age(39).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(40).vitality(0.5).build().getAgeFactor());
+        }
+
+        @Test
+        void shouldReturnHigherNumberAsVitalityIncreasesWhenAgeIsTheSame() {
+            assertTrue(Player.builder().age(35).vitality(0.4).build().getAgeFactor() >
+                    Player.builder().age(35).vitality(0.3).build().getAgeFactor());
+            assertTrue(Player.builder().age(35).vitality(0.5).build().getAgeFactor() >
+                    Player.builder().age(35).vitality(0.4).build().getAgeFactor());
+            assertTrue(Player.builder().age(35).vitality(0.6).build().getAgeFactor() >
+                    Player.builder().age(35).vitality(0.5).build().getAgeFactor());
+            assertTrue(Player.builder().age(35).vitality(0.7).build().getAgeFactor() >
+                    Player.builder().age(35).vitality(0.6).build().getAgeFactor());
+            assertTrue(Player.builder().age(35).vitality(0.8).build().getAgeFactor() >
+                    Player.builder().age(35).vitality(0.7).build().getAgeFactor());
+
+        }
+
+        // TODO: This test should change when calculation is fixed (see method)
+        @Test
+        void shouldReturnMinFactorWhenAgeIsFortyAndMinVitality() {
+            assertEquals(MIN_FACTOR, Player.builder().age(40).vitality(MIN_RATING).build().getAgeFactor());
+        }
+
+        // TODO: This test should change when calculation is fixed (see method)
+        @Test
+        void shouldReturnMinFactorWhenAgeIsFortyFiveAndMaxVitality() {
+            assertEquals(MIN_FACTOR, Player.builder().age(45).vitality(MAX_RATING).build().getAgeFactor());
+        }
+    }
+
+    @Nested
+    class GetConfidenceFactor {
+        @Test
+        void shouldReturnMaxFactorWhenConfidenceIsMax() {
+            final Player player = Player.builder().age(35).confidence(MAX_RATING).build();
+
+            assertEquals(MAX_FACTOR, player.getConfidenceFactor());
+        }
+
+        @Test
+        void shouldReturnMinFactorWhenConfidenceIsMinAndAgeIsMin() {
+            final Player player = Player.builder().age(STARTING_AGE).confidence(MIN_RATING).build();
+
+            assertEquals(MIN_FACTOR, player.getConfidenceFactor());
+        }
+
+        @Test
+        void shouldIncreaseValueAsPlayerAges() {
+            assertTrue(Player.builder().age(STARTING_AGE).confidence(0.0).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE + 1).confidence(0.0).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE + 1).confidence(0.0).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE + 2).confidence(0.0).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE + 2).confidence(0.0).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE + 3).confidence(0.0).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE + 3).confidence(0.0).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE + 4).confidence(0.0).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE + 4).confidence(0.0).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE + 5).confidence(0.0).build().getConfidenceFactor());
+        }
+
+        @Test
+        void shouldIncreaseValueAsConfidenceIncreases() {
+            assertTrue(Player.builder().age(STARTING_AGE).confidence(0.0).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE).confidence(0.1).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE).confidence(0.1).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE).confidence(0.2).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE).confidence(0.2).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE).confidence(0.3).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE).confidence(0.3).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE).confidence(0.4).build().getConfidenceFactor());
+            assertTrue(Player.builder().age(STARTING_AGE).confidence(0.4).build().getConfidenceFactor() <
+                    Player.builder().age(STARTING_AGE).confidence(0.5).build().getConfidenceFactor());
+        }
+    }
+
+    @Nested
+    class GetFatigueFactor {
+        @Test
+        void shouldReturnMaxFactorWhenFatigueIsUnderOne() {
+            assertEquals(MAX_FACTOR, Player.builder().fatigue(0.1).build().getFatigueFactor());
+            assertEquals(MAX_FACTOR, Player.builder().fatigue(0.3).build().getFatigueFactor());
+            assertEquals(MAX_FACTOR, Player.builder().fatigue(0.5).build().getFatigueFactor());
+            assertEquals(MAX_FACTOR, Player.builder().fatigue(0.7).build().getFatigueFactor());
+            assertEquals(MAX_FACTOR, Player.builder().fatigue(0.9).build().getFatigueFactor());
+        }
+
+        @Test
+        void shouldReturnLowerValuesAsFatigueIncreasesOverOne() {
+            assertTrue(Player.builder().fatigue(1.0).build().getFatigueFactor() >
+                    Player.builder().fatigue(1.1).build().getFatigueFactor());
+            assertTrue(Player.builder().fatigue(1.1).build().getFatigueFactor() >
+                    Player.builder().fatigue(1.2).build().getFatigueFactor());
+            assertTrue(Player.builder().fatigue(1.2).build().getFatigueFactor() >
+                    Player.builder().fatigue(1.3).build().getFatigueFactor());
+            assertTrue(Player.builder().fatigue(1.3).build().getFatigueFactor() >
+                    Player.builder().fatigue(1.4).build().getFatigueFactor());
+            assertTrue(Player.builder().fatigue(1.4).build().getFatigueFactor() >
+                    Player.builder().fatigue(1.5).build().getFatigueFactor());
+        }
+
+        @Test
+        void shouldReturnMinFactorWhenFatigueIsTwoOrAbove() {
+            assertEquals(MIN_FACTOR, Player.builder().fatigue(2.0).build().getFatigueFactor());
+            assertEquals(MIN_FACTOR, Player.builder().fatigue(2.2).build().getFatigueFactor());
+            assertEquals(MIN_FACTOR, Player.builder().fatigue(2.4).build().getFatigueFactor());
+            assertEquals(MIN_FACTOR, Player.builder().fatigue(2.6).build().getFatigueFactor());
+            assertEquals(MIN_FACTOR, Player.builder().fatigue(2.8).build().getFatigueFactor());
         }
     }
 
