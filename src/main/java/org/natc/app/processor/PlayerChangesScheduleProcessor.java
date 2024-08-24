@@ -10,6 +10,7 @@ import org.natc.app.service.ManagerService;
 import org.natc.app.service.PlayerService;
 import org.natc.app.service.ScheduleService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -79,6 +80,8 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
 
     private int checkEachManagerForPlayerChanges(List<Manager> managers, List<Player> players) {
         int playerChangesMade = 0;
+
+        Collections.shuffle(managers);
 
         for (Manager manager : managers) {
             if (checkForPlayerChange(manager, players)) {

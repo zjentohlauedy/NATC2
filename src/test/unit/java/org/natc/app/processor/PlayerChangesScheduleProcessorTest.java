@@ -1,5 +1,6 @@
 package org.natc.app.processor;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,10 +24,8 @@ import org.natc.app.service.ManagerService;
 import org.natc.app.service.PlayerService;
 import org.natc.app.service.ScheduleService;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -656,6 +655,47 @@ class PlayerChangesScheduleProcessorTest {
                 assertNotNull(resignedPlayer);
                 assertEquals(manager1.getTeamId(), resignedPlayer.getFormerTeamId());
                 assertEquals(manager2.getTeamId(), resignedPlayer.getTeamId());
+            }
+
+            @Test
+            void shouldProcessTeamsInRandomOrderThatChangesEachTimeThrough() throws NATCException {
+                final ArgumentCaptor<ManagerStyle> captor = ArgumentCaptor.forClass(ManagerStyle.class);
+                final List<Manager> managerList = List.of(
+                        Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
+                        Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
+                        Manager.builder().managerId(3).teamId(3).style(ManagerStyle.INTANGIBLE.getValue()).build(),
+                        Manager.builder().managerId(4).teamId(4).style(ManagerStyle.PENALTIES.getValue()).build(),
+                        Manager.builder().managerId(5).teamId(5).style(ManagerStyle.BALANCED.getValue()).build()
+                );
+                final List<Player> freeAgents = new ArrayList<>();
+
+                for (int i = 1; i <= 25; i++) {
+                    freeAgents.add(generatePlayer(i, null, "2020", 0.5));
+                }
+
+                List<ManagerStyle> previousOrder = managerList.stream()
+                        .map(manager -> ManagerStyle.getByValue(manager.getStyle()))
+                        .collect(Collectors.toList());
+
+                when(playerService.getActivePlayersForYear(anyString())).thenReturn(freeAgents);
+                when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
+                when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
+                when(leagueConfiguration.getPlayersPerTeam()).thenReturn(10);
+
+                processor.process(Schedule.builder().year("2020").build());
+
+                verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(captor.capture(), any());
+
+                final List<ManagerStyle> managerStyleList = captor.getAllValues();
+
+                assertEquals(30, managerStyleList.size());
+
+                for (List<ManagerStyle> currentOrder : Lists.partition(managerStyleList, managerList.size())) {
+                    assertEquals(previousOrder.stream().distinct().count(), currentOrder.stream().distinct().count());
+                    assertNotEquals(previousOrder, currentOrder);
+
+                    previousOrder = currentOrder;
+                }
             }
         }
 
