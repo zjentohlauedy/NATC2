@@ -61,7 +61,9 @@ public class Player {
     private Integer rookie;
     private Integer injured;
     private LocalDate returnDate;
+    @Setter
     private Integer freeAgent;
+    @Setter
     private Integer signed;
     @Setter
     private Integer released;
