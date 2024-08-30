@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.mockito.stubbing.Answer;
 import org.natc.app.comparator.PlayerComparator;
 import org.natc.app.comparator.PlayerComparatorFactory;
 import org.natc.app.configuration.LeagueConfiguration;
@@ -697,6 +698,29 @@ class PlayerChangesScheduleProcessorTest {
                     previousOrder = currentOrder;
                 }
             }
+
+            @Test
+            void shouldNotConsiderPlayersThatHaveRetired() throws NATCException {
+                final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
+                final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
+                final Player oldTeamPlayer = generatePlayer(2, manager.getTeamId(), "2020", 0.7);
+                final Player retiredPlayer = generatePlayer(3, null, "2020", 0.7);
+                final List<Player> playerList = Arrays.asList(teamPlayer, oldTeamPlayer, retiredPlayer);
+                final List<Manager> managerList = Collections.singletonList(manager);
+
+                retiredPlayer.setRetired(1);
+
+                when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
+                when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
+                when(playerRetirementProxy.readyToRetire(any())).then(invocation -> invocation.getArgument(0) == oldTeamPlayer);
+                when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
+
+                processor.process(Schedule.builder().year("2020").build());
+
+                assertNull(retiredPlayer.getTeamId());
+                assertNull(oldTeamPlayer.getTeamId());
+                assertEquals(manager.getTeamId(), teamPlayer.getTeamId());
+            }
         }
 
         @Nested
@@ -734,6 +758,21 @@ class PlayerChangesScheduleProcessorTest {
                 final List<Player> playerList = Arrays.asList(
                         Player.builder().playerId(1).teamId(1).year("2020").build(),
                         Player.builder().playerId(2).teamId(1).year("2020").build(),
+                        Player.builder().playerId(3).year("2020").build()
+                );
+
+                when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
+
+                processor.process(Schedule.builder().year("2012").build());
+
+                verify(playerRetirementProxy, times(1)).shouldRetire(any());
+            }
+
+            @Test
+            void shouldOnlyCallPlayerRetirementProxyShouldRetireForPlayersNotAlreadyRetired() throws NATCException {
+                final List<Player> playerList = Arrays.asList(
+                        Player.builder().playerId(1).retired(1).year("2020").build(),
+                        Player.builder().playerId(2).retired(1).year("2020").build(),
                         Player.builder().playerId(3).year("2020").build()
                 );
 

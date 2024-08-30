@@ -2,11 +2,13 @@ package org.natc.app.comparator;
 
 import org.natc.app.entity.domain.ManagerStyle;
 import org.natc.app.entity.domain.PlayerRatingAdjustment;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 import static java.util.Map.entry;
 
+@Component
 public class PlayerComparatorFactory {
     private static final Map<ManagerStyle, PlayerComparator.PlayerComparatorMode> managerStyleModeMap = Map.ofEntries(
             entry(ManagerStyle.OFFENSIVE, PlayerComparator.PlayerComparatorMode.OFFENSIVE),

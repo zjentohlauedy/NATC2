@@ -9,6 +9,8 @@ import org.natc.app.proxy.PlayerRetirementProxy;
 import org.natc.app.service.ManagerService;
 import org.natc.app.service.PlayerService;
 import org.natc.app.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.natc.app.entity.domain.PlayerRatingAdjustment.APPLY_AGE;
 
+@Component("player-changes-schedule-processor")
 public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
 
     private final PlayerService playerService;
@@ -26,6 +29,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
     private final PlayerComparatorFactory playerComparatorFactory;
     private final LeagueConfiguration leagueConfiguration;
 
+    @Autowired
     public PlayerChangesScheduleProcessor(
             final PlayerService playerService,
             final ManagerService managerService,
@@ -63,7 +67,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         while (checkEachManagerForPlayerChanges(teamManagers, players) > 0);
 
         for (final Player player : players) {
-            if (player.getTeamId() != null) continue;
+            if (player.getTeamId() != null || Objects.equals(player.getRetired(), 1)) continue;
 
             if (playerRetirementProxy.shouldRetire(player)) {
                 player.setRetired(1);
@@ -98,7 +102,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         final PlayerComparator playerComparator = playerComparatorFactory.getPlayerComparatorForManager(managerStyle, APPLY_AGE);
 
         final List<Player> freeAgents = players.stream()
-                .filter(player -> Objects.isNull(player.getTeamId()))
+                .filter(player -> Objects.isNull(player.getTeamId()) && !Objects.equals(player.getRetired(), 1))
                 .collect(Collectors.toList());
 
         if (freeAgents.isEmpty()) return false;
