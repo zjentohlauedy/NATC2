@@ -67,7 +67,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         while (checkEachManagerForPlayerChanges(teamManagers, players) > 0);
 
         for (final Player player : players) {
-            if (player.getTeamId() != null || Objects.equals(player.getRetired(), 1)) continue;
+            if (Objects.nonNull(player.getTeamId()) || Objects.equals(player.getRetired(), 1)) continue;
 
             if (playerRetirementProxy.shouldRetire(player)) {
                 player.setRetired(1);

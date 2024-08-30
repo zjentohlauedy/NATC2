@@ -56,7 +56,7 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
                 manager.setTeamId(null);
             }
 
-            if (manager.getTeamId() != null && teamService.willTeamReleaseManager(manager)) {
+            if (Objects.nonNull(manager.getTeamId()) && teamService.willTeamReleaseManager(manager)) {
                 manager.setReleased(1);
                 manager.setFormerTeamId(manager.getTeamId());
                 manager.setTeamId(null);
@@ -68,7 +68,7 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
         final List<Team> teamsWithoutManagers = new ArrayList<>();
 
         for (final Manager manager : managerList) {
-            if (manager.getFormerTeamId() != null) {
+            if (Objects.nonNull(manager.getFormerTeamId())) {
                 teamsWithoutManagers.add(teamService.getTeamByTeamIdAndYear(manager.getFormerTeamId(), manager.getYear()));
             }
         }

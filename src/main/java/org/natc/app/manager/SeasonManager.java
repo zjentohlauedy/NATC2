@@ -32,7 +32,7 @@ public class SeasonManager {
     }
 
     public void processScheduledEvent() throws NATCException {
-        if (scheduleService.getCurrentScheduleEntry() != null) return;
+        if (Objects.nonNull(scheduleService.getCurrentScheduleEntry())) return;
 
         final Schedule lastScheduleEntry = scheduleService.getLastScheduleEntry();
 

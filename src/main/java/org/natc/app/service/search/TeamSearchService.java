@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.lang.Boolean.TRUE;
@@ -40,7 +41,7 @@ public class TeamSearchService implements NATCSearchService<TeamResponse, TeamSe
     }
 
     private Integer mapAllstarTeamValue(final Boolean allstarTeam) {
-        if (allstarTeam != null) {
+        if (Objects.nonNull(allstarTeam)) {
             return TRUE.equals(allstarTeam) ? 1 : 0;
         }
 

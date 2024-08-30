@@ -142,7 +142,7 @@ class TeamManagerDraftServiceTest {
 
             teamManagerDraftService.assignManagersToTeams(teams, managers);
 
-            assertEquals(teams.size(), managers.stream().filter(manager -> manager.getTeamId() != null).count());
+            assertEquals(teams.size(), managers.stream().filter(manager -> Objects.nonNull(manager.getTeamId())).count());
             assertEquals(
                     teams.stream().map(Team::getTeamId).distinct().sorted().collect(Collectors.toList()),
                     managers.stream().map(Manager::getTeamId).distinct().sorted().collect(Collectors.toList())
@@ -167,7 +167,7 @@ class TeamManagerDraftServiceTest {
 
             teamManagerDraftService.assignManagersToTeams(teams, managers);
 
-            assertEquals(teams.size(), managers.stream().filter(manager -> manager.getTeamId() != null).count());
+            assertEquals(teams.size(), managers.stream().filter(manager -> Objects.nonNull(manager.getTeamId())).count());
         }
 
         @Test

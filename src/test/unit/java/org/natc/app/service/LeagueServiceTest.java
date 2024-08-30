@@ -18,6 +18,7 @@ import org.natc.app.exception.NATCException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -209,7 +210,7 @@ class LeagueServiceTest {
 
             verify(managerService, times(teamList.size())).updateManager(any(Manager.class));
 
-            assertEquals(teamList.size(), managerList.stream().filter(manager -> manager.getTeamId() != null).count());
+            assertEquals(teamList.size(), managerList.stream().filter(manager -> Objects.nonNull(manager.getTeamId())).count());
         }
 
         @Test
@@ -498,7 +499,7 @@ class LeagueServiceTest {
 
             verify(playerService, times(teamList.size())).updatePlayer(any(Player.class));
 
-            assertEquals(teamList.size(), playerList.stream().filter(player -> player.getTeamId() != null).count());
+            assertEquals(teamList.size(), playerList.stream().filter(player -> Objects.nonNull(player.getTeamId())).count());
         }
 
         @Test
