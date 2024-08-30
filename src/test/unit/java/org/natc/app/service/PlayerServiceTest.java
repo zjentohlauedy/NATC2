@@ -13,10 +13,7 @@ import org.natc.app.exception.NATCException;
 import org.natc.app.repository.PlayerRepository;
 import org.springframework.data.domain.Example;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -110,7 +107,7 @@ class PlayerServiceTest {
             final List<Player> playerList = playerService.generatePlayers("1995", 10);
 
             assertEquals(10, playerList.size());
-            assertEquals(0, playerList.stream().filter(player -> player.getPlayerId() == null).count());
+            assertEquals(0, playerList.stream().filter(player -> Objects.isNull(player.getPlayerId())).count());
         }
 
         @Test

@@ -8,6 +8,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static org.natc.app.entity.domain.PlayerRatingAdjustment.*;
 
@@ -106,9 +107,9 @@ public class Player {
     }
 
     public Double getOffensiveRating() {
-        if (scoring == null) return MIN_RATING;
-        if (passing == null) return MIN_RATING;
-        if (blocking == null) return MIN_RATING;
+        if (Objects.isNull(scoring)) return MIN_RATING;
+        if (Objects.isNull(passing)) return MIN_RATING;
+        if (Objects.isNull(blocking)) return MIN_RATING;
 
         return (scoring + passing + blocking) / 3.0;
     }
@@ -118,9 +119,9 @@ public class Player {
     }
 
     public Double getDefensiveRating() {
-        if (tackling == null) return MIN_RATING;
-        if (stealing == null) return MIN_RATING;
-        if (presence == null) return MIN_RATING;
+        if (Objects.isNull(tackling)) return MIN_RATING;
+        if (Objects.isNull(stealing)) return MIN_RATING;
+        if (Objects.isNull(presence)) return MIN_RATING;
 
         return (tackling + stealing + presence) / 3.0;
     }
@@ -130,10 +131,10 @@ public class Player {
     }
 
     public Double getIntangibleRating() {
-        if (blocking == null) return MIN_RATING;
-        if (presence == null) return MIN_RATING;
-        if (discipline == null) return MIN_RATING;
-        if (endurance == null) return MIN_RATING;
+        if (Objects.isNull(blocking)) return MIN_RATING;
+        if (Objects.isNull(presence)) return MIN_RATING;
+        if (Objects.isNull(discipline)) return MIN_RATING;
+        if (Objects.isNull(endurance)) return MIN_RATING;
 
         return (blocking + presence + discipline + endurance) / 4.0;
     }
@@ -143,9 +144,9 @@ public class Player {
     }
 
     public Double getPenaltyRating() {
-        if (penaltyShot == null) return MIN_RATING;
-        if (penaltyOffense == null) return MIN_RATING;
-        if (penaltyDefense == null) return MIN_RATING;
+        if (Objects.isNull(penaltyShot)) return MIN_RATING;
+        if (Objects.isNull(penaltyOffense)) return MIN_RATING;
+        if (Objects.isNull(penaltyDefense)) return MIN_RATING;
 
         return (penaltyShot + penaltyOffense + penaltyDefense) / 3.0;
     }
@@ -155,14 +156,14 @@ public class Player {
     }
 
     public Double getPerformanceRating() {
-        if (scoring == null) return MIN_RATING;
-        if (passing == null) return MIN_RATING;
-        if (blocking == null) return MIN_RATING;
-        if (tackling == null) return MIN_RATING;
-        if (stealing == null) return MIN_RATING;
-        if (presence == null) return MIN_RATING;
-        if (discipline == null) return MIN_RATING;
-        if (endurance == null) return MIN_RATING;
+        if (Objects.isNull(scoring)) return MIN_RATING;
+        if (Objects.isNull(passing)) return MIN_RATING;
+        if (Objects.isNull(blocking)) return MIN_RATING;
+        if (Objects.isNull(tackling)) return MIN_RATING;
+        if (Objects.isNull(stealing)) return MIN_RATING;
+        if (Objects.isNull(presence)) return MIN_RATING;
+        if (Objects.isNull(discipline)) return MIN_RATING;
+        if (Objects.isNull(endurance)) return MIN_RATING;
 
         return (scoring + passing + blocking +
                 tackling + stealing + presence +

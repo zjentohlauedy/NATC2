@@ -62,7 +62,7 @@ public class LeagueService {
     private void assignManagersToTeams(final List<Team> teams, final List<Manager> managers) throws NATCException {
         for (final Team team : teams) {
             final Optional<Manager> managerOpt = managers.stream()
-                    .filter(manager -> manager.getTeamId() == null)
+                    .filter(manager -> Objects.isNull(manager.getTeamId()))
                     .max(Comparator.comparing(Manager::getOverallRating));
 
             if (managerOpt.isEmpty()) {
@@ -85,7 +85,7 @@ public class LeagueService {
                     .findFirst().orElseThrow(LeagueProcessingException::new);
 
             final Optional<Player> playerOpt = players.stream()
-                    .filter(player -> player.getTeamId() == null)
+                    .filter(player -> Objects.isNull(player.getTeamId()))
                     .max(managerStyleComparatorMap.get(ManagerStyle.getByValue(teamManager.getStyle())));
 
             if (playerOpt.isEmpty()) {

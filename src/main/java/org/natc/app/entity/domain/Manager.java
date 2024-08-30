@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import java.util.Objects;
 
 @Entity(name = "managers_t")
 @IdClass(ManagerId.class)
@@ -67,10 +68,10 @@ public class Manager {
     }
 
     public Double getOverallRating() {
-        if (offense == null) return 0.0;
-        if (defense == null) return 0.0;
-        if (intangible == null) return 0.0;
-        if (penalties == null) return 0.0;
+        if (Objects.isNull(offense)) return 0.0;
+        if (Objects.isNull(defense)) return 0.0;
+        if (Objects.isNull(intangible)) return 0.0;
+        if (Objects.isNull(penalties)) return 0.0;
 
         return (offense + defense + intangible + penalties) / 4.0;
     }

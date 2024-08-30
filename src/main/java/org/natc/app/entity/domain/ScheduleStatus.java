@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum ScheduleStatus {
     SCHEDULED(0), IN_PROGRESS(1), COMPLETED(2);
 
@@ -14,7 +16,7 @@ public enum ScheduleStatus {
     }
 
     public static ScheduleStatus getByValue(final Integer value) {
-        if (value == null) {
+        if (Objects.isNull(value)) {
             return null;
         }
 

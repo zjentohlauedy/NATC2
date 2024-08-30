@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum PossessionType {
     NONE(0), HOME(1), ROAD(2);
 
@@ -14,7 +16,7 @@ public enum PossessionType {
     }
 
     public static Integer getValueFor(final PossessionType type) {
-        if (type == null) return null;
+        if (Objects.isNull(type)) return null;
 
         return type.getValue();
     }

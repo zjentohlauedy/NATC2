@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum ManagerAward {
     NONE(0), MANAGER_OF_THE_YEAR(1);
 
@@ -14,7 +16,7 @@ public enum ManagerAward {
     }
 
     public static ManagerAward getByValue(final Integer value) {
-        if (value == null) {
+        if (Objects.isNull(value)) {
             return null;
         }
 

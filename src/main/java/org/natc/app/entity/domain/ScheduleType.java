@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum ScheduleType {
     BEGINNING_OF_SEASON(0),
     MANAGER_CHANGES(1),
@@ -36,7 +38,7 @@ public enum ScheduleType {
     }
 
     public static ScheduleType getByValue(final Integer value) {
-        if (value == null) {
+        if (Objects.isNull(value)) {
             return null;
         }
 

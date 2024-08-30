@@ -17,10 +17,7 @@ import org.natc.app.repository.ScheduleRepository;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -451,7 +448,7 @@ class ScheduleServiceTest {
             LocalDate previousDate = null;
 
             for (final Schedule schedule : preseason) {
-                if (previousDate == null) {
+                if (Objects.isNull(previousDate)) {
                     previousDate = schedule.getScheduled();
                     continue;
                 }
@@ -661,7 +658,7 @@ class ScheduleServiceTest {
             LocalDate previousDate = null;
 
             for (final Schedule schedule : regularSeason) {
-                if (previousDate == null) {
+                if (Objects.isNull(previousDate)) {
                     previousDate = schedule.getScheduled();
                     continue;
                 }

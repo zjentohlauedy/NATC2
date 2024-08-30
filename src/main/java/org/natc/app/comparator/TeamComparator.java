@@ -108,7 +108,7 @@ public class TeamComparator implements Comparator<Team> {
     }
 
     private Integer valueOrZero(final Integer value) {
-        return value == null ? 0 : value;
+        return Objects.isNull(value) ? 0 : value;
     }
 
     private Double safeDivide(final Integer dividend, final Integer divisor) {

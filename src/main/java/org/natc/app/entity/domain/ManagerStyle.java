@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum ManagerStyle {
     OFFENSIVE(1), DEFENSIVE(2), INTANGIBLE(3), PENALTIES(4), BALANCED(5);
 
@@ -14,7 +16,7 @@ public enum ManagerStyle {
     }
 
     public static ManagerStyle getByValue(final Integer value) {
-        if (value == null) {
+        if (Objects.isNull(value)) {
             return null;
         }
 

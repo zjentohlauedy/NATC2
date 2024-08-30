@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum Period {
     NONE(0), FIRST(1), SECOND(2), THIRD(3), FOURTH(4), FIFTH(5);
 
@@ -14,7 +16,7 @@ public enum Period {
     }
 
     public static Integer getValueFor(final Period period) {
-        if (period == null) return null;
+        if (Objects.isNull(period)) return null;
 
         return period.getValue();
     }

@@ -1,5 +1,7 @@
 package org.natc.app.entity.domain;
 
+import java.util.Objects;
+
 public enum PlayerAward {
     NONE(0), SILVER(1), GOLD(2), PLATINUM(3);
 
@@ -14,7 +16,7 @@ public enum PlayerAward {
     }
 
     public static PlayerAward getByValue(final Integer value) {
-        if (value == null) {
+        if (Objects.isNull(value)) {
             return null;
         }
 

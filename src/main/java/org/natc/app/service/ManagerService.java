@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ManagerService {
@@ -37,7 +38,7 @@ public class ManagerService {
             final FullName name = nameService.generateName();
             final Manager manager = Manager.generate(++lastManagerId, year, name.getFirstName(), name.getLastName());
             final ManagerStyle style = managerAnalyzer.determineManagerStyle(manager);
-            manager.setStyle(style == null ? null : style.getValue());
+            manager.setStyle(Objects.isNull(style) ? null : style.getValue());
 
             managerRepository.save(manager);
 
@@ -63,7 +64,7 @@ public class ManagerService {
         manager.setVitality(player.getVitality());
 
         final ManagerStyle style = managerAnalyzer.determineManagerStyle(manager);
-        manager.setStyle(style == null ? null : style.getValue());
+        manager.setStyle(Objects.isNull(style) ? null : style.getValue());
 
         managerRepository.save(manager);
 

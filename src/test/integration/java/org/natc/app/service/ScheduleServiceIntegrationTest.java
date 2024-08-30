@@ -13,6 +13,7 @@ import org.springframework.data.domain.Example;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -385,7 +386,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, scheduleList.stream().map(Schedule::getStatus).distinct().count());
             assertEquals(ScheduleStatus.SCHEDULED.getValue(), scheduleList.get(0).getStatus());
-            assertEquals(0, scheduleList.stream().filter(schedule -> schedule.getScheduled() == null).count());
+            assertEquals(0, scheduleList.stream().filter(schedule -> Objects.isNull(schedule.getScheduled())).count());
         }
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Component
 public class SeasonManager {
@@ -35,7 +36,7 @@ public class SeasonManager {
 
         final Schedule lastScheduleEntry = scheduleService.getLastScheduleEntry();
 
-        if (lastScheduleEntry == null) {
+        if (Objects.isNull(lastScheduleEntry)) {
             leagueService.generateNewLeague();
             scheduleService.generateSchedule(leagueConfiguration.getFirstSeason());
         }
@@ -48,7 +49,7 @@ public class SeasonManager {
 
         final Schedule nextScheduleEntry = scheduleService.getNextScheduleEntry(lastScheduleEntry);
 
-        if (nextScheduleEntry == null) throw new ScheduleProcessingException();
+        if (Objects.isNull(nextScheduleEntry)) throw new ScheduleProcessingException();
 
         if (nextScheduleEntry.getScheduled().isAfter(LocalDate.now())) return;
 

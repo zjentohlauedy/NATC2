@@ -15,10 +15,7 @@ import org.natc.app.repository.ManagerRepository;
 import org.natc.app.service.analysis.ManagerAnalyzer;
 import org.springframework.data.domain.Example;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -112,7 +109,7 @@ class ManagerServiceTest {
             final List<Manager> managerList = managerService.generateManagers("2017", 10);
 
             assertEquals(10, managerList.size());
-            assertEquals(0, managerList.stream().filter(manager -> manager.getManagerId() == null).count());
+            assertEquals(0, managerList.stream().filter(manager -> Objects.isNull(manager.getManagerId())).count());
         }
 
         @Test

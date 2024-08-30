@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TeamManagerDraftService {
@@ -51,7 +48,7 @@ public class TeamManagerDraftService {
 
         for (final Team team : draftTeams) {
             final Manager manager = managers.stream()
-                    .filter(m -> m.getTeamId() == null && !team.getTeamId().equals(m.getFormerTeamId()))
+                    .filter(m -> Objects.isNull(m.getTeamId()) && !team.getTeamId().equals(m.getFormerTeamId()))
                     .max(Comparator.comparing(Manager::getPerformanceRating).thenComparing(Manager::getOverallRating))
                     .orElseThrow(TeamManagerDraftException::new);
 

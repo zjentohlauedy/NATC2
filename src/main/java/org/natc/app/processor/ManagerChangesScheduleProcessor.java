@@ -75,7 +75,7 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
 
         if (!teamsWithoutManagers.isEmpty()) {
             final List<Manager> availableManagers = managerList.stream()
-                    .filter(manager -> !Objects.equals(manager.getRetired(), 1) && manager.getTeamId() == null)
+                    .filter(manager -> !Objects.equals(manager.getRetired(), 1) && Objects.isNull(manager.getTeamId()))
                     .collect(Collectors.toList());
 
             teamManagerDraftService.assignManagersToTeams(teamsWithoutManagers, availableManagers);

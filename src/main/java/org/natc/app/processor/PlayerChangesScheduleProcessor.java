@@ -51,7 +51,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         final List<Manager> managers = managerService.getActiveManagersForYear(schedule.getYear());
 
         for (final Player player : players) {
-            if (player.getTeamId() == null) continue;
+            if (Objects.isNull(player.getTeamId())) continue;
 
             if (playerRetirementProxy.readyToRetire(player)) {
                 player.setRetired(1);
