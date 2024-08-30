@@ -1,7 +1,7 @@
 package org.natc.app
 
 import org.natc.app.entity.domain.GameType
-import org.natc.app.entity.domain.TeamOffenseSummary;
+import org.natc.app.entity.domain.TeamOffenseSummary
 import org.natc.app.repository.TeamOffenseSummaryRepository
 import org.springframework.beans.factory.annotation.Autowired
 

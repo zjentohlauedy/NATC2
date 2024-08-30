@@ -3,17 +3,9 @@ package org.natc.app.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.natc.app.entity.domain.FirstName;
-import org.natc.app.entity.domain.FullName;
-import org.natc.app.entity.domain.LastName;
-import org.natc.app.entity.domain.Manager;
-import org.natc.app.entity.domain.Player;
+import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
 import org.natc.app.exception.NameGenerationException;
 import org.natc.app.repository.FirstNameRepository;
@@ -27,9 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NameServiceTest {

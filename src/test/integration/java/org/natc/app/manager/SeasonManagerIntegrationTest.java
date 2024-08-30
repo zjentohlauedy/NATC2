@@ -3,12 +3,7 @@ package org.natc.app.manager;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.natc.app.configuration.LeagueConfiguration;
-import org.natc.app.entity.domain.Manager;
-import org.natc.app.entity.domain.Player;
-import org.natc.app.entity.domain.Schedule;
-import org.natc.app.entity.domain.ScheduleStatus;
-import org.natc.app.entity.domain.ScheduleType;
-import org.natc.app.entity.domain.Team;
+import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
 import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.repository.ManagerRepository;
@@ -24,9 +19,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
 

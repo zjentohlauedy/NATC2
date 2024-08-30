@@ -1,10 +1,6 @@
 package org.natc.app.processor;
 
 import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +8,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
-import org.mockito.stubbing.Answer;
 import org.natc.app.comparator.PlayerComparator;
 import org.natc.app.comparator.PlayerComparatorFactory;
 import org.natc.app.configuration.LeagueConfiguration;
@@ -188,7 +181,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldRetrievePlayerComparatorForEachManagerBasedOnManagerStyle() throws NATCException {
-                final List<Manager> managerList = List.of(
+                final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                         Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                         Manager.builder().managerId(3).teamId(3).style(ManagerStyle.INTANGIBLE.getValue()).build(),
@@ -210,7 +203,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldOnlyRetrievePlayerComparatorForManagersOnATeam() throws NATCException {
-                final List<Manager> managerList = List.of(
+                final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                         Manager.builder().managerId(2).style(ManagerStyle.BALANCED.getValue()).build()
                 );
@@ -226,7 +219,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldConfigurePlayerComparatorsWithUseAgeAdjustment() throws NATCException {
-                final List<Manager> managerList = List.of(
+                final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build()
                 );
 
@@ -661,7 +654,7 @@ class PlayerChangesScheduleProcessorTest {
             @Test
             void shouldProcessTeamsInRandomOrderThatChangesEachTimeThrough() throws NATCException {
                 final ArgumentCaptor<ManagerStyle> captor = ArgumentCaptor.forClass(ManagerStyle.class);
-                final List<Manager> managerList = List.of(
+                final List<Manager> managerList = Arrays.asList(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                         Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                         Manager.builder().managerId(3).teamId(3).style(ManagerStyle.INTANGIBLE.getValue()).build(),

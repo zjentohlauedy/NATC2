@@ -3,43 +3,21 @@ package org.natc.app.processor;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.configuration.LeagueConfiguration;
-import org.natc.app.entity.domain.Manager;
-import org.natc.app.entity.domain.Player;
-import org.natc.app.entity.domain.Schedule;
-import org.natc.app.entity.domain.ScheduleStatus;
-import org.natc.app.entity.domain.Team;
+import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
-import org.natc.app.service.ManagerService;
-import org.natc.app.service.PlayerService;
-import org.natc.app.service.ScheduleService;
-import org.natc.app.service.TeamManagerDraftService;
-import org.natc.app.service.TeamService;
+import org.natc.app.service.*;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ManagerChangesScheduleProcessorTest {

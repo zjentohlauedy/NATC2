@@ -1,17 +1,9 @@
 package org.natc.app.processor;
 
 import org.natc.app.configuration.LeagueConfiguration;
-import org.natc.app.entity.domain.Manager;
-import org.natc.app.entity.domain.Player;
-import org.natc.app.entity.domain.Schedule;
-import org.natc.app.entity.domain.ScheduleStatus;
-import org.natc.app.entity.domain.Team;
+import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
-import org.natc.app.service.ManagerService;
-import org.natc.app.service.PlayerService;
-import org.natc.app.service.ScheduleService;
-import org.natc.app.service.TeamManagerDraftService;
-import org.natc.app.service.TeamService;
+import org.natc.app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

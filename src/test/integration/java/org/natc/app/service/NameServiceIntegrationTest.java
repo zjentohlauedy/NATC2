@@ -2,11 +2,7 @@ package org.natc.app.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.natc.app.entity.domain.FirstName;
-import org.natc.app.entity.domain.FullName;
-import org.natc.app.entity.domain.LastName;
-import org.natc.app.entity.domain.Manager;
-import org.natc.app.entity.domain.Player;
+import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
 import org.natc.app.repository.FirstNameRepository;
 import org.natc.app.repository.LastNameRepository;

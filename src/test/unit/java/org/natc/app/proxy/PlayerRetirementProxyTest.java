@@ -9,7 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.entity.domain.Player;
 import org.natc.app.random.RandomNumber;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.natc.app.entity.domain.Player.MAX_RATING;
 import static org.natc.app.entity.domain.Player.MIN_RATING;

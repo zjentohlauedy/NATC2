@@ -1,17 +1,12 @@
 package org.natc.app.entity.domain;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.natc.app.entity.domain.Player.*;
 import static org.natc.app.entity.domain.PlayerRatingAdjustment.*;
 import static org.natc.app.util.BooleanHelper.valueOf;

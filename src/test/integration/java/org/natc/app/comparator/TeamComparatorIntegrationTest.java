@@ -2,11 +2,7 @@ package org.natc.app.comparator;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.natc.app.entity.domain.GameType;
-import org.natc.app.entity.domain.Team;
-import org.natc.app.entity.domain.TeamDefenseSummary;
-import org.natc.app.entity.domain.TeamGame;
-import org.natc.app.entity.domain.TeamOffenseSummary;
+import org.natc.app.entity.domain.*;
 import org.natc.app.repository.TeamDefenseSummaryRepository;
 import org.natc.app.repository.TeamGameRepository;
 import org.natc.app.repository.TeamOffenseSummaryRepository;
