@@ -1,0 +1,15 @@
+name: Application Build and Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  hello-world:
+    name: Hello World
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - name: Execute
+        run: echo "Hello, World!"
