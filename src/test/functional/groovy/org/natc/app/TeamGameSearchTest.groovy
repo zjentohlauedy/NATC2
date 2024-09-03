@@ -31,7 +31,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
             data.status == 'SUCCESS'
             data.resource == null
             data.errors == null
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].gameId == 1234
             data.resources[0].teamId == 12
         }
@@ -80,7 +80,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             with(data.resources[0]) {
                 gameId == 1234
                 year == '1984'
@@ -132,7 +132,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 3
+            data.resources.size() == 3
         }
     }
 
@@ -145,7 +145,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'NOT_FOUND'
-            data.resources.size == 0
+            data.resources.size() == 0
         }
     }
 
@@ -166,7 +166,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].gameId == 1
         }
     }
@@ -188,7 +188,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].year == '2001'
         }
     }
@@ -210,7 +210,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].datestamp == '2002-03-16'
         }
     }
@@ -232,7 +232,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].type == 'PRESEASON'
         }
     }
@@ -254,7 +254,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].teamId == 2
         }
     }
@@ -276,7 +276,7 @@ class TeamGameSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].opponent == 3
         }
     }

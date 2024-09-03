@@ -28,7 +28,7 @@ class TeamSearchTest extends NATCFunctionalTest {
             data.status == 'SUCCESS'
             data.resource == null
             data.errors == null
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].teamId == 1
             data.resources[0].year == '2000'
         }
@@ -82,7 +82,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             with(data.resources[0]) {
                 teamId == 123
                 year == '1999'
@@ -139,7 +139,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 3
+            data.resources.size() == 3
 
             data.resources.collect { it.teamId }.containsAll([1, 2, 3])
         }
@@ -154,7 +154,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'NOT_FOUND'
-            data.resources.size == 0
+            data.resources.size() == 0
         }
     }
 
@@ -175,7 +175,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].teamId == 1
         }
     }
@@ -197,7 +197,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].year == '2000'
         }
     }
@@ -219,7 +219,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].conferenceId == 1
         }
     }
@@ -241,7 +241,7 @@ class TeamSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].divisionId == 1
         }
     }

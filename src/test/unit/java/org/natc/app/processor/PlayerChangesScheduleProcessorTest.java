@@ -1,6 +1,5 @@
 package org.natc.app.processor;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +18,7 @@ import org.natc.app.service.PlayerService;
 import org.natc.app.service.ScheduleService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -684,7 +684,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 assertEquals(30, managerStyleList.size());
 
-                for (List<ManagerStyle> currentOrder : Lists.partition(managerStyleList, managerList.size())) {
+                for (List<ManagerStyle> currentOrder : partitionList(managerStyleList, managerList.size())) {
                     assertEquals(previousOrder.stream().distinct().count(), currentOrder.stream().distinct().count());
                     assertNotEquals(previousOrder, currentOrder);
 
@@ -837,6 +837,14 @@ class PlayerChangesScheduleProcessorTest {
 
             verify(playerService).updatePlayers(playerList);
         }
+    }
+
+    private List<List<ManagerStyle>> partitionList(final List<ManagerStyle> managerStyleList, final int chunkSize) {
+        final AtomicInteger counter = new AtomicInteger(0);
+
+        return new ArrayList<>(managerStyleList.stream()
+                .collect(Collectors.groupingBy(style -> counter.getAndDecrement() / chunkSize))
+                .values());
     }
 
     private Player generatePlayer(final int playerId, final Integer teamId, final String year, final double rating) {

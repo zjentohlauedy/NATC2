@@ -29,7 +29,7 @@ class GameStateSearchTest extends NATCFunctionalTest {
             data.status == 'SUCCESS'
             data.resource == null
             data.errors == null
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].gameId == 123
         }
     }
@@ -57,7 +57,7 @@ class GameStateSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             with(data.resources[0]) {
                 gameId == 123
                 started == true
@@ -89,7 +89,7 @@ class GameStateSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 3
+            data.resources.size() == 3
         }
     }
     
@@ -102,7 +102,7 @@ class GameStateSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'NOT_FOUND'
-            data.resources.size == 0
+            data.resources.size() == 0
         }
     }
     
@@ -122,7 +122,7 @@ class GameStateSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].gameId == 1
         }
     }

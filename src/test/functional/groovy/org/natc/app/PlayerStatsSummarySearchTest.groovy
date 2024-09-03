@@ -34,7 +34,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
             data.status == 'SUCCESS'
             data.resource == null
             data.errors == null
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].year == '1996'
             data.resources[0].type == 'REGULAR_SEASON'
             data.resources[0].playerId == 5434
@@ -75,7 +75,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             with(data.resources[0]) {
                 year == "2002"
                 type == 'PRESEASON'
@@ -117,7 +117,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 3
+            data.resources.size() == 3
 
             data.resources.collect { it.playerId }.containsAll([1, 2, 3])
         }
@@ -132,7 +132,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'NOT_FOUND'
-            data.resources.size == 0
+            data.resources.size() == 0
         }
     }
 
@@ -153,7 +153,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].year == '2000'
         }
     }
@@ -175,7 +175,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].type == 'POSTSEASON'
         }
     }
@@ -197,7 +197,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].playerId == 3
         }
     }
@@ -219,7 +219,7 @@ class PlayerStatsSummarySearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].teamId == 2
         }
     }

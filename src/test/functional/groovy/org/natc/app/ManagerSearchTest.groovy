@@ -29,7 +29,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
             data.status == 'SUCCESS'
             data.resource == null
             data.errors == null
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].managerId == 1
             data.resources[0].year == '1999'
         }
@@ -72,7 +72,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == "SUCCESS"
-            data.resources.size == 1
+            data.resources.size() == 1
             with(data.resources[0]) {
                 managerId == 123
                 teamId == 321
@@ -118,7 +118,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 3
+            data.resources.size() == 3
 
             data.resources.collect { it.managerId }.containsAll([1,2,3])
         }
@@ -133,7 +133,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'NOT_FOUND'
-            data.resources.size == 0
+            data.resources.size() == 0
         }
     }
 
@@ -154,7 +154,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].managerId == 1
         }
     }
@@ -176,7 +176,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].year == '2000'
         }
     }
@@ -198,7 +198,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].teamId == 3
         }
     }
@@ -220,7 +220,7 @@ class ManagerSearchTest extends NATCFunctionalTest {
         with(response) {
             status == 200
             data.status == 'SUCCESS'
-            data.resources.size == 1
+            data.resources.size() == 1
             data.resources[0].playerId == 5
         }
     }
