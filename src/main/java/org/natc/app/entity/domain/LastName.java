@@ -1,12 +1,11 @@
 package org.natc.app.entity.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity(name = "lastnames_t")
 @Builder

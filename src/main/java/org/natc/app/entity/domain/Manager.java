@@ -1,10 +1,10 @@
 package org.natc.app.entity.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import java.util.Objects;
 
 @Entity(name = "managers_t")

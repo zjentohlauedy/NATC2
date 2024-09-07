@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface LastNameRepository extends JpaRepository<LastName, String> {
 
-    @Query(value = "SELECT name FROM #{#entityName} ORDER BY -LOG(1 - random())/frequency LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM #{#entityName} ORDER BY -LOG(1 - random())/frequency LIMIT 1", nativeQuery = true)
     Optional<LastName> findRandomName();
 }

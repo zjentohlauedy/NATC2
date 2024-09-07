@@ -1,11 +1,11 @@
 package org.natc.app.entity.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Transient;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;

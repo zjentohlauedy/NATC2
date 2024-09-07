@@ -1,10 +1,10 @@
 package org.natc.app.entity.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import java.time.LocalDate;
 
 @Entity(name = "schedule_t")
