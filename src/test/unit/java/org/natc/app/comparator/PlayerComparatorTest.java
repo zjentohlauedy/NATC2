@@ -31,8 +31,8 @@ class PlayerComparatorTest {
 
                 playerComparator.compare(player1, player2);
 
-                verify(player1).getAdjustedOffensiveRating(any());
-                verify(player2).getAdjustedOffensiveRating(any());
+                verify(player1).getAdjustedOffensiveRating(any(PlayerRatingAdjustment[].class));
+                verify(player2).getAdjustedOffensiveRating(any(PlayerRatingAdjustment[].class));
             }
 
             @Test
@@ -158,8 +158,8 @@ class PlayerComparatorTest {
 
                 playerComparator.compare(player1, player2);
 
-                verify(player1).getAdjustedDefensiveRating(any());
-                verify(player2).getAdjustedDefensiveRating(any());
+                verify(player1).getAdjustedDefensiveRating(any(PlayerRatingAdjustment[].class));
+                verify(player2).getAdjustedDefensiveRating(any(PlayerRatingAdjustment[].class));
             }
 
             @Test
@@ -285,8 +285,8 @@ class PlayerComparatorTest {
 
                 playerComparator.compare(player1, player2);
 
-                verify(player1).getAdjustedIntangibleRating(any());
-                verify(player2).getAdjustedIntangibleRating(any());
+                verify(player1).getAdjustedIntangibleRating(any(PlayerRatingAdjustment[].class));
+                verify(player2).getAdjustedIntangibleRating(any(PlayerRatingAdjustment[].class));
             }
 
             @Test
@@ -412,8 +412,8 @@ class PlayerComparatorTest {
 
                 playerComparator.compare(player1, player2);
 
-                verify(player1).getAdjustedPenaltyRating(any());
-                verify(player2).getAdjustedPenaltyRating(any());
+                verify(player1).getAdjustedPenaltyRating(any(PlayerRatingAdjustment[].class));
+                verify(player2).getAdjustedPenaltyRating(any(PlayerRatingAdjustment[].class));
             }
 
             @Test
@@ -539,8 +539,8 @@ class PlayerComparatorTest {
 
                 playerComparator.compare(player1, player2);
 
-                verify(player1).getAdjustedPerformanceRating(any());
-                verify(player2).getAdjustedPerformanceRating(any());
+                verify(player1).getAdjustedPerformanceRating(any(PlayerRatingAdjustment[].class));
+                verify(player2).getAdjustedPerformanceRating(any(PlayerRatingAdjustment[].class));
             }
 
             @Test
