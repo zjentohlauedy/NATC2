@@ -52,7 +52,7 @@ dependencies {
 	testImplementation 'org.codehaus.groovy:groovy-json:3.0.22'
 	testImplementation 'org.spockframework:spock-core'
 	testImplementation 'org.spockframework:spock-spring'
-	testImplementation enforcedPlatform('io.zonky.test.postgres:embedded-postgres-binaries-bom:14.13.0')
+	testImplementation enforcedPlatform('io.zonky.test.postgres:embedded-postgres-binaries-bom:15.8.0')
 }
 
 test {
