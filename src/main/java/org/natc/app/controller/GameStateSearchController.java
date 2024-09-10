@@ -26,6 +26,9 @@ public class GameStateSearchController {
     @RequestMapping("/search")
     public ResponseEntity<ResponseEnvelope<GameStateResponse>> search(
             @RequestParam(name = "game-id", required = false) final Integer gameId) {
+        // TODO: Add MCD request id to response
+        //  final String requestId = MDC.get(REQUEST_ID_KEY);
+
         final GameStateSearchRequest request = GameStateSearchRequest.builder()
                 .gameId(gameId)
                 .build();

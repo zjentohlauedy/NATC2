@@ -12,6 +12,8 @@ public class ResponseEnvelope<T> {
     private List<T> resources;
     private List<String> errors;
 
+    // TODO: add requestId to fields and constructor
+
     public ResponseEnvelope(final ResponseStatus responseStatus, List<T> list) {
         status = responseStatus;
         resources = list;
