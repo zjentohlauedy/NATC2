@@ -3,10 +3,7 @@ package org.natc.app.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.entity.domain.Manager;
 import org.natc.app.entity.domain.Team;
@@ -14,6 +11,7 @@ import org.natc.app.exception.TeamNotFoundException;
 import org.natc.app.repository.TeamRepository;
 import org.springframework.data.domain.Example;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -403,6 +401,53 @@ class TeamServiceTest {
             when(teamRepository.findOne(any())).thenReturn(Optional.empty());
 
             assertThrows(TeamNotFoundException.class, () -> teamService.getTeamByTeamIdAndYear(123, "2000"));
+        }
+    }
+
+    @Nested
+    class GetRegularTeamsByYear {
+        @Test
+        void shouldCallTeamRepositoryToFindTeams() {
+            teamService.getRegularTeamsByYear("2011");
+
+            verify(teamRepository).findAll(ArgumentMatchers.<Example<Team>>any());
+        }
+
+        @Test
+        void shouldPassTheGivenYearToTheRepository() {
+            teamService.getRegularTeamsByYear("2011");
+
+            verify(teamRepository).findAll(captor.capture());
+
+            final Team exampleTeam = captor.getValue().getProbe();
+
+            assertEquals("2011", exampleTeam.getYear());
+        }
+
+        @Test
+        void shouldPassAllStarAsFalseToTheRepository() {
+            teamService.getRegularTeamsByYear("2011");
+
+            verify(teamRepository).findAll(captor.capture());
+
+            final Team exampleTeam = captor.getValue().getProbe();
+
+            assertEquals(0, exampleTeam.getAllstarTeam());
+        }
+
+        @Test
+        void shouldReturnTheTeamsReturnedByTheRespository() {
+            final List<Team> expectedTeams = Arrays.asList(
+                    Team.builder().teamId(1).build(),
+                    Team.builder().teamId(2).build(),
+                    Team.builder().teamId(3).build()
+            );
+
+            when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(expectedTeams);
+
+            final List<Team> actualTeams = teamService.getRegularTeamsByYear("2011");
+
+            assertEquals(expectedTeams, actualTeams);
         }
     }
 }

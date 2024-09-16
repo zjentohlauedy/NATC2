@@ -108,4 +108,8 @@ public class TeamService {
         return repository.findOne(Example.of(Team.builder().teamId(teamId).year(year).build()))
                 .orElseThrow(TeamNotFoundException::new);
     }
+
+    public List<Team> getRegularTeamsByYear(final String year) {
+        return repository.findAll(Example.of(Team.builder().year(year).allstarTeam(0).build()));
+    }
 }

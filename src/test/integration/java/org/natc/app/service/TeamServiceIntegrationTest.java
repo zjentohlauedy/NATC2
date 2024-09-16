@@ -1156,4 +1156,56 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
             assertThrows(TeamNotFoundException.class, () -> teamService.getTeamByTeamIdAndYear(5, "2005"));
         }
     }
+
+    @Nested
+    class GetRegularTeamsByYear {
+        @Test
+        void shouldReturnRegularTeamsForTheGivenYear() {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("2018").allstarTeam(0).build(),
+                    Team.builder().teamId(2).year("2018").allstarTeam(0).build(),
+                    Team.builder().teamId(3).year("2018").allstarTeam(0).build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            final List<Team> actualTeamList = teamService.getRegularTeamsByYear("2018");
+
+            assertEquals(3, actualTeamList.size());
+        }
+
+        @Test
+        void shouldOnlyReturnRegularTeamsForTheGivenYear() {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(1).year("2018").allstarTeam(0).build(),
+                    Team.builder().teamId(2).year("2016").allstarTeam(0).build(),
+                    Team.builder().teamId(3).year("2018").allstarTeam(0).build(),
+                    Team.builder().teamId(4).year("2018").allstarTeam(1).build(),
+                    Team.builder().teamId(5).year("2018").allstarTeam(0).build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            final List<Team> actualTeamList = teamService.getRegularTeamsByYear("2018");
+
+            assertEquals(3, actualTeamList.size());
+            assertEquals(3, actualTeamList.stream().filter(t -> t.getYear().equals("2018")).count());
+            assertEquals(3, actualTeamList.stream().filter(t -> t.getAllstarTeam().equals(0)).count());
+        }
+
+        @Test
+        void shouldReturnAnEmptyListWhenNoTeamsMatch() {
+            final List<Team> teamList = Arrays.asList(
+                    Team.builder().teamId(2).year("2016").allstarTeam(0).build(),
+                    Team.builder().teamId(4).year("2018").allstarTeam(1).build()
+            );
+
+            teamRepository.saveAll(teamList);
+
+            final List<Team> actualTeamList = teamService.getRegularTeamsByYear("2018");
+
+            assertEquals(0, actualTeamList.size());
+            assertTrue(actualTeamList.isEmpty());
+        }
+    }
 }
