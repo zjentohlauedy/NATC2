@@ -10,6 +10,12 @@ group = 'org.natc'
 version = '0.0.1-SNAPSHOT'
 defaultTasks = ['clean', 'build']
 
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
