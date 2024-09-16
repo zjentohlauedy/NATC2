@@ -5,7 +5,15 @@ public class NATCException extends Exception {
         super();
     }
 
-    public NATCException(final Exception ex) {
-        super(ex);
+    public NATCException(final String message) {
+        super(message);
+    }
+
+    public NATCException(final Throwable cause) {
+        super(cause);
+    }
+
+    public NATCException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }
