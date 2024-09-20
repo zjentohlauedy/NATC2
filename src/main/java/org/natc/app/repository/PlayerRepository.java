@@ -24,4 +24,6 @@ public interface PlayerRepository extends JpaRepository<Player, PlayerId> {
 
     @Query(value = "select * from #{#entityName} where year = :year and retired = 1 order by (scoring + passing + blocking + tackling + stealing + presence + discipline + endurance + penalty_shot + penalty_offense + penalty_defense) desc limit :num", nativeQuery = true)
     List<Player> findTopNumRetiredPlayersForYear(String year, Integer num);
+
+    List<Player> findPlayersByTeamIdAndYearAndRookie(Integer teamId, String year, Integer rookie);
 }

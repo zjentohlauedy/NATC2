@@ -405,4 +405,26 @@ class PlayerServiceTest {
             verify(playerRepository).saveAll(playerList);
         }
     }
+
+    @Nested
+    class GetUndraftedRookiesForYear {
+
+        @Test
+        void shouldCallRepositoryToRetrieveRookiePlayersForGivenYearThatDoNotHaveATeam() {
+            playerService.getUndraftedRookiesForYear("1999");
+
+            verify(playerRepository).findPlayersByTeamIdAndYearAndRookie(null, "1999", 1);
+        }
+
+        @Test
+        void shouldReturnThePlayersReturnedByTheRepository() {
+            final List<Player> expectedPlayers = Collections.singletonList(Player.builder().playerId(1).build());
+
+            when(playerRepository.findPlayersByTeamIdAndYearAndRookie(any(), any(), any())).thenReturn(expectedPlayers);
+
+            final List<Player> actualPlayers = playerService.getUndraftedRookiesForYear("1999");
+
+            assertEquals(expectedPlayers, actualPlayers);
+        }
+    }
 }

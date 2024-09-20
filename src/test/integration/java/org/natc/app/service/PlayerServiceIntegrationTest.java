@@ -14,6 +14,7 @@ import org.springframework.data.domain.Example;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -428,6 +429,84 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(5, actualPlayers.get(0).getPlayerId());
             assertEquals(2, actualPlayers.get(1).getPlayerId());
+        }
+    }
+
+    @Nested
+    class GetUndraftedRookiesForYear {
+        @Test
+        void ShouldReturnAllRookiePlayerRecordsMatchingTheGivenYear() {
+            final List<Player> persistedPlayers = Arrays.asList(
+                    Player.builder().playerId(1).year("2015").rookie(1).build(),
+                    Player.builder().playerId(2).year("2015").rookie(1).build(),
+                    Player.builder().playerId(3).year("2015").rookie(1).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            final List<Player> foundPlayers = playerService.getUndraftedRookiesForYear("2015");
+
+            assertEquals(persistedPlayers.size(), foundPlayers.size());
+        }
+
+        @Test
+        void ShouldOnlyReturnRookiePlayerRecordsForGivenYearNotOnATeam() {
+            final List<Player> persistedPlayers = Arrays.asList(
+                    Player.builder().playerId(1).year("2015").rookie(1).build(),
+                    Player.builder().playerId(2).teamId(1).year("2015").rookie(1).build(),
+                    Player.builder().playerId(3).year("2015").rookie(1).build(),
+                    Player.builder().playerId(4).teamId(2).year("2015").rookie(1).build(),
+                    Player.builder().playerId(5).year("2015").rookie(1).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            final List<Player> foundPlayers = playerService.getUndraftedRookiesForYear("2015");
+
+            assertEquals(3, foundPlayers.size());
+            assertEquals(3, foundPlayers.stream().filter(player ->
+                    player.getYear().equals("2015") && player.getRookie().equals(1) && Objects.isNull(player.getTeamId())
+            ).count());
+        }
+
+        @Test
+        void ShouldOnlyReturnUndraftedRookiePlayerRecordsForGivenYear() {
+            final List<Player> persistedPlayers = Arrays.asList(
+                    Player.builder().playerId(1).year("2015").rookie(1).build(),
+                    Player.builder().playerId(2).year("2014").rookie(1).build(),
+                    Player.builder().playerId(3).year("2015").rookie(1).build(),
+                    Player.builder().playerId(4).year("2016").rookie(1).build(),
+                    Player.builder().playerId(5).year("2015").rookie(1).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            final List<Player> foundPlayers = playerService.getUndraftedRookiesForYear("2015");
+
+            assertEquals(3, foundPlayers.size());
+            assertEquals(3, foundPlayers.stream().filter(player ->
+                    player.getYear().equals("2015") && player.getRookie().equals(1) && Objects.isNull(player.getTeamId())
+            ).count());
+        }
+
+        @Test
+        void ShouldOnlyReturnUndraftedPlayerRecordsForGivenYearThatAreRookies() {
+            final List<Player> persistedPlayers = Arrays.asList(
+                    Player.builder().playerId(1).year("2015").rookie(1).build(),
+                    Player.builder().playerId(2).year("2015").rookie(0).build(),
+                    Player.builder().playerId(3).year("2015").rookie(1).build(),
+                    Player.builder().playerId(4).year("2015").build(),
+                    Player.builder().playerId(5).year("2015").rookie(1).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            final List<Player> foundPlayers = playerService.getUndraftedRookiesForYear("2015");
+
+            assertEquals(3, foundPlayers.size());
+            assertEquals(3, foundPlayers.stream().filter(player ->
+                    player.getYear().equals("2015") && player.getRookie().equals(1) && Objects.isNull(player.getTeamId())
+            ).count());
         }
     }
 }

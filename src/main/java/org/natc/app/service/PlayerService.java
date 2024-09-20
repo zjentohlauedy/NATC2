@@ -59,8 +59,11 @@ public class PlayerService {
         return playerRepository.findTopNumRetiredPlayersForYear(year, leagueConfiguration.getMaxPlayerManagersPerSeason());
     }
 
-    public List<Player> getActivePlayersForYear(String year) {
+    public List<Player> getActivePlayersForYear(final String year) {
         return playerRepository.findAll(Example.of(Player.builder().year(year).retired(0).build()));
     }
 
+    public List<Player> getUndraftedRookiesForYear(final String year) {
+        return playerRepository.findPlayersByTeamIdAndYearAndRookie(null, year, 1);
+    }
 }
