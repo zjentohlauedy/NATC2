@@ -38,6 +38,7 @@ public class Player {
     private String year;
     private String firstName;
     private String lastName;
+    @Setter
     private Integer age;
     private Double scoring;
     private Double passing;
@@ -55,6 +56,7 @@ public class Player {
     @Transient
     private Double fatigue;
     private Double durability;
+    @Setter
     private Integer rookie;
     private Integer injured;
     private LocalDate returnDate;
@@ -70,6 +72,7 @@ public class Player {
     private Integer formerTeamId;
     private Integer allstarTeamId;
     private Integer award;
+    @Setter
     private Integer draftPick;
     private Integer seasonsPlayed;
     private Integer allstarAlternate;
