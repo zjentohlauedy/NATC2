@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
+import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.service.*;
 
 import java.util.Arrays;
@@ -51,17 +52,38 @@ class ManagerChangesScheduleProcessorTest {
 
     @Nested
     class Process {
+        @Test
+        void shouldThrowExceptionWhenScheduleTypeIsMissing() {
+            final Schedule schedule = Schedule.builder().year("2019").build();
+
+            assertThrows(ScheduleProcessingException.class, () -> processor.process(schedule));
+        }
+
+        @Test
+        void shouldThrowExceptionWhenGivenIncorrectScheduleEventType() throws NATCException {
+            final Schedule schedule = Schedule.builder()
+                    .type(ScheduleType.BEGINNING_OF_SEASON.getValue())
+                    .year("2019")
+                    .build();
+
+            assertThrows(ScheduleProcessingException.class, () -> processor.process(schedule));
+        }
 
         @Test
         void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(scheduleService).updateScheduleEntry(any());
         }
 
         @Test
         void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
-            final Schedule schedule = Schedule.builder().year("2001").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
+            final Schedule schedule = Schedule.builder()
+                    .type(ScheduleType.MANAGER_CHANGES.getValue())
+                    .year("2001")
+                    .sequence(1)
+                    .status(ScheduleStatus.IN_PROGRESS.getValue())
+                    .build();
             final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
 
             processor.process(schedule);
@@ -74,7 +96,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallManagerServiceToGetActiveManagersForSameYearAsEvent() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).getActiveManagersForYear("2005");
         }
@@ -89,7 +111,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(managerList);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).updateManagers(managerList);
         }
@@ -104,7 +126,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(managerList);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(46, managerList.get(0).getAge());
             assertEquals(38, managerList.get(1).getAge());
@@ -121,7 +143,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(managerList);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(1, managerList.get(0).getRetired());
             assertEquals(0, managerList.get(1).getRetired());
@@ -138,7 +160,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(managerList);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(1, managerList.get(0).getRetired());
             assertEquals(0, managerList.get(1).getRetired());
@@ -158,7 +180,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(1, manager.getRetired());
             assertEquals(4, manager.getFormerTeamId());
@@ -177,7 +199,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService).willTeamReleaseManager(manager);
         }
@@ -192,7 +214,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(managerList);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService, times(3)).willTeamReleaseManager(any(Manager.class));
         }
@@ -208,7 +230,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService, never()).willTeamReleaseManager(manager);
         }
@@ -226,7 +248,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService, never()).willTeamReleaseManager(manager);
         }
@@ -245,7 +267,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
             when(teamService.willTeamReleaseManager(manager)).thenReturn(true);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(1, manager.getReleased());
         }
@@ -264,7 +286,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
             when(teamService.willTeamReleaseManager(manager)).thenReturn(false);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(0, manager.getReleased());
         }
@@ -283,7 +305,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
             when(teamService.willTeamReleaseManager(manager)).thenReturn(true);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             assertEquals(1, manager.getReleased());
             assertEquals(4, manager.getFormerTeamId());
@@ -292,7 +314,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallLeagueConfigurationToGetNumberOfNewManagersToCreate() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(leagueConfiguration).getNewManagersPerSeason();
         }
@@ -302,14 +324,14 @@ class ManagerChangesScheduleProcessorTest {
             when(leagueConfiguration.getNewManagersPerSeason()).thenReturn(8);
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.emptyList());
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).generateManagers("2005", 8);
         }
 
         @Test
         void shouldCallLeagueConfigurationToGetTheNewManagerStartingAge() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(leagueConfiguration).getNewManagerStartingAge();
         }
@@ -322,7 +344,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.emptyList());
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).updateManagers(managerCaptor.capture());
 
@@ -343,7 +365,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.emptyList());
             when(managerService.generateManagers(any(), any())).thenReturn(newManagers);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).updateManagers(managerCaptor.capture());
 
@@ -352,14 +374,14 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallPlayerServiceToCheckForManagerialCandidatesInFormerPlayers() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(playerService).getManagerialCandidates(any());
         }
 
         @Test
         void shouldCallLeagueConfigurationToGetNumberOfYearsAPlayerMustSpendRetiredBeforeBecomingAManager() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(leagueConfiguration).getPlayerManagerYearsRetired();
         }
@@ -368,7 +390,7 @@ class ManagerChangesScheduleProcessorTest {
         void shouldSearchForCandidatePlayersThatRetiredTheConfiguredNumberOfYearsInThePast() throws NATCException {
             when(leagueConfiguration.getPlayerManagerYearsRetired()).thenReturn(10);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(playerService).getManagerialCandidates("1995");
         }
@@ -380,7 +402,7 @@ class ManagerChangesScheduleProcessorTest {
             when(playerService.getManagerialCandidates(any())).thenReturn(Collections.singletonList(player));
             when(managerService.generateManagerFromPlayer(any(), any())).thenReturn(Manager.builder().build());
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).generateManagerFromPlayer(anyString(), eq(player));
         }
@@ -390,7 +412,7 @@ class ManagerChangesScheduleProcessorTest {
             when(playerService.getManagerialCandidates(any())).thenReturn(Collections.singletonList(Player.builder().build()));
             when(managerService.generateManagerFromPlayer(any(), any())).thenReturn(Manager.builder().build());
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).generateManagerFromPlayer(eq("2005"), any());
         }
@@ -408,7 +430,7 @@ class ManagerChangesScheduleProcessorTest {
             when(playerService.getManagerialCandidates(any())).thenReturn(playerList);
             when(managerService.generateManagerFromPlayer(any(), any())).thenReturn(Manager.builder().build());
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService, times(playerList.size())).generateManagerFromPlayer(any(), any());
         }
@@ -423,7 +445,7 @@ class ManagerChangesScheduleProcessorTest {
             when(playerService.getManagerialCandidates(any())).thenReturn(Collections.singletonList(player));
             when(managerService.generateManagerFromPlayer(any(), eq(player))).thenReturn(managerFromPlayer);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).updateManagers(managerCaptor.capture());
 
@@ -442,7 +464,7 @@ class ManagerChangesScheduleProcessorTest {
             when(playerService.getManagerialCandidates(any())).thenReturn(playerList);
             when(managerService.generateManagerFromPlayer(any(), any())).thenReturn(Manager.builder().build());
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(managerService).generateManagers(any(), eq(5 - playerList.size()));
         }
@@ -454,7 +476,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService).getTeamByTeamIdAndYear(teamId, manager.getYear());
         }
@@ -467,7 +489,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
             when(teamService.willTeamReleaseManager(manager)).thenReturn(true);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService).getTeamByTeamIdAndYear(teamId, manager.getYear());
         }
@@ -492,7 +514,7 @@ class ManagerChangesScheduleProcessorTest {
             when(teamService.willTeamReleaseManager(any())).thenReturn(false);
             when(teamService.willTeamReleaseManager(managerToRelease)).thenReturn(true);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamService, times(2)).getTeamByTeamIdAndYear(captor.capture(), any());
 
@@ -506,7 +528,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamManagerDraftService).assignManagersToTeams(any(), any());
         }
@@ -518,7 +540,7 @@ class ManagerChangesScheduleProcessorTest {
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
             when(teamService.willTeamReleaseManager(manager)).thenReturn(true);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamManagerDraftService).assignManagersToTeams(any(), any());
         }
@@ -529,7 +551,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(managerService.getActiveManagersForYear(any())).thenReturn(Collections.singletonList(manager));
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamManagerDraftService, never()).assignManagersToTeams(any(), any());
         }
@@ -557,7 +579,7 @@ class ManagerChangesScheduleProcessorTest {
             when(teamService.getTeamByTeamIdAndYear(releasedManagerTeamId, "2005"))
                     .thenReturn(Team.builder().teamId(releasedManagerTeamId).year("2005").build());
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamManagerDraftService).assignManagersToTeams(teamCaptor.capture(), any());
 
@@ -601,7 +623,7 @@ class ManagerChangesScheduleProcessorTest {
             when(teamService.willTeamReleaseManager(managerReleasedFromTeam)).thenReturn(true);
             when(managerService.generateManagers(any(), any())).thenReturn(newManagers);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             verify(teamManagerDraftService).assignManagersToTeams(any(), managerCaptor.capture());
 
@@ -632,7 +654,7 @@ class ManagerChangesScheduleProcessorTest {
 
             final InOrder inOrder = inOrder(teamService, teamManagerDraftService, managerService);
 
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
             inOrder.verify(teamService).willTeamReleaseManager(manager);
             inOrder.verify(teamManagerDraftService).assignManagersToTeams(any(), any());
@@ -645,7 +667,7 @@ class ManagerChangesScheduleProcessorTest {
 
             when(leagueConfiguration.getFirstSeason()).thenReturn(firstSeason);
 
-            processor.process(Schedule.builder().year(firstSeason).build());
+            processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year(firstSeason).build());
 
             verify(managerService, never()).updateManagers(any());
         }
@@ -653,7 +675,7 @@ class ManagerChangesScheduleProcessorTest {
         @Test
         public void shouldUpdateScheduleToCompletedIfFirstSeasonYear() throws NATCException {
             final String firstSeason = "1989";
-            final Schedule schedule = Schedule.builder().year(firstSeason).sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
+            final Schedule schedule = Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year(firstSeason).sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
             final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
 
             when(leagueConfiguration.getFirstSeason()).thenReturn(firstSeason);

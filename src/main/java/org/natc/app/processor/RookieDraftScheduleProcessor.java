@@ -6,7 +6,6 @@ import org.natc.app.comparator.TeamComparator;
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
-import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.service.ManagerService;
 import org.natc.app.service.PlayerService;
 import org.natc.app.service.ScheduleService;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.natc.app.processor.ScheduleValidator.validateScheduleEntry;
 
 @Component("rookie-draft-schedule-processor")
 public class RookieDraftScheduleProcessor implements ScheduleProcessor {
@@ -51,7 +52,7 @@ public class RookieDraftScheduleProcessor implements ScheduleProcessor {
 
     @Override
     public void process(final Schedule schedule) throws NATCException {
-        validateScheduleEntry(schedule);
+        validateScheduleEntry(schedule, validScheduleTypes);
 
         final List<Team> teams = retrieveTeams(schedule);
         final Map<Integer, ManagerStyle> managerStyleMap = getManagerStyleMap(schedule);
@@ -76,23 +77,6 @@ public class RookieDraftScheduleProcessor implements ScheduleProcessor {
         schedule.setStatus(ScheduleStatus.COMPLETED.getValue());
 
         scheduleService.updateScheduleEntry(schedule);
-    }
-
-    private void validateScheduleEntry(final Schedule schedule) throws ScheduleProcessingException {
-        final ScheduleType scheduleType = ScheduleType.getByValue(schedule.getType());
-
-        if (Objects.isNull(scheduleType)) {
-            throw new ScheduleProcessingException("Schedule type is required");
-        }
-
-        if (!validScheduleTypes.contains(scheduleType)) {
-            throw new ScheduleProcessingException(
-                    String.format("Invalid Schedule Type [%s] for this processor, valid types: %s",
-                            scheduleType.name(),
-                            validScheduleTypes
-                    )
-            );
-        }
     }
 
     private List<Team> retrieveTeams(final Schedule schedule) {

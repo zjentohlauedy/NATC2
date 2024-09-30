@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static org.natc.app.processor.ScheduleValidator.validateScheduleEntry;
 
 @Component("manager-changes-schedule-processor")
 public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
@@ -21,6 +24,8 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
     private final ScheduleService scheduleService;
     private final TeamService teamService;
     private final TeamManagerDraftService teamManagerDraftService;
+
+    private final List<ScheduleType> validScheduleTypes = Collections.singletonList(ScheduleType.MANAGER_CHANGES);
 
     @Autowired
     public ManagerChangesScheduleProcessor(
@@ -40,6 +45,8 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
 
     @Override
     public void process(final Schedule schedule) throws NATCException {
+        validateScheduleEntry(schedule, validScheduleTypes);
+
         if (schedule.getYear().equals(leagueConfiguration.getFirstSeason())) {
             completeSchedule(schedule);
             return;
@@ -85,7 +92,7 @@ public class ManagerChangesScheduleProcessor implements ScheduleProcessor {
 
         completeSchedule(schedule);
     }
-    
+
     private List<Manager> generateNewManagers(final String year) throws NATCException {
         final Integer newManagerStartingAge = leagueConfiguration.getNewManagerStartingAge();
         final List<Manager> managerList = new ArrayList<>();

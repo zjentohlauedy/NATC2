@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.natc.app.entity.domain.PlayerRatingAdjustment.APPLY_AGE;
+import static org.natc.app.processor.ScheduleValidator.validateScheduleEntry;
 
 @Component("player-changes-schedule-processor")
 public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
@@ -28,6 +29,8 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
     private final PlayerRetirementProxy playerRetirementProxy;
     private final PlayerComparatorFactory playerComparatorFactory;
     private final LeagueConfiguration leagueConfiguration;
+
+    private final List<ScheduleType> validScheduleTypes = Collections.singletonList(ScheduleType.PLAYER_CHANGES);
 
     @Autowired
     public PlayerChangesScheduleProcessor(
@@ -47,6 +50,8 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
 
     @Override
     public void process(final Schedule schedule) throws NATCException {
+        validateScheduleEntry(schedule, validScheduleTypes);
+
         final List<Player> players = playerService.getActivePlayersForYear(schedule.getYear());
         final List<Manager> managers = managerService.getActiveManagersForYear(schedule.getYear());
 
@@ -82,12 +87,12 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         scheduleService.updateScheduleEntry(schedule);
     }
 
-    private int checkEachManagerForPlayerChanges(List<Manager> managers, List<Player> players) {
+    private int checkEachManagerForPlayerChanges(final List<Manager> managers, final List<Player> players) {
         int playerChangesMade = 0;
 
         Collections.shuffle(managers);
 
-        for (Manager manager : managers) {
+        for (final Manager manager : managers) {
             if (checkForPlayerChange(manager, players)) {
                 playerChangesMade++;
             }
@@ -96,7 +101,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         return playerChangesMade;
     }
 
-    private boolean checkForPlayerChange(Manager manager, List<Player> players) {
+    private boolean checkForPlayerChange(final Manager manager, final List<Player> players) {
         final ManagerStyle managerStyle = ManagerStyle.getByValue(manager.getStyle());
 
         final PlayerComparator playerComparator = playerComparatorFactory.getPlayerComparatorForManager(managerStyle, APPLY_AGE);
@@ -135,13 +140,13 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         return false;
     }
     
-    private void signFreeAgentToTeam(Player player, Integer teamId) {
+    private void signFreeAgentToTeam(final Player player, final Integer teamId) {
         player.setTeamId(teamId);
         player.setSigned(1);
         player.setFreeAgent(0);
     }
     
-    private void releasePlayerFromTeam(Player player, Integer teamId) {
+    private void releasePlayerFromTeam(final Player player, final Integer teamId) {
         player.setTeamId(null);
         player.setReleased(1);
         player.setFreeAgent(1);

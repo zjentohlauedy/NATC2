@@ -12,6 +12,7 @@ import org.natc.app.comparator.PlayerComparatorFactory;
 import org.natc.app.configuration.LeagueConfiguration;
 import org.natc.app.entity.domain.*;
 import org.natc.app.exception.NATCException;
+import org.natc.app.exception.ScheduleProcessingException;
 import org.natc.app.proxy.PlayerRetirementProxy;
 import org.natc.app.service.ManagerService;
 import org.natc.app.service.PlayerService;
@@ -53,18 +54,38 @@ class PlayerChangesScheduleProcessorTest {
 
     @Nested
     class Process {
-        // schedule management
+        @Test
+        void shouldThrowExceptionWhenScheduleTypeIsMissing() {
+            final Schedule schedule = Schedule.builder().year("2019").build();
+
+            assertThrows(ScheduleProcessingException.class, () -> processor.process(schedule));
+        }
+
+        @Test
+        void shouldThrowExceptionWhenGivenIncorrectScheduleEventType() throws NATCException {
+            final Schedule schedule = Schedule.builder()
+                    .type(ScheduleType.BEGINNING_OF_SEASON.getValue())
+                    .year("2019")
+                    .build();
+
+            assertThrows(ScheduleProcessingException.class, () -> processor.process(schedule));
+        }
 
         @Test
         void shouldCallTheScheduleServiceToUpdateTheScheduleEntry() throws NATCException {
-            processor.process(Schedule.builder().year("2005").build());
+            processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2005").build());
 
             verify(scheduleService).updateScheduleEntry(any());
         }
 
         @Test
         void shouldUpdateTheScheduleEntryStatusToCompleted() throws NATCException {
-            final Schedule schedule = Schedule.builder().year("2001").sequence(1).status(ScheduleStatus.IN_PROGRESS.getValue()).build();
+            final Schedule schedule = Schedule.builder()
+                    .type(ScheduleType.PLAYER_CHANGES.getValue())
+                    .year("2001")
+                    .sequence(1)
+                    .status(ScheduleStatus.IN_PROGRESS.getValue())
+                    .build();
             final ArgumentCaptor<Schedule> captor = ArgumentCaptor.forClass(Schedule.class);
 
             processor.process(schedule);
@@ -77,21 +98,20 @@ class PlayerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallPlayerServiceToGetActivePlayersForSameYearAsScheduledEvent() throws NATCException {
-            processor.process(Schedule.builder().year("2012").build());
+            processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
             verify(playerService).getActivePlayersForYear("2012");
         }
 
         @Test
         void shouldCallManagerServiceToGetActiveManagersForSameYearAsScheduledEvent() throws NATCException {
-            processor.process(Schedule.builder().year("2012").build());
+            processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
             verify(managerService).getActiveManagersForYear("2012");
         }
 
         @Nested
         class ReadyToRetire {
-            // players on a team deciding to retire
             @Test
             void shouldCallPlayerRetirementProxyToSeeIfAPlayerIsReadyToRetire() throws NATCException {
                 final Player player = Player.builder().playerId(1).teamId(1).year("2020").build();
@@ -99,7 +119,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy).readyToRetire(player);
             }
@@ -114,7 +134,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy, times(playerList.size())).readyToRetire(any());
             }
@@ -129,7 +149,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy, times(2)).readyToRetire(any());
             }
@@ -142,7 +162,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
                 when(playerRetirementProxy.readyToRetire(any())).thenReturn(true);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 assertEquals(1, player.getRetired());
             }
@@ -156,7 +176,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
                 when(playerRetirementProxy.readyToRetire(any())).thenReturn(true);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 assertEquals(teamId, player.getFormerTeamId());
                 assertNull(player.getTeamId());
@@ -174,7 +194,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(any(), any());
             }
@@ -192,7 +212,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(eq(ManagerStyle.OFFENSIVE), any());
                 verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(eq(ManagerStyle.DEFENSIVE), any());
@@ -211,7 +231,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(eq(ManagerStyle.OFFENSIVE), any());
                 verify(playerComparatorFactory, never()).getPlayerComparatorForManager(eq(ManagerStyle.BALANCED), any());
@@ -219,19 +239,18 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldConfigurePlayerComparatorsWithUseAgeAdjustment() throws NATCException {
-                final List<Manager> managerList = Arrays.asList(
+                final List<Manager> managerList = Collections.singletonList(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build()
                 );
 
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(ManagerStyle.OFFENSIVE, APPLY_AGE);
             }
 
-            // player comparator is used - doesn't matter just .compare gets called
             @Test
             void shouldUseThePlayerComparatorReturnedFromPlayerComparatorFactory() throws NATCException {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
@@ -245,7 +264,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenReturn(playerComparator);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerComparator, atLeastOnce()).compare(any(Player.class), any(Player.class));
             }
@@ -262,7 +281,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(teamPlayer.getTeamId());
                 assertEquals(manager.getTeamId(), freeAgent.getTeamId());
@@ -281,7 +300,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
                 when(leagueConfiguration.getPlayersPerTeam()).thenReturn(2);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(manager.getTeamId(), teamPlayer.getTeamId());
                 assertEquals(manager.getTeamId(), freeAgent.getTeamId());
@@ -299,7 +318,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(1, freeAgent.getSigned());
                 assertEquals(0, freeAgent.getFreeAgent());
@@ -318,7 +337,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
                 when(leagueConfiguration.getPlayersPerTeam()).thenReturn(2);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(1, freeAgent.getSigned());
                 assertEquals(0, freeAgent.getFreeAgent());
@@ -336,7 +355,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(1, teamPlayer.getReleased());
                 assertEquals(1, teamPlayer.getFreeAgent());
@@ -355,7 +374,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(teamPlayer.getTeamId());
                 assertEquals(manager.getTeamId(), teamPlayer.getFormerTeamId());
@@ -374,7 +393,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(teamPlayer.getTeamId());
                 assertEquals(25, teamPlayer.getFormerTeamId());
@@ -403,7 +422,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(teamPlayer2.getTeamId());
                 assertEquals(manager.getTeamId(), freeAgent2.getTeamId());
@@ -432,7 +451,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(teamPlayer1.getTeamId());
                 assertEquals(manager.getTeamId(), freeAgent.getTeamId());
@@ -455,7 +474,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(manager.getTeamId(), teamPlayer.getTeamId());
                 assertEquals(2, otherTeamPlayer.getTeamId());
@@ -503,7 +522,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(teamPlayer1.getTeamId());
                 assertNull(teamPlayer2.getTeamId());
@@ -548,7 +567,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
                 when(leagueConfiguration.getPlayersPerTeam()).thenReturn(5);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(playerList.size(), playerList.stream()
                         .filter(player -> Objects.equals(player.getSigned(), 1))
@@ -594,7 +613,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
                 when(leagueConfiguration.getPlayersPerTeam()).thenReturn(4);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertEquals(4, playerList.stream()
                         .filter(player -> Objects.equals(player.getSigned(), 1))
@@ -642,7 +661,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
                 when(leagueConfiguration.getPlayersPerTeam()).thenReturn(4);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 final Player resignedPlayer = playerList.stream().filter(p -> p.getPlayerId() == 4).findFirst().orElse(null);
 
@@ -676,7 +695,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
                 when(leagueConfiguration.getPlayersPerTeam()).thenReturn(10);
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerComparatorFactory, atLeastOnce()).getPlayerComparatorForManager(captor.capture(), any());
 
@@ -684,7 +703,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 assertEquals(30, managerStyleList.size());
 
-                for (List<ManagerStyle> currentOrder : partitionList(managerStyleList, managerList.size())) {
+                for (final List<ManagerStyle> currentOrder : partitionList(managerStyleList, managerList.size())) {
                     assertEquals(previousOrder.stream().distinct().count(), currentOrder.stream().distinct().count());
                     assertNotEquals(previousOrder, currentOrder);
 
@@ -708,7 +727,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerRetirementProxy.readyToRetire(any())).then(invocation -> invocation.getArgument(0) == oldTeamPlayer);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 assertNull(retiredPlayer.getTeamId());
                 assertNull(oldTeamPlayer.getTeamId());
@@ -718,7 +737,6 @@ class PlayerChangesScheduleProcessorTest {
 
         @Nested
         class ShouldRetire {
-            // free agents deciding to retire
             @Test
             void shouldCallPlayerRetirementProxyToSeeIfAPlayerShouldRetire() throws NATCException {
                 final Player player = Player.builder().playerId(1).year("2020").build();
@@ -726,7 +744,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy).shouldRetire(player);
             }
@@ -741,7 +759,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy, times(playerList.size())).shouldRetire(any());
             }
@@ -756,7 +774,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy, times(1)).shouldRetire(any());
             }
@@ -771,7 +789,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 verify(playerRetirementProxy, times(1)).shouldRetire(any());
             }
@@ -784,7 +802,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
                 when(playerRetirementProxy.shouldRetire(any())).thenReturn(true);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 assertEquals(1, player.getRetired());
             }
@@ -797,7 +815,7 @@ class PlayerChangesScheduleProcessorTest {
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
                 when(playerRetirementProxy.shouldRetire(any())).thenReturn(true);
 
-                processor.process(Schedule.builder().year("2012").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2012").build());
 
                 assertEquals(0, player.getReleased());
             }
@@ -814,14 +832,12 @@ class PlayerChangesScheduleProcessorTest {
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
                 when(playerComparatorFactory.getPlayerComparatorForManager(any(), any())).thenCallRealMethod();
 
-                processor.process(Schedule.builder().year("2020").build());
+                processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
                 verify(playerRetirementProxy, times(1)).readyToRetire(teamPlayer);
                 verify(playerRetirementProxy, times(1)).shouldRetire(teamPlayer);
             }
         }
-
-        // final updates to players
 
         @Test
         void shouldCallPlayerServiceToUpdatePlayersRetrievedForScheduledYear() throws NATCException {
@@ -833,7 +849,7 @@ class PlayerChangesScheduleProcessorTest {
 
             when(playerService.getActivePlayersForYear("2020")).thenReturn(playerList);
 
-            processor.process(Schedule.builder().year("2020").build());
+            processor.process(Schedule.builder().type(ScheduleType.PLAYER_CHANGES.getValue()).year("2020").build());
 
             verify(playerService).updatePlayers(playerList);
         }
