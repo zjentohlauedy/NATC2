@@ -119,7 +119,7 @@ class PlayerServiceTest {
             final List<Integer> expectedPlayerIds = Arrays.asList(124, 125, 126, 127, 128);
 
             assertEquals(5, playerList.size());
-            assertEquals(expectedPlayerIds, playerList.stream().map(Player::getPlayerId).collect(Collectors.toList()));
+            assertEquals(expectedPlayerIds, playerList.stream().map(Player::getPlayerId).toList());
         }
 
         @Test

@@ -33,6 +33,6 @@ public class TeamDefenseSummarySearchService implements NATCSearchService<TeamDe
 
         final List<TeamDefenseSummary> teamDefenseSummaryList = repository.findAll(Example.of(teamDefenseSummary));
 
-        return teamDefenseSummaryList.stream().map(TeamDefenseSummaryResponse::new).collect(Collectors.toList());
+        return teamDefenseSummaryList.stream().map(TeamDefenseSummaryResponse::new).toList();
     }
 }

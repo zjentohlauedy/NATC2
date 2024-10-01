@@ -36,6 +36,6 @@ public class TeamGameSearchService implements NATCSearchService<TeamGameResponse
 
         final List<TeamGame> teamGameList = repository.findAll(Example.of(teamGame));
 
-        return teamGameList.stream().map(TeamGameResponse::new).collect(Collectors.toList());
+        return teamGameList.stream().map(TeamGameResponse::new).toList();
     }
 }

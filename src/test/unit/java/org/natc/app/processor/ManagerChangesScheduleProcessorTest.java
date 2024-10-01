@@ -585,7 +585,7 @@ class ManagerChangesScheduleProcessorTest {
 
             assertEquals(2, teamCaptor.getValue().size());
 
-            final List<Integer> teamIds = teamCaptor.getValue().stream().map(Team::getTeamId).collect(Collectors.toList());
+            final List<Integer> teamIds = teamCaptor.getValue().stream().map(Team::getTeamId).toList();
 
             assertTrue(teamIds.contains(retiredManagerTeamId));
             assertTrue(teamIds.contains(releasedManagerTeamId));
@@ -629,7 +629,7 @@ class ManagerChangesScheduleProcessorTest {
 
             assertEquals(7, managerCaptor.getValue().size());
 
-            final List<Integer> managerIds = managerCaptor.getValue().stream().map(Manager::getManagerId).collect(Collectors.toList());
+            final List<Integer> managerIds = managerCaptor.getValue().stream().map(Manager::getManagerId).toList();
 
             assertTrue(managerIds.contains(managerReleasedFromTeam.getManagerId()));
             assertTrue(managerIds.contains(availableManager.getManagerId()));

@@ -30,6 +30,6 @@ public class ScheduleSearchService implements NATCSearchService<ScheduleResponse
 
         final List<Schedule> scheduleList = repository.findAll(Example.of(schedule));
 
-        return scheduleList.stream().map(ScheduleResponse::new).collect(Collectors.toList());
+        return scheduleList.stream().map(ScheduleResponse::new).toList();
     }
 }

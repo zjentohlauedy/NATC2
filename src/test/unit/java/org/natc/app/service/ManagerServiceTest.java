@@ -121,7 +121,7 @@ class ManagerServiceTest {
             final List<Integer> expectedManagerIds = Arrays.asList(28, 29, 30, 31, 32);
 
             assertEquals(5, managerList.size());
-            assertEquals(expectedManagerIds, managerList.stream().map(Manager::getManagerId).collect(Collectors.toList()));
+            assertEquals(expectedManagerIds, managerList.stream().map(Manager::getManagerId).toList());
         }
 
         @Test

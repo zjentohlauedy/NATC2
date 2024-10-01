@@ -33,6 +33,6 @@ public class ManagerSearchService implements NATCSearchService<ManagerResponse, 
 
         final List<Manager> managerList = repository.findAll(Example.of(manager));
 
-        return managerList.stream().map(ManagerResponse::new).collect(Collectors.toList());
+        return managerList.stream().map(ManagerResponse::new).toList();
     }
 }

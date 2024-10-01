@@ -158,17 +158,17 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
 
             assertEquals(3, stayingManager.getTeamId());
 
-            final List<Manager> team1Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 1)).collect(Collectors.toList());
+            final List<Manager> team1Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 1)).toList();
 
             assertEquals(1, team1Managers.size());
             assertNotEquals(retiringManager.getManagerId(), team1Managers.get(0).getManagerId());
 
-            final List<Manager> team2Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 2)).collect(Collectors.toList());
+            final List<Manager> team2Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 2)).toList();
 
             assertEquals(1, team2Managers.size());
             assertNotEquals(releasedManager.getManagerId(), team2Managers.get(0).getManagerId());
 
-            final List<Manager> team3Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 3)).collect(Collectors.toList());
+            final List<Manager> team3Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 3)).toList();
 
             assertEquals(1, team3Managers.size());
             assertEquals(stayingManager.getManagerId(), team3Managers.get(0).getManagerId());

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -101,7 +100,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             final List<Player> retiredPlayers = finalPlayerList.stream()
                     .filter(player -> Objects.equals(player.getRetired(), 1))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertFalse(retiredPlayers.isEmpty());
 
@@ -112,7 +111,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             final List<Player> signedFeeAgents = finalPlayerList.stream()
                     .filter(player -> player.getPlayerId() > 400 && Objects.nonNull(player.getTeamId()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertFalse(signedFeeAgents.isEmpty());
             assertEquals(retiredPlayers.size(), signedFeeAgents.size());
@@ -170,7 +169,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             final List<Player> retiredReleasedPlayers = finalPlayerList.stream()
                     .filter(player -> Objects.equals(player.getRetired(), 1) && Objects.equals(player.getFreeAgent(), 1))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertFalse(retiredReleasedPlayers.isEmpty());
 
@@ -183,7 +182,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             final List<Player> retiredFreeAgents = finalPlayerList.stream()
                     .filter(player -> Objects.equals(player.getRetired(), 1) && player.getPlayerId() > 500)
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertEquals(10, retiredFreeAgents.size());
 
@@ -288,31 +287,31 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
                     .filter(player -> Objects.nonNull(player.getTeamId()) &&
                             Objects.isNull(player.getFormerTeamId()) &&
                             player.getPlayerId() < 400)
-                    .collect(Collectors.toList());
+                    .toList();
 
             final List<Player> releasedPlayers = finalPlayerList.stream()
                     .filter(player -> Objects.isNull(player.getTeamId()) &&
                             Objects.nonNull(player.getFormerTeamId()) &&
                             player.getPlayerId() < 400)
-                    .collect(Collectors.toList());
+                    .toList();
 
             final List<Player> signedFreeAgents = finalPlayerList.stream()
                     .filter(player -> Objects.nonNull(player.getTeamId()) &&
                             Objects.isNull(player.getFormerTeamId()) &&
                             player.getPlayerId() > 400)
-                    .collect(Collectors.toList());
+                    .toList();
 
             final List<Player> unsignedFreeAgents = finalPlayerList.stream()
                     .filter(player -> Objects.isNull(player.getTeamId()) &&
                             Objects.isNull(player.getFormerTeamId()) &&
                             player.getPlayerId() > 400)
-                    .collect(Collectors.toList());
+                    .toList();
 
             final List<Player> resignedPlayers = finalPlayerList.stream()
                     .filter(player -> Objects.nonNull(player.getTeamId()) &&
                             Objects.nonNull(player.getFormerTeamId()) &&
                             player.getPlayerId() < 400)
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertFalse(keptPlayers.isEmpty());
             assertFalse(releasedPlayers.isEmpty());

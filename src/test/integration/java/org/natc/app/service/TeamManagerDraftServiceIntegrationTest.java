@@ -57,8 +57,8 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
             teamManagerDraftService.assignManagersToTeams(teams, managers);
 
             assertEquals(
-                    previousYearTeams.stream().sorted(Comparator.comparing(Team::getWins)).map(Team::getTeamId).collect(Collectors.toList()),
-                    managers.stream().sorted(Comparator.comparing(Manager::getManagerId)).map(Manager::getTeamId).collect(Collectors.toList())
+                    previousYearTeams.stream().sorted(Comparator.comparing(Team::getWins)).map(Team::getTeamId).toList(),
+                    managers.stream().sorted(Comparator.comparing(Manager::getManagerId)).map(Manager::getTeamId).toList()
             );
         }
 

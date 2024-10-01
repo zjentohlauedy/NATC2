@@ -28,6 +28,6 @@ public class GameStateSearchService implements NATCSearchService<GameStateRespon
 
         final List<GameState> gameStateList = repository.findAll(Example.of(gameState));
 
-        return gameStateList.stream().map(GameStateResponse::new).collect(Collectors.toList());
+        return gameStateList.stream().map(GameStateResponse::new).toList();
     }
 }

@@ -35,6 +35,6 @@ public class PlayerGameSearchService implements NATCSearchService<PlayerGameResp
 
         final List<PlayerGame> playerGameList = repository.findAll(Example.of(playerGame));
 
-        return playerGameList.stream().map(PlayerGameResponse::new).collect(Collectors.toList());
+        return playerGameList.stream().map(PlayerGameResponse::new).toList();
     }
 }

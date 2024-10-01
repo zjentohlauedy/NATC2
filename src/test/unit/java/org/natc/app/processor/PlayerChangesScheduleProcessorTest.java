@@ -688,7 +688,7 @@ class PlayerChangesScheduleProcessorTest {
 
                 List<ManagerStyle> previousOrder = managerList.stream()
                         .map(manager -> ManagerStyle.getByValue(manager.getStyle()))
-                        .collect(Collectors.toList());
+                        .toList();
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(freeAgents);
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);

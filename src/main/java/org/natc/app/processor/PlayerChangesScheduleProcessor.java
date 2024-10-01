@@ -66,7 +66,7 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
         }
 
         final List<Manager> teamManagers = managers.stream()
-                .filter(manager -> !Objects.isNull(manager.getTeamId()))
+                .filter(manager -> Objects.nonNull(manager.getTeamId()))
                 .collect(Collectors.toList());
 
         while (checkEachManagerForPlayerChanges(teamManagers, players) > 0);
@@ -108,13 +108,13 @@ public class PlayerChangesScheduleProcessor implements ScheduleProcessor {
 
         final List<Player> freeAgents = players.stream()
                 .filter(player -> Objects.isNull(player.getTeamId()) && !Objects.equals(player.getRetired(), 1))
-                .collect(Collectors.toList());
+                .toList();
 
         if (freeAgents.isEmpty()) return false;
 
         final List<Player> teamPlayers = players.stream()
                 .filter(player -> Objects.equals(manager.getTeamId(), player.getTeamId()))
-                .collect(Collectors.toList());
+                .toList();
 
         final Player bestFreeAgent = freeAgents.stream()
                 .max(playerComparator)

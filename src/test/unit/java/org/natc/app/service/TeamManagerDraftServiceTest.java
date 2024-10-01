@@ -144,8 +144,8 @@ class TeamManagerDraftServiceTest {
 
             assertEquals(teams.size(), managers.stream().filter(manager -> Objects.nonNull(manager.getTeamId())).count());
             assertEquals(
-                    teams.stream().map(Team::getTeamId).distinct().sorted().collect(Collectors.toList()),
-                    managers.stream().map(Manager::getTeamId).distinct().sorted().collect(Collectors.toList())
+                    teams.stream().map(Team::getTeamId).distinct().sorted().toList(),
+                    managers.stream().map(Manager::getTeamId).distinct().sorted().toList()
             );
         }
 
@@ -254,11 +254,11 @@ class TeamManagerDraftServiceTest {
                     Manager.builder().managerId(105).year("2000").seasons(0).offense(0.2).defense(0.2).intangible(0.2).penalties(0.2).build()
             );
 
-            final List<Integer> expectedTeamIdList = teams.stream().map(Team::getTeamId).collect(Collectors.toList());
+            final List<Integer> expectedTeamIdList = teams.stream().map(Team::getTeamId).toList();
 
             teamManagerDraftService.assignManagersToTeams(teams, managers);
 
-            final List<Integer> actualTeamIdList = managers.stream().sorted(Comparator.comparing(Manager::getManagerId)).map(Manager::getTeamId).collect(Collectors.toList());
+            final List<Integer> actualTeamIdList = managers.stream().sorted(Comparator.comparing(Manager::getManagerId)).map(Manager::getTeamId).toList();
 
             assertNotEquals(expectedTeamIdList, actualTeamIdList);
         }

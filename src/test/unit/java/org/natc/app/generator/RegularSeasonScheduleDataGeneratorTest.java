@@ -317,10 +317,10 @@ class RegularSeasonScheduleDataGeneratorTest {
             assertNotEquals(
                     firstRun.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
                             .map(match -> match.getRoadTeam().toString() + match.getHomeTeam().toString())
-                            .collect(Collectors.toList()),
+                            .toList(),
                     secondRun.stream().flatMap(scheduleData -> scheduleData.getMatches().stream())
                             .map(match -> match.getRoadTeam().toString() + match.getHomeTeam().toString())
-                            .collect(Collectors.toList())
+                            .toList()
             );
         }
 

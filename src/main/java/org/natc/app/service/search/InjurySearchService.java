@@ -31,6 +31,6 @@ public class InjurySearchService implements NATCSearchService<InjuryResponse, In
 
         final List<Injury> injuryList = repository.findAll(Example.of(injury));
 
-        return injuryList.stream().map(InjuryResponse::new).collect(Collectors.toList());
+        return injuryList.stream().map(InjuryResponse::new).toList();
     }
 }

@@ -18,7 +18,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -354,11 +353,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> preseason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(preseasonScheduleData.size(), preseason.size());
-
-            preseason.sort(Comparator.comparing(Schedule::getSequence));
 
             assertEquals(LocalDate.parse("2005-04-04"), preseason.get(0).getScheduled());
 
@@ -392,7 +390,7 @@ class ScheduleServiceTest {
 
             final List<Schedule> preseason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertEquals(preseasonScheduleData.size(), preseason.size());
 
@@ -414,7 +412,7 @@ class ScheduleServiceTest {
 
             final List<Schedule> preseason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertEquals(preseasonScheduleData.size(), preseason.size());
 
@@ -439,11 +437,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> preseason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.PRESEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(preseasonScheduleData.size(), preseason.size());
-
-            preseason.sort(Comparator.comparing(Schedule::getSequence));
 
             LocalDate previousDate = null;
 
@@ -564,11 +561,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> regularSeason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
-
-            regularSeason.sort(Comparator.comparing(Schedule::getSequence));
 
             assertEquals(LocalDate.parse("2005-05-02"), regularSeason.get(0).getScheduled());
 
@@ -602,7 +598,7 @@ class ScheduleServiceTest {
 
             final List<Schedule> regularSeason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
@@ -624,7 +620,7 @@ class ScheduleServiceTest {
 
             final List<Schedule> regularSeason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
@@ -649,11 +645,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> regularSeason = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.REGULAR_SEASON.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
-
-            regularSeason.sort(Comparator.comparing(Schedule::getSequence));
 
             LocalDate previousDate = null;
 
@@ -785,11 +780,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> divisionPlayoff = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.DIVISION_PLAYOFF.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(leagueConfiguration.getPlayoffGamesRoundOne(), divisionPlayoff.size());
-
-            divisionPlayoff.sort(Comparator.comparing(Schedule::getSequence));
 
             final Schedule firstDivisionPlayoff = divisionPlayoff.get(0);
 
@@ -828,11 +822,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> divisionChampionship = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.DIVISION_CHAMPIONSHIP.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(leagueConfiguration.getPlayoffGamesRoundTwo(), divisionChampionship.size());
-
-            divisionChampionship.sort(Comparator.comparing(Schedule::getSequence));
 
             final Schedule firstDivisionChampionship = divisionChampionship.get(0);
 
@@ -872,11 +865,10 @@ class ScheduleServiceTest {
 
             final List<Schedule> conferenceChampionship = captor.getValue().stream()
                     .filter(schedule -> schedule.getType().equals(ScheduleType.CONFERENCE_CHAMPIONSHIP.getValue()))
-                    .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(Schedule::getSequence))
+                    .toList();
 
             assertEquals(leagueConfiguration.getPlayoffGamesRoundThree(), conferenceChampionship.size());
-
-            conferenceChampionship.sort(Comparator.comparing(Schedule::getSequence));
 
             final Schedule firstConferenceChampionship = conferenceChampionship.get(0);
 

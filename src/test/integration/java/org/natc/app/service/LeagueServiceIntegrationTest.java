@@ -85,7 +85,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
         void shouldAssignEveryTeamAManager() throws NATCException {
             leagueService.generateNewLeague();
 
-            final List<Team> regularTeams = teamRepository.findAll().stream().filter(team -> team.getAllstarTeam() == 0).collect(Collectors.toList());
+            final List<Team> regularTeams = teamRepository.findAll().stream().filter(team -> team.getAllstarTeam() == 0).toList();
 
             final Integer totalTeams = regularTeams.size();
             final Integer firstTeam = regularTeams.stream().min(Comparator.comparing(Team::getTeamId)).map(Team::getTeamId).orElseThrow();
@@ -93,7 +93,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Manager> managers = managerRepository.findAll();
 
-            final List<Manager> signedManagers = managers.stream().filter(manager -> Objects.nonNull(manager.getTeamId())).collect(Collectors.toList());
+            final List<Manager> signedManagers = managers.stream().filter(manager -> Objects.nonNull(manager.getTeamId())).toList();
 
             assertEquals(totalTeams, signedManagers.size());
             assertEquals(firstTeam, signedManagers.stream()
@@ -110,7 +110,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
         void shouldAssignEveryTeamAPlayersPerTeamNumberOfPlayers() throws NATCException {
             leagueService.generateNewLeague();
 
-            final List<Team> regularTeams = teamRepository.findAll().stream().filter(team -> team.getAllstarTeam() == 0).collect(Collectors.toList());
+            final List<Team> regularTeams = teamRepository.findAll().stream().filter(team -> team.getAllstarTeam() == 0).toList();
 
             final Integer totalTeams = regularTeams.size();
             final Integer firstTeam = regularTeams.stream().min(Comparator.comparing(Team::getTeamId)).map(Team::getTeamId).orElseThrow();
@@ -118,7 +118,7 @@ class LeagueServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             final List<Player> players = playerRepository.findAll();
 
-            final List<Player> signedPlayers = players.stream().filter(player -> Objects.nonNull(player.getTeamId())).collect(Collectors.toList());
+            final List<Player> signedPlayers = players.stream().filter(player -> Objects.nonNull(player.getTeamId())).toList();
 
             assertEquals(totalTeams * leagueConfiguration.getPlayersPerTeam(), signedPlayers.size());
 

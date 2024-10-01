@@ -34,6 +34,6 @@ public class PlayerStatsSummarySearchService implements NATCSearchService<Player
 
         final List<PlayerStatsSummary> playerStatsSummaryList = repository.findAll(Example.of(playerStatsSummary));
 
-        return playerStatsSummaryList.stream().map(PlayerStatsSummaryResponse::new).collect(Collectors.toList());
+        return playerStatsSummaryList.stream().map(PlayerStatsSummaryResponse::new).toList();
     }
 }

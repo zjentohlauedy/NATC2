@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -168,8 +167,8 @@ class LeagueServiceTest {
 
             verify(managerService, times(teamList.size())).updateManager(any(Manager.class));
 
-            final List<Integer> expectedTeamIds = teamList.stream().map(Team::getTeamId).sorted().collect(Collectors.toList());
-            final List<Integer> actualTeamIds = managerList.stream().map(Manager::getTeamId).sorted().collect(Collectors.toList());
+            final List<Integer> expectedTeamIds = teamList.stream().map(Team::getTeamId).sorted().toList();
+            final List<Integer> actualTeamIds = managerList.stream().map(Manager::getTeamId).sorted().toList();
 
             assertEquals(expectedTeamIds, actualTeamIds);
         }
@@ -316,13 +315,13 @@ class LeagueServiceTest {
             when(teamService.generateTeams(any())).thenReturn(teamList);
             when(managerService.generateManagers(any(), any())).thenReturn(managerList);
 
-            final List<Integer> startingTeamIds = teamList.stream().map(Team::getTeamId).collect(Collectors.toList());
+            final List<Integer> startingTeamIds = teamList.stream().map(Team::getTeamId).toList();
 
             leagueService.generateNewLeague();
 
             verify(managerService, times(10)).updateManager(captor.capture());
 
-            final List<Integer> actualTeamIds = captor.getAllValues().stream().map(Manager::getTeamId).collect(Collectors.toList());
+            final List<Integer> actualTeamIds = captor.getAllValues().stream().map(Manager::getTeamId).toList();
 
             assertNotEquals(startingTeamIds, actualTeamIds);
         }
@@ -369,8 +368,8 @@ class LeagueServiceTest {
 
             assertEquals(5, captor.getAllValues().stream().filter(player -> player.getTeamId() == 123).count());
 
-            final List<Integer> expectedPlayerIds = playerList.stream().map(Player::getTeamId).sorted().collect(Collectors.toList());
-            final List<Integer> actualPlayerIds = captor.getAllValues().stream().map(Player::getTeamId).sorted().collect(Collectors.toList());
+            final List<Integer> expectedPlayerIds = playerList.stream().map(Player::getTeamId).sorted().toList();
+            final List<Integer> actualPlayerIds = captor.getAllValues().stream().map(Player::getTeamId).sorted().toList();
 
             assertEquals(expectedPlayerIds, actualPlayerIds);
         }
@@ -410,8 +409,8 @@ class LeagueServiceTest {
 
             verify(playerService, times(teamList.size())).updatePlayer(any(Player.class));
 
-            final List<Integer> expectedTeamIds = teamList.stream().map(Team::getTeamId).sorted().collect(Collectors.toList());
-            final List<Integer> actualTeamIds = playerList.stream().map(Player::getTeamId).sorted().collect(Collectors.toList());
+            final List<Integer> expectedTeamIds = teamList.stream().map(Team::getTeamId).sorted().toList();
+            final List<Integer> actualTeamIds = playerList.stream().map(Player::getTeamId).sorted().toList();
 
             assertEquals(expectedTeamIds, actualTeamIds);
         }
@@ -609,9 +608,9 @@ class LeagueServiceTest {
 
             verify(playerService, times(9)).updatePlayer(captor.capture());
 
-            final List<Integer> firstRound = captor.getAllValues().subList(0, 3).stream().map(Player::getTeamId).collect(Collectors.toList());
-            final List<Integer> secondRound = captor.getAllValues().subList(3, 6).stream().map(Player::getTeamId).collect(Collectors.toList());
-            final List<Integer> thirdRound = captor.getAllValues().subList(6, 9).stream().map(Player::getTeamId).collect(Collectors.toList());
+            final List<Integer> firstRound = captor.getAllValues().subList(0, 3).stream().map(Player::getTeamId).toList();
+            final List<Integer> secondRound = captor.getAllValues().subList(3, 6).stream().map(Player::getTeamId).toList();
+            final List<Integer> thirdRound = captor.getAllValues().subList(6, 9).stream().map(Player::getTeamId).toList();
 
             assertEquals(firstRound.get(0), secondRound.get(2));
             assertEquals(firstRound.get(1), secondRound.get(1));

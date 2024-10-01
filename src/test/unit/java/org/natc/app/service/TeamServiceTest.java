@@ -159,10 +159,10 @@ class TeamServiceTest {
                     .collect(Collectors.toSet());
 
             final List<String> expectedLocations = Stream.of("Greene", "Davis", "Smith", "Lawrence")
-                    .sorted().collect(Collectors.toList());
+                    .sorted().toList();
 
             assertEquals(4, locations.size());
-            assertEquals(expectedLocations, locations.stream().sorted().collect(Collectors.toList()));
+            assertEquals(expectedLocations, locations.stream().sorted().toList());
         }
 
         @Test
@@ -188,10 +188,10 @@ class TeamServiceTest {
                     .collect(Collectors.toSet());
 
             final List<String> expectedLocations = Stream.of("GRN.", "DVS.", "SMI.", "LAW.")
-                    .sorted().collect(Collectors.toList());
+                    .sorted().toList();
 
             assertEquals(4, abbreviations.size());
-            assertEquals(expectedLocations, abbreviations.stream().sorted().collect(Collectors.toList()));
+            assertEquals(expectedLocations, abbreviations.stream().sorted().toList());
         }
 
         @Test
