@@ -27,7 +27,7 @@ public class ManagerAnalyzer {
 
     public ManagerStyle determineManagerStyle(final Manager manager) {
 
-        final List<ManagerStyleValue> styleValues = Arrays.asList(
+        final List<ManagerStyleValue> styleValues = List.of(
                 new ManagerStyleValue(ManagerStyle.OFFENSIVE, manager.getOffense(), 3),
                 new ManagerStyleValue(ManagerStyle.DEFENSIVE, manager.getDefense(), 3),
                 new ManagerStyleValue(ManagerStyle.INTANGIBLE, manager.getIntangible(), 1),

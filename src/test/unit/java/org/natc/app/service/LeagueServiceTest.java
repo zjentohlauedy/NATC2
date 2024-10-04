@@ -144,7 +144,7 @@ class LeagueServiceTest {
 
         @Test
         void shouldUpdateAUniqueManagerForAllTeamsReturnedByTeamService() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -152,7 +152,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(5).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).build(),
                     Manager.builder().managerId(102).build(),
                     Manager.builder().managerId(103).build(),
@@ -188,13 +188,13 @@ class LeagueServiceTest {
 
         @Test
         void shouldOnlyAssignAsManyManagersAsThereAreTeamsGivenMoreManagersThanTeams() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).build(),
                     Manager.builder().managerId(102).build(),
                     Manager.builder().managerId(103).build(),
@@ -214,7 +214,7 @@ class LeagueServiceTest {
 
         @Test
         void shouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanManagers() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -222,7 +222,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(5).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).build(),
                     Manager.builder().managerId(102).build(),
                     Manager.builder().managerId(103).build()
@@ -241,7 +241,7 @@ class LeagueServiceTest {
             final Manager lowRatedManager = Manager.builder().managerId(322).offense(0.5).defense(0.5).intangible(0.3).penalties(0.2).build();
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
-            when(managerService.generateManagers(any(), any())).thenReturn(Arrays.asList(lowRatedManager, highRatedManager));
+            when(managerService.generateManagers(any(), any())).thenReturn(List.of(lowRatedManager, highRatedManager));
 
             leagueService.generateNewLeague();
 
@@ -251,7 +251,7 @@ class LeagueServiceTest {
         @Test
         void shouldAssignManagersInOrderFromHighestRatedToLowestRated() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -286,7 +286,7 @@ class LeagueServiceTest {
         @Test
         void shouldRandomizeTeamOrderWhenAssigningManagers() throws NATCException {
             final ArgumentCaptor<Manager> captor = ArgumentCaptor.forClass(Manager.class);
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -299,7 +299,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(10).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).build(),
                     Manager.builder().managerId(102).build(),
                     Manager.builder().managerId(103).build(),
@@ -349,7 +349,7 @@ class LeagueServiceTest {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
             final Team team = Team.builder().teamId(123).allstarTeam(0).build();
             final Manager manager = Manager.builder().managerId(321).style(ManagerStyle.BALANCED.getValue()).build();
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build(),
@@ -376,7 +376,7 @@ class LeagueServiceTest {
 
         @Test
         void shouldUpdateAUniquePlayerForAllTeamsReturnedByTeamService() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -384,7 +384,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(5).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.BALANCED.getValue()).build(),
@@ -392,7 +392,7 @@ class LeagueServiceTest {
                     Manager.builder().managerId(105).style(ManagerStyle.BALANCED.getValue()).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build(),
@@ -417,19 +417,19 @@ class LeagueServiceTest {
 
         @Test
         void shouldAssignAsManyPlayersAsThereAreTeamsTimesPlayersPerTeam() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.BALANCED.getValue()).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build(),
@@ -469,19 +469,19 @@ class LeagueServiceTest {
 
         @Test
         void shouldOnlyAssignAsManyPlayersAsThereAreTeamsGivenMorePlayersThanTeams() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.BALANCED.getValue()).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build(),
@@ -503,7 +503,7 @@ class LeagueServiceTest {
 
         @Test
         void shouldThrowLeagueProcessingExceptionIfThereAreMoreTeamsThanPlayers() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -511,7 +511,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(5).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.BALANCED.getValue()).build(),
@@ -519,7 +519,7 @@ class LeagueServiceTest {
                     Manager.builder().managerId(105).style(ManagerStyle.BALANCED.getValue()).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build()
@@ -535,7 +535,7 @@ class LeagueServiceTest {
 
         @Test
         void shouldThrowLeagueProcessingExceptionIfThereAreNotEnoughPlayersConsideringPlayersPerTeam() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -543,7 +543,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(5).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.BALANCED.getValue()).build(),
@@ -551,7 +551,7 @@ class LeagueServiceTest {
                     Manager.builder().managerId(105).style(ManagerStyle.BALANCED.getValue()).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build(),
@@ -575,19 +575,19 @@ class LeagueServiceTest {
         @Test
         void shouldReverseTheTeamOrderForEachRoundOfPlayerAssignment() throws NATCException {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.BALANCED.getValue()).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(201).build(),
                     Player.builder().playerId(202).build(),
                     Player.builder().playerId(203).build(),
@@ -638,7 +638,7 @@ class LeagueServiceTest {
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
-            when(playerService.generatePlayers(any(), any())).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
+            when(playerService.generatePlayers(any(), any())).thenReturn(List.of(lowRatedPlayer, highRatedPlayer));
             when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
 
             leagueService.generateNewLeague();
@@ -649,7 +649,7 @@ class LeagueServiceTest {
         @Test
         void shouldAssignPlayersInOrderFromHighestRatedToLowestRatedAcrossTeams() throws NATCException {
             final ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).allstarTeam(0).build(),
                     Team.builder().teamId(2).allstarTeam(0).build(),
                     Team.builder().teamId(3).allstarTeam(0).build(),
@@ -657,7 +657,7 @@ class LeagueServiceTest {
                     Team.builder().teamId(5).allstarTeam(0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).style(ManagerStyle.BALANCED.getValue()).build(),
                     Manager.builder().managerId(102).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(103).style(ManagerStyle.DEFENSIVE.getValue()).build(),
@@ -753,7 +753,7 @@ class LeagueServiceTest {
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
-            when(playerService.generatePlayers(any(), any())).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
+            when(playerService.generatePlayers(any(), any())).thenReturn(List.of(lowRatedPlayer, highRatedPlayer));
             when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
 
             leagueService.generateNewLeague();
@@ -776,7 +776,7 @@ class LeagueServiceTest {
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
-            when(playerService.generatePlayers(any(), any())).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
+            when(playerService.generatePlayers(any(), any())).thenReturn(List.of(lowRatedPlayer, highRatedPlayer));
             when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
 
             leagueService.generateNewLeague();
@@ -799,7 +799,7 @@ class LeagueServiceTest {
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
-            when(playerService.generatePlayers(any(), any())).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
+            when(playerService.generatePlayers(any(), any())).thenReturn(List.of(lowRatedPlayer, highRatedPlayer));
             when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
 
             leagueService.generateNewLeague();
@@ -822,7 +822,7 @@ class LeagueServiceTest {
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
-            when(playerService.generatePlayers(any(), any())).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
+            when(playerService.generatePlayers(any(), any())).thenReturn(List.of(lowRatedPlayer, highRatedPlayer));
             when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
 
             leagueService.generateNewLeague();
@@ -845,7 +845,7 @@ class LeagueServiceTest {
 
             when(teamService.generateTeams(any())).thenReturn(Collections.singletonList(team));
             when(managerService.generateManagers(any(), any())).thenReturn(Collections.singletonList(manager));
-            when(playerService.generatePlayers(any(), any())).thenReturn(Arrays.asList(lowRatedPlayer, highRatedPlayer));
+            when(playerService.generatePlayers(any(), any())).thenReturn(List.of(lowRatedPlayer, highRatedPlayer));
             when(leagueConfiguration.getPlayersPerTeam()).thenReturn(1);
 
             leagueService.generateNewLeague();

@@ -50,7 +50,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldChooseFirstNamesRandomly() throws NATCException {
-            final List<FirstName> firstNameList = Arrays.asList(
+            final List<FirstName> firstNameList = List.of(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("John").frequency(1.0).build(),
                     FirstName.builder().name("Robert").frequency(1.0).build(),
@@ -77,7 +77,7 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldChooseLastNamesRandomly() throws NATCException {
-            final List<LastName> lastNameList = Arrays.asList(
+            final List<LastName> lastNameList = List.of(
                     LastName.builder().name("Smith").frequency(1.0).build(),
                     LastName.builder().name("Johnson").frequency(1.0).build(),
                     LastName.builder().name("Williams").frequency(1.0).build(),
@@ -104,12 +104,12 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldChooseHighFrequencyFirstNamesMoreOftenThanLowFrequencyFirstNames() throws NATCException {
-            final List<FirstName> firstNameList = Arrays.asList(
+            final List<FirstName> firstNameList = List.of(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(0.001).build()
             );
 
-            final List<LastName> lastNameList = Arrays.asList(
+            final List<LastName> lastNameList = List.of(
                     LastName.builder().name("Smith").frequency(1.0).build(),
                     LastName.builder().name("Taylor").frequency(1.0).build()
             );
@@ -131,12 +131,12 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldChooseHighFrequencyLastNamesMoreOftenThanLowFrequencyLastNames() throws NATCException {
-            final List<FirstName> firstNameList = Arrays.asList(
+            final List<FirstName> firstNameList = List.of(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(1.0).build()
             );
 
-            final List<LastName> lastNameList = Arrays.asList(
+            final List<LastName> lastNameList = List.of(
                     LastName.builder().name("Smith").frequency(0.001).build(),
                     LastName.builder().name("Taylor").frequency(1.0).build()
             );
@@ -158,17 +158,17 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldNotGenerateANameThatAlreadyExistsAsAManager() throws NATCException {
-            final List<FirstName> firstNameList = Arrays.asList(
+            final List<FirstName> firstNameList = List.of(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(1.0).build()
             );
 
-            final List<LastName> lastNameList = Arrays.asList(
+            final List<LastName> lastNameList = List.of(
                     LastName.builder().name("Smith").frequency(1.0).build(),
                     LastName.builder().name("Taylor").frequency(1.0).build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2000").firstName("James").lastName("Smith").build(),
                     Manager.builder().managerId(2).year("2000").firstName("James").lastName("Taylor").build(),
                     Manager.builder().managerId(3).year("2000").firstName("Thomas").lastName("Smith").build()
@@ -186,17 +186,17 @@ class NameServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldNotGenerateANameThatAlreadyExistsAsAPlayer() throws NATCException {
-            final List<FirstName> firstNameList = Arrays.asList(
+            final List<FirstName> firstNameList = List.of(
                     FirstName.builder().name("James").frequency(1.0).build(),
                     FirstName.builder().name("Thomas").frequency(1.0).build()
             );
 
-            final List<LastName> lastNameList = Arrays.asList(
+            final List<LastName> lastNameList = List.of(
                     LastName.builder().name("Smith").frequency(1.0).build(),
                     LastName.builder().name("Taylor").frequency(1.0).build()
             );
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(1).year("2000").firstName("James").lastName("Smith").build(),
                     Player.builder().playerId(2).year("2000").firstName("James").lastName("Taylor").build(),
                     Player.builder().playerId(3).year("2000").firstName("Thomas").lastName("Smith").build()

@@ -246,7 +246,7 @@ class ManagerSearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsManagersReturnedByRepository() {
-            final List<Manager> managerList = Arrays.asList(new Manager(), new Manager(), new Manager(), new Manager());
+            final List<Manager> managerList = List.of(new Manager(), new Manager(), new Manager(), new Manager());
 
             when(managerRepository.findAll(ArgumentMatchers.<Example<Manager>>any())).thenReturn(managerList);
 

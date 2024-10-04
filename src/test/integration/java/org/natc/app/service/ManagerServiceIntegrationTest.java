@@ -121,7 +121,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void generateManagers_ShouldCreateEveryManagerWithAStyle() throws NATCException {
-            final List<Integer> managerStyles = Arrays.asList(
+            final List<Integer> managerStyles = List.of(
                     ManagerStyle.OFFENSIVE.getValue(),
                     ManagerStyle.DEFENSIVE.getValue(),
                     ManagerStyle.INTANGIBLE.getValue(),
@@ -292,7 +292,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void updateManagers_ShouldModifyAllExistingManagerRecordsInTheDatabaseMatchingTheGivenList() {
-            final List<Manager> originalManagers = Arrays.asList(
+            final List<Manager> originalManagers = List.of(
                     Manager.builder().managerId(1).year("2001").build(),
                     Manager.builder().managerId(2).year("2001").build(),
                     Manager.builder().managerId(3).year("2001").build()
@@ -300,7 +300,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             managerRepository.saveAll(originalManagers);
 
-            final List<Manager> updatedManagers = Arrays.asList(
+            final List<Manager> updatedManagers = List.of(
                     Manager.builder().managerId(1).year("2001").teamId(4).build(),
                     Manager.builder().managerId(2).year("2001").teamId(5).build(),
                     Manager.builder().managerId(3).year("2001").teamId(6).build()
@@ -323,7 +323,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void updateManagersForNewSeason_ShouldCopyManagerRecordsFromOneYearToAnother() {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2001").build(),
                     Manager.builder().managerId(2).year("2001").build(),
                     Manager.builder().managerId(3).year("2001").build()
@@ -341,7 +341,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void updateManagersForNewSeason_ShouldOnlyCopyManagerRecordsFromPreviousYear() {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2001").build(),
                     Manager.builder().managerId(2).year("2002").build(),
                     Manager.builder().managerId(3).year("2003").build()
@@ -428,7 +428,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void getActiveManagersForYear_ShouldReturnAllActiveManagerRecordsMatchingTheGivenYear() {
-            final List<Manager> persistedManagers = Arrays.asList(
+            final List<Manager> persistedManagers = List.of(
                     Manager.builder().managerId(1).year("2001").retired(0).build(),
                     Manager.builder().managerId(2).year("2001").retired(0).build(),
                     Manager.builder().managerId(3).year("2001").retired(0).build()
@@ -443,7 +443,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void getActiveManagersForYear_ShouldReturnOnlyActiveManagerRecordsMatchingTheGivenYear() {
-            final List<Manager> persistedManagers = Arrays.asList(
+            final List<Manager> persistedManagers = List.of(
                     Manager.builder().managerId(1).year("2001").retired(0).build(),
                     Manager.builder().managerId(2).year("2002").retired(0).build(),
                     Manager.builder().managerId(3).year("2001").retired(0).build(),

@@ -106,7 +106,7 @@ class PlayerStatsSummarySearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsPlayerStatsSummariesReturnedByRepository() {
-            final List<PlayerStatsSummary> playerStatsSummaryList = Arrays.asList(
+            final List<PlayerStatsSummary> playerStatsSummaryList = List.of(
                     new PlayerStatsSummary(),
                     new PlayerStatsSummary(),
                     new PlayerStatsSummary(),

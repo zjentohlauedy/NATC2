@@ -23,7 +23,7 @@ public class TeamService {
     }
 
     public List<Team> generateTeams(final String year) {
-        final List<Team> teamList = Arrays.asList(
+        final List<Team> teamList = List.of(
                 Team.builder().teamId(1).year(year).location("Indianapolis").name("Titans").abbreviation("IND.").timeZone("America/Indianapolis").gameTime(965).conference(0).division(0).allstarTeam(0).build(),
                 Team.builder().teamId(2).year(year).location("Cincinnati").name("Whirlwind").abbreviation("CIN.").timeZone("America/New_York").gameTime(965).conference(0).division(0).allstarTeam(0).build(),
                 Team.builder().teamId(3).year(year).location("Kansas City").name("Flames").abbreviation("K.C.").timeZone("America/Chicago").gameTime(965).conference(0).division(0).allstarTeam(0).build(),

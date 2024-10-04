@@ -172,7 +172,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldCopyPlayerRecordsFromOneYearToAnother() {
-            final List<Player> originalPlayers = Arrays.asList(
+            final List<Player> originalPlayers = List.of(
                     Player.builder().playerId(1).year("2015").build(),
                     Player.builder().playerId(2).year("2015").build(),
                     Player.builder().playerId(3).year("2015").build()
@@ -190,7 +190,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyCopyPlayerRecordsFromPreviousYear() {
-            final List<Player> originalPlayers = Arrays.asList(
+            final List<Player> originalPlayers = List.of(
                     Player.builder().playerId(1).year("2015").build(),
                     Player.builder().playerId(2).year("2016").build(),
                     Player.builder().playerId(3).year("2017").build()
@@ -297,7 +297,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void ShouldReturnAllActivePlayerRecordsMatchingTheGivenYear() {
-            final List<Player> persistedPlayers = Arrays.asList(
+            final List<Player> persistedPlayers = List.of(
                     Player.builder().playerId(1).year("2015").retired(0).build(),
                     Player.builder().playerId(2).year("2015").retired(0).build(),
                     Player.builder().playerId(3).year("2015").retired(0).build()
@@ -312,7 +312,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void ShouldReturnOnlyActivePlayerRecordsMatchingTheGivenYear() {
-            final List<Player> persistedPlayers = Arrays.asList(
+            final List<Player> persistedPlayers = List.of(
                     Player.builder().playerId(1).year("2015").retired(0).build(),
                     Player.builder().playerId(2).year("2016").retired(0).build(),
                     Player.builder().playerId(3).year("2015").retired(0).build(),
@@ -356,7 +356,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldReturnAtMostTwoPlayers() {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(1).year("1997").retired(1).build(),
                     Player.builder().playerId(2).year("1997").retired(1).build(),
                     Player.builder().playerId(3).year("1997").retired(1).build(),
@@ -371,7 +371,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyConsiderRetiredPlayers() {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(1).year("1997").retired(0).build(),
                     Player.builder().playerId(2).year("1997").retired(0).build(),
                     Player.builder().playerId(3).year("1997").retired(1).build(),
@@ -392,7 +392,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyConsiderPlayersForTheGivenYear() {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(1).year("1995").retired(1).build(),
                     Player.builder().playerId(2).year("1996").retired(1).build(),
                     Player.builder().playerId(3).year("1997").retired(1).build(),
@@ -413,7 +413,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
         
         @Test
         void shouldReturnTheTwoHighestRatedPlayers() {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(1).year("1998").retired(1).scoring(0.2).passing(0.2).blocking(0.2).tackling(0.2).stealing(0.2).presence(0.2).discipline(0.2).endurance(0.2).penaltyShot(0.2).penaltyOffense(0.2).penaltyDefense(0.2).build(),
                     Player.builder().playerId(2).year("1998").retired(1).scoring(0.8).passing(0.8).blocking(0.8).tackling(0.8).stealing(0.8).presence(0.8).discipline(0.8).endurance(0.8).penaltyShot(0.8).penaltyOffense(0.8).penaltyDefense(0.8).build(),
                     Player.builder().playerId(3).year("1998").retired(1).scoring(0.6).passing(0.6).blocking(0.6).tackling(0.6).stealing(0.6).presence(0.6).discipline(0.6).endurance(0.6).penaltyShot(0.6).penaltyOffense(0.6).penaltyDefense(0.6).build(),
@@ -436,7 +436,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetUndraftedRookiesForYear {
         @Test
         void ShouldReturnAllRookiePlayerRecordsMatchingTheGivenYear() {
-            final List<Player> persistedPlayers = Arrays.asList(
+            final List<Player> persistedPlayers = List.of(
                     Player.builder().playerId(1).year("2015").rookie(1).build(),
                     Player.builder().playerId(2).year("2015").rookie(1).build(),
                     Player.builder().playerId(3).year("2015").rookie(1).build()
@@ -451,7 +451,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void ShouldOnlyReturnRookiePlayerRecordsForGivenYearNotOnATeam() {
-            final List<Player> persistedPlayers = Arrays.asList(
+            final List<Player> persistedPlayers = List.of(
                     Player.builder().playerId(1).year("2015").rookie(1).build(),
                     Player.builder().playerId(2).teamId(1).year("2015").rookie(1).build(),
                     Player.builder().playerId(3).year("2015").rookie(1).build(),
@@ -471,7 +471,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void ShouldOnlyReturnUndraftedRookiePlayerRecordsForGivenYear() {
-            final List<Player> persistedPlayers = Arrays.asList(
+            final List<Player> persistedPlayers = List.of(
                     Player.builder().playerId(1).year("2015").rookie(1).build(),
                     Player.builder().playerId(2).year("2014").rookie(1).build(),
                     Player.builder().playerId(3).year("2015").rookie(1).build(),
@@ -491,7 +491,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void ShouldOnlyReturnUndraftedPlayerRecordsForGivenYearThatAreRookies() {
-            final List<Player> persistedPlayers = Arrays.asList(
+            final List<Player> persistedPlayers = List.of(
                     Player.builder().playerId(1).year("2015").rookie(1).build(),
                     Player.builder().playerId(2).year("2015").rookie(0).build(),
                     Player.builder().playerId(3).year("2015").rookie(1).build(),

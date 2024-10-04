@@ -102,7 +102,7 @@ class TeamDefenseSummarySearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsTeamDefenseSummariesReturnedByRepository() {
-            final List<TeamDefenseSummary> teamDefenseSummaryList = Arrays.asList(
+            final List<TeamDefenseSummary> teamDefenseSummaryList = List.of(
                     new TeamDefenseSummary(),
                     new TeamDefenseSummary(),
                     new TeamDefenseSummary(),

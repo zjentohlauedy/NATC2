@@ -141,7 +141,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             scheduleRepository.save(schedule);
 
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2005").allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2005").allstarTeam(0).build(),
                     Team.builder().teamId(3).year("2005").allstarTeam(0).build(),
@@ -151,7 +151,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             teamRepository.saveAll(teamList);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).year("2005").style(ManagerStyle.BALANCED.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).teamId(2).year("2005").style(ManagerStyle.BALANCED.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).teamId(3).year("2005").style(ManagerStyle.BALANCED.getValue()).retired(0).build(),
@@ -161,7 +161,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             managerRepository.saveAll(managerList);
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, "2005", 0.7, ManagerStyle.BALANCED),
                     generatePlayer(2, "2005", 0.9, ManagerStyle.BALANCED),
                     generatePlayer(3, "2005", 0.4, ManagerStyle.BALANCED),
@@ -209,7 +209,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             scheduleRepository.save(schedule);
 
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2004").games(100).wins(75).allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2004").games(100).wins(25).allstarTeam(0).build(),
                     Team.builder().teamId(3).year("2004").games(100).wins(50).allstarTeam(0).build(),
@@ -219,7 +219,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             teamRepository.saveAll(teamList);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).year("2005").style(ManagerStyle.BALANCED.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).teamId(2).year("2005").style(ManagerStyle.BALANCED.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).teamId(3).year("2005").style(ManagerStyle.BALANCED.getValue()).retired(0).build(),
@@ -262,7 +262,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             scheduleRepository.save(schedule);
 
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2005").allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2005").allstarTeam(0).build(),
                     Team.builder().teamId(3).year("2005").allstarTeam(0).build(),
@@ -272,7 +272,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             teamRepository.saveAll(teamList);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).year("2005").style(ManagerStyle.OFFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).teamId(2).year("2005").style(ManagerStyle.DEFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).teamId(3).year("2005").style(ManagerStyle.INTANGIBLE.getValue()).retired(0).build(),
@@ -282,7 +282,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             managerRepository.saveAll(managerList);
 
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, "2005", 0.7, ManagerStyle.OFFENSIVE),
                     generatePlayer(2, "2005", 0.7, ManagerStyle.DEFENSIVE),
                     generatePlayer(3, "2005", 0.7, ManagerStyle.INTANGIBLE),
@@ -329,7 +329,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
             scheduleRepository.save(roundOneSchedule);
             scheduleRepository.save(roundTwoSchedule);
 
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2004").games(100).wins(75).allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2004").games(100).wins(25).allstarTeam(0).build(),
                     Team.builder().teamId(3).year("2004").games(100).wins(50).allstarTeam(0).build(),
@@ -339,7 +339,7 @@ class RookieDraftScheduleProcessorIntegrationTest extends NATCServiceIntegration
 
             teamRepository.saveAll(teamList);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).year("2005").style(ManagerStyle.OFFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).teamId(2).year("2005").style(ManagerStyle.DEFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).teamId(3).year("2005").style(ManagerStyle.INTANGIBLE.getValue()).retired(0).build(),

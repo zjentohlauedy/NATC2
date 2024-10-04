@@ -119,18 +119,18 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldUseTeamComparatorToOrderTeamsFromPreviousYear() throws NATCException {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, 0.7),
                     generatePlayer(2, 0.5),
                     generatePlayer(3, 0.3)
             );
 
-            when(teamService.getRegularTeamsByYear("2018")).thenReturn(Arrays.asList(
+            when(teamService.getRegularTeamsByYear("2018")).thenReturn(List.of(
                     Team.builder().teamId(1).wins(75).build(),
                     Team.builder().teamId(2).wins(50).build(),
                     Team.builder().teamId(3).wins(25).build()
             ));
-            when(managerService.getActiveManagersForYear(anyString())).thenReturn(Arrays.asList(
+            when(managerService.getActiveManagersForYear(anyString())).thenReturn(List.of(
                     Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                     Manager.builder().managerId(3).teamId(3).style(ManagerStyle.PENALTIES.getValue()).build()
@@ -158,7 +158,7 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldShuffleTeamsFromCurrentYearWhenPreviousYearCallReturnsNoTeams() throws NATCException {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, 0.9),
                     generatePlayer(2, 0.7),
                     generatePlayer(3, 0.5),
@@ -174,7 +174,7 @@ class RookieDraftScheduleProcessorTest {
                     Team.builder().teamId(4).build(),
                     Team.builder().teamId(5).build()
             ));
-            when(managerService.getActiveManagersForYear(anyString())).thenReturn(Arrays.asList(
+            when(managerService.getActiveManagersForYear(anyString())).thenReturn(List.of(
                     Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                     Manager.builder().managerId(3).teamId(3).style(ManagerStyle.PENALTIES.getValue()).build(),
@@ -210,7 +210,7 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldCallPlayerServiceToUpdateNewPlayersWhenRoundOne() throws NATCException {
-            final List<Player> generatedPlayers = Arrays.asList(
+            final List<Player> generatedPlayers = List.of(
                     Player.builder().playerId(1).build(),
                     Player.builder().playerId(2).build(),
                     Player.builder().playerId(3).build(),
@@ -227,7 +227,7 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldUpdateNewPlayersToBeRookiesOfStartingAgeWhenRoundOne() throws NATCException {
-            final List<Player> generatedPlayers = Arrays.asList(
+            final List<Player> generatedPlayers = List.of(
                     Player.builder().playerId(1).build(),
                     Player.builder().playerId(2).build(),
                     Player.builder().playerId(3).build(),
@@ -259,7 +259,7 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldCallPlayerServiceToUpdateUndraftedRookiePlayersWhenRoundTwo() throws NATCException {
-            final List<Player> undraftedRookies = Arrays.asList(
+            final List<Player> undraftedRookies = List.of(
                     Player.builder().playerId(1).build(),
                     Player.builder().playerId(2).build(),
                     Player.builder().playerId(3).build(),
@@ -299,17 +299,17 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldGetPlayerComparatorForEachTeamWithCorrespondingManagersStyle() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).build(),
                     Team.builder().teamId(2).build(),
                     Team.builder().teamId(3).build()
             );
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                     Manager.builder().managerId(3).teamId(3).style(ManagerStyle.BALANCED.getValue()).build()
             );
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, 5.0),
                     generatePlayer(2, 5.0),
                     generatePlayer(3, 5.0)
@@ -356,7 +356,7 @@ class RookieDraftScheduleProcessorTest {
                     .teamId(1)
                     .style(ManagerStyle.DEFENSIVE.getValue())
                     .build()));
-            when(playerService.generatePlayers(anyString(), anyInt())).thenReturn(Arrays.asList(
+            when(playerService.generatePlayers(anyString(), anyInt())).thenReturn(List.of(
                     Player.builder().playerId(1).build(),
                     Player.builder().playerId(2).build()
             ));
@@ -372,7 +372,7 @@ class RookieDraftScheduleProcessorTest {
             final Player betterPlayer = generatePlayer(2, 0.7);
             final Player worsePlayer = generatePlayer(1, 0.3);
 
-            final List<Player> rookies = Arrays.asList(worsePlayer, betterPlayer);
+            final List<Player> rookies = List.of(worsePlayer, betterPlayer);
 
             when(teamService.getRegularTeamsByYear(anyString())).thenReturn(Collections.singletonList(Team.builder().teamId(1).build()));
             when(managerService.getActiveManagersForYear(anyString())).thenReturn(Collections.singletonList(Manager.builder()
@@ -391,17 +391,17 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldHaveDifferentTeamsPickDifferentRookiePlayers() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).build(),
                     Team.builder().teamId(2).build(),
                     Team.builder().teamId(3).build()
             );
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                     Manager.builder().managerId(3).teamId(3).style(ManagerStyle.BALANCED.getValue()).build()
             );
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, 4.0),
                     generatePlayer(2, 5.0),
                     generatePlayer(3, 6.0)
@@ -458,17 +458,17 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldIncrementDraftPickValueForEachPlayerPickedWhenRoundOne() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).build(),
                     Team.builder().teamId(2).build(),
                     Team.builder().teamId(3).build()
             );
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                     Manager.builder().managerId(3).teamId(3).style(ManagerStyle.BALANCED.getValue()).build()
             );
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, 4.0),
                     generatePlayer(2, 5.0),
                     generatePlayer(3, 6.0)
@@ -488,17 +488,17 @@ class RookieDraftScheduleProcessorTest {
 
         @Test
         void shouldIncrementDraftPickValueForEachPlayerPickedWhenRoundTwo() throws NATCException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).build(),
                     Team.builder().teamId(2).build(),
                     Team.builder().teamId(3).build()
             );
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                     Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                     Manager.builder().managerId(3).teamId(3).style(ManagerStyle.BALANCED.getValue()).build()
             );
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     generatePlayer(1, 4.0),
                     generatePlayer(2, 5.0),
                     generatePlayer(3, 6.0)

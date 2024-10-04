@@ -256,7 +256,7 @@ class TeamGameSearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsTeamGamesReturnedByRepository() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     new TeamGame(),
                     new TeamGame(),
                     new TeamGame(),

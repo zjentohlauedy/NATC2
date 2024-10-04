@@ -66,7 +66,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             scheduleRepository.save(schedule);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").teamId(3).style(ManagerStyle.BALANCED.getValue()).retired(0).build()
@@ -134,7 +134,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             scheduleRepository.save(schedule);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").teamId(3).style(ManagerStyle.BALANCED.getValue()).retired(0).build()
@@ -205,7 +205,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
 
             scheduleRepository.save(schedule);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").teamId(3).style(ManagerStyle.BALANCED.getValue()).retired(0).build()

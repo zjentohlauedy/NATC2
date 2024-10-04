@@ -80,7 +80,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameWhenSearchingByGameId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(1).playerId(2).teamId(2).build(),
                         Injury.builder().gameId(1).playerId(3).teamId(3).build()
@@ -99,7 +99,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameWhenSearchingByGameId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(2).teamId(1).build(),
                         Injury.builder().gameId(1).playerId(3).teamId(2).build(),
@@ -121,7 +121,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForPlayerWhenSearchingByPlayerId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(1).teamId(2).build(),
                         Injury.builder().gameId(3).playerId(1).teamId(3).build()
@@ -140,7 +140,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForPlayerWhenSearchingByPlayerId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(2).teamId(1).build(),
                         Injury.builder().gameId(3).playerId(1).teamId(2).build(),
@@ -162,7 +162,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(2).teamId(1).build(),
                         Injury.builder().gameId(3).playerId(3).teamId(1).build()
@@ -181,7 +181,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(1).teamId(2).build(),
                         Injury.builder().gameId(3).playerId(2).teamId(1).build(),
@@ -226,7 +226,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndPlayerWhenSearchingByGameIdAndPlayerId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(1).playerId(2).teamId(1).build(),
@@ -250,7 +250,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameAndTeamWhenSearchingByGameIdAndTeamId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(1).playerId(2).teamId(1).build(),
                         Injury.builder().gameId(1).playerId(3).teamId(1).build()
@@ -270,7 +270,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndTeamWhenSearchingByGameIdAndTeamId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(2).teamId(1).build(),
                         Injury.builder().gameId(1).playerId(3).teamId(2).build(),
@@ -297,7 +297,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForPlayerAndTeamWhenSearchingByPlayerIdAndTeamId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(3).playerId(1).teamId(1).build()
@@ -317,7 +317,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForPlayerAndTeamWhenSearchingByPlayerIdAndTeamId() {
-                final List<Injury> injuryList = Arrays.asList(
+                final List<Injury> injuryList = List.of(
                         Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                         Injury.builder().gameId(2).playerId(2).teamId(1).build(),
                         Injury.builder().gameId(3).playerId(1).teamId(2).build(),
@@ -365,7 +365,7 @@ class InjurySearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
-            final List<Injury> injuryList = Arrays.asList(
+            final List<Injury> injuryList = List.of(
                     Injury.builder().gameId(1).playerId(1).teamId(1).build(),
                     Injury.builder().gameId(2).playerId(1).teamId(1).build(),
                     Injury.builder().gameId(1).playerId(2).teamId(1).build(),

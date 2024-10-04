@@ -115,7 +115,7 @@ class PlayerServiceTest {
 
             final List<Player> playerList = playerService.generatePlayers("1995", 5);
 
-            final List<Integer> expectedPlayerIds = Arrays.asList(124, 125, 126, 127, 128);
+            final List<Integer> expectedPlayerIds = List.of(124, 125, 126, 127, 128);
 
             assertEquals(5, playerList.size());
             assertEquals(expectedPlayerIds, playerList.stream().map(Player::getPlayerId).toList());
@@ -381,7 +381,7 @@ class PlayerServiceTest {
 
         @Test
         void shouldReturnTheResponseFromTheRepository() {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().build(),
                     Player.builder().build(),
                     Player.builder().build()

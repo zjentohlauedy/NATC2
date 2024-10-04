@@ -28,7 +28,7 @@ public class RookieDraftScheduleProcessor implements ScheduleProcessor {
     private final TeamComparator teamComparator;
     private final TeamService teamService;
 
-    private final List<ScheduleType> validScheduleTypes = Arrays.asList(
+    private final List<ScheduleType> validScheduleTypes = List.of(
             ScheduleType.ROOKIE_DRAFT_ROUND_1,
             ScheduleType.ROOKIE_DRAFT_ROUND_2
     );

@@ -24,7 +24,7 @@ class ScheduleValidatorTest {
         @Test
         void shouldDoNothingIfScheduleTypeIsInValidList() throws ScheduleProcessingException {
             final Schedule schedule = Schedule.builder().type(ScheduleType.BEGINNING_OF_SEASON.getValue()).build();
-            final List<ScheduleType> validTypes = Arrays.asList(
+            final List<ScheduleType> validTypes = List.of(
                     ScheduleType.ALL_STAR_DAY_1,
                     ScheduleType.CONFERENCE_CHAMPIONSHIP,
                     ScheduleType.MANAGER_CHANGES,
@@ -47,7 +47,7 @@ class ScheduleValidatorTest {
         @Test
         void shouldThrowScheduleProcessingExceptionWhenTheScheduleTypeIsNotInTheValidList() {
             final Schedule schedule = Schedule.builder().type(ScheduleType.BEGINNING_OF_SEASON.getValue()).build();
-            final List<ScheduleType> validTypes = Arrays.asList(
+            final List<ScheduleType> validTypes = List.of(
                     ScheduleType.ALL_STAR_DAY_1,
                     ScheduleType.CONFERENCE_CHAMPIONSHIP,
                     ScheduleType.MANAGER_CHANGES

@@ -93,7 +93,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearWhenSearchingByYear() {
-                final List<Schedule> scheduleList = Arrays.asList(
+                final List<Schedule> scheduleList = List.of(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2000").sequence(2).build(),
                         Schedule.builder().year("2000").sequence(3).build()
@@ -112,7 +112,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
-                final List<Schedule> scheduleList = Arrays.asList(
+                final List<Schedule> scheduleList = List.of(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2001").sequence(1).build(),
                         Schedule.builder().year("2000").sequence(2).build(),
@@ -134,7 +134,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForSequenceWhenSearchingBySequence() {
-                final List<Schedule> scheduleList = Arrays.asList(
+                final List<Schedule> scheduleList = List.of(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2001").sequence(1).build(),
                         Schedule.builder().year("2002").sequence(1).build()
@@ -153,7 +153,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForSequenceWhenSearchingBySequence() {
-                final List<Schedule> scheduleList = Arrays.asList(
+                final List<Schedule> scheduleList = List.of(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2000").sequence(2).build(),
                         Schedule.builder().year("2001").sequence(1).build(),
@@ -198,7 +198,7 @@ class ScheduleSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnOnlyEntriesForYearAndSequenceWhenSearchingByYearAndSequence() {
-                final List<Schedule> scheduleList = Arrays.asList(
+                final List<Schedule> scheduleList = List.of(
                         Schedule.builder().year("2000").sequence(1).build(),
                         Schedule.builder().year("2001").sequence(1).build(),
                         Schedule.builder().year("2000").sequence(2).build()

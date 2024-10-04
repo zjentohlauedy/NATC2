@@ -28,7 +28,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
 
         @Test
         void shouldAssignManagersToTeamsInOrderOfPreviousSeasonsStats() throws NATCException {
-            final List<Team> previousYearTeams = Arrays.asList(
+            final List<Team> previousYearTeams = List.of(
                     Team.builder().teamId(1).year("1999").games(100).wins(55).build(),
                     Team.builder().teamId(2).year("1999").games(100).wins(40).build(),
                     Team.builder().teamId(3).year("1999").games(100).wins(35).build(),
@@ -38,7 +38,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
 
             teamRepository.saveAll(previousYearTeams);
 
-            final List<Team> teams = Arrays.asList(
+            final List<Team> teams = List.of(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build(),
                     Team.builder().teamId(3).year("2000").build(),
@@ -46,7 +46,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
                     Team.builder().teamId(5).year("2000").build()
             );
 
-            final List<Manager> managers = Arrays.asList(
+            final List<Manager> managers = List.of(
                     Manager.builder().managerId(101).year("2000").seasons(0).offense(1.0).defense(1.0).intangible(1.0).penalties(1.0).build(),
                     Manager.builder().managerId(102).year("2000").seasons(0).offense(0.8).defense(0.8).intangible(0.8).penalties(0.8).build(),
                     Manager.builder().managerId(103).year("2000").seasons(0).offense(0.6).defense(0.6).intangible(0.6).penalties(0.6).build(),
@@ -64,7 +64,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
 
         @Test
         void shouldOnlyConsiderPreviousSeasonTeamRecords() throws NATCException {
-            final List<Team> previousYearTeams = Arrays.asList(
+            final List<Team> previousYearTeams = List.of(
                     Team.builder().teamId(1).year("1997").games(100).wins(55).build(),
                     Team.builder().teamId(1).year("1998").games(100).wins(40).build(),
                     Team.builder().teamId(1).year("1999").games(100).wins(35).build(),
@@ -80,7 +80,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
 
             teamRepository.saveAll(previousYearTeams);
 
-            final List<Team> teams = Arrays.asList(
+            final List<Team> teams = List.of(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build()
             );
@@ -88,7 +88,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
             final Manager highestRatedManager = Manager.builder().managerId(101).year("2000").seasons(0).offense(1.0).defense(1.0).intangible(1.0).penalties(1.0).build();
             final Manager lowestRatedManager = Manager.builder().managerId(105).year("2000").seasons(0).offense(0.2).defense(0.2).intangible(0.2).penalties(0.2).build();
 
-            final List<Manager> managers = Arrays.asList(lowestRatedManager, highestRatedManager);
+            final List<Manager> managers = List.of(lowestRatedManager, highestRatedManager);
 
             teamManagerDraftService.assignManagersToTeams(teams, managers);
 
@@ -98,7 +98,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
 
         @Test
         void shouldOnlyConsiderRecordsForTheGivenTeams() throws NATCException {
-            final List<Team> previousYearTeams = Arrays.asList(
+            final List<Team> previousYearTeams = List.of(
                     Team.builder().teamId(1).year("1999").games(100).wins(55).build(),
                     Team.builder().teamId(2).year("1999").games(100).wins(35).build(),
                     Team.builder().teamId(3).year("1999").games(100).wins(40).build(),
@@ -110,7 +110,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
 
             teamRepository.saveAll(previousYearTeams);
 
-            final List<Team> teams = Arrays.asList(
+            final List<Team> teams = List.of(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("2000").build()
             );
@@ -118,7 +118,7 @@ class TeamManagerDraftServiceIntegrationTest extends NATCServiceIntegrationTest 
             final Manager highestRatedManager = Manager.builder().managerId(101).year("2000").seasons(0).offense(1.0).defense(1.0).intangible(1.0).penalties(1.0).build();
             final Manager lowestRatedManager = Manager.builder().managerId(105).year("2000").seasons(0).offense(0.2).defense(0.2).intangible(0.2).penalties(0.2).build();
 
-            final List<Manager> managers = Arrays.asList(lowestRatedManager, highestRatedManager);
+            final List<Manager> managers = List.of(lowestRatedManager, highestRatedManager);
 
             teamManagerDraftService.assignManagersToTeams(teams, managers);
 

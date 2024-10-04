@@ -79,7 +79,7 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
 
             scheduleRepository.save(schedule);
 
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2005").build(),
                     Team.builder().teamId(2).year("2005").build(),
                     Team.builder().teamId(3).year("2005").build()
@@ -87,7 +87,7 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
 
             teamRepository.saveAll(teamList);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).year("2005").teamId(1).seasons(1).build(),
                     Manager.builder().managerId(102).year("2005").teamId(2).seasons(1).build(),
                     Manager.builder().managerId(103).year("2005").teamId(3).seasons(1).build()
@@ -116,7 +116,7 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
 
             scheduleRepository.save(schedule);
 
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2003").playoffRank(0).build(),
                     Team.builder().teamId(1).year("2004").playoffRank(1).build(),
                     Team.builder().teamId(1).year("2005").build(),
@@ -130,7 +130,7 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
 
             teamRepository.saveAll(teamList);
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(101).year("2005").teamId(1).seasons(4).age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(102).year("2005").teamId(2).seasons(4).age(52).vitality(0.7).retired(0).score(1).totalSeasons(4).totalScore(1).build(),
                     Manager.builder().managerId(103).year("2005").teamId(3).seasons(4).age(48).vitality(0.8).retired(0).build()

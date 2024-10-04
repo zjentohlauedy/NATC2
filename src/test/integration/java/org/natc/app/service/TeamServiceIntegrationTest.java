@@ -945,7 +945,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldCopyTeamRecordsFromOneYearToAnother() {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2002").build(),
                     Team.builder().teamId(2).year("2002").build(),
                     Team.builder().teamId(3).year("2002").build()
@@ -963,7 +963,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyCopyTeamRecordsFromPreviousYear() {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2001").build(),
                     Team.builder().teamId(2).year("2002").build(),
                     Team.builder().teamId(3).year("2003").build()
@@ -1083,7 +1083,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         @Test
         void shouldReturnFalseIfTwoYearsBackSeasonTeamIsDoesNotExist() {
             final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).build();
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("1999").build(),
                     Team.builder().teamId(2).year("2000").build()
             );
@@ -1096,7 +1096,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
         @Test
         void shouldReturnTrueIfBothYearsTeamsExistAndTheManagerFailsOnCriteria() {
             final Manager manager = Manager.builder().managerId(1).year("2000").seasons(5).totalSeasons(5).score(0).totalScore(0).build();
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).wins(55).playoffRank(1).expectation(0.6).year("1998").build(),
                     Team.builder().teamId(2).wins(55).playoffRank(1).expectation(0.6).year("1999").build(),
                     Team.builder().teamId(3).wins(55).playoffRank(1).expectation(0.6).year("2000").build()
@@ -1125,7 +1125,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldReturnTheOnlyMatchingTeam() throws TeamNotFoundException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("1999").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -1143,7 +1143,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldThrowATeamNotFoundExceptionIfMatchingTeamDoesntExist() throws TeamNotFoundException {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2000").build(),
                     Team.builder().teamId(2).year("1999").build(),
                     Team.builder().teamId(2).year("2000").build(),
@@ -1161,7 +1161,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
     class GetRegularTeamsByYear {
         @Test
         void shouldReturnRegularTeamsForTheGivenYear() {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2018").allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2018").allstarTeam(0).build(),
                     Team.builder().teamId(3).year("2018").allstarTeam(0).build()
@@ -1176,7 +1176,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyReturnRegularTeamsForTheGivenYear() {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(1).year("2018").allstarTeam(0).build(),
                     Team.builder().teamId(2).year("2016").allstarTeam(0).build(),
                     Team.builder().teamId(3).year("2018").allstarTeam(0).build(),
@@ -1195,7 +1195,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldReturnAnEmptyListWhenNoTeamsMatch() {
-            final List<Team> teamList = Arrays.asList(
+            final List<Team> teamList = List.of(
                     Team.builder().teamId(2).year("2016").allstarTeam(0).build(),
                     Team.builder().teamId(4).year("2018").allstarTeam(1).build()
             );

@@ -126,7 +126,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldCallPlayerRetirementProxyReadyToRetireForEachPlayer() throws NATCException {
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         Player.builder().playerId(1).teamId(1).year("2020").build(),
                         Player.builder().playerId(2).teamId(1).year("2020").build(),
                         Player.builder().playerId(3).teamId(1).year("2020").build()
@@ -141,7 +141,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldOnlyCallPlayerRetirementProxyReadyToRetireForPlayersOnATeam() throws NATCException {
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         Player.builder().playerId(1).teamId(1).year("2020").build(),
                         Player.builder().playerId(2).teamId(1).year("2020").build(),
                         Player.builder().playerId(3).year("2020").build()
@@ -201,7 +201,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldRetrievePlayerComparatorForEachManagerBasedOnManagerStyle() throws NATCException {
-                final List<Manager> managerList = Arrays.asList(
+                final List<Manager> managerList = List.of(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                         Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                         Manager.builder().managerId(3).teamId(3).style(ManagerStyle.INTANGIBLE.getValue()).build(),
@@ -223,7 +223,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldOnlyRetrievePlayerComparatorForManagersOnATeam() throws NATCException {
-                final List<Manager> managerList = Arrays.asList(
+                final List<Manager> managerList = List.of(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                         Manager.builder().managerId(2).style(ManagerStyle.BALANCED.getValue()).build()
                 );
@@ -256,7 +256,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
                 final PlayerComparator playerComparator = mock(PlayerComparator.class);
 
@@ -274,7 +274,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -292,7 +292,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.7);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.3);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -311,7 +311,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -329,7 +329,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.7);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.3);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -348,7 +348,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -367,7 +367,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -385,7 +385,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
                 teamPlayer.setFormerTeamId(25);
 
@@ -408,7 +408,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Player freeAgent1 = generatePlayer(4, null, "2020", 0.3);
                 final Player freeAgent2 = generatePlayer(5, null, "2020", 0.4);
                 final Player freeAgent3 = generatePlayer(6, null, "2020", 0.2);
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         teamPlayer1,
                         freeAgent1,
                         teamPlayer2,
@@ -437,7 +437,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Player teamPlayer4 = generatePlayer(4, 12, "2020", 0.1);
                 final Player teamPlayer5 = generatePlayer(5, 13, "2020", 0.4);
                 final Player freeAgent = generatePlayer(6, null, "2020", 0.6);
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         teamPlayer1,
                         teamPlayer2,
                         teamPlayer3,
@@ -467,7 +467,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.7);
                 final Player otherTeamPlayer = generatePlayer(2, 2, "2020", 0.3);
                 final Player anotherTeamPlayer = generatePlayer(3, 3, "2020", 0.3);
-                final List<Player> playerList = Arrays.asList(teamPlayer, otherTeamPlayer, anotherTeamPlayer);
+                final List<Player> playerList = List.of(teamPlayer, otherTeamPlayer, anotherTeamPlayer);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -508,7 +508,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Player freeAgent1 = generatePlayer(4, null, "2020", 0.7);
                 final Player freeAgent2 = generatePlayer(5, null, "2020", 0.7);
                 final Player freeAgent3 = generatePlayer(6, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         teamPlayer1,
                         freeAgent1,
                         teamPlayer2,
@@ -516,7 +516,7 @@ class PlayerChangesScheduleProcessorTest {
                         teamPlayer3,
                         freeAgent3
                 );
-                final List<Manager> managerList = Arrays.asList(manager1, manager2, manager3);
+                final List<Manager> managerList = List.of(manager1, manager2, manager3);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
                 when(managerService.getActiveManagersForYear(anyString())).thenReturn(managerList);
@@ -552,8 +552,8 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager1 = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build();
                 final Manager manager2 = Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build();
                 final Manager manager3 = Manager.builder().managerId(3).teamId(3).style(ManagerStyle.BALANCED.getValue()).build();
-                final List<Manager> managerList = Arrays.asList(manager1, manager2, manager3);
-                final List<Player> playerList = Arrays.asList(
+                final List<Manager> managerList = List.of(manager1, manager2, manager3);
+                final List<Player> playerList = List.of(
                         generatePlayer(1, null, "2020", 0.5),
                         generatePlayer(2, null, "2020", 0.5),
                         generatePlayer(3, null, "2020", 0.5),
@@ -592,8 +592,8 @@ class PlayerChangesScheduleProcessorTest {
             void shouldMakeChangesBasedOnTeamNeedRatherThanEvenDistribution() throws NATCException {
                 final Manager manager1 = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build();
                 final Manager manager2 = Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build();
-                final List<Manager> managerList = Arrays.asList(manager1, manager2);
-                final List<Player> playerList = Arrays.asList(
+                final List<Manager> managerList = List.of(manager1, manager2);
+                final List<Player> playerList = List.of(
                         generatePlayer(1, manager1.getTeamId(), "2020", 0.9),
                         generatePlayer(2, manager1.getTeamId(), "2020", 0.9),
                         generatePlayer(3, manager1.getTeamId(), "2020", 0.9),
@@ -640,8 +640,8 @@ class PlayerChangesScheduleProcessorTest {
             void shouldConsiderReleasedPlayersAsFreeAgents() throws NATCException {
                 final Manager manager1 = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build();
                 final Manager manager2 = Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build();
-                final List<Manager> managerList = Arrays.asList(manager1, manager2);
-                final List<Player> playerList = Arrays.asList(
+                final List<Manager> managerList = List.of(manager1, manager2);
+                final List<Player> playerList = List.of(
                         generatePlayer(1, manager1.getTeamId(), "2020", 0.9),
                         generatePlayer(2, manager1.getTeamId(), "2020", 0.9),
                         generatePlayer(3, manager1.getTeamId(), "2020", 0.9),
@@ -673,7 +673,7 @@ class PlayerChangesScheduleProcessorTest {
             @Test
             void shouldProcessTeamsInRandomOrderThatChangesEachTimeThrough() throws NATCException {
                 final ArgumentCaptor<ManagerStyle> captor = ArgumentCaptor.forClass(ManagerStyle.class);
-                final List<Manager> managerList = Arrays.asList(
+                final List<Manager> managerList = List.of(
                         Manager.builder().managerId(1).teamId(1).style(ManagerStyle.OFFENSIVE.getValue()).build(),
                         Manager.builder().managerId(2).teamId(2).style(ManagerStyle.DEFENSIVE.getValue()).build(),
                         Manager.builder().managerId(3).teamId(3).style(ManagerStyle.INTANGIBLE.getValue()).build(),
@@ -717,7 +717,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player oldTeamPlayer = generatePlayer(2, manager.getTeamId(), "2020", 0.7);
                 final Player retiredPlayer = generatePlayer(3, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, oldTeamPlayer, retiredPlayer);
+                final List<Player> playerList = List.of(teamPlayer, oldTeamPlayer, retiredPlayer);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 retiredPlayer.setRetired(1);
@@ -751,7 +751,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldCallPlayerRetirementProxyShouldRetireForEachPlayer() throws NATCException {
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         Player.builder().playerId(1).year("2020").build(),
                         Player.builder().playerId(2).year("2020").build(),
                         Player.builder().playerId(3).year("2020").build()
@@ -766,7 +766,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldOnlyCallPlayerRetirementProxyShouldRetireForPlayersNotOnATeam() throws NATCException {
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         Player.builder().playerId(1).teamId(1).year("2020").build(),
                         Player.builder().playerId(2).teamId(1).year("2020").build(),
                         Player.builder().playerId(3).year("2020").build()
@@ -781,7 +781,7 @@ class PlayerChangesScheduleProcessorTest {
 
             @Test
             void shouldOnlyCallPlayerRetirementProxyShouldRetireForPlayersNotAlreadyRetired() throws NATCException {
-                final List<Player> playerList = Arrays.asList(
+                final List<Player> playerList = List.of(
                         Player.builder().playerId(1).retired(1).year("2020").build(),
                         Player.builder().playerId(2).retired(1).year("2020").build(),
                         Player.builder().playerId(3).year("2020").build()
@@ -825,7 +825,7 @@ class PlayerChangesScheduleProcessorTest {
                 final Manager manager = Manager.builder().managerId(1).teamId(1).style(ManagerStyle.BALANCED.getValue()).build();
                 final Player teamPlayer = generatePlayer(1, manager.getTeamId(), "2020", 0.3);
                 final Player freeAgent = generatePlayer(2, null, "2020", 0.7);
-                final List<Player> playerList = Arrays.asList(teamPlayer, freeAgent);
+                final List<Player> playerList = List.of(teamPlayer, freeAgent);
                 final List<Manager> managerList = Collections.singletonList(manager);
 
                 when(playerService.getActivePlayersForYear(anyString())).thenReturn(playerList);
@@ -841,7 +841,7 @@ class PlayerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallPlayerServiceToUpdatePlayersRetrievedForScheduledYear() throws NATCException {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().playerId(1).year("2020").build(),
                     Player.builder().playerId(2).year("2020").build(),
                     Player.builder().playerId(3).year("2020").build()

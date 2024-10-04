@@ -102,7 +102,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallManagerServiceToUpdateTheManagersFoundForTheGivenYear() throws NATCException {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").age(50).vitality(0.5).build(),
                     Manager.builder().managerId(2).year("2005").age(50).vitality(0.5).build(),
                     Manager.builder().managerId(3).year("2005").age(50).vitality(0.5).build()
@@ -117,7 +117,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldIncrementTheAgeOfEachManagerFoundForTheGivenYear() throws NATCException {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").age(45).vitality(0.5).build(),
                     Manager.builder().managerId(2).year("2005").age(37).vitality(0.5).build(),
                     Manager.builder().managerId(3).year("2005").age(62).vitality(0.5).build()
@@ -134,7 +134,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldMarkRetiredAnyFreeManagersThatAreNowReadyToRetire() throws NATCException {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").age(47).vitality(0.5).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").age(62).vitality(0.5).retired(0).build()
@@ -151,7 +151,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldMarkRetiredAnyTeamManagersThatAreNowReadyToRetire() throws NATCException {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(4).age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(5).age(47).vitality(0.5).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").teamId(6).age(62).vitality(0.5).retired(0).build()
@@ -205,7 +205,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldCallTeamServiceForEveryApplicableManagerToDetermineIfManagerShouldBeReleased() throws NATCException {
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(4).age(45).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").teamId(5).age(45).vitality(0.5).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").teamId(6).age(45).vitality(0.5).retired(0).build()
@@ -353,7 +353,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldSaveTheNewGeneratedManagers() throws NATCException {
-            final List<Manager> newManagers = Arrays.asList(
+            final List<Manager> newManagers = List.of(
                     Manager.builder().build(),
                     Manager.builder().build(),
                     Manager.builder().build(),
@@ -418,7 +418,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldGenerateManagersFromAllCandidatePlayers() throws NATCException {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().build(),
                     Player.builder().build(),
                     Player.builder().build(),
@@ -454,7 +454,7 @@ class ManagerChangesScheduleProcessorTest {
 
         @Test
         void shouldOnlyGenerateConfiguredNumberOfNewManagersIncludingPlayerCandidateManagers() throws NATCException {
-            final List<Player> playerList = Arrays.asList(
+            final List<Player> playerList = List.of(
                     Player.builder().build(),
                     Player.builder().build()
             );
@@ -498,7 +498,7 @@ class ManagerChangesScheduleProcessorTest {
             final ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class);
             final Integer retiredManagerTeamId = 25;
             final Integer releasedManagerTeamId = 18;
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(retiredManagerTeamId).age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").age(47).vitality(0.5).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").age(62).vitality(0.5).retired(0).build(),
@@ -559,7 +559,7 @@ class ManagerChangesScheduleProcessorTest {
         void shouldPassTheTeamsReturnedByTheTeamServiceToTheTeamManagerDraftService() throws NATCException {
             final Integer retiredManagerTeamId = 25;
             final Integer releasedManagerTeamId = 18;
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     Manager.builder().managerId(1).year("2005").teamId(retiredManagerTeamId).age(55).vitality(0.2).retired(0).build(),
                     Manager.builder().managerId(2).year("2005").age(47).vitality(0.5).retired(0).build(),
                     Manager.builder().managerId(3).year("2005").age(62).vitality(0.5).retired(0).build(),
@@ -600,7 +600,7 @@ class ManagerChangesScheduleProcessorTest {
             final Manager managerReleasedFromTeam = Manager.builder().managerId(5).year("2005").teamId(18).age(44).vitality(0.5).retired(0).build();
             final Manager availableManager = Manager.builder().managerId(6).year("2005").age(47).vitality(0.5).retired(0).build();
 
-            final List<Manager> newManagers = Arrays.asList(
+            final List<Manager> newManagers = List.of(
                     Manager.builder().managerId(7).year("2005").build(),
                     Manager.builder().managerId(8).year("2005").build(),
                     Manager.builder().managerId(9).year("2005").build(),
@@ -608,7 +608,7 @@ class ManagerChangesScheduleProcessorTest {
                     Manager.builder().managerId(11).year("2005").build()
             );
 
-            final List<Manager> managerList = Arrays.asList(
+            final List<Manager> managerList = List.of(
                     managerRetiredFromTeam,
                     managerRetired,
                     managerReleasedFromTeam,

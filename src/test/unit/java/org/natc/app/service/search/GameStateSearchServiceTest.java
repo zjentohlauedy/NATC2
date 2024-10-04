@@ -227,7 +227,7 @@ class GameStateSearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsGameStatesReturnedByRepository() {
-            final List<GameState> gameStateList = Arrays.asList(
+            final List<GameState> gameStateList = List.of(
                     new GameState(),
                     new GameState(),
                     new GameState(),

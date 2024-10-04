@@ -435,7 +435,7 @@ class PlayerSearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsPlayersReturnedByRepository() {
-            final List<Player> playerList = Arrays.asList(new Player(), new Player(), new Player(), new Player());
+            final List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());
 
             when(playerRepository.findAll(ArgumentMatchers.<Example<Player>>any())).thenReturn(playerList);
 

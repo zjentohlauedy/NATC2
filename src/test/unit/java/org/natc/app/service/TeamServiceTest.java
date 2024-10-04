@@ -437,7 +437,7 @@ class TeamServiceTest {
 
         @Test
         void shouldReturnTheTeamsReturnedByTheRespository() {
-            final List<Team> expectedTeams = Arrays.asList(
+            final List<Team> expectedTeams = List.of(
                     Team.builder().teamId(1).build(),
                     Team.builder().teamId(2).build(),
                     Team.builder().teamId(3).build()

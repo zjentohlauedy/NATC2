@@ -87,7 +87,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldReturnAllEntriesWhenSearchingWithoutValues() {
-            final List<GameState> gameStateList = Arrays.asList(
+            final List<GameState> gameStateList = List.of(
                     GameState.builder().gameId(1).build(),
                     GameState.builder().gameId(2).build(),
                     GameState.builder().gameId(3).build()
@@ -125,7 +125,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldReturnOnlyEntriesForGameWhenSearchingByGameId() {
-            final List<GameState> gameStateList = Arrays.asList(
+            final List<GameState> gameStateList = List.of(
                     GameState.builder().gameId(1).build(),
                     GameState.builder().gameId(2).build(),
                     GameState.builder().gameId(3).build()

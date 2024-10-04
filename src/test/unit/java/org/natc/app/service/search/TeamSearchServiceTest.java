@@ -198,7 +198,7 @@ class TeamSearchServiceTest {
 
         @Test
         void shouldReturnSameNumberOfResponsesAsTeamsReturnedByRepository() {
-            final List<Team> teamList = Arrays.asList(new Team(), new Team(), new Team());
+            final List<Team> teamList = List.of(new Team(), new Team(), new Team());
 
             when(teamRepository.findAll(ArgumentMatchers.<Example<Team>>any())).thenReturn(teamList);
 

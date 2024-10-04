@@ -139,7 +139,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldReturnAllEntriesWhenSearchingWithoutValues() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                     TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -164,7 +164,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameWhenSearchingByGameId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -183,7 +183,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameWhenSearchingByGameId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
@@ -205,7 +205,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearWhenSearchingByYear() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -224,7 +224,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearWhenSearchingByYear() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
@@ -246,7 +246,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampWhenSearchingByDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -265,7 +265,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampWhenSearchingByDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
@@ -287,7 +287,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTypeWhenSearchingByType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -306,7 +306,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTypeWhenSearchingByType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -328,7 +328,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTeamWhenSearchingByTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(3).build()
@@ -347,7 +347,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTeamWhenSearchingByTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
@@ -369,7 +369,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForOpponentWhenSearchingByOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -388,7 +388,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForOpponentWhenSearchingByOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -414,7 +414,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameAndYearWhenSearchingByGameIdAndYear() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -434,7 +434,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndYearWhenSearchingByGameIdAndYear() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -461,7 +461,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameAndDatestampWhenSearchingByGameIdAndDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -481,7 +481,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndDatestampWhenSearchingByGameIdAndDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -508,7 +508,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameAndTypeWhenSearchingByGameIdAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -528,7 +528,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndTypeWhenSearchingByGameIdAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(3).opponent(1).build(),
@@ -574,7 +574,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndTeamWhenSearchingByGameIdAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -598,7 +598,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameAndOpponentWhenSearchingByGameIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -618,7 +618,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameAndOpponentWhenSearchingByGameIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(2).build(),
@@ -645,7 +645,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearAndDatestampWhenSearchingByYearAndDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -665,7 +665,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearAndDatestampWhenSearchingByYearAndDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -692,7 +692,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearAndTypeWhenSearchingByYearAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -712,7 +712,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearAndTypeWhenSearchingByYearAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -739,7 +739,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(3).build()
@@ -759,7 +759,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearAndTeamWhenSearchingByYearAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -786,7 +786,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearAndOpponentWhenSearchingByYearAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -806,7 +806,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearAndOpponentWhenSearchingByYearAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
@@ -833,7 +833,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampAndTypeWhenSearchingByDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -853,7 +853,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampAndTypeWhenSearchingByDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -880,7 +880,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampAndTeamWhenSearchingByDatestampAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(3).build()
@@ -900,7 +900,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampAndTeamWhenSearchingByDatestampAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -927,7 +927,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampAndOpponentWhenSearchingByDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -947,7 +947,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampAndOpponentWhenSearchingByDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
@@ -974,7 +974,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(3).build()
@@ -994,7 +994,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTypeAndTeamWhenSearchingByTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -1021,7 +1021,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTypeAndOpponentWhenSearchingByTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -1041,7 +1041,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTypeAndOpponentWhenSearchingByTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
@@ -1068,7 +1068,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTeamAndOpponentWhenSearchingByTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(1).build()
@@ -1088,7 +1088,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTeamAndOpponentWhenSearchingByTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
@@ -1119,7 +1119,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearAndDatestampWhenSearchingByGameIdYearAndDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(3).build()
@@ -1140,7 +1140,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearAndDatestampWhenSearchingByGameIdYearAndDatestamp() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -1170,7 +1170,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearAndTypeWhenSearchingByGameIdYearAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -1191,7 +1191,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearAndTypeWhenSearchingByGameIdYearAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -1241,7 +1241,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearAndTeamWhenSearchingByGameIdYearAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -1266,7 +1266,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearAndTeamWhenSearchingByGameIdYearAndTeamIdAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build()
@@ -1287,7 +1287,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearAndOpponentWhenSearchingByGameIdYearAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -1308,7 +1308,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearAndOpponentWhenSearchingByGameIdYearAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -1338,7 +1338,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameDatestampAndTypeWhenSearchingByGameIdDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -1359,7 +1359,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampAndTypeWhenSearchingByGameIdDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -1409,7 +1409,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampAndTeamWhenSearchingByGameIdDatestampAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -1434,7 +1434,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampAndTeamWhenSearchingByGameIdDatestampAndTeamIdAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build()
@@ -1455,7 +1455,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameDatestampAndOpponentWhenSearchingByGameIdDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -1476,7 +1476,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampAndOpponentWhenSearchingByGameIdDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -1526,7 +1526,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameTypeAndTeamWhenSearchingByGameIdTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -1551,7 +1551,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameTypeAndTeamWhenSearchingByGameIdTypeAndTeamIdAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build()
@@ -1572,7 +1572,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameTypeAndOpponentWhenSearchingByGameIdTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -1593,7 +1593,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameTypeAndOpponentWhenSearchingByGameIdTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(3).opponent(1).build(),
@@ -1643,7 +1643,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameTeamAndOpponentWhenSearchingByGameIdTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -1668,7 +1668,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameTeamAndOpponentWhenSearchingByGameIdTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-04-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(2).build()
@@ -1689,7 +1689,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampAndTypeWhenSearchingByYearDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -1710,7 +1710,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampAndTypeWhenSearchingByYearDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -1740,7 +1740,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampAndTeamWhenSearchingByYearDatestampAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(3).build()
@@ -1761,7 +1761,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampAndTeamWhenSearchingByYearDatestampAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -1791,7 +1791,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampAndOpponentWhenSearchingByYearDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -1812,7 +1812,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampAndOpponentWhenSearchingByYearDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -1842,7 +1842,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearTypeAndTeamWhenSearchingByYearTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(3).build()
@@ -1863,7 +1863,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearTypeAndTeamWhenSearchingByYearTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -1893,7 +1893,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearTypeAndOpponentWhenSearchingByYearTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -1914,7 +1914,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearTypeAndTeamWhenSearchingByYearTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -1944,7 +1944,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearTeamAndOpponentWhenSearchingByYearTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(1).build()
@@ -1965,7 +1965,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearTeamAndOpponentWhenSearchingByYearTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -1995,7 +1995,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampTypeAndTeamWhenSearchingByDatestampTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(3).build()
@@ -2016,7 +2016,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampTypeAndTeamWhenSearchingByDatestampTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -2046,7 +2046,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampTypeAndOpponentWhenSearchingByDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -2067,7 +2067,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampTypeAndOpponentWhenSearchingByDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -2097,7 +2097,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampTeamAndOpponentWhenSearchingByDatestampTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(1).build()
@@ -2118,7 +2118,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampTeamAndOpponentWhenSearchingByDatestampTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2148,7 +2148,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForTypeTeamAndOpponentWhenSearchingByTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2001-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2002-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build()
@@ -2169,7 +2169,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForTypeTeamAndOpponentWhenSearchingByTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2203,7 +2203,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearDatestampAndTypeWhenSearchingByGameYearDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(3).build()
@@ -2225,7 +2225,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearDatestampAndTypeWhenSearchingByGameYearDatestampAndType() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -2282,7 +2282,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearDatestampAndTeamWhenSearchingByGameIdYearDatestampAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2311,7 +2311,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampAndTeamWhenSearchingByGameIdYearDatestampAndTeamIdAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2334,7 +2334,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampAndTeamWhenSearchingByGameIdYearDatestampAndTeamIdAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2357,7 +2357,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearDatestampAndOpponentWhenSearchingByGameYearDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(3).opponent(1).build()
@@ -2379,7 +2379,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearDatestampAndOpponentWhenSearchingByGameYearDatestampAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -2436,7 +2436,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearTypeAndTeamWhenSearchingByGameIdYearTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2465,7 +2465,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTypeAndTeamWhenSearchingByGameIdYearTypeAndTeamIdAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2488,7 +2488,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTypeAndTeamWhenSearchingByGameIdYearTypeAndTeamIdAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2511,7 +2511,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearTypeAndOpponentWhenSearchingByGameYearTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -2533,7 +2533,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearTypeAndOpponentWhenSearchingByGameYearTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -2590,7 +2590,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearTeamAndOpponentWhenSearchingByGameIdYearTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2619,7 +2619,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTeamAndOpponentWhenSearchingByGameIdYearTeamIdAndOpponentAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2642,7 +2642,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTeamAndOpponentWhenSearchingByGameIdYearTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -2686,7 +2686,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampTypeAndTeamWhenSearchingByGameIdDatestampTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2715,7 +2715,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTypeAndTeamWhenSearchingByGameIdDatestampTypeAndTeamIdAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2738,7 +2738,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTypeAndTeamWhenSearchingByGameIdDatestampTypeAndTeamIdAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2761,7 +2761,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameDatestampTypeAndOpponentWhenSearchingByGameDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -2783,7 +2783,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampTypeAndOpponentWhenSearchingByGameDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -2840,7 +2840,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampTeamAndOpponentWhenSearchingByGameIdDatestampTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2869,7 +2869,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTeamAndOpponentWhenSearchingByGameIdDatestampTeamIdAndOpponentAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2892,7 +2892,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTeamAndOpponentWhenSearchingByGameIdDatestampTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -2936,7 +2936,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameTypeTeamAndOpponentWhenSearchingByGameIdTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2965,7 +2965,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameTypeTeamAndOpponentWhenSearchingByGameIdTypeTeamIdAndOpponentAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -2988,7 +2988,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameTypeTeamAndOpponentWhenSearchingByGameIdTypeTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -3011,7 +3011,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampTypeAndTeamWhenSearchingByYearDatestampTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(3).build()
@@ -3033,7 +3033,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampTypeAndTeamWhenSearchingByYearDatestampTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -3069,7 +3069,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampTypeAndOpponentWhenSearchingByYearDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -3091,7 +3091,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampTypeAndOpponentWhenSearchingByYearDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -3127,7 +3127,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampTeamAndOpponentWhenSearchingByYearDatestampTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.POSTSEASON.getValue()).teamId(1).opponent(1).build()
@@ -3149,7 +3149,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampTeamAndOpponentWhenSearchingByYearDatestampTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -3185,7 +3185,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearTypeTeamAndOpponentWhenSearchingByYearTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-18")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build()
@@ -3207,7 +3207,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearTypeTeamAndOpponentWhenSearchingByYearTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -3243,7 +3243,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForDatestampTypeTeamAndOpponentWhenSearchingByDatestampTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2002").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build()
@@ -3265,7 +3265,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForDatestampTypeTeamAndOpponentWhenSearchingByDatestampTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
@@ -3327,7 +3327,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearDatestampTypeAndTeamWhenSearchingByGameIdYearDatestampTypeAndTeamId() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3358,7 +3358,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampTypeAndTeamWhenSearchingByGameIdYearDatestampTypeAndTeamIdAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3382,7 +3382,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampTypeAndTeamWhenSearchingByGameIdYearDatestampTypeAndTeamIdAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3406,7 +3406,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampTypeAndTeamWhenSearchingByGameIdYearDatestampTypeAndTeamIdAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3430,7 +3430,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForGameYearDatestampTypeAndOpponentWhenSearchingByGameIdYearDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build()
@@ -3453,7 +3453,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearDatestampTypeAndOpponentWhenSearchingByGameIdYearDatestampTypeAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(3).opponent(1).build(),
@@ -3515,7 +3515,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearDatestampTeamAndOpponentWhenSearchingByGameIdYearDatestampTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3546,7 +3546,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampTeamAndOpponentWhenSearchingByGameIdYearDatestampTeamIdAndOpponentAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3570,7 +3570,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampTeamAndOpponentWhenSearchingByGameIdYearDatestampTeamIdAndOpponentAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3594,7 +3594,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearDatestampTeamAndOpponentWhenSearchingByGameIdYearDatestampTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -3640,7 +3640,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameYearTypeTeamAndOpponentWhenSearchingByGameIdYearTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3671,7 +3671,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTypeTeamAndOpponentWhenSearchingByGameIdYearTypeTeamIdAndOpponentAndYearIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3695,7 +3695,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTypeTeamAndOpponentWhenSearchingByGameIdYearTypeTeamIdAndOpponentAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3719,7 +3719,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameYearTypeTeamAndOpponentWhenSearchingByGameIdYearTypeTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -3765,7 +3765,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForGameDatestampTypeTeamAndOpponentWhenSearchingByGameIdDatestampTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3796,7 +3796,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTypeTeamAndOpponentWhenSearchingByGameIdDatestampTypeTeamIdAndOpponentAndDatestampIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3820,7 +3820,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTypeTeamAndOpponentWhenSearchingByGameIdDatestampTypeTeamIdAndOpponentAndTypeIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3844,7 +3844,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnNoEntriesForGameDatestampTypeTeamAndOpponentWhenSearchingByGameIdDatestampTypeTeamIdAndOpponentAndOpponentIsDifferent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
@@ -3868,7 +3868,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldReturnAllEntriesForYearDatestampTypeTeamAndOpponentWhenSearchingByYearDatestampTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build()
@@ -3891,7 +3891,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             @Test
             void shouldOnlyReturnEntriesForYearDatestampTypeTeamAndOpponentWhenSearchingByYearDatestampTypeTeamIdAndOpponent() {
-                final List<TeamGame> teamGameList = Arrays.asList(
+                final List<TeamGame> teamGameList = List.of(
                         TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                         TeamGame.builder().gameId(3).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
@@ -3955,7 +3955,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldOnlyReturnMatchingEntryWhenSearchingByAllParameters() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -3988,7 +3988,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldNotReturnMatchingEntriyWhenSearchingByAllParametersAndYearIsDifferent() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(2).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(1).year("2001").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -4013,7 +4013,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldNotReturnMatchingEntriyWhenSearchingByAllParametersAndDatestampIsDifferent() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-17")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(1).build(),
@@ -4038,7 +4038,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldNotReturnMatchingEntriyWhenSearchingByAllParametersAndTypeIsDifferent() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(1).opponent(1).build(),
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.REGULAR_SEASON.getValue()).teamId(2).opponent(1).build(),
@@ -4063,7 +4063,7 @@ class TeamGameSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
         @Test
         void shouldNotReturnMatchingEntriyWhenSearchingByAllParametersAndOpponentIsDifferent() {
-            final List<TeamGame> teamGameList = Arrays.asList(
+            final List<TeamGame> teamGameList = List.of(
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                     TeamGame.builder().gameId(2).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(1).opponent(2).build(),
                     TeamGame.builder().gameId(1).year("2000").datestamp(LocalDate.parse("2000-03-16")).type(GameType.PRESEASON.getValue()).teamId(2).opponent(2).build(),
