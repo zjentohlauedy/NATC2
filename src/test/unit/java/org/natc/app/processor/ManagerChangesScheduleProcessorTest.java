@@ -14,7 +14,6 @@ import org.natc.app.service.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -128,7 +127,7 @@ class ManagerChangesScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
-            assertEquals(46, managerList.getFirst().getAge());
+            assertEquals(46, managerList.get(0).getAge());
             assertEquals(38, managerList.get(1).getAge());
             assertEquals(63, managerList.get(2).getAge());
         }
@@ -145,7 +144,7 @@ class ManagerChangesScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
-            assertEquals(1, managerList.getFirst().getRetired());
+            assertEquals(1, managerList.get(0).getRetired());
             assertEquals(0, managerList.get(1).getRetired());
             assertEquals(1, managerList.get(2).getRetired());
         }
@@ -162,7 +161,7 @@ class ManagerChangesScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
-            assertEquals(1, managerList.getFirst().getRetired());
+            assertEquals(1, managerList.get(0).getRetired());
             assertEquals(0, managerList.get(1).getRetired());
             assertEquals(1, managerList.get(2).getRetired());
         }
@@ -633,7 +632,7 @@ class ManagerChangesScheduleProcessorTest {
 
             assertTrue(managerIds.contains(managerReleasedFromTeam.getManagerId()));
             assertTrue(managerIds.contains(availableManager.getManagerId()));
-            assertTrue(managerIds.contains(newManagers.getFirst().getManagerId()));
+            assertTrue(managerIds.contains(newManagers.get(0).getManagerId()));
             assertTrue(managerIds.contains(newManagers.get(1).getManagerId()));
             assertTrue(managerIds.contains(newManagers.get(2).getManagerId()));
             assertTrue(managerIds.contains(newManagers.get(3).getManagerId()));

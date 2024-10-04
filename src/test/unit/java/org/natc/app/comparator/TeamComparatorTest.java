@@ -325,13 +325,12 @@ class TeamComparatorTest {
 
                 verify(teamOffenseSummaryRepository, times(2)).findOne(teamOffenseSummaryCaptor.capture());
                 
-                final TeamOffenseSummary team1OffenseSummary = teamOffenseSummaryCaptor.getAllValues().getFirst().getProbe();
+                final TeamOffenseSummary team1OffenseSummary = teamOffenseSummaryCaptor.getAllValues().get(0).getProbe();
+                final TeamOffenseSummary team2OffenseSummary = teamOffenseSummaryCaptor.getAllValues().get(1).getProbe();
 
                 assertEquals(team1.getYear(), team1OffenseSummary.getYear());
                 assertEquals(GameType.REGULAR_SEASON.getValue(), team1OffenseSummary.getType());
                 assertEquals(team1.getTeamId(), team1OffenseSummary.getTeamId());
-                
-                final TeamOffenseSummary team2OffenseSummary = teamOffenseSummaryCaptor.getAllValues().get(1).getProbe();
 
                 assertEquals(team2.getYear(), team2OffenseSummary.getYear());
                 assertEquals(GameType.REGULAR_SEASON.getValue(), team2OffenseSummary.getType());
@@ -349,13 +348,12 @@ class TeamComparatorTest {
 
                 verify(teamDefenseSummaryRepository, times(2)).findOne(teamDefenseSummaryCaptor.capture());
                 
-                final TeamDefenseSummary team1DefenseSummary = teamDefenseSummaryCaptor.getAllValues().getFirst().getProbe();
+                final TeamDefenseSummary team1DefenseSummary = teamDefenseSummaryCaptor.getAllValues().get(0).getProbe();
+                final TeamDefenseSummary team2DefenseSummary = teamDefenseSummaryCaptor.getAllValues().get(1).getProbe();
 
                 assertEquals(team1.getYear(), team1DefenseSummary.getYear());
                 assertEquals(GameType.REGULAR_SEASON.getValue(), team1DefenseSummary.getType());
                 assertEquals(team1.getTeamId(), team1DefenseSummary.getTeamId());
-                
-                final TeamDefenseSummary team2DefenseSummary = teamDefenseSummaryCaptor.getAllValues().get(1).getProbe();
 
                 assertEquals(team2.getYear(), team2DefenseSummary.getYear());
                 assertEquals(GameType.REGULAR_SEASON.getValue(), team2DefenseSummary.getType());

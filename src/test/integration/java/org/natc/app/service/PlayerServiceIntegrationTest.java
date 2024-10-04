@@ -427,7 +427,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(2, actualPlayers.size());
 
-            assertEquals(5, actualPlayers.getFirst().getPlayerId());
+            assertEquals(5, actualPlayers.get(0).getPlayerId());
             assertEquals(2, actualPlayers.get(1).getPlayerId());
         }
     }

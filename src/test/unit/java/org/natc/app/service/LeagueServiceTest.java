@@ -276,7 +276,7 @@ class LeagueServiceTest {
 
             verify(managerService, times(5)).updateManager(captor.capture());
 
-            assertEquals(101, captor.getAllValues().getFirst().getManagerId());
+            assertEquals(101, captor.getAllValues().get(0).getManagerId());
             assertEquals(102, captor.getAllValues().get(1).getManagerId());
             assertEquals(103, captor.getAllValues().get(2).getManagerId());
             assertEquals(104, captor.getAllValues().get(3).getManagerId());
@@ -612,11 +612,11 @@ class LeagueServiceTest {
             final List<Integer> secondRound = captor.getAllValues().subList(3, 6).stream().map(Player::getTeamId).toList();
             final List<Integer> thirdRound = captor.getAllValues().subList(6, 9).stream().map(Player::getTeamId).toList();
 
-            assertEquals(firstRound.getFirst(), secondRound.get(2));
+            assertEquals(firstRound.get(0), secondRound.get(2));
             assertEquals(firstRound.get(1), secondRound.get(1));
             assertEquals(firstRound.get(2), secondRound.getFirst());
 
-            assertEquals(firstRound.getFirst(), thirdRound.getFirst());
+            assertEquals(firstRound.get(0), thirdRound.getFirst());
             assertEquals(firstRound.get(1), thirdRound.get(1));
             assertEquals(firstRound.get(2), thirdRound.get(2));
         }
@@ -689,7 +689,7 @@ class LeagueServiceTest {
 
             verify(playerService, times(teamList.size())).updatePlayer(captor.capture());
 
-            assertEquals(201, captor.getAllValues().getFirst().getPlayerId());
+            assertEquals(201, captor.getAllValues().get(0).getPlayerId());
             assertEquals(202, captor.getAllValues().get(1).getPlayerId());
             assertEquals(203, captor.getAllValues().get(2).getPlayerId());
             assertEquals(204, captor.getAllValues().get(3).getPlayerId());
@@ -731,7 +731,7 @@ class LeagueServiceTest {
 
             verify(playerService, times(playerList.size())).updatePlayer(captor.capture());
 
-            assertEquals(201, captor.getAllValues().getFirst().getPlayerId());
+            assertEquals(201, captor.getAllValues().get(0).getPlayerId());
             assertEquals(202, captor.getAllValues().get(1).getPlayerId());
             assertEquals(203, captor.getAllValues().get(2).getPlayerId());
             assertEquals(204, captor.getAllValues().get(3).getPlayerId());

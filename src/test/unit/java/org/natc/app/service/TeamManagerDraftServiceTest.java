@@ -17,7 +17,6 @@ import org.natc.app.repository.TeamRepository;
 import org.springframework.data.domain.Example;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -289,7 +288,7 @@ class TeamManagerDraftServiceTest {
             );
 
             when(teamRepository.findOne(any()))
-                    .thenReturn(Optional.of(previousYearTeams.getFirst()))
+                    .thenReturn(Optional.of(previousYearTeams.get(0)))
                     .thenReturn(Optional.of(previousYearTeams.get(1)))
                     .thenReturn(Optional.of(previousYearTeams.get(2)))
                     .thenReturn(Optional.of(previousYearTeams.get(3)))
@@ -328,7 +327,7 @@ class TeamManagerDraftServiceTest {
                 );
 
                 when(teamRepository.findOne(any()))
-                        .thenReturn(Optional.of(previousYearTeams.getFirst()))
+                        .thenReturn(Optional.of(previousYearTeams.get(0)))
                         .thenReturn(Optional.of(previousYearTeams.get(1)))
                         .thenReturn(Optional.of(previousYearTeams.get(2)))
                         .thenReturn(Optional.of(previousYearTeams.get(3)))
@@ -357,11 +356,11 @@ class TeamManagerDraftServiceTest {
                 );
 
                 when(teamRepository.findOne(any()))
-                        .thenReturn(Optional.of(previousYearTeams.getFirst()))
+                        .thenReturn(Optional.of(previousYearTeams.get(0)))
                         .thenReturn(Optional.of(previousYearTeams.get(1)));
 
                 // Team 2 should be sorted to first position
-                when(teamComparator.compare(previousYearTeams.get(1), previousYearTeams.getFirst())).thenReturn(-1);
+                when(teamComparator.compare(previousYearTeams.get(1), previousYearTeams.get(0))).thenReturn(-1);
 
                 final Manager bestManager = managers.getFirst();
 
@@ -388,11 +387,11 @@ class TeamManagerDraftServiceTest {
                 );
 
                 when(teamRepository.findOne(any()))
-                        .thenReturn(Optional.of(previousYearTeams.getFirst()))
+                        .thenReturn(Optional.of(previousYearTeams.get(0)))
                         .thenReturn(Optional.of(previousYearTeams.get(1)));
 
                 // Team 2 should be sorted to first position
-                when(teamComparator.compare(previousYearTeams.get(1), previousYearTeams.getFirst())).thenReturn(1);
+                when(teamComparator.compare(previousYearTeams.get(1), previousYearTeams.get(0))).thenReturn(1);
 
                 final Manager bestManager = managers.getFirst();
 

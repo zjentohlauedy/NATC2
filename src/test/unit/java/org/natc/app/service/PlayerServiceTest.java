@@ -14,7 +14,6 @@ import org.natc.app.repository.PlayerRepository;
 import org.springframework.data.domain.Example;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -149,8 +148,8 @@ class PlayerServiceTest {
 
             assertEquals(3, playerList.size());
 
-            assertEquals("James", playerList.getFirst().getFirstName());
-            assertEquals("Smith", playerList.getFirst().getLastName());
+            assertEquals("James", playerList.get(0).getFirstName());
+            assertEquals("Smith", playerList.get(0).getLastName());
 
             assertEquals("John", playerList.get(1).getFirstName());
             assertEquals("Johnson", playerList.get(1).getLastName());

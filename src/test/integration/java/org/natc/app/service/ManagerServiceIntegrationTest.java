@@ -312,7 +312,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             persistedManagers.sort(Comparator.comparing(Manager::getManagerId));
 
-            assertEquals(updatedManagers.getFirst().getTeamId(), persistedManagers.getFirst().getTeamId());
+            assertEquals(updatedManagers.get(0).getTeamId(), persistedManagers.get(0).getTeamId());
             assertEquals(updatedManagers.get(1).getTeamId(), persistedManagers.get(1).getTeamId());
             assertEquals(updatedManagers.get(2).getTeamId(), persistedManagers.get(2).getTeamId());
         }

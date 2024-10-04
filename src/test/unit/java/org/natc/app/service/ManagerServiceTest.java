@@ -16,7 +16,6 @@ import org.natc.app.service.analysis.ManagerAnalyzer;
 import org.springframework.data.domain.Example;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -151,8 +150,8 @@ class ManagerServiceTest {
 
             assertEquals(3, managerList.size());
 
-            assertEquals("James", managerList.getFirst().getFirstName());
-            assertEquals("Smith", managerList.getFirst().getLastName());
+            assertEquals("James", managerList.get(0).getFirstName());
+            assertEquals("Smith", managerList.get(0).getLastName());
 
             assertEquals("John", managerList.get(1).getFirstName());
             assertEquals("Johnson", managerList.get(1).getLastName());
