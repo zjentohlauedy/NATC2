@@ -43,7 +43,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertEquals(gameState.getGameId(), response.getGameId());
             assertEquals(false, response.getStarted());
@@ -71,7 +71,7 @@ class GameStateSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertNotNull(response.getGameId());
             assertNotNull(response.getStarted());

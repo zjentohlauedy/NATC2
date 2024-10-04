@@ -65,7 +65,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
             final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
             final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-            assertEquals(ScheduleStatus.SCHEDULED.getValue(), afterScheduleList.get(0).getStatus());
+            assertEquals(ScheduleStatus.SCHEDULED.getValue(), afterScheduleList.getFirst().getStatus());
         }
 
         @Test
@@ -77,8 +77,8 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
             final Example<Schedule> example = Example.of(Schedule.builder().year(leagueConfiguration.getFirstSeason()).sequence(1).build());
             final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-            assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
-            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+            assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.getFirst().getType());
+            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.getFirst().getStatus());
         }
 
         @Test
@@ -141,8 +141,8 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
             final Example<Schedule> example = Example.of(Schedule.builder().year("2002").sequence(1).build());
             final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-            assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.get(0).getType());
-            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+            assertEquals(ScheduleType.BEGINNING_OF_SEASON.getValue(), afterScheduleList.getFirst().getType());
+            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.getFirst().getStatus());
         }
 
         @Test
@@ -179,7 +179,7 @@ class SeasonManagerIntegrationTest extends NATCServiceIntegrationTest {
             final Example<Schedule> example = Example.of(Schedule.builder().year("2001").sequence(26).build());
             final List<Schedule> afterScheduleList = scheduleRepository.findAll(example);
 
-            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.get(0).getStatus());
+            assertEquals(ScheduleStatus.IN_PROGRESS.getValue(), afterScheduleList.getFirst().getStatus());
         }
     }
 }

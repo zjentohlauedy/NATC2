@@ -66,7 +66,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Indianapolis", team.getLocation());
             assertEquals("Titans", team.getName());
@@ -87,7 +87,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Cincinnati", team.getLocation());
             assertEquals("Whirlwind", team.getName());
@@ -108,7 +108,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Kansas City", team.getLocation());
             assertEquals("Flames", team.getName());
@@ -129,7 +129,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Dallas", team.getLocation());
             assertEquals("Rustlers", team.getName());
@@ -150,7 +150,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Washington", team.getLocation());
             assertEquals("Olympians", team.getName());
@@ -171,7 +171,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Minneapolis", team.getLocation());
             assertEquals("Marauders", team.getName());
@@ -192,7 +192,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("New Orleans", team.getLocation());
             assertEquals("Tigersharks", team.getName());
@@ -213,7 +213,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Oakland", team.getLocation());
             assertEquals("Aces", team.getName());
@@ -234,7 +234,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Vancouver", team.getLocation());
             assertEquals("Comets", team.getName());
@@ -255,7 +255,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Salt Lake City", team.getLocation());
             assertEquals("Lightning", team.getName());
@@ -276,7 +276,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Boston", team.getLocation());
             assertEquals("Blacks", team.getName());
@@ -297,7 +297,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Pittsburgh", team.getLocation());
             assertEquals("Pirahnas", team.getName());
@@ -318,7 +318,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("San Diego", team.getLocation());
             assertEquals("Stingrays", team.getName());
@@ -339,7 +339,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Philadelphia", team.getLocation());
             assertEquals("Photons", team.getName());
@@ -360,7 +360,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Detroit", team.getLocation());
             assertEquals("Thunder", team.getName());
@@ -381,7 +381,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Atlanta", team.getLocation());
             assertEquals("Renegades", team.getName());
@@ -402,7 +402,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Baltimore", team.getLocation());
             assertEquals("Crabbers", team.getName());
@@ -423,7 +423,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("St. Louis", team.getLocation());
             assertEquals("Juggernauts", team.getName());
@@ -444,7 +444,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Orlando", team.getLocation());
             assertEquals("Hurricanes", team.getName());
@@ -465,7 +465,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Las Vegas", team.getLocation());
             assertEquals("Vampires", team.getName());
@@ -486,7 +486,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Miami", team.getLocation());
             assertEquals("Voyagers", team.getName());
@@ -507,7 +507,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Houston", team.getLocation());
             assertEquals("Hammers", team.getName());
@@ -528,7 +528,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Los Angeles", team.getLocation());
             assertEquals("Legends", team.getName());
@@ -549,7 +549,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("New York", team.getLocation());
             assertEquals("Knights", team.getName());
@@ -570,7 +570,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Chicago", team.getLocation());
             assertEquals("Goblins", team.getName());
@@ -591,7 +591,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Tampa Bay", team.getLocation());
             assertEquals("Terror", team.getName());
@@ -612,7 +612,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Montreal", team.getLocation());
             assertEquals("Dragons", team.getName());
@@ -633,7 +633,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("New Jersey", team.getLocation());
             assertEquals("Phantoms", team.getName());
@@ -654,7 +654,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Mexico City", team.getLocation());
             assertEquals("Aztecs", team.getName());
@@ -675,7 +675,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Buffalo", team.getLocation());
             assertEquals("Icers", team.getName());
@@ -696,7 +696,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Cleveland", team.getLocation());
             assertEquals("Scorpions", team.getName());
@@ -717,7 +717,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Denver", team.getLocation());
             assertEquals("Nukes", team.getName());
@@ -738,7 +738,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Seattle", team.getLocation());
             assertEquals("Psychotics", team.getName());
@@ -759,7 +759,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Phoenix", team.getLocation());
             assertEquals("Eclipse", team.getName());
@@ -780,7 +780,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Milwaukee", team.getLocation());
             assertEquals("Warriors", team.getName());
@@ -801,7 +801,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Kingston", team.getLocation());
             assertEquals("Outlaws", team.getName());
@@ -822,7 +822,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Toronto", team.getLocation());
             assertEquals("Overlords", team.getName());
@@ -843,7 +843,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Charlotte", team.getLocation());
             assertEquals("Serpents", team.getName());
@@ -864,7 +864,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Portland", team.getLocation());
             assertEquals("Rhinos", team.getName());
@@ -885,7 +885,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Greene", team.getLocation());
             assertEquals("All Stars", team.getName());
@@ -906,7 +906,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Davis", team.getLocation());
             assertEquals("All Stars", team.getName());
@@ -927,7 +927,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, teamList.size());
 
-            final Team team = teamList.get(0);
+            final Team team = teamList.getFirst();
 
             assertEquals("Lawrence", team.getLocation());
             assertEquals("All Stars", team.getName());
@@ -977,7 +977,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
             final List<Team> copiedTeams = teamRepository.findAll(queryCriteria);
 
             assertEquals(1, copiedTeams.size());
-            assertEquals(2, copiedTeams.get(0).getTeamId());
+            assertEquals(2, copiedTeams.getFirst().getTeamId());
         }
 
         @Test
@@ -1028,7 +1028,7 @@ class TeamServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, copiedTeams.size());
 
-            final Team copiedTeam = copiedTeams.get(0);
+            final Team copiedTeam = copiedTeams.getFirst();
 
             assertEquals(originalTeam.getTeamId(), copiedTeam.getTeamId());
             assertEquals(originalTeam.getLocation(), copiedTeam.getLocation());

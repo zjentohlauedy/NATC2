@@ -76,7 +76,7 @@ class InjurySearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final InjuryResponse response = result.get(0);
+            final InjuryResponse response = result.getFirst();
 
             assertEquals(injury.getGameId(), response.getGameId());
             assertEquals(injury.getPlayerId(), response.getPlayerId());

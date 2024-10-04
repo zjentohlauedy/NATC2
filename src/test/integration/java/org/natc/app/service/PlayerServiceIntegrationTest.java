@@ -204,7 +204,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
             final List<Player> copiedPlayers = playerRepository.findAll(queryCriteria);
 
             assertEquals(1, copiedPlayers.size());
-            assertEquals(1, copiedPlayers.get(0).getPlayerId());
+            assertEquals(1, copiedPlayers.getFirst().getPlayerId());
         }
 
         @Test
@@ -254,7 +254,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, copiedPlayers.size());
 
-            final Player copiedPlayer = copiedPlayers.get(0);
+            final Player copiedPlayer = copiedPlayers.getFirst();
 
             assertEquals(originalPlayer.getPlayerId(), copiedPlayer.getPlayerId());
             assertEquals(originalPlayer.getTeamId(), copiedPlayer.getTeamId());
@@ -349,7 +349,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, playerList.size());
 
-            final Player actualPlayer = playerList.get(0);
+            final Player actualPlayer = playerList.getFirst();
 
             assertEquals(expectedPlayer.getPlayerId(), actualPlayer.getPlayerId());
         }
@@ -385,7 +385,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, actualPlayers.size());
 
-            final Player actualPlayer = actualPlayers.get(0);
+            final Player actualPlayer = actualPlayers.getFirst();
 
             assertEquals(3, actualPlayer.getPlayerId());
         }
@@ -406,7 +406,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, actualPlayers.size());
 
-            final Player actualPlayer = actualPlayers.get(0);
+            final Player actualPlayer = actualPlayers.getFirst();
 
             assertEquals(4, actualPlayer.getPlayerId());
         }
@@ -427,7 +427,7 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(2, actualPlayers.size());
 
-            assertEquals(5, actualPlayers.get(0).getPlayerId());
+            assertEquals(5, actualPlayers.getFirst().getPlayerId());
             assertEquals(2, actualPlayers.get(1).getPlayerId());
         }
     }

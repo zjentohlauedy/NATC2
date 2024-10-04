@@ -112,7 +112,7 @@ class TeamSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamResponse response = result.get(0);
+            final TeamResponse response = result.getFirst();
 
             assertEquals(team.getTeamId(), response.getTeamId());
             assertEquals(team.getYear(), response.getYear());
@@ -161,7 +161,7 @@ class TeamSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamResponse response = result.get(0);
+            final TeamResponse response = result.getFirst();
 
             assertFalse(response.getAllstarTeam());
         }
@@ -176,7 +176,7 @@ class TeamSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamResponse response = result.get(0);
+            final TeamResponse response = result.getFirst();
 
             assertTrue(response.getAllstarTeam());
         }
@@ -191,7 +191,7 @@ class TeamSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamResponse response = result.get(0);
+            final TeamResponse response = result.getFirst();
 
             assertNull(response.getAllstarTeam());
         }

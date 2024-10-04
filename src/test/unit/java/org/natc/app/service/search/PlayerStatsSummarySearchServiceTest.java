@@ -81,7 +81,7 @@ class PlayerStatsSummarySearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerStatsSummaryResponse response = result.get(0);
+            final PlayerStatsSummaryResponse response = result.getFirst();
 
             assertEquals(playerStatsSummary.getYear(), response.getYear());
             assertEquals(GameType.PRESEASON, response.getType());

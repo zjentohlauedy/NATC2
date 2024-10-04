@@ -62,7 +62,7 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
             final List<Schedule> scheduleList = scheduleRepository.findAll();
 
             assertEquals(1, scheduleList.size());
-            assertEquals(ScheduleStatus.COMPLETED.getValue(), scheduleList.get(0).getStatus());
+            assertEquals(ScheduleStatus.COMPLETED.getValue(), scheduleList.getFirst().getStatus());
         }
 
         @Test
@@ -161,17 +161,17 @@ class ManagerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrat
             final List<Manager> team1Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 1)).toList();
 
             assertEquals(1, team1Managers.size());
-            assertNotEquals(retiringManager.getManagerId(), team1Managers.get(0).getManagerId());
+            assertNotEquals(retiringManager.getManagerId(), team1Managers.getFirst().getManagerId());
 
             final List<Manager> team2Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 2)).toList();
 
             assertEquals(1, team2Managers.size());
-            assertNotEquals(releasedManager.getManagerId(), team2Managers.get(0).getManagerId());
+            assertNotEquals(releasedManager.getManagerId(), team2Managers.getFirst().getManagerId());
 
             final List<Manager> team3Managers = finalManagerList.stream().filter(manager -> Objects.equals(manager.getTeamId(), 3)).toList();
 
             assertEquals(1, team3Managers.size());
-            assertEquals(stayingManager.getManagerId(), team3Managers.get(0).getManagerId());
+            assertEquals(stayingManager.getManagerId(), team3Managers.getFirst().getManagerId());
         }
     }
 }

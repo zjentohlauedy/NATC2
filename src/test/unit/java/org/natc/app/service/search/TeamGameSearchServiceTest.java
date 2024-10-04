@@ -85,7 +85,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertEquals(teamGame.getGameId(), response.getGameId());
             assertEquals(teamGame.getYear(), response.getYear());
@@ -129,7 +129,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertFalse(response.getRoad());
         }
@@ -144,7 +144,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertTrue(response.getRoad());
         }
@@ -159,7 +159,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertNull(response.getRoad());
         }
@@ -174,7 +174,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertFalse(response.getOvertime());
         }
@@ -189,7 +189,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertTrue(response.getOvertime());
         }
@@ -204,7 +204,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertNull(response.getOvertime());
         }
@@ -219,7 +219,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertFalse(response.getWin());
         }
@@ -234,7 +234,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertTrue(response.getWin());
         }
@@ -249,7 +249,7 @@ class TeamGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamGameResponse response = result.get(0);
+            final TeamGameResponse response = result.getFirst();
 
             assertNull(response.getWin());
         }

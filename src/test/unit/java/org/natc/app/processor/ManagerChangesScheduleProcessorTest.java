@@ -128,7 +128,7 @@ class ManagerChangesScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
-            assertEquals(46, managerList.get(0).getAge());
+            assertEquals(46, managerList.getFirst().getAge());
             assertEquals(38, managerList.get(1).getAge());
             assertEquals(63, managerList.get(2).getAge());
         }
@@ -145,7 +145,7 @@ class ManagerChangesScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
-            assertEquals(1, managerList.get(0).getRetired());
+            assertEquals(1, managerList.getFirst().getRetired());
             assertEquals(0, managerList.get(1).getRetired());
             assertEquals(1, managerList.get(2).getRetired());
         }
@@ -162,7 +162,7 @@ class ManagerChangesScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.MANAGER_CHANGES.getValue()).year("2005").build());
 
-            assertEquals(1, managerList.get(0).getRetired());
+            assertEquals(1, managerList.getFirst().getRetired());
             assertEquals(0, managerList.get(1).getRetired());
             assertEquals(1, managerList.get(2).getRetired());
         }
@@ -349,7 +349,7 @@ class ManagerChangesScheduleProcessorTest {
             verify(managerService).updateManagers(managerCaptor.capture());
 
             assertEquals(1, managerCaptor.getValue().size());
-            assertEquals(44, managerCaptor.getValue().get(0).getAge());
+            assertEquals(44, managerCaptor.getValue().getFirst().getAge());
         }
 
         @Test
@@ -450,7 +450,7 @@ class ManagerChangesScheduleProcessorTest {
             verify(managerService).updateManagers(managerCaptor.capture());
 
             assertEquals(1, managerCaptor.getValue().size());
-            assertEquals(managerFromPlayer, managerCaptor.getValue().get(0));
+            assertEquals(managerFromPlayer, managerCaptor.getValue().getFirst());
         }
 
         @Test
@@ -633,7 +633,7 @@ class ManagerChangesScheduleProcessorTest {
 
             assertTrue(managerIds.contains(managerReleasedFromTeam.getManagerId()));
             assertTrue(managerIds.contains(availableManager.getManagerId()));
-            assertTrue(managerIds.contains(newManagers.get(0).getManagerId()));
+            assertTrue(managerIds.contains(newManagers.getFirst().getManagerId()));
             assertTrue(managerIds.contains(newManagers.get(1).getManagerId()));
             assertTrue(managerIds.contains(newManagers.get(2).getManagerId()));
             assertTrue(managerIds.contains(newManagers.get(3).getManagerId()));

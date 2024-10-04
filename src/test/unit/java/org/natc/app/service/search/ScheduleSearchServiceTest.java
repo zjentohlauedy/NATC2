@@ -75,7 +75,7 @@ class ScheduleSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ScheduleResponse response = result.get(0);
+            final ScheduleResponse response = result.getFirst();
 
             assertEquals(schedule.getYear(), response.getYear());
             assertEquals(schedule.getSequence(), response.getSequence());

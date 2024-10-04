@@ -481,7 +481,7 @@ class RookieDraftScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.ROOKIE_DRAFT_ROUND_1.getValue()).year("2022").build());
 
-            assertEquals(3, playerList.get(0).getDraftPick());
+            assertEquals(3, playerList.getFirst().getDraftPick());
             assertEquals(2, playerList.get(1).getDraftPick());
             assertEquals(1, playerList.get(2).getDraftPick());
         }
@@ -512,7 +512,7 @@ class RookieDraftScheduleProcessorTest {
 
             processor.process(Schedule.builder().type(ScheduleType.ROOKIE_DRAFT_ROUND_2.getValue()).year("2022").build());
 
-            assertEquals(43, playerList.get(0).getDraftPick());
+            assertEquals(43, playerList.getFirst().getDraftPick());
             assertEquals(42, playerList.get(1).getDraftPick());
             assertEquals(41, playerList.get(2).getDraftPick());
         }

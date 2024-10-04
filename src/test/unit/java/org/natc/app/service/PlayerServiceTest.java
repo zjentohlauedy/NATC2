@@ -65,7 +65,7 @@ class PlayerServiceTest {
             final List<Player> playerList = playerService.generatePlayers("1995", 10);
 
             assertEquals(1, playerList.stream().map(Player::getYear).distinct().count());
-            assertEquals("1995", playerList.get(0).getYear());
+            assertEquals("1995", playerList.getFirst().getYear());
         }
 
         @Test
@@ -82,7 +82,7 @@ class PlayerServiceTest {
             final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
             assertEquals(1, playerList.size());
-            assertEquals(124, playerList.get(0).getPlayerId());
+            assertEquals(124, playerList.getFirst().getPlayerId());
         }
 
         @Test
@@ -92,7 +92,7 @@ class PlayerServiceTest {
             final List<Player> playerList = playerService.generatePlayers("1995", 1);
 
             assertEquals(1, playerList.size());
-            assertEquals(1, playerList.get(0).getPlayerId());
+            assertEquals(1, playerList.getFirst().getPlayerId());
         }
 
         @Test
@@ -149,8 +149,8 @@ class PlayerServiceTest {
 
             assertEquals(3, playerList.size());
 
-            assertEquals("James", playerList.get(0).getFirstName());
-            assertEquals("Smith", playerList.get(0).getLastName());
+            assertEquals("James", playerList.getFirst().getFirstName());
+            assertEquals("Smith", playerList.getFirst().getLastName());
 
             assertEquals("John", playerList.get(1).getFirstName());
             assertEquals("Johnson", playerList.get(1).getLastName());
@@ -182,7 +182,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player player = playerList.get(0);
+            final Player player = playerList.getFirst();
 
             assertTrue(player.getScoring() >= 0.0 && player.getScoring() <= 1.0);
             assertTrue(player.getPassing() >= 0.0 && player.getPassing() <= 1.0);
@@ -195,7 +195,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player player = playerList.get(0);
+            final Player player = playerList.getFirst();
 
             assertTrue(player.getTackling() >= 0.0 && player.getTackling() <= 1.0);
             assertTrue(player.getStealing() >= 0.0 && player.getStealing() <= 1.0);
@@ -208,7 +208,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player player = playerList.get(0);
+            final Player player = playerList.getFirst();
 
             assertTrue(player.getDiscipline() >= 0.0 && player.getDiscipline() <= 1.0);
             assertTrue(player.getPenaltyShot() >= 0.0 && player.getPenaltyShot() <= 1.0);
@@ -222,7 +222,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player player = playerList.get(0);
+            final Player player = playerList.getFirst();
 
             assertTrue(player.getEndurance() >= 0.0 && player.getEndurance() <= 1.0);
             assertTrue(player.getConfidence() >= 0.0 && player.getConfidence() <= 1.0);
@@ -236,7 +236,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player player = playerList.get(0);
+            final Player player = playerList.getFirst();
 
             assertEquals(0, player.getRookie());
             assertEquals(0, player.getInjured());
@@ -253,7 +253,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player player = playerList.get(0);
+            final Player player = playerList.getFirst();
 
             assertEquals(0, player.getSeasonsPlayed());
         }
@@ -275,7 +275,7 @@ class PlayerServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final Player expectedPlayer = playerList.get(0);
+            final Player expectedPlayer = playerList.getFirst();
             final Player actualPlayer = captor.getValue();
 
             assertEquals(expectedPlayer, actualPlayer);

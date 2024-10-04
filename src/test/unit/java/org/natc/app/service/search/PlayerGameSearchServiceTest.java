@@ -85,7 +85,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertEquals(playerGame.getGameId(), response.getGameId());
             assertEquals(playerGame.getYear(), response.getYear());
@@ -123,7 +123,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertFalse(response.getInjured());
         }
@@ -138,7 +138,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertTrue(response.getInjured());
         }
@@ -153,7 +153,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertNull(response.getInjured());
         }
@@ -168,7 +168,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertFalse(response.getStarted());
         }
@@ -183,7 +183,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertTrue(response.getStarted());
         }
@@ -198,7 +198,7 @@ class PlayerGameSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final PlayerGameResponse response = result.get(0);
+            final PlayerGameResponse response = result.getFirst();
 
             assertNull(response.getStarted());
         }

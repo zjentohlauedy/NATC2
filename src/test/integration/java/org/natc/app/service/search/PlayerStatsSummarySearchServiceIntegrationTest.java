@@ -48,7 +48,7 @@ class PlayerStatsSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
             assertEquals(1, result.size());
 
-            final PlayerStatsSummaryResponse response = result.get(0);
+            final PlayerStatsSummaryResponse response = result.getFirst();
 
             assertEquals(playerStatsSummary.getYear(), response.getYear());
             assertEquals(GameType.REGULAR_SEASON, response.getType());
@@ -91,7 +91,7 @@ class PlayerStatsSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
             assertEquals(1, result.size());
 
-            final PlayerStatsSummaryResponse response = result.get(0);
+            final PlayerStatsSummaryResponse response = result.getFirst();
 
             assertNotNull(response.getYear());
             assertNotNull(response.getType());

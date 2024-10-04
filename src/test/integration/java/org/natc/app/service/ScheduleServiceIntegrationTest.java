@@ -343,7 +343,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
             final List<Schedule> scheduleList = repository.findAll();
 
             assertEquals(1, scheduleList.stream().map(Schedule::getYear).distinct().count());
-            assertEquals("2001", scheduleList.get(0).getYear());
+            assertEquals("2001", scheduleList.getFirst().getYear());
         }
 
         @Test
@@ -385,7 +385,7 @@ class ScheduleServiceIntegrationTest extends NATCServiceIntegrationTest {
             final List<Schedule> scheduleList = repository.findAll();
 
             assertEquals(1, scheduleList.stream().map(Schedule::getStatus).distinct().count());
-            assertEquals(ScheduleStatus.SCHEDULED.getValue(), scheduleList.get(0).getStatus());
+            assertEquals(ScheduleStatus.SCHEDULED.getValue(), scheduleList.getFirst().getStatus());
             assertEquals(0, scheduleList.stream().filter(schedule -> Objects.isNull(schedule.getScheduled())).count());
         }
     }

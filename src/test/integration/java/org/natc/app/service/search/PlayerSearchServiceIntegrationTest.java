@@ -45,7 +45,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final PlayerResponse response = result.get(0);
+            final PlayerResponse response = result.getFirst();
 
             assertEquals(player.getPlayerId(), response.getPlayerId());
             assertEquals(player.getYear(), response.getYear());
@@ -98,7 +98,7 @@ class PlayerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final PlayerResponse response = result.get(0);
+            final PlayerResponse response = result.getFirst();
 
             assertNotNull(response.getPlayerId());
             assertNotNull(response.getTeamId());

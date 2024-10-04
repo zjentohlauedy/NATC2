@@ -259,7 +259,7 @@ class TeamServiceTest {
 
             verify(teamRepository, times(2)).findOne(captor.capture());
 
-            final Team firstTeam = captor.getAllValues().get(0).getProbe();
+            final Team firstTeam = captor.getAllValues().getFirst().getProbe();
             final Team secondTeam = captor.getAllValues().get(1).getProbe();
 
             assertEquals(manager.getTeamId(), firstTeam.getTeamId());

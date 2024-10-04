@@ -75,7 +75,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertEquals(gameState.getGameId(), response.getGameId());
             assertEquals(gameState.getStartTime(), response.getStartTime());
@@ -100,7 +100,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertFalse(response.getStarted());
         }
@@ -115,7 +115,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertTrue(response.getStarted());
         }
@@ -130,7 +130,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertNull(response.getStarted());
         }
@@ -145,7 +145,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertFalse(response.getOvertime());
         }
@@ -160,7 +160,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertTrue(response.getOvertime());
         }
@@ -175,7 +175,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertNull(response.getOvertime());
         }
@@ -190,7 +190,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertFalse(response.getClockStopped());
         }
@@ -205,7 +205,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertTrue(response.getClockStopped());
         }
@@ -220,7 +220,7 @@ class GameStateSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final GameStateResponse response = result.get(0);
+            final GameStateResponse response = result.getFirst();
 
             assertNull(response.getClockStopped());
         }

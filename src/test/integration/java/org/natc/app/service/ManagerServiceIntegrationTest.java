@@ -164,9 +164,9 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, managers.size());
 
-            assertEquals(player.getPlayerId(), managers.get(0).getPlayerId());
-            assertEquals(player.getFirstName(), managers.get(0).getFirstName());
-            assertEquals(player.getLastName(), managers.get(0).getLastName());
+            assertEquals(player.getPlayerId(), managers.getFirst().getPlayerId());
+            assertEquals(player.getFirstName(), managers.getFirst().getFirstName());
+            assertEquals(player.getLastName(), managers.getFirst().getLastName());
         }
 
         @Test
@@ -179,7 +179,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, managers.size());
 
-            assertEquals(36, managers.get(0).getAge());
+            assertEquals(36, managers.getFirst().getAge());
         }
         
         @Test
@@ -209,11 +209,11 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, managers.size());
             
-            assertEquals(player.getOffensiveRating(), managers.get(0).getOffense());
-            assertEquals(player.getDefensiveRating(), managers.get(0).getDefense());
-            assertEquals(player.getIntangibleRating(), managers.get(0).getIntangible());
-            assertEquals(player.getPenaltyRating(), managers.get(0).getPenalties());
-            assertEquals(player.getVitality(), managers.get(0).getVitality());
+            assertEquals(player.getOffensiveRating(), managers.getFirst().getOffense());
+            assertEquals(player.getDefensiveRating(), managers.getFirst().getDefense());
+            assertEquals(player.getIntangibleRating(), managers.getFirst().getIntangible());
+            assertEquals(player.getPenaltyRating(), managers.getFirst().getPenalties());
+            assertEquals(player.getVitality(), managers.getFirst().getVitality());
         }
 
         @Test
@@ -229,7 +229,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, managers.size());
 
-            assertEquals(124, managers.get(0).getManagerId());
+            assertEquals(124, managers.getFirst().getManagerId());
         }
 
         @Test
@@ -259,7 +259,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, managers.size());
 
-            assertEquals(ManagerStyle.DEFENSIVE.getValue(), managers.get(0).getStyle());
+            assertEquals(ManagerStyle.DEFENSIVE.getValue(), managers.getFirst().getStyle());
         }
     }
 
@@ -312,7 +312,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             persistedManagers.sort(Comparator.comparing(Manager::getManagerId));
 
-            assertEquals(updatedManagers.get(0).getTeamId(), persistedManagers.get(0).getTeamId());
+            assertEquals(updatedManagers.getFirst().getTeamId(), persistedManagers.getFirst().getTeamId());
             assertEquals(updatedManagers.get(1).getTeamId(), persistedManagers.get(1).getTeamId());
             assertEquals(updatedManagers.get(2).getTeamId(), persistedManagers.get(2).getTeamId());
         }
@@ -355,7 +355,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
             final List<Manager> copiedManagers = managerRepository.findAll(queryCriteria);
 
             assertEquals(1, copiedManagers.size());
-            assertEquals(3, copiedManagers.get(0).getManagerId());
+            assertEquals(3, copiedManagers.getFirst().getManagerId());
         }
 
         @Test
@@ -395,7 +395,7 @@ class ManagerServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, copiedManagers.size());
 
-            final Manager copiedManager = copiedManagers.get(0);
+            final Manager copiedManager = copiedManagers.getFirst();
 
             assertEquals(originalManager.getManagerId(), copiedManager.getManagerId());
             assertEquals(originalManager.getTeamId(), copiedManager.getTeamId());

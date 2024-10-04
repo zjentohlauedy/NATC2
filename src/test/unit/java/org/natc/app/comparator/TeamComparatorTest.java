@@ -325,7 +325,7 @@ class TeamComparatorTest {
 
                 verify(teamOffenseSummaryRepository, times(2)).findOne(teamOffenseSummaryCaptor.capture());
                 
-                final TeamOffenseSummary team1OffenseSummary = teamOffenseSummaryCaptor.getAllValues().get(0).getProbe();
+                final TeamOffenseSummary team1OffenseSummary = teamOffenseSummaryCaptor.getAllValues().getFirst().getProbe();
 
                 assertEquals(team1.getYear(), team1OffenseSummary.getYear());
                 assertEquals(GameType.REGULAR_SEASON.getValue(), team1OffenseSummary.getType());
@@ -349,7 +349,7 @@ class TeamComparatorTest {
 
                 verify(teamDefenseSummaryRepository, times(2)).findOne(teamDefenseSummaryCaptor.capture());
                 
-                final TeamDefenseSummary team1DefenseSummary = teamDefenseSummaryCaptor.getAllValues().get(0).getProbe();
+                final TeamDefenseSummary team1DefenseSummary = teamDefenseSummaryCaptor.getAllValues().getFirst().getProbe();
 
                 assertEquals(team1.getYear(), team1DefenseSummary.getYear());
                 assertEquals(GameType.REGULAR_SEASON.getValue(), team1DefenseSummary.getType());

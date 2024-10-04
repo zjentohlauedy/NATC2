@@ -81,7 +81,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertEquals(manager.getManagerId(), response.getManagerId());
             assertEquals(manager.getTeamId(), response.getTeamId());
@@ -119,7 +119,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertFalse(response.getNewHire());
         }
@@ -134,7 +134,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertTrue(response.getNewHire());
         }
@@ -149,7 +149,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertNull(response.getNewHire());
         }
@@ -164,7 +164,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertFalse(response.getReleased());
         }
@@ -179,7 +179,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertTrue(response.getReleased());
         }
@@ -194,7 +194,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertNull(response.getReleased());
         }
@@ -209,7 +209,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertFalse(response.getRetired());
         }
@@ -224,7 +224,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertTrue(response.getRetired());
         }
@@ -239,7 +239,7 @@ class ManagerSearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertNull(response.getRetired());
         }

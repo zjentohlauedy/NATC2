@@ -51,7 +51,7 @@ class PlayerChangesScheduleProcessorIntegrationTest extends NATCServiceIntegrati
             final List<Schedule> scheduleList = scheduleRepository.findAll();
 
             assertEquals(1, scheduleList.size());
-            assertEquals(ScheduleStatus.COMPLETED.getValue(), scheduleList.get(0).getStatus());
+            assertEquals(ScheduleStatus.COMPLETED.getValue(), scheduleList.getFirst().getStatus());
         }
 
         @Test

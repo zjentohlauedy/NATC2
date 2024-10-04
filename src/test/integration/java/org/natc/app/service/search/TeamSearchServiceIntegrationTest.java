@@ -43,7 +43,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final TeamResponse response = result.get(0);
+            final TeamResponse response = result.getFirst();
 
             assertEquals(team.getTeamId(), response.getTeamId());
             assertEquals(team.getYear(), response.getYear());
@@ -97,7 +97,7 @@ class TeamSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final TeamResponse response = result.get(0);
+            final TeamResponse response = result.getFirst();
 
             assertNotNull(response.getTeamId());
             assertNotNull(response.getYear());

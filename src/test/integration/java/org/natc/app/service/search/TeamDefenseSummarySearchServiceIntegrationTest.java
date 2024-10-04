@@ -46,7 +46,7 @@ class TeamDefenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
             assertEquals(1, result.size());
 
-            final TeamDefenseSummaryResponse response = result.get(0);
+            final TeamDefenseSummaryResponse response = result.getFirst();
 
             assertEquals(teamDefenseSummary.getYear(), response.getYear());
             assertEquals(teamDefenseSummary.getTeamId(), response.getTeamId());
@@ -85,7 +85,7 @@ class TeamDefenseSummarySearchServiceIntegrationTest extends NATCServiceIntegrat
 
             assertEquals(1, result.size());
 
-            final TeamDefenseSummaryResponse response = result.get(0);
+            final TeamDefenseSummaryResponse response = result.getFirst();
 
             assertNotNull(response.getYear());
             assertNotNull(response.getType());

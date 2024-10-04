@@ -67,7 +67,7 @@ class ManagerServiceTest {
             final List<Manager> managerList = managerService.generateManagers("2017", 10);
 
             assertEquals(1, managerList.stream().map(Manager::getYear).distinct().count());
-            assertEquals("2017", managerList.get(0).getYear());
+            assertEquals("2017", managerList.getFirst().getYear());
         }
 
         @Test
@@ -84,7 +84,7 @@ class ManagerServiceTest {
             final List<Manager> managerList = managerService.generateManagers("2017", 1);
 
             assertEquals(1, managerList.size());
-            assertEquals(28, managerList.get(0).getManagerId());
+            assertEquals(28, managerList.getFirst().getManagerId());
         }
 
         @Test
@@ -94,7 +94,7 @@ class ManagerServiceTest {
             final List<Manager> managerList = managerService.generateManagers("2017", 1);
 
             assertEquals(1, managerList.size());
-            assertEquals(1, managerList.get(0).getManagerId());
+            assertEquals(1, managerList.getFirst().getManagerId());
         }
 
         @Test
@@ -151,8 +151,8 @@ class ManagerServiceTest {
 
             assertEquals(3, managerList.size());
 
-            assertEquals("James", managerList.get(0).getFirstName());
-            assertEquals("Smith", managerList.get(0).getLastName());
+            assertEquals("James", managerList.getFirst().getFirstName());
+            assertEquals("Smith", managerList.getFirst().getLastName());
 
             assertEquals("John", managerList.get(1).getFirstName());
             assertEquals("Johnson", managerList.get(1).getLastName());
@@ -184,7 +184,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            final Manager manager = managerList.get(0);
+            final Manager manager = managerList.getFirst();
 
             assertEquals(0, manager.getNewHire());
             assertEquals(0, manager.getReleased());
@@ -197,7 +197,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            final Manager manager = managerList.get(0);
+            final Manager manager = managerList.getFirst();
 
             assertEquals(0, manager.getSeasons());
             assertEquals(0, manager.getTotalSeasons());
@@ -209,7 +209,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            final Manager manager = managerList.get(0);
+            final Manager manager = managerList.getFirst();
 
             assertEquals(0, manager.getScore());
             assertEquals(0, manager.getTotalScore());
@@ -221,7 +221,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            final Manager manager = managerList.get(0);
+            final Manager manager = managerList.getFirst();
 
             assertTrue(manager.getOffense() >= 0.0 && manager.getOffense() <= 1.0);
             assertTrue(manager.getDefense() >= 0.0 && manager.getDefense() <= 1.0);
@@ -247,7 +247,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            final Manager expectedManager = managerList.get(0);
+            final Manager expectedManager = managerList.getFirst();
             final Manager actualManager = captor.getValue();
 
             assertEquals(expectedManager, actualManager);
@@ -261,7 +261,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            assertEquals(ManagerStyle.DEFENSIVE.getValue(), managerList.get(0).getStyle());
+            assertEquals(ManagerStyle.DEFENSIVE.getValue(), managerList.getFirst().getStyle());
         }
 
         @Test
@@ -299,7 +299,7 @@ class ManagerServiceTest {
 
             assertEquals(1, managerList.size());
 
-            final Manager expectedManager = managerList.get(0);
+            final Manager expectedManager = managerList.getFirst();
             final Manager actualManager = captor.getValue();
 
             assertEquals(expectedManager, actualManager);

@@ -79,7 +79,7 @@ class TeamOffenseSummarySearchServiceTest {
 
             assertEquals(1, result.size());
 
-            final TeamOffenseSummaryResponse response = result.get(0);
+            final TeamOffenseSummaryResponse response = result.getFirst();
 
             assertEquals(teamOffenseSummary.getYear(), response.getYear());
             assertEquals(GameType.REGULAR_SEASON, response.getType());

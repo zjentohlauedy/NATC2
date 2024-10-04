@@ -79,7 +79,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertEquals(player.getPlayerId(), response.getPlayerId());
             assertEquals(player.getTeamId(), response.getTeamId());
@@ -127,7 +127,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getRookie());
         }
@@ -142,7 +142,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getRookie());
 
@@ -158,7 +158,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getRookie());
         }
@@ -173,7 +173,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getInjured());
         }
@@ -188,7 +188,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getInjured());
         }
@@ -203,7 +203,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getInjured());
         }
@@ -218,7 +218,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getFreeAgent());
         }
@@ -233,7 +233,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getFreeAgent());
         }
@@ -248,7 +248,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getFreeAgent());
         }
@@ -263,7 +263,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getSigned());
         }
@@ -278,7 +278,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getSigned());
         }
@@ -293,7 +293,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getSigned());
         }
@@ -308,7 +308,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getReleased());
         }
@@ -323,7 +323,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getReleased());
         }
@@ -338,7 +338,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getReleased());
         }
@@ -353,7 +353,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getRetired());
         }
@@ -368,7 +368,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getRetired());
         }
@@ -383,7 +383,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getRetired());
         }
@@ -398,7 +398,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertFalse(response.getAllstarAlternate());
         }
@@ -413,7 +413,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertTrue(response.getAllstarAlternate());
         }
@@ -428,7 +428,7 @@ class PlayerSearchServiceTest {
 
             assertEquals(1, playerList.size());
 
-            final PlayerResponse response = playerList.get(0);
+            final PlayerResponse response = playerList.getFirst();
 
             assertNull(response.getAllstarAlternate());
         }

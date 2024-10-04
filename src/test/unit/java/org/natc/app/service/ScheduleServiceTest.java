@@ -358,7 +358,7 @@ class ScheduleServiceTest {
 
             assertEquals(preseasonScheduleData.size(), preseason.size());
 
-            assertEquals(LocalDate.parse("2005-04-04"), preseason.get(0).getScheduled());
+            assertEquals(LocalDate.parse("2005-04-04"), preseason.getFirst().getScheduled());
 
             int expectedSequence = 7;
 
@@ -566,7 +566,7 @@ class ScheduleServiceTest {
 
             assertEquals(regularSeasonScheduleData.size(), regularSeason.size());
 
-            assertEquals(LocalDate.parse("2005-05-02"), regularSeason.get(0).getScheduled());
+            assertEquals(LocalDate.parse("2005-05-02"), regularSeason.getFirst().getScheduled());
 
             int expectedSequence = rosterCut.getSequence() + 1;
 
@@ -785,7 +785,7 @@ class ScheduleServiceTest {
 
             assertEquals(leagueConfiguration.getPlayoffGamesRoundOne(), divisionPlayoff.size());
 
-            final Schedule firstDivisionPlayoff = divisionPlayoff.get(0);
+            final Schedule firstDivisionPlayoff = divisionPlayoff.getFirst();
 
             assertEquals(DayOfWeek.SUNDAY, firstDivisionPlayoff.getScheduled().getDayOfWeek());
             assertTrue(firstDivisionPlayoff.getScheduled().isAfter(postseason.getScheduled()));
@@ -827,7 +827,7 @@ class ScheduleServiceTest {
 
             assertEquals(leagueConfiguration.getPlayoffGamesRoundTwo(), divisionChampionship.size());
 
-            final Schedule firstDivisionChampionship = divisionChampionship.get(0);
+            final Schedule firstDivisionChampionship = divisionChampionship.getFirst();
 
             assertEquals(DayOfWeek.SUNDAY, firstDivisionChampionship.getScheduled().getDayOfWeek());
             assertTrue(firstDivisionChampionship.getScheduled().isAfter(lastDivisionPlayoff.getScheduled()));
@@ -870,7 +870,7 @@ class ScheduleServiceTest {
 
             assertEquals(leagueConfiguration.getPlayoffGamesRoundThree(), conferenceChampionship.size());
 
-            final Schedule firstConferenceChampionship = conferenceChampionship.get(0);
+            final Schedule firstConferenceChampionship = conferenceChampionship.getFirst();
 
             assertEquals(DayOfWeek.SUNDAY, firstConferenceChampionship.getScheduled().getDayOfWeek());
             assertTrue(firstConferenceChampionship.getScheduled().isAfter(lastDivisionChampionship.getScheduled()));

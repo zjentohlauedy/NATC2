@@ -46,7 +46,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertEquals(manager.getManagerId(), response.getManagerId());
             assertEquals(manager.getYear(), response.getYear());
@@ -89,7 +89,7 @@ class ManagerSearchServiceIntegrationTest extends NATCServiceIntegrationTest {
 
             assertEquals(1, result.size());
 
-            final ManagerResponse response = result.get(0);
+            final ManagerResponse response = result.getFirst();
 
             assertNotNull(response.getManagerId());
             assertNotNull(response.getTeamId());
