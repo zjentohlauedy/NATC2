@@ -12,7 +12,7 @@ import spock.lang.Specification
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureEmbeddedDatabase
 @SpringJUnitConfig
-@Sql("/db/migration/V1__Initial_Schema.sql")
+@Sql("/application_schema.sql")
 class NATCFunctionalTest extends Specification {
 
     @LocalServerPort

@@ -1,7 +1,14 @@
+buildscript {
+	dependencies {
+		classpath 'org.flywaydb:flyway-database-postgresql:10.19.0'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '3.3.3'
 	id 'io.spring.dependency-management' version '1.1.6'
 	id 'io.freefair.lombok'  version '8.10'
+	id 'org.flywaydb.flyway' version '10.19.0'
 	id 'java'
 	id 'groovy'
 }
@@ -71,6 +78,18 @@ test {
 					"${result.failedTestCount} failures, " +
 					"${result.skippedTestCount} skipped)")
 	}
+}
+
+project.ext {
+	migrationDatabaseName = 'natc_test'
+	migrationDatabaseUser = 'natc_test'
+}
+
+flyway {
+	url = "jdbc:postgresql://localhost:5432/${migrationDatabaseName}"
+	user = migrationDatabaseUser
+	password = System.getenv("MIGRATION_DB_PASSWORD")
+	locations = ["filesystem:${projectDir}/db/migration"]
 }
 
 wrapper {

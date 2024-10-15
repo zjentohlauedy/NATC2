@@ -14,7 +14,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @SpringBootTest
 @AutoConfigureEmbeddedDatabase
 @SpringJUnitConfig
-@Sql("/db/migration/V1__Initial_Schema.sql")
+@Sql("/application_schema.sql")
 public class NATCServiceIntegrationTest {
 
     @Autowired

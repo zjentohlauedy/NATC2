@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/natc_test
+    username: natc_test
+    password: ENC(BTCbijCSRstI6f5qwPy7HA==)
