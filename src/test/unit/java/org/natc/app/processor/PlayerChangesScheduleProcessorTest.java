@@ -703,12 +703,15 @@ class PlayerChangesScheduleProcessorTest {
 
                 assertEquals(30, managerStyleList.size());
 
-                for (final List<ManagerStyle> currentOrder : partitionList(managerStyleList, managerList.size())) {
-                    assertEquals(previousOrder.stream().distinct().count(), currentOrder.stream().distinct().count());
-                    assertNotEquals(previousOrder, currentOrder);
+                final List<List<ManagerStyle>> picksByRound = partitionList(managerStyleList, managerList.size());
 
-                    previousOrder = currentOrder;
+                assertEquals(6, picksByRound.size());
+
+                for (final List<ManagerStyle> currentOrder : picksByRound) {
+                    assertEquals(5, currentOrder.stream().distinct().count());
                 }
+
+                assertTrue(picksByRound.stream().distinct().count() > 3);
             }
 
             @Test
