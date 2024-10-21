@@ -426,4 +426,14 @@ class PlayerServiceTest {
             assertEquals(expectedPlayers, actualPlayers);
         }
     }
+
+    @Nested
+    class AgePlayers {
+        @Test
+        void shouldCallRepositoryToAgePlayersForGivenYear() {
+            playerService.agePlayers("2015");
+
+            verify(playerRepository).agePlayersForYear("2015");
+        }
+    }
 }

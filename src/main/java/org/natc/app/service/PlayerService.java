@@ -66,4 +66,8 @@ public class PlayerService {
     public List<Player> getUndraftedRookiesForYear(final String year) {
         return playerRepository.findPlayersByTeamIdAndYearAndRookie(null, year, 1);
     }
+
+    public void agePlayers(final String year) {
+        playerRepository.agePlayersForYear(year);
+    }
 }

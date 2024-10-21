@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -507,6 +506,65 @@ class PlayerServiceIntegrationTest extends NATCServiceIntegrationTest {
             assertEquals(3, foundPlayers.stream().filter(player ->
                     player.getYear().equals("2015") && player.getRookie().equals(1) && Objects.isNull(player.getTeamId())
             ).count());
+        }
+    }
+
+    @Nested
+    class AgePlayers {
+        @Test
+        void shouldIncreaseEveryPlayersAgeByOneForGivenYear() {
+            final List<Player> persistedPlayers = List.of(
+                    Player.builder().playerId(1).year("2015").age(21).build(),
+                    Player.builder().playerId(2).year("2015").age(36).build(),
+                    Player.builder().playerId(3).year("2015").age(24).build(),
+                    Player.builder().playerId(4).year("2015").age(41).build(),
+                    Player.builder().playerId(5).year("2015").age(30).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            playerService.agePlayers("2015");
+
+            final List<Player> updatedPlayers = playerRepository.findAll();
+
+            assertEquals(persistedPlayers.size(), updatedPlayers.size());
+
+            for (final Player updatedPlayer : updatedPlayers) {
+                final Player originalPlayer = persistedPlayers.stream()
+                        .filter(p -> p.getPlayerId().equals(updatedPlayer.getPlayerId()))
+                        .findFirst()
+                        .orElseThrow();
+
+                assertEquals(1, updatedPlayer.getAge() - originalPlayer.getAge());
+            }
+        }
+
+        @Test
+        void shouldNotChangePlayersAgeForDifferentYear() {
+            final List<Player> persistedPlayers = List.of(
+                    Player.builder().playerId(1).year("2012").age(21).build(),
+                    Player.builder().playerId(2).year("2013").age(36).build(),
+                    Player.builder().playerId(3).year("2014").age(24).build(),
+                    Player.builder().playerId(4).year("2016").age(41).build(),
+                    Player.builder().playerId(5).year("2017").age(30).build()
+            );
+
+            playerRepository.saveAll(persistedPlayers);
+
+            playerService.agePlayers("2015");
+
+            final List<Player> updatedPlayers = playerRepository.findAll();
+
+            assertEquals(persistedPlayers.size(), updatedPlayers.size());
+
+            for (final Player updatedPlayer : updatedPlayers) {
+                final Player originalPlayer = persistedPlayers.stream()
+                        .filter(p -> p.getPlayerId().equals(updatedPlayer.getPlayerId()))
+                        .findFirst()
+                        .orElseThrow();
+
+                assertEquals(originalPlayer.getAge(), updatedPlayer.getAge());
+            }
         }
     }
 }

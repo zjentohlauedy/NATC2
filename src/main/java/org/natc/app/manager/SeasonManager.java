@@ -11,6 +11,7 @@ import org.natc.app.service.LeagueService;
 import org.natc.app.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class SeasonManager {
         this.leagueConfiguration = leagueConfiguration;
     }
 
+    @Transactional
     public void processScheduledEvent() throws NATCException {
         if (Objects.nonNull(scheduleService.getCurrentScheduleEntry())) return;
 

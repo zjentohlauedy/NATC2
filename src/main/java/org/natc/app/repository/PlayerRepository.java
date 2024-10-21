@@ -26,4 +26,8 @@ public interface PlayerRepository extends JpaRepository<Player, PlayerId> {
     List<Player> findTopNumRetiredPlayersForYear(String year, Integer num);
 
     List<Player> findPlayersByTeamIdAndYearAndRookie(Integer teamId, String year, Integer rookie);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE #{#entityName} set age = age + 1 where year = :year", nativeQuery = true)
+    void agePlayersForYear(String year);
 }
